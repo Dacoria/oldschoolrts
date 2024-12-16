@@ -1,0 +1,11 @@
+{
+	"acrName": "jellesbesteacr",
+	"resourceGroup": "jelles-beste-rg",
+	"location": "westeurope",
+	"appServicePlanName": "jelles-beste-appserviceplan",
+	"webAppName": "jelles-beste-webapp",
+	"imageName": "oldschoolrts",
+	"imagetag": "latest",
+	"dockerInternallyExposedPort": 80,
+	"localhostPort": 8088
+}

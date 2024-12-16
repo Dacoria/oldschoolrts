@@ -1,0 +1,11 @@
+﻿public enum BuildStatus
+{
+    NONE,
+    NEEDS_PREPARE,
+    PREPARING,
+    COMPLETED_PREPARING,
+    NEEDS_BUILDING,
+    BUILDING,
+    COMPLETED_BUILDING,
+    CANCEL
+}

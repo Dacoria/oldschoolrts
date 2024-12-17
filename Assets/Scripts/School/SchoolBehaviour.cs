@@ -42,6 +42,8 @@ public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
                 villagerGo.GetComponent<WorkManager>().VillagerUnitType = villagerUnitSetting.Type;
                 villagerGo.AddComponent<WarningDisplayAboveHeadBehaviour>();
             }
+
+            AE.VillagerUnitCreated?.Invoke(villagerUnitSetting.Type);
         }
     }
 

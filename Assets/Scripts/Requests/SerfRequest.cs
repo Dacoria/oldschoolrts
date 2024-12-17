@@ -11,8 +11,7 @@ public class SerfRequest : IComparable<SerfRequest>
         {
             {Purpose.ROAD, 1},
             {Purpose.BUILDING, 2},
-            {Purpose.LOGISTICS, 3},
-            {Purpose.FIELD, 4}
+            {Purpose.LOGISTICS, 3}
         };
 
     public int BufferDepth = 0;

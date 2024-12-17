@@ -2,8 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BuilderBehaviour : MonoBehaviour, IHasStopped
-{    public BuilderRequest _currentBuilderRequest { private set; get; }
+public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
+{    
+    public BuilderRequest _currentBuilderRequest { private set; get; }
 
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     [ComponentInject] public NavMeshObstacle myNavMeshObstacle;
@@ -209,4 +210,6 @@ public class BuilderBehaviour : MonoBehaviour, IHasStopped
             this._currentBuilderRequest.Status = BuildStatus.CANCEL;
         }
     }
+
+    public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Builder;
 }

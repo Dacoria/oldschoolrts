@@ -11,11 +11,16 @@ public class GameManager : MonoBehaviour
     public GameObject RoadNavMeshSurface;
 
     private static SortedSet<SerfRequest> SerfRequests;
-    public SortedSet<SerfOrder> CurrentSerfOrders;
+    private SortedSet<SerfOrder> CurrentSerfOrders;
     private static List<SerfBehaviour> freeSerfs;
 
     private static List<BuilderBehaviour> freeBuilders;
     private static SortedSet<BuilderRequest> BuilderRequests;
+
+    public SortedSet<SerfRequest> GetSerfRequests() => SerfRequests;
+    public SortedSet<SerfOrder> GetCurrentSerfOrders() => CurrentSerfOrders;
+    public SortedSet<BuilderRequest> GetBuilderRequests() => BuilderRequests;
+
 
     public SortedSet<SerfOrder> CompletedOrders;
     public static GameManager Instance { get; set; }
@@ -102,8 +107,8 @@ public class GameManager : MonoBehaviour
         ActionEvents.OrderStatusChanged += OnOrderStatusChanged;
     }
 
-    private Unity.AI.Navigation.NavMeshSurface _roadNavMeshSurfaceComponent;
-    private Unity.AI.Navigation.NavMeshSurface RoadNavMeshSurfaceComponent
+    private NavMeshSurface _roadNavMeshSurfaceComponent;
+    private NavMeshSurface RoadNavMeshSurfaceComponent
     {
         get {
             if (_roadNavMeshSurfaceComponent == null)

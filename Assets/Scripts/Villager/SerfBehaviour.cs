@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
-public class SerfBehaviour : MonoBehaviour, IHasStopped
+public class SerfBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     public SerfOrder _currentSerfOrder { get; private set; }
@@ -205,4 +204,6 @@ public class SerfBehaviour : MonoBehaviour, IHasStopped
         }
         GameManager.Instance.TryRemoveSerfFromFreeSerfList(this);
     }
+
+    public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Serf;
 }

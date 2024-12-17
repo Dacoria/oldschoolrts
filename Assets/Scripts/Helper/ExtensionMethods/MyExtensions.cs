@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Assets;
 using Unity.Mathematics;
@@ -30,6 +31,13 @@ public static class MyExtensions
         return obj;
     }
 
+    public static string TitleCase(this string text)
+    {
+        var textInfo = new CultureInfo("en-US", false).TextInfo;
+        var test = textInfo.ToTitleCase(text.ToLower());
+        return textInfo.ToTitleCase(text.ToLower());
+    }
+
     public static bool StoppedAtDestination(this NavMeshAgent myNavMeshAgent, float additionalStoppingDistance = 0)
     {
         return myNavMeshAgent.isActiveAndEnabled &&
@@ -57,11 +65,6 @@ public static class MyExtensions
     public static bool IsAlmostEmptyVector(this Vector3 a)
     {
         return Mathf.Abs(a.x) <= 0.1 && Mathf.Abs(a.y) <= 0.1 && Mathf.Abs(a.z) <= 0.1;
-    }
-
-    public static Color SetA(this Color c, float a)
-    {
-        return new Color(c.r, c.g, c.b, a);
     }
 
     public static Vector3 MultiplyVector(this Vector3 a, Vector3 b)

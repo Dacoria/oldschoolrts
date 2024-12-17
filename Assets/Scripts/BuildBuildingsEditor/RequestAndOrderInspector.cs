@@ -27,8 +27,8 @@ public class RequestAndOrderInspector : EditorWindow
             switch (tab)
             {
                 case 0:
-                    EditorGUILayout.LabelField("Current orders:", gameManager.CurrentSerfOrders.Count.ToString());
-                    foreach (var serfOrder in gameManager.CurrentSerfOrders)
+                    EditorGUILayout.LabelField("Current orders:", gameManager.GetCurrentSerfOrders().Count.ToString());
+                    foreach (var serfOrder in gameManager.GetCurrentSerfOrders())
                     {
                         DrawOrder(serfOrder);
                     }

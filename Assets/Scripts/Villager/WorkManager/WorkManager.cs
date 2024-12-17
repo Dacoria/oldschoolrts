@@ -4,14 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WorkManager : MonoBehaviour, IHasStopped
+public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
 {
     public List<BuildingType> BuildingTypeToBringResourceBackTo;
     public float timeToWaitForRetryIfNoNewAction = 1;
 
-
     [HideInInspector] // wordt geset bij initieren van unit in school
     public VillagerUnitType VillagerUnitType;
+    public VillagerUnitType GetVillagerUnitType() => VillagerUnitType;
 
     [ComponentInject] private Animator Animator;
     [ComponentInject] private NavMeshAgent NavMeshAgent;

@@ -1,21 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class NavMeshStuckFixer : MonoBehaviourSlowUpdate
+public class NavMeshStuckFixer : MonoBehaviourSlowUpdateTime
 {
-    [ComponentInject] private NavMeshAgent NavMashAgent;
-
+    [ComponentInject] private UnityEngine.AI.NavMeshAgent NavMashAgent;
+    
     private void Awake()
     {
         this.ComponentInject();
+        initialAvoidancePriority = NavMashAgent.avoidancePriority;
     }
 
-    protected override int FramesTillSlowUpdate => 20;
+    private int initialAvoidancePriority;
 
+    protected override int MsTillSlowUpdate => 500;
     protected override void SlowUpdate()
     {
-        throw new System.NotImplementedException();
+        if(!NavMeshIsActive() || !IsStuck())
+        {
+            ResetToInitialNavmeshAgent();
+        }
+        else
+        {
+            if (!isStillStuck)
+            {
+                isStillStuck = true;
+            }
+            else
+            {
+                // randomizen lijkt het beste te werken -> ander gedrag forceren bij serfs tot je weer beweegt
+                NavMashAgent.avoidancePriority = Random.Range(1, 99);
+            }
+        }
+
+        prevLoc = transform.position;
+    }
+
+    private void ResetToInitialNavmeshAgent()
+    {
+        prevLoc = null;
+        isStillStuck = false;
+        if (NavMashAgent.avoidancePriority != initialAvoidancePriority)
+        {
+            NavMashAgent.avoidancePriority = initialAvoidancePriority;
+        }
+    }
+
+    private bool NavMeshIsActive()
+    {
+        return NavMashAgent.enabled && 
+            !NavMashAgent.isStopped && 
+            NavMashAgent.hasPath;
+    }
+
+    private bool isStillStuck;
+    private Vector3? prevLoc;    
+
+    private bool IsStuck()
+    {
+        if(!prevLoc.HasValue)
+        {
+            return false;
+        }    
+
+        return Vector3.Distance(transform.position, prevLoc.Value) < 0.05f;
     }
 }

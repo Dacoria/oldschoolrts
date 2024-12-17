@@ -5,7 +5,7 @@ using Assets;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StockpileUiBehaviour : MonoBehaviourSlowUpdate, ICardCarousselDisplay
+public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFrames, ICardCarousselDisplay
 {
     [HideInInspector]
     public StockpileBehaviour CallingStockpile;

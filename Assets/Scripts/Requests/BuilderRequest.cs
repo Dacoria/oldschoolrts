@@ -30,7 +30,7 @@ public class BuilderRequest : IComparable<BuilderRequest>
             {
                 var previousValue = _status;
                 _status = value;
-                AE.BuilderRequestStatusChanged(this, previousValue);
+                AE.BuilderRequestStatusChanged?.Invoke(this, previousValue);
             }
         }
     }

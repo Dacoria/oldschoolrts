@@ -44,7 +44,7 @@ public class SerfOrder: IComparable<SerfOrder>
             if (_requestStatus != value)
             {
                 _requestStatus = value;
-                AE.OrderStatusChanged(this);
+                AE.OrderStatusChanged?.Invoke(this);
             }
         }
     }

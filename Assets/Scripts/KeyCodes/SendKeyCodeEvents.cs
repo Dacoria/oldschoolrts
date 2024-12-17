@@ -25,30 +25,25 @@ public class SendKeyCodeEvents : MonoBehaviour
 
     private void DoKeyCodeAction(KeyCodeAction keyCodeAction)
     {
-        if(AE.KeyCodeAction == null)
-        {
-            throw new Exception("Geen KeyCodeAction; zou altijd moeten -> KeyCode: " + keyCodeAction.KeyCode);
-        }
-
         switch (keyCodeAction.KeyCodeActionType)
         {
             case KeyCodeActionType.ToggleInputOutputDisplay:
 
                 KeyCodeStatusSettings.ToggleInputOutputDisplay_Active = !KeyCodeStatusSettings.ToggleInputOutputDisplay_Active;
                 keyCodeAction.Active = KeyCodeStatusSettings.ToggleInputOutputDisplay_Active;
-                AE.KeyCodeAction(keyCodeAction);
+                AE.KeyCodeAction?.Invoke(keyCodeAction);
                 break;
             case KeyCodeActionType.ToggleBuildingProgressDisplay:
 
                 KeyCodeStatusSettings.ToggleBuildingProgressDisplay_Active = !KeyCodeStatusSettings.ToggleBuildingProgressDisplay_Active;
                 keyCodeAction.Active = KeyCodeStatusSettings.ToggleBuildingProgressDisplay_Active;
-                AE.KeyCodeAction(keyCodeAction);
+                AE.KeyCodeAction?.Invoke(keyCodeAction);
                 break;
             case KeyCodeActionType.ToggleEntranceExitDisplay:
 
                 KeyCodeStatusSettings.ToggleEntranceExitDisplay_Active = !KeyCodeStatusSettings.ToggleEntranceExitDisplay_Active;
                 keyCodeAction.Active = KeyCodeStatusSettings.ToggleEntranceExitDisplay_Active;
-                AE.KeyCodeAction(keyCodeAction);
+                AE.KeyCodeAction?.Invoke(keyCodeAction);
                 break;
 
             default:

@@ -10,11 +10,11 @@ public class VillagerManager : BaseAEMono
 
     private List<SerfBehaviour> Serfs = new List<SerfBehaviour>();
     private List<BuilderBehaviour> Builders = new List<BuilderBehaviour>();
-    private List<WorkerBuildingBehaviour> Workers = new List<WorkerBuildingBehaviour>();
+    private List<WorkManager> Workers = new List<WorkManager>();
 
     public List<SerfBehaviour> GetSerfs() => Serfs;
     public List<BuilderBehaviour> GetBuilders() => Builders;
-    public List<WorkerBuildingBehaviour> GetWorkers() => Workers;
+    public List<WorkManager> GetWorkers() => Workers;
 
     private new void Awake()
     {
@@ -49,7 +49,7 @@ public class VillagerManager : BaseAEMono
                 case VillagerUnitType.Fisherman:
                 case VillagerUnitType.Hunter:
                 case VillagerUnitType.Gatherer:
-                    Workers.Add((WorkerBuildingBehaviour)villagerUnit);
+                    Workers.Add((WorkManager)villagerUnit);
                     break;
                 default:
                     throw new System.Exception($"VillagerManager -> VillagerUnitType '{villagerUnit.GetVillagerUnitType()}' is niet ondersteund");

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class VillagerBuilderScript : MonoBehaviour
+public class VillagerBuilderScript : BaseAEMono
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     [ComponentInject] private Animator Animator;
@@ -10,17 +10,13 @@ public class VillagerBuilderScript : MonoBehaviour
 
     public GameObject ToLocation;
 
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
     }
 
-    void Start()
-    {
-        AE.BuilderRequestStatusChanged += BuilderRequestStatusChanged;
-    }
-
-    private void BuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
+    protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
         if (previousStatus == BuildStatus.NEEDS_PREPARE && builderRequest.Status == BuildStatus.PREPARING)
         {

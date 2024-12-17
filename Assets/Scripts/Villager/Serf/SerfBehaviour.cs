@@ -27,7 +27,7 @@ public class SerfBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
 
     void Start()
     {
-        AE.FreeSerf(this);
+        AE.FreeSerf?.Invoke(this);
     }
     
 
@@ -49,7 +49,7 @@ public class SerfBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
                 case FoodConsumptionStatus.REFILL_FAILED:
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    AE.FreeSerf(this);
+                    AE.FreeSerf?.Invoke(this);
                     break;
             }
         }
@@ -76,7 +76,7 @@ public class SerfBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
                         }
                         if(!stopAsapWithOrders && !stoppedWithOrders)
                         {
-                            AE.FreeSerf(this);
+                            AE.FreeSerf?.Invoke(this);
                         }
                         break;
                     }

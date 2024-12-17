@@ -85,7 +85,7 @@ public class UiManager : MonoBehaviour
         {
             foreach (var hit in hits)
             {
-                AE.LeftClickOnGo(hit.transform.gameObject); // nu gebruikt voor tooltips
+                AE.LeftClickOnGo?.Invoke(hit.transform.gameObject); // nu gebruikt voor tooltips
             }
         }
 

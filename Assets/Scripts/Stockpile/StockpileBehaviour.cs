@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class StockpileBehaviour : BaseAEMono
 {
@@ -8,9 +9,12 @@ public class StockpileBehaviour : BaseAEMono
     [HideInInspector]
     public ItemAmountBuffer[] CurrentItemAmount;
 
+    [ComponentInject] public NavMeshAgent NavMeshAgent; // nodig voor path bepaling; is er een path?
+
     private new void Awake()
     {
         base.Awake();
+        this.ComponentInject();
         var allItemTypes = (ItemType[])Enum.GetValues(typeof(ItemType));
         CurrentItemAmount = new ItemAmountBuffer[allItemTypes.Length];
 

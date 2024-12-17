@@ -47,10 +47,7 @@ public class WorkManager : BaseAEMono, IHasStopped, IVillagerUnit
             {
                 ObjectToBringResourceBackTo.GetComponent<WorkerBuildingBehaviour>().Worker = this.gameObject;
             }
-            if(AE.NoWorkerAction != null)
-            {
-                AE.NoWorkerAction(this);
-            }            
+            AE.NoWorkerAction?.Invoke(this);
             yield return MonoHelper.Instance.GetCachedWaitForSeconds(1f);
         }
 
@@ -116,7 +113,7 @@ public class WorkManager : BaseAEMono, IHasStopped, IVillagerUnit
                 var success = DetermineNextWorkerAction();
                 if (success)
                 {
-                    AE.StartNewWorkerAction(this);                    
+                    AE.StartNewWorkerAction?.Invoke(this);                    
                 }
                 else
                 {
@@ -210,7 +207,7 @@ public class WorkManager : BaseAEMono, IHasStopped, IVillagerUnit
         else
         {
             StartCoroutine(IdleForRetryNewAction());
-            AE.NoWorkerAction(this);
+            AE.NoWorkerAction?.Invoke(this);
         }
     }
 }

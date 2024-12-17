@@ -133,7 +133,7 @@ public class FoodConsumptionBehaviour : BaseAEMono
         var tavernScript = FoodConsumption.TavernTargetedForFoodRefill.GetComponent<TavernBehaviour>();
         if (tavernScript == null) { throw new Exception("Tavern heeft altijd Tavernscript!"); }
 
-        AE.ReachedFoodRefillingPoint(tavernScript, this);
+        AE.ReachedFoodRefillingPoint?.Invoke(tavernScript, this);
         FoodConsumption.TavernTargetedForFoodRefill = null;
     }
 }

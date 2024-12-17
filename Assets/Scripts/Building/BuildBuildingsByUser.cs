@@ -239,7 +239,6 @@ public class BuildBuildingsByUser : MonoBehaviour
             {
                 buildingBehaviour.BuildingType = buildingSettings.BuildingType;
             }
-
         }
     }
 

@@ -121,7 +121,7 @@ public class ProduceResourceOrderBehaviour : BaseAEMono
                 Direction = Direction.PUSH,
                 IsOriginator = true,
             };
-            AE.SerfRequest(serfRequest);
+            AE.SerfRequest?.Invoke(serfRequest);
             OutputOrders.Add(serfRequest);
         }
     }

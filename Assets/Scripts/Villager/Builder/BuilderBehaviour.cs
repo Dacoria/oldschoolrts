@@ -23,7 +23,7 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
 
     private void Start()
     {
-        AE.FreeBuilder(this);
+        AE.FreeBuilder?.Invoke(this);
     }   
 
     public bool HasStoppedWithLogic()
@@ -42,14 +42,14 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
                     _currentBuilderRequest = null;
                     if (!stopAsapWithOrders && !stoppedWithOrders)
                     {
-                        AE.FreeBuilder(this);
+                        AE.FreeBuilder?.Invoke(this);
                     }
                     break;
                 case BuildStatus.CANCEL:
                     _currentBuilderRequest = null;
                     if (!stopAsapWithOrders && !stoppedWithOrders)
                     {
-                        AE.FreeBuilder(this);
+                        AE.FreeBuilder?.Invoke(this);
 
                     }
                     break;
@@ -72,12 +72,12 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
                     Debug.Log("FoodConsumptionStatus.REFILL_SUCCESS");
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    AE.FreeBuilder(this);
+                    AE.FreeBuilder?.Invoke(this);
                     break;
                 case FoodConsumptionStatus.REFILL_FAILED:
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    AE.FreeBuilder(this);
+                    AE.FreeBuilder?.Invoke(this);
                     Debug.Log("FoodConsumptionStatus.REFILL_FAILED");
                     break;
             }

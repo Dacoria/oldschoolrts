@@ -74,7 +74,7 @@ public class RefillBehaviour : BaseAEMono
             Direction = Direction.PULL,
             BufferDepth = IncomingOrders.Count,
         };
-        AE.SerfRequest(serfRequest);
+        AE.SerfRequest?.Invoke(serfRequest);
         IncomingOrders.Add(serfRequest);
     }
 

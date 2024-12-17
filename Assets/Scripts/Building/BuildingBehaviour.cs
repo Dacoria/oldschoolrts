@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Assets;
-using Assets.CrossCutting;
 using UnityEngine;
 
 public class BuildingBehaviour : BaseAEMono
@@ -28,8 +25,9 @@ public class BuildingBehaviour : BaseAEMono
     [HideInInspector]
     public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
 
-    public void Awake()
+    public new void Awake()
     {
+        base.Awake();
         this.ComponentInject();        
     }
 
@@ -134,7 +132,7 @@ public class BuildingBehaviour : BaseAEMono
             Purpose = builderRequest.Purpose,
             GameObject = builderRequest.GameObject
         };
-        AE.BuilderRequest(newBuilderRequest);
+        AE.BuilderRequest?.Invoke(newBuilderRequest);
         newBuilderRequest.Status = statusForNewReq; // forceert change; maakt het makkelijker
     }
 
@@ -165,7 +163,7 @@ public class BuildingBehaviour : BaseAEMono
                     IsOriginator = true
                 };
 
-                AE.SerfRequest(serfRequest);
+                AE.SerfRequest?.Invoke(serfRequest);
                 count++;
             }
         }
@@ -218,7 +216,7 @@ public class BuildingBehaviour : BaseAEMono
                 Status = BuildStatus.NONE,
                 GameObject = GhostBuildingBehaviour.transform.parent.gameObject
             };
-            AE.BuilderRequest(req);
+            AE.BuilderRequest?.Invoke(req);
             req.Status = BuildStatus.COMPLETED_BUILDING;
 
             ActivateReal();            
@@ -229,7 +227,7 @@ public class BuildingBehaviour : BaseAEMono
     {
         if (AllRequiredItemsCompleted())
         {
-            AE.BuilderRequest(new BuilderRequest
+            AE.BuilderRequest?.Invoke(new BuilderRequest
             {
                 Purpose = Purpose,
                 Status = BuildStatus.NEEDS_BUILDING,

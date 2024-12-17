@@ -8506,7 +8506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8108612958988138417, guid: bb53f64a3659e1f44b98c35033f6fe2f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8108612958988138419, guid: bb53f64a3659e1f44b98c35033f6fe2f, type: 3}
       propertyPath: m_RootOrder
@@ -10139,6 +10139,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6254611152164367048, guid: 138edaba187ffc245b64c82f3a5dfcde, type: 3}
       insertIndex: -1
       addedObject: {fileID: 803797355}
+    - targetCorrespondingSourceObject: {fileID: 6254611152164367048, guid: 138edaba187ffc245b64c82f3a5dfcde, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 803797359}
   m_SourcePrefab: {fileID: 100100000, guid: 138edaba187ffc245b64c82f3a5dfcde, type: 3}
 --- !u!1 &803797354 stripped
 GameObject:
@@ -10174,6 +10177,7 @@ MonoBehaviour:
     ItemType: 55
     MaxBuffer: 999
   CurrentItemAmount: []
+  NavMeshAgent: {fileID: 0}
 --- !u!65 &803797356
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10195,6 +10199,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 4, z: 3}
   m_Center: {x: -1, y: 2, z: 0}
+--- !u!195 &803797359
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803797354}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &814211678
 GameObject:
   m_ObjectHideFlags: 0
@@ -36717,6 +36743,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1409061581661283394, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a55919b87fc56624ab40ba40ca526e9d, type: 2}
     - target: {fileID: 1409061581661283396, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -36851,7 +36881,7 @@ PrefabInstance:
       objectReference: {fileID: 1409722203}
     - target: {fileID: 1409061581661283449, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: m_Name
-      value: Grass
+      value: GameManager
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1409061581661283407, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}

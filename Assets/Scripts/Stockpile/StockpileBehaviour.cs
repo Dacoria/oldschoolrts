@@ -9,8 +9,6 @@ public class StockpileBehaviour : BaseAEMono
     [HideInInspector]
     public ItemAmountBuffer[] CurrentItemAmount;
 
-    [ComponentInject] public NavMeshAgent NavMeshAgent; // nodig voor path bepaling; is er een path?
-
     private new void Awake()
     {
         base.Awake();

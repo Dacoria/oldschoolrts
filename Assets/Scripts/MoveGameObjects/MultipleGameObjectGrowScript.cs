@@ -23,7 +23,6 @@ public class MultipleGameObjectGrowScript : MonoBehaviour, IGrowOnFarmField
         this.ComponentInject();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         if(DynamicallyRetrieveGoToGrow)
@@ -55,7 +54,6 @@ public class MultipleGameObjectGrowScript : MonoBehaviour, IGrowOnFarmField
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!hasFinishedGrowingAllGameObjects)

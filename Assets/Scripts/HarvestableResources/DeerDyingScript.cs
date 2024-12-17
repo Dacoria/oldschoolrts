@@ -17,7 +17,7 @@ public class DeerDyingScript : MonoBehaviour,IRetrieveResourceFromObject
         }
 
         TimeKilled = DateTime.Now;
-        this.GetComponentInChildren<Animator>().SetTrigger(StaticHelper.ANIM_TRIGGER_DIE);
+        this.GetComponentInChildren<Animator>().SetTrigger(Constants.ANIM_TRIGGER_DIE);
 
         var moveObjectDownSurfaceAndDestroy = this.gameObject.AddComponent<MoveObjectDownSurfaceAndDestroy>();
         moveObjectDownSurfaceAndDestroy.waitTimeInSecondsBeforeGoingDown = 2;

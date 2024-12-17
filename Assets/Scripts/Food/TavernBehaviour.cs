@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class TavernBehaviour : MonoBehaviour
+public class TavernBehaviour : BaseAEMono
 {
     public int MaxBufferForEachFoodType = 5;
 
@@ -19,10 +19,7 @@ public class TavernBehaviour : MonoBehaviour
     }
     void Start()
     {
-        ActionEvents.ReachedFoodRefillingPoint += OnReachedFoodRefillingPoint;
         IncomingOrders = new List<SerfRequest>();
-
-        ActionEvents.OrderStatusChanged += OnOrderStatusChanged;
 
         foreach (var itemAmount in GameManager.Instance.ItemFoodRefillValues)
         {
@@ -30,7 +27,7 @@ public class TavernBehaviour : MonoBehaviour
         }
     }
 
-    private void OnReachedFoodRefillingPoint(TavernBehaviour tavernScript, FoodConsumptionBehaviour foodConsumptionBehaviour)
+    protected override void OnReachedFoodRefillingPoint(TavernBehaviour tavernScript, FoodConsumptionBehaviour foodConsumptionBehaviour)
     {
         if(tavernScript == this)
         {
@@ -94,7 +91,7 @@ public class TavernBehaviour : MonoBehaviour
         }
     }
 
-    private void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
         var myRequest = IncomingOrders.FirstOrDefault(serfOrder.Has);
         if (myRequest != null)
@@ -129,12 +126,7 @@ public class TavernBehaviour : MonoBehaviour
             Direction = Direction.PULL,
             BufferDepth = IncomingOrders.Count,
         };
-        ActionEvents.SerfRequest(serfRequest);
+        AE.SerfRequest(serfRequest);
         IncomingOrders.Add(serfRequest);
-    }
-
-    private void OnDestroy()
-    {
-        ActionEvents.OrderStatusChanged -= OnOrderStatusChanged;
     }
 }

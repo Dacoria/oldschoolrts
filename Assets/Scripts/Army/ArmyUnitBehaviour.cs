@@ -21,21 +21,19 @@ public class ArmyUnitBehaviour : MonoBehaviour
     public Transform RangedHomingMissileSpawnPosition;
 
     [ComponentInject] private OwnedByPlayerBehaviour OwnedByPlayerBehaviour;
-    // Start is called before the first frame update
+
     private void Awake()
     {
         this.ComponentInject();
         NavMeshAgent.stoppingDistance = Reach;
     }
 
-    // Update is called once per frame
     private void Update()
     {
-
         var colliders = Physics.OverlapSphere(this.transform.position, EnemyAttractRadius, LayerMaskManager.RtsUnitMask);
         
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WALKING, !NavMeshAgent.StoppedAtDestination());
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_ATTACKING, false);
+        Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.StoppedAtDestination());
+        Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, false);
 
         foreach (var collider in colliders)
         {
@@ -47,7 +45,7 @@ public class ArmyUnitBehaviour : MonoBehaviour
 
                 if (NavMeshAgent.StoppedAtDestination())
                 {
-                    Animator.SetBool(StaticHelper.ANIM_BOOL_IS_ATTACKING, true);
+                    Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, true);
                 }
             }
         }

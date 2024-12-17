@@ -5,11 +5,19 @@ using UnityEngine;
 
 public class BuildBuildingsByUser : MonoBehaviour
 {
+    public static BuildBuildingsByUser Instance;
+
+    private void Awake()
+    {
+        Instance = this;    
+    }
+
     private GameObject ObjectToBuild;
     private GameObject SelectedGameObjectToBuild; // hierin wordt het gameobject gezet wat wordt gebouwd. Hiermee wordt ObjectToBuild Initiated! (kan meerdere keren zijn door Roads)
 
-    public bool useCollorSetter;
-    public bool InstaBuild;
+    [SerializeField] private bool UseCollorSetter; // voor wel/niet tonen collide colors --> Altijd aan tenzij 'gedoe'
+
+    [HideInInspector] public bool InstaBuild = false;
 
     private bool isHighlightedFieldShown => ObjectToBuild != null;
     private bool isMouseDragging;
@@ -83,7 +91,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             //Debug.Log("Klik mouse 4 buildigs");
             if (isHighlightedFieldShown)
             {
-                if (!useCollorSetter || !CheckCollisionForBuilding.IsColliding())
+                if (!UseCollorSetter || !CheckCollisionForBuilding.IsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
                     Build(ObjectToBuild);
@@ -99,7 +107,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private void UpdateDragLeftMouseInputForRoadOrField()
     {                 
-        if ((!useCollorSetter || !CheckCollisionForBuilding.IsColliding()) && 
+        if ((!UseCollorSetter || !CheckCollisionForBuilding.IsColliding()) && 
             ObjectToBuild != null &&
             LastKnownGhostRoadOrFieldLocation != null && 
             !ObjectToBuild.transform.position.IsSameVector3(LastKnownGhostRoadOrFieldLocation)
@@ -144,7 +152,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             //Debug.Log("Klik mouse 4 Road or Field");
             if (isHighlightedFieldShown)
             {
-                if (!useCollorSetter || !AnyOfRoadsOrFieldsColliding())
+                if (!UseCollorSetter || !AnyOfRoadsOrFieldsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
                     BuildRoadsOrFields(ObjectToBuild);
@@ -202,7 +210,7 @@ public class BuildBuildingsByUser : MonoBehaviour
         ObjectToBuild = Instantiate(SelectedGameObjectToBuild, new Vector3(0, 0.01f, 0), Quaternion.identity);
         FillBuildingType(SelectedGameObjectToBuild, ObjectToBuild);
 
-        if (useCollorSetter)
+        if (UseCollorSetter)
         {
             CheckCollisionForBuilding = ObjectToBuild.GetComponentInChildren<CheckCollisionForBuilding>(); // voor bepalen of collide wordt met ander iets
             if(CheckCollisionForBuilding != null)
@@ -332,17 +340,5 @@ public class BuildBuildingsByUser : MonoBehaviour
         }
 
         SelectedGameObjectToBuild = null;
-    }
-
-    public void ToggleInstaBuild()
-    {
-        InstaBuild = !InstaBuild;
-        //Debug.Log("Instabuild = " + InstaBuild);
-        ClearSelectedGameObjectToBuild();
-    }
-    public void ToggleGetsHungry()
-    {
-        FoodConsumptionSettings.ToggleUseFoodConsumption_Active = !FoodConsumptionSettings.ToggleUseFoodConsumption_Active;
-        ClearSelectedGameObjectToBuild();
     }
 }

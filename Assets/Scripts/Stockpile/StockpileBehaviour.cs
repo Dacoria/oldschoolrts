@@ -2,14 +2,15 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class StockpileBehaviour : MonoBehaviour
+public class StockpileBehaviour : BaseAEMono
 {
     public ItemAmountBuffer[] InitialItemAmount;
     [HideInInspector]
     public ItemAmountBuffer[] CurrentItemAmount;
 
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
         var allItemTypes = (ItemType[])Enum.GetValues(typeof(ItemType));
         CurrentItemAmount = new ItemAmountBuffer[allItemTypes.Length];
 
@@ -29,15 +30,12 @@ public class StockpileBehaviour : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         GameManager.Instance.RegisterStockpile(this);
-
-        ActionEvents.OrderStatusChanged += OnOrderStatusChanged;
     }
 
-    private void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
         if (serfOrder.From != null && serfOrder.From.GameObject == gameObject && serfOrder.Status == Status.IN_PROGRESS_TO)
         {
@@ -56,16 +54,10 @@ public class StockpileBehaviour : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {        
-    }
-
     public Vector3 Location => this == null || this.gameObject == null ? new Vector3(0,0,0) : this.gameObject.EntranceExit();
 
     private void OnDestroy()
     {
         GameManager.Instance.TryRemoveStockpile(this);
-        ActionEvents.OrderStatusChanged -= OnOrderStatusChanged;
     }
 }

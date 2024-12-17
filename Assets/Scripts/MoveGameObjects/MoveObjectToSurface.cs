@@ -40,8 +40,6 @@ public class MoveObjectToSurface : MonoBehaviour
         MovementSpeed = (this.EndPosition.y - this.transform.position.y) / TimeInSeconds;        
     }
   
-
-    // Update is called once per frame
     void Update()
     {
         if(BuildingBehaviour != null && BuildingBehaviour.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)

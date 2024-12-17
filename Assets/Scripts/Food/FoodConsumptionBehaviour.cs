@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using TMPro.EditorUtilities;
 
-public class FoodConsumptionBehaviour : MonoBehaviour
+public class FoodConsumptionBehaviour : BaseAEMono
 {
     public float FoodSatisfactionPercentage = 0.6f;
     public float FoodDeclinePercPerSecond = 0.01f;
@@ -19,8 +20,9 @@ public class FoodConsumptionBehaviour : MonoBehaviour
     private GameObject GoToTavernBubble;
 
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
         FoodConsumption = new FoodConsumption(FoodSatisfactionPercentage, FoodDeclinePercPerSecond, PercLimitForFoodRefill);
     }
@@ -28,10 +30,9 @@ public class FoodConsumptionBehaviour : MonoBehaviour
     void Start()
     {
         StartCoroutine(ProcessFoodDecline());
-        ActionEvents.FoodStatusHasChanged += OnFoodStatusHasChanged;
     }
 
-    private void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
+    protected override void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
     {
         if(foodConsumption == FoodConsumption)
         {        
@@ -132,7 +133,7 @@ public class FoodConsumptionBehaviour : MonoBehaviour
         var tavernScript = FoodConsumption.TavernTargetedForFoodRefill.GetComponent<TavernBehaviour>();
         if (tavernScript == null) { throw new Exception("Tavern heeft altijd Tavernscript!"); }
 
-        ActionEvents.ReachedFoodRefillingPoint(tavernScript, this);
+        AE.ReachedFoodRefillingPoint(tavernScript, this);
         FoodConsumption.TavernTargetedForFoodRefill = null;
     }
 }

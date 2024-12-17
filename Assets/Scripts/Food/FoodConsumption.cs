@@ -51,7 +51,7 @@ public class FoodConsumption
 
             if (FoodSatisfactionPercentage == 0)
             {
-                ActionEvents.NoFoodToConsume(this);
+                AE.NoFoodToConsume(this);
             }
         }
     }  
@@ -66,7 +66,7 @@ public class FoodConsumption
             {
                 var previousValue = _foodConsumptionStatus;
                 _foodConsumptionStatus = value;
-                ActionEvents.FoodStatusHasChanged(this, previousValue);
+                AE.FoodStatusHasChanged(this, previousValue);
             }
         }
     }

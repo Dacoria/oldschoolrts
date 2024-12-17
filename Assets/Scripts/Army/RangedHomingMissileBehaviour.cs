@@ -15,7 +15,6 @@ public class RangedHomingMissileBehaviour : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Target == null)

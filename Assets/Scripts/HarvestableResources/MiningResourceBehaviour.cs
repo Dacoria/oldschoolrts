@@ -43,7 +43,7 @@ public class MiningResourceBehaviour : MonoBehaviour, IProduceResourceOverTime, 
     {
         var result = new List<HarvestableMaterialScript>();
 
-        var resourceGos = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_RESOURCE);
+        var resourceGos = GameObject.FindGameObjectsWithTag(Constants.TAG_RESOURCE);
         foreach (var resourceGo in resourceGos)
         {
             var harvestResourceScript = resourceGo.GetComponent<HarvestableMaterialScript>();

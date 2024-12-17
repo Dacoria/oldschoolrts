@@ -40,14 +40,14 @@ public class FindLumberScript : MonoBehaviour, ILocationOfNewResource, ILocation
     private bool IsCollidingObjectToPlantTree(Collider collider)
     {
         return
-            collider.transform.gameObject.layer != StaticHelper.LAYER_TERRAIN &&
-            collider.transform.tag != StaticHelper.TAG_UNIT &&           
-            collider.transform.tag != StaticHelper.TAG_ENTRANCE_EXIT;
+            collider.transform.gameObject.layer != Constants.LAYER_TERRAIN &&
+            collider.transform.tag != Constants.TAG_UNIT &&           
+            collider.transform.tag != Constants.TAG_ENTRANCE_EXIT;
     }
 
     public GameObject GetResourceToRetrieve()
     {
-        var resources = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_RESOURCE);
+        var resources = GameObject.FindGameObjectsWithTag(Constants.TAG_RESOURCE);
         GameObject closestTree = null;
         var closestDistance = 9999999f;
 

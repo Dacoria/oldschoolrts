@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 
-public class GenerateUpdateInputOutputDisplayResources : MonoBehaviour
+public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
 {
     
     public GameObject ProcessingDisplayPrefab;
@@ -105,19 +105,12 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviour
         }        
     }
 
-    private int frames;
-    void Update()
+    protected override int FramesTillSlowUpdate => 10;
+    protected override void SlowUpdate()
     {
-        frames++;
-        if (frames == 10)
-        {
-            // niet al te vaak updaten; onnodig
-            frames = 0;
-            UpdateInputText();
-            UpdateOutputText();
-            UpdateProgressCircleText();
-        }
-        
+        UpdateInputText();
+        UpdateOutputText();
+        UpdateProgressCircleText();
     }
 
     private void UpdateProgressCircleText()
@@ -126,7 +119,6 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviour
         {
             ProgressCircleGo.SetActive(QueueForBuildingBehaviour.QueueItems.Any());
             ProgressCircleGoRunning.SetActive(QueueForBuildingBehaviour.GetCurrentItemProcessed() != null);
-
         }
     }
 

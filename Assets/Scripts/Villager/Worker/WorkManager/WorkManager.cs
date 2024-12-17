@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
+public class WorkManager : BaseAEMono, IHasStopped, IVillagerUnit
 {
     public List<BuildingType> BuildingTypeToBringResourceBackTo;
     public float timeToWaitForRetryIfNoNewAction = 1;
@@ -25,8 +25,9 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
     private bool isIdle;
     private bool workerIsActive;
 
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
     }
 
@@ -46,9 +47,9 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
             {
                 ObjectToBringResourceBackTo.GetComponent<WorkerBuildingBehaviour>().Worker = this.gameObject;
             }
-            if(ActionEvents.NoWorkerAction != null)
+            if(AE.NoWorkerAction != null)
             {
-                ActionEvents.NoWorkerAction(this);
+                AE.NoWorkerAction(this);
             }            
             yield return MonoHelper.Instance.GetCachedWaitForSeconds(1f);
         }
@@ -58,11 +59,7 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
     }
 
     private void SetRelevantScripts()
-    {                         
-        if (TryGetComponent(out FoodConsumptionBehaviour))
-        {
-            ActionEvents.FoodStatusHasChanged += OnFoodStatusHasChanged;
-        }
+    {
         //TODO jelle list injecten
         var workActions = this.GetComponents<IVillagerWorkAction>();
         foreach(var workActionScript in workActions)
@@ -76,7 +73,7 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
         return stoppedWithOrders;
     }
 
-    private void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
+    protected override void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
     {
         if (foodConsumption == FoodConsumptionBehaviour.FoodConsumption)
         {
@@ -97,7 +94,7 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
 
     private GameObject TryFindFreeObjectToBringResourceBackTo()
     {
-        var gameObjects = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_BUILDING);
+        var gameObjects = GameObject.FindGameObjectsWithTag(Constants.TAG_BUILDING);
         var firstOrNullUninhabitedBuilding = gameObjects.FirstOrDefault(x =>
             x.activeSelf &&
             BuildingTypeToBringResourceBackTo.Any(y => y == x.GetComponent<BuildingBehaviour>()?.BuildingType) &&
@@ -119,7 +116,7 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
                 var success = DetermineNextWorkerAction();
                 if (success)
                 {
-                    ActionEvents.StartNewWorkerAction(this);                    
+                    AE.StartNewWorkerAction(this);                    
                 }
                 else
                 {
@@ -168,18 +165,18 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
         var activeWorkAction = GetActiveWorkAction();
         if (!workerIsActive || activeWorkAction == null)
         {
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WALKING, !NavMeshAgent.isStopped);
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WORKING, false);
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WORKING_2, false);
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_IDLE, NavMeshAgent.isStopped);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.isStopped);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, false);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING_2, false);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, NavMeshAgent.isStopped);
         }
         else
         {
             var animationStatus = activeWorkAction.GetAnimationStatus();
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WALKING, animationStatus.IsWalking);
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WORKING, animationStatus.IsWorking);
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WORKING_2, animationStatus.IsWorking2);
-            Animator.SetBool(StaticHelper.ANIM_BOOL_IS_IDLE, animationStatus.IsIdle);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, animationStatus.IsWalking);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, animationStatus.IsWorking);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING_2, animationStatus.IsWorking2);
+            Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, animationStatus.IsIdle);
         }       
     }
 
@@ -213,7 +210,7 @@ public class WorkManager : MonoBehaviour, IHasStopped, IVillagerUnit
         else
         {
             StartCoroutine(IdleForRetryNewAction());
-            ActionEvents.NoWorkerAction(this);
+            AE.NoWorkerAction(this);
         }
     }
 }

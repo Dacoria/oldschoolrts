@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public class HideShowBuildingProgressScript : MonoBehaviour
+public class HideShowBuildingProgressScript : BaseAEMono
 {
     private void Start()
     {
-        ActionEvents.KeyCodeAction += KeyCodeActionChanged;
         gameObject.SetActive(KeyCodeStatusSettings.ToggleBuildingProgressDisplay_Active);
     }
 
-    private void KeyCodeActionChanged(KeyCodeAction keyCodeAction)
+    protected override void OnKeyCodeAction(KeyCodeAction keyCodeAction)
     {
         if(keyCodeAction.KeyCodeActionType == KeyCodeActionType.ToggleBuildingProgressDisplay)
         {

@@ -34,7 +34,7 @@ public class FindResourceScript : MonoBehaviour, ILocationOfResource
     {
         var result = new List<GameObject>(); 
 
-        var resourceGameObjects = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_RESOURCE);
+        var resourceGameObjects = GameObject.FindGameObjectsWithTag(Constants.TAG_RESOURCE);
         foreach (var resource in resourceGameObjects)
         {
             var harvestableScript = resource.GetComponent<HarvestableMaterialScript>();

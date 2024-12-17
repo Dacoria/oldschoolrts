@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SerfBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
+public class SerfBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     public SerfOrder _currentSerfOrder { get; private set; }
@@ -19,16 +19,15 @@ public class SerfBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
     public bool IsCarryingResource => CarryingResource != ItemType.NONE;
     public ItemType CarryingResource => _currentSerfOrder?.Status == Status.IN_PROGRESS_TO ? _currentSerfOrder.ItemType : ItemType.NONE;
 
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
     }
 
     void Start()
     {
-        ActionEvents.FreeSerf(this);
-        ActionEvents.OrderStatusChanged += OnOrderStatusChanged;
-        ActionEvents.FoodStatusHasChanged += OnFoodStatusHasChanged;        
+        AE.FreeSerf(this);
     }
     
 
@@ -37,7 +36,7 @@ public class SerfBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
         return stoppedWithOrders;
     }
 
-    private void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
+    protected override void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
     {
         if(foodConsumption == FoodConsumptionBehaviour.FoodConsumption)
         {
@@ -50,13 +49,13 @@ public class SerfBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
                 case FoodConsumptionStatus.REFILL_FAILED:
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    ActionEvents.FreeSerf(this);
+                    AE.FreeSerf(this);
                     break;
             }
         }
     }    
 
-    private void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
         if (serfOrder == _currentSerfOrder)
         {
@@ -77,7 +76,7 @@ public class SerfBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
                         }
                         if(!stopAsapWithOrders && !stoppedWithOrders)
                         {
-                            ActionEvents.FreeSerf(this);
+                            AE.FreeSerf(this);
                         }
                         break;
                     }
@@ -164,8 +163,8 @@ public class SerfBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
 
     private void UpdateAnimation()
     {
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WALKING, IsWalking());
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_IDLE, !IsWalking());
+        Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, IsWalking());
+        Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !IsWalking());
     }
 
     private bool IsWalking()

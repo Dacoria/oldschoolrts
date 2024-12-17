@@ -1,28 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class UIBuilderQueueViewListScript : MonoBehaviour
+public class UIBuilderQueueViewListScript : MonoBehaviourSlowUpdate
 {
-    private int frameCount;
-    private int frameLimit = 40;
     public UIQueueItemViewScript UIQueueItemViewPrefab;
     public Sprite BuildIcon;
 
     public List<UIQueueItemViewScript> CurrentUIQueueItemViews = new List<UIQueueItemViewScript>();
 
-    void Update()
-    {
-        frameCount++;
-        if (frameCount >= frameLimit)
-        {
-            SlowUpdate();
-            frameCount = 0;
-        }        
-    }
+    protected override int FramesTillSlowUpdate => 40;
 
-    private void SlowUpdate()
+    protected override void SlowUpdate()
     {
         DestroyAllQueueItems();
 

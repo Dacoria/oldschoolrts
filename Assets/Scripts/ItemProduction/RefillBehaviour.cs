@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RefillBehaviour : MonoBehaviour
+public class RefillBehaviour : BaseAEMono
 {
     public List<SerfRequest> IncomingOrders;
     public List<ItemAmount> StockpileOfItemsRequired;
@@ -10,8 +10,9 @@ public class RefillBehaviour : MonoBehaviour
     [ComponentInject]
     public IRefillItems RefillItems;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
         StockpileOfItemsRequired = GetItemsToRefill()
             .Select(x => new ItemAmount() { ItemType = x.ItemType, Amount = 0 })
@@ -22,7 +23,6 @@ public class RefillBehaviour : MonoBehaviour
     {
         IncomingOrders = new List<SerfRequest>();
 
-        ActionEvents.OrderStatusChanged += OnOrderStatusChanged;
         foreach (var itemAmount in GetItemsToRefill())
         {
             AddSerfRequestTillBuffer(itemAmount.ItemType);
@@ -41,7 +41,7 @@ public class RefillBehaviour : MonoBehaviour
         }
     }
 
-    private void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
         var myRequest = IncomingOrders.FirstOrDefault(serfOrder.Has);
         if (myRequest != null)
@@ -74,13 +74,8 @@ public class RefillBehaviour : MonoBehaviour
             Direction = Direction.PULL,
             BufferDepth = IncomingOrders.Count,
         };
-        ActionEvents.SerfRequest(serfRequest);
+        AE.SerfRequest(serfRequest);
         IncomingOrders.Add(serfRequest);
-    }
-
-    private void OnDestroy()
-    {
-        ActionEvents.OrderStatusChanged -= OnOrderStatusChanged;
     }
 
     public List<ItemAmount> GetItemsToRefill()

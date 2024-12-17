@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
+public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
 {    
     public BuilderRequest _currentBuilderRequest { private set; get; }
 
@@ -13,19 +13,17 @@ public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
 
     private bool IsWorking;
 
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
 
         NavMeshAgent.areaMask = 1 << 0;
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
-        ActionEvents.FreeBuilder(this);
-        ActionEvents.BuilderRequestStatusChanged += BuilderOrderStatusChanged;
-        ActionEvents.FoodStatusHasChanged += OnFoodStatusHasChanged;
+        AE.FreeBuilder(this);
     }   
 
     public bool HasStoppedWithLogic()
@@ -33,7 +31,7 @@ public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
         return stoppedWithOrders;
     }
 
-    private void BuilderOrderStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
+    protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
         if (builderRequest == _currentBuilderRequest)
         {
@@ -44,14 +42,14 @@ public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
                     _currentBuilderRequest = null;
                     if (!stopAsapWithOrders && !stoppedWithOrders)
                     {
-                        ActionEvents.FreeBuilder(this);
+                        AE.FreeBuilder(this);
                     }
                     break;
                 case BuildStatus.CANCEL:
                     _currentBuilderRequest = null;
                     if (!stopAsapWithOrders && !stoppedWithOrders)
                     {
-                        ActionEvents.FreeBuilder(this);
+                        AE.FreeBuilder(this);
 
                     }
                     break;
@@ -61,7 +59,7 @@ public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
         }
     }
 
-    private void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
+    protected override void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
     {
         if (foodConsumption == FoodConsumptionBehaviour.FoodConsumption)
         {
@@ -74,12 +72,12 @@ public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
                     Debug.Log("FoodConsumptionStatus.REFILL_SUCCESS");
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    ActionEvents.FreeBuilder(this);
+                    AE.FreeBuilder(this);
                     break;
                 case FoodConsumptionStatus.REFILL_FAILED:
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    ActionEvents.FreeBuilder(this);
+                    AE.FreeBuilder(this);
                     Debug.Log("FoodConsumptionStatus.REFILL_FAILED");
                     break;
             }
@@ -131,9 +129,9 @@ public class BuilderBehaviour : MonoBehaviour, IHasStopped, IVillagerUnit
             }
         }
 
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WALKING, IsWalking());
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WORKING, IsWorking && !IsWalking());
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_IDLE, !IsWalking() && !IsWorking);
+        Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, IsWalking());
+        Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, IsWorking && !IsWalking());
+        Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !IsWalking() && !IsWorking);
     }
 
     private bool IsWalking()

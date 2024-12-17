@@ -20,7 +20,6 @@ public class BuildingUiBehaviour : MonoBehaviour, ICardCarousselDisplay
         this.ComponentInject();
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         BuildingUiWrapperBehaviours = new List<BuildingUiWrapperBehaviour>();

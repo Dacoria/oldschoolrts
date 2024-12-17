@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public class HideShowInputOutputScript : MonoBehaviour
+public class HideShowInputOutputScript : BaseAEMono
 {
     private void Start()
     {
-        ActionEvents.KeyCodeAction += KeyCodeActionChanged;
         gameObject.SetActive(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
     }
 
-    private void KeyCodeActionChanged(KeyCodeAction keyCodeAction)
+    protected override void OnKeyCodeAction(KeyCodeAction keyCodeAction)
     {
         if(keyCodeAction.KeyCodeActionType == KeyCodeActionType.ToggleInputOutputDisplay)
         {

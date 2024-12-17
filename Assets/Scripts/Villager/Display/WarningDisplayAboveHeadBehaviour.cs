@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using System;
 
-public class WarningDisplayAboveHeadBehaviour : MonoBehaviour
+public class WarningDisplayAboveHeadBehaviour : BaseAEMono
 {
     private GameObject WarningGo;
 
@@ -12,18 +12,13 @@ public class WarningDisplayAboveHeadBehaviour : MonoBehaviour
     [ComponentInject]
     private WorkManager WorkManager;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
     }
 
-    private void Start()
-    {
-        ActionEvents.NoWorkerAction += OnNoWorkerAction;
-        ActionEvents.StartNewWorkerAction += OnStartNewWorkerAction;
-    }
-
-    private void OnNoWorkerAction(WorkManager workMangerChanged)
+    protected override void OnNoWorkerAction(WorkManager workMangerChanged)
     {
         if(WorkManager == workMangerChanged)
         {
@@ -45,7 +40,7 @@ public class WarningDisplayAboveHeadBehaviour : MonoBehaviour
         WarningGo.transform.localPosition = new Vector3(0, 2.4f, 0); // net voor de borst -> voor nu hardcoded, allemaal cubes
     }
 
-    private void OnStartNewWorkerAction(WorkManager workMangerChanged)
+    protected override void OnStartNewWorkerAction(WorkManager workMangerChanged)
     {
         if (WorkManager == workMangerChanged)
         {
@@ -57,11 +52,5 @@ public class WarningDisplayAboveHeadBehaviour : MonoBehaviour
     {
         currentNoWorkCounter = 0;
         Destroy(WarningGo);
-    }
-
-    private void OnDestroy()
-    {
-        ActionEvents.NoWorkerAction -= OnNoWorkerAction;
-        ActionEvents.StartNewWorkerAction -= OnStartNewWorkerAction;
     }
 }

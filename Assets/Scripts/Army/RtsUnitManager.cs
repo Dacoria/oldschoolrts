@@ -33,13 +33,11 @@ public class RtsUnitManager : MonoBehaviour
 
     private List<GameObject> units = new List<GameObject>();
 
-    // Start is called before the first frame update
     private void Start()
     {
         TemporarySelectionSquad = GameObject.Instantiate(SelectionSquadPrefab);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         int terrainMask = 1 << 3; // 3e layer

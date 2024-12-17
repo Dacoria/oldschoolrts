@@ -23,7 +23,6 @@ public class ToolCarryingScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         ToolToShowHide.SetActive(ToolShowToRetrieveResourceScript.ShowToolToRetrieveResourceWith());

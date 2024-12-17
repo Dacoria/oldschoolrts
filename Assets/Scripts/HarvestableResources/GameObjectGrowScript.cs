@@ -15,7 +15,6 @@ public class GameObjectGrowScript : MonoBehaviour
         return Vector3.SqrMagnitude(transform.localScale - TargetSize) < 0.01;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         TargetSize = transform.localScale * EndScale;
@@ -24,7 +23,6 @@ public class GameObjectGrowScript : MonoBehaviour
         transform.localScale = transform.localScale * StartScale;
     }    
 
-    // Update is called once per frame
     void Update()
     {
         if(!HasReachedGrowthTarget())

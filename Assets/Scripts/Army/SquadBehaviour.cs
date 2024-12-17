@@ -9,17 +9,6 @@ public class SquadBehaviour : MonoBehaviour
     public int Width = 5;
     public int Height = 2;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Clear()
     {

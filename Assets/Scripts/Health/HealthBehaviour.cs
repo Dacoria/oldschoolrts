@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthBehaviour : MonoBehaviour
+public class HealthBehaviour : BaseAEMono
 {
     [HideInInspector]
     public float InitialHeath = 100;
@@ -15,22 +15,22 @@ public class HealthBehaviour : MonoBehaviour
 
     [ComponentInject(Required.OPTIONAL)] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
 
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
         InitialHeath = CurrentHealth;
         this.ComponentInject();
     }
 
     void Start()
     {
-        ActionEvents.NoFoodToConsume += OnNoFoodToConsume;
         if(FoodConsumptionBehaviour != null)
         {
             FoodConsumption = FoodConsumptionBehaviour.FoodConsumption;
         }
     }
 
-    private void OnNoFoodToConsume(FoodConsumption foodConsumption)
+    protected override void OnNoFoodToConsume(FoodConsumption foodConsumption)
     {
         if(FoodConsumption == foodConsumption)
         {

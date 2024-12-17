@@ -3,15 +3,12 @@ using UnityEngine.AI;
 
 public class VillagerBuilderScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     [ComponentInject] private Animator Animator;
 
     private bool IsBuilding;
 
     public GameObject ToLocation;
-
 
     void Awake()
     {
@@ -20,7 +17,7 @@ public class VillagerBuilderScript : MonoBehaviour
 
     void Start()
     {
-        ActionEvents.BuilderRequestStatusChanged += BuilderRequestStatusChanged;
+        AE.BuilderRequestStatusChanged += BuilderRequestStatusChanged;
     }
 
     private void BuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
@@ -41,8 +38,8 @@ public class VillagerBuilderScript : MonoBehaviour
 
     public void Update()
     {
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WALKING, NavMeshAgent.enabled);
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_WORKING, IsBuilding);
-        Animator.SetBool(StaticHelper.ANIM_BOOL_IS_IDLE, !NavMeshAgent.enabled);
+        Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, NavMeshAgent.enabled);
+        Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, IsBuilding);
+        Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !NavMeshAgent.enabled);
     }
 }

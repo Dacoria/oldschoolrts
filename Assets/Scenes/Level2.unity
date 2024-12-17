@@ -3786,8 +3786,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 683332192}
-        m_TargetAssemblyTypeName: BuildBuildingsByUser, Assembly-CSharp
+      - m_Target: {fileID: 927418709}
+        m_TargetAssemblyTypeName: UIUserSettings, Assembly-CSharp
         m_MethodName: ToggleInstaBuild
         m_Mode: 1
         m_Arguments:
@@ -8663,6 +8663,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641333579}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &648846516 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+  m_PrefabInstance: {fileID: 1262054936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &650090761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1125315316511156034, guid: 2bbfd50e01a554c43b3a86b6bb2e7ec9, type: 3}
@@ -12665,6 +12670,7 @@ GameObject:
   - component: {fileID: 927418703}
   - component: {fileID: 927418707}
   - component: {fileID: 927418708}
+  - component: {fileID: 927418709}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -12792,6 +12798,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927418702}
   m_CullTransparentMesh: 1
+--- !u!114 &927418709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927418702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c42015ade3f1984a8738dc4761c31cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &929800435
 GameObject:
   m_ObjectHideFlags: 0
@@ -17245,6 +17263,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1177809865}
     m_Modifications:
+    - target: {fileID: 810635720017932078, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: MeshRenderer
+      value: 
+      objectReference: {fileID: 648846516}
     - target: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_Name
       value: Road (2)
@@ -17289,6 +17311,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1718953353888058826, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -17297,7 +17323,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4390418403150656218, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -18198,6 +18225,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1177809865}
     m_Modifications:
+    - target: {fileID: 810635720017932078, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: MeshRenderer
+      value: 
+      objectReference: {fileID: 1803263354}
     - target: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_Name
       value: Road
@@ -18242,6 +18273,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1718953353888058826, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -18250,7 +18285,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4390418403150656218, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -19328,6 +19364,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487626916}
   m_CullTransparentMesh: 1
+--- !u!23 &1488561062 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+  m_PrefabInstance: {fileID: 1605546612}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1496045562
 GameObject:
   m_ObjectHideFlags: 0
@@ -21279,6 +21320,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1177809865}
     m_Modifications:
+    - target: {fileID: 810635720017932078, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: MeshRenderer
+      value: 
+      objectReference: {fileID: 1488561062}
     - target: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_Name
       value: Road (1)
@@ -21323,6 +21368,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1718953353888058826, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -21331,7 +21380,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4390418403150656218, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -23975,8 +24025,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 683332192}
-        m_TargetAssemblyTypeName: BuildBuildingsByUser, Assembly-CSharp
+      - m_Target: {fileID: 927418709}
+        m_TargetAssemblyTypeName: UIUserSettings, Assembly-CSharp
         m_MethodName: ToggleGetsHungry
         m_Mode: 1
         m_Arguments:
@@ -24183,6 +24233,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1800565792}
   m_CullTransparentMesh: 1
+--- !u!23 &1803263354 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+  m_PrefabInstance: {fileID: 1386385857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1819742926
 GameObject:
   m_ObjectHideFlags: 0
@@ -31060,6 +31115,14 @@ PrefabInstance:
       propertyPath: IsVegan
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6779166740270853963, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779166740270853963, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7071609009281037088, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.03406571
@@ -34313,6 +34376,14 @@ PrefabInstance:
     - target: {fileID: 6734796283247875188, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.110192254
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779166740270853963, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779166740270853963, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7071609009281037088, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
       propertyPath: m_LocalPosition.x

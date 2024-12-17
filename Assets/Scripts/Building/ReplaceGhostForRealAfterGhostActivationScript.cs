@@ -15,7 +15,6 @@ public class ReplaceGhostForRealAfterGhostActivationScript : MonoBehaviour
         this.ComponentInject();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         ScriptIsActive = BuildingBehaviour != null && GhostBuildingBehaviour != null && !GhostBuildingBehaviour.isActiveAndEnabled;

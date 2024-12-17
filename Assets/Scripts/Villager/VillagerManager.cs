@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class VillagerManager : BaseEventCallback
+public class VillagerManager : BaseAEMono
 {
     public static VillagerManager Instance;
 

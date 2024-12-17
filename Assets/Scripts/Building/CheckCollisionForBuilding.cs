@@ -47,14 +47,14 @@ public class CheckCollisionForBuilding : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.transform.gameObject.layer != StaticHelper.LAYER_TERRAIN)
+        if (other.transform.gameObject.layer != Constants.LAYER_TERRAIN)
         {
             var isRelevantResourceCollision = CheckResourceCollisionForBuilding != null && CheckResourceCollisionForBuilding.IsCollidingWithRequiredResource(other);
             var collision = new Collision
             {
                 IsRelevantResourceCollision = isRelevantResourceCollision,
-                IsResourceCollision = other.transform.tag == StaticHelper.TAG_RESOURCE,
-                IsUnitCollision = other.transform.tag == StaticHelper.TAG_UNIT,
+                IsResourceCollision = other.transform.tag == Constants.TAG_RESOURCE,
+                IsUnitCollision = other.transform.tag == Constants.TAG_UNIT,
                 GameObject = other.transform.gameObject
             };
 

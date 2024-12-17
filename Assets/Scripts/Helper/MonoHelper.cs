@@ -75,7 +75,7 @@ public class MonoHelper : MonoBehaviour
     public GameObject WarningGoPrefab;
     public GameObject GetClosestTavernWithFood()
     {
-        var allTaverns = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_TAVERN);
+        var allTaverns = GameObject.FindGameObjectsWithTag(Constants.TAG_TAVERN);
         GameObject closestTavern = null;
         var closestDistance = 9999999f;
 

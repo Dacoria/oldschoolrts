@@ -7,8 +7,8 @@ public class CheckResourceCollisionForBuilding : MonoBehaviour
 
     public bool IsCollidingWithRequiredResource(Collider other)
     {  
-        if (other.transform.tag == StaticHelper.TAG_RESOURCE  && 
-        other.transform.gameObject.layer != StaticHelper.LAYER_TERRAIN)
+        if (other.transform.tag == Constants.TAG_RESOURCE  && 
+        other.transform.gameObject.layer != Constants.LAYER_TERRAIN)
         {            
             var resourceScript = other.gameObject.GetComponent<HarvestableMaterialScript>();
             if(resourceScript != null)

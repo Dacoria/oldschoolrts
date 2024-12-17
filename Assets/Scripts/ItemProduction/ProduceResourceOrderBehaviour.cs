@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProduceResourceOrderBehaviour : MonoBehaviour
+public class ProduceResourceOrderBehaviour : BaseAEMono
 {
     [HideInInspector]
     public int CurrentOutstandingOrders = 0;
@@ -16,15 +16,15 @@ public class ProduceResourceOrderBehaviour : MonoBehaviour
     [ComponentInject]
     public IResourcesToProduce ResourcesToProduce;
 
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
     }
 
     void Start()
     {
         OutputOrders = new List<SerfRequest>();
-        ActionEvents.OrderStatusChanged += OrderStatusChanged;
 
         if (IsProducingResourcesOverTime())
         {
@@ -78,7 +78,7 @@ public class ProduceResourceOrderBehaviour : MonoBehaviour
         CurrentOutstandingOrders = OutputOrders != null ? OutputOrders.Count : 0; 
     }
 
-    private void OrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
         if (OutputOrders.Contains(serfOrder.From))
         {
@@ -121,7 +121,7 @@ public class ProduceResourceOrderBehaviour : MonoBehaviour
                 Direction = Direction.PUSH,
                 IsOriginator = true,
             };
-            ActionEvents.SerfRequest(serfRequest);
+            AE.SerfRequest(serfRequest);
             OutputOrders.Add(serfRequest);
         }
     }

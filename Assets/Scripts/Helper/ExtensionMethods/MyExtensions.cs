@@ -99,7 +99,7 @@ public static class MyExtensions
         }
         foreach (Transform child in root)
         {
-            if (child.tag == StaticHelper.TAG_ENTRANCE_EXIT)
+            if (child.tag == Constants.TAG_ENTRANCE_EXIT)
             {
                 return child.position;
             }

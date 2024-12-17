@@ -162,7 +162,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     {
         var ray = MainCamera.ScreenPointToRay(mousePosition);
         var hits = Physics.RaycastAll(ray);
-        var hitGrassPoint = hits.First(x => x.collider.gameObject.layer == StaticHelper.LAYER_TERRAIN).point;
+        var hitGrassPoint = hits.First(x => x.collider.gameObject.layer == Constants.LAYER_TERRAIN).point;
 
         hitGrassPoint.y = 0.01f;
         hitGrassPoint.x = (float)Math.Round(hitGrassPoint.x);
@@ -277,7 +277,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
         for(var i = 0;i < roadGo.transform.childCount;i++)
         {
             var childGo = roadGo.transform.GetChild(i);
-            if(childGo.GetComponent<GhostBuildingBehaviour>() == null && childGo.tag != StaticHelper.TAG_ENTRANCE_EXIT)
+            if(childGo.GetComponent<GhostBuildingBehaviour>() == null && childGo.tag != Constants.TAG_ENTRANCE_EXIT)
             {
                 return childGo.gameObject;
             }

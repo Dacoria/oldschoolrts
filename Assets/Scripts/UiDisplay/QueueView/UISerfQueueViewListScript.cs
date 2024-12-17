@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UISerfQueueViewListScript : MonoBehaviour
+public class UISerfQueueViewListScript : MonoBehaviourSlowUpdate
 {
-    private int frameCount;
-    private int frameLimit = 40;
     public UIQueueItemViewScript UIQueueItemViewPrefab;
 
     public Sprite ServeOrderIcon;
@@ -14,18 +12,8 @@ public class UISerfQueueViewListScript : MonoBehaviour
 
     public List<UIQueueItemViewScript> CurrentUIQueueItemViews = new List<UIQueueItemViewScript>();
 
-
-    void Update()
-    {
-        frameCount++;
-        if (frameCount >= frameLimit)
-        {
-            SlowUpdate();
-            frameCount = 0;
-        }        
-    }
-
-    private void SlowUpdate()
+    protected override int FramesTillSlowUpdate => 40;
+    protected override void SlowUpdate()
     {
         DestroyAllQueueItems();
 
@@ -105,5 +93,4 @@ public class UISerfQueueViewListScript : MonoBehaviour
         }
         CurrentUIQueueItemViews.Clear();
     }
-
 }

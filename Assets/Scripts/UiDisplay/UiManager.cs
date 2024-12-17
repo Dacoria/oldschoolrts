@@ -1,7 +1,3 @@
-using Assets;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -89,7 +85,7 @@ public class UiManager : MonoBehaviour
         {
             foreach (var hit in hits)
             {
-                ActionEvents.LeftClickOnGo(hit.transform.gameObject); // nu gebruikt voor tooltips
+                AE.LeftClickOnGo(hit.transform.gameObject); // nu gebruikt voor tooltips
             }
         }
 

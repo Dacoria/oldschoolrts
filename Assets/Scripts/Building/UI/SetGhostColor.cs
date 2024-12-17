@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SetGhostColor : MonoBehaviour
+public class SetGhostColor : BaseAEMono
 {
     public bool UseColorSetterOfMaterials = false; // voor als een building in 1 mesh meerdere materialen heeft -> die zijn niet op een temp material te zetten -> dan deze workaround....
 
@@ -20,12 +20,11 @@ public class SetGhostColor : MonoBehaviour
     void Start()
     {
         updateActive = GhostBuildingBehaviour != null;
-        ActionEvents.BuilderRequestStatusChanged += BuilderRequestStatusChanged;
     }
 
     private bool hasSetColorGhostToBuild = false;
 
-    private void BuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
+    protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
         if (GhostBuildingBehaviour != null && 
             GhostBuildingBehaviour.isActiveAndEnabled && 

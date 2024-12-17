@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class TooltipUIHandler : MonoBehaviour
+public class TooltipUIHandler : BaseAEMono
 {
     private bool toolTipIsActive;
     private OutlineBehaviour OutlineComponent;
@@ -9,22 +9,21 @@ public class TooltipUIHandler : MonoBehaviour
     [ComponentInject]
     public ITooltipUIText CallingTooltipBahaviour;
 
-    public void Awake()
+    private new void Awake()
     {
+        base.Awake();
         this.ComponentInject();
-        ActionEvents.LeftClickOnGo += OnLeftClick;
     }
 
     public void OnDestroy()
     {
-        ActionEvents.LeftClickOnGo -= OnLeftClick;
         if (toolTipIsActive)
         {
             RemoveTooltip();
         }
     }
 
-    private void OnLeftClick(GameObject go)
+    protected override void OnLeftClickOnGo(GameObject go)
     {
         if(go == transform?.gameObject &&
             !toolTipIsActive 

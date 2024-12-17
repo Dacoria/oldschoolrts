@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviour
+public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowUpdate
 {
     public GameObject BuildingProgressDisplayPrefab;
     [HideInInspector]
@@ -32,8 +32,10 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviour
     }
 
     private int frames;
-    void Update()
+
+    new void Update()
     {
+        base.Update();
         if(!isScriptActive)
         {
             if(BuildingBehaviourScript.CurrentBuildStatus == BuildStatus.NEEDS_PREPARE)
@@ -45,20 +47,19 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviour
         {
             if (BuildingBehaviourScript.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
             {
-                // disable display & dit script
-                BuildingProgressDisplayGo.SetActive(false);
-                enabled = false;
-            }
-            else
-            {
-                frames++;
-                if (frames == 10)
-                {
-                    // niet al te vaak updaten; onnodig
-                    frames = 0;
-                    UpdateInputText();
-                }
-            }            
+                // DESTROY
+                Destroy(BuildingProgressDisplayGo);
+                Destroy(this);
+            }                     
+        }
+    }
+
+    protected override int FramesTillSlowUpdate => 20;
+    protected override void SlowUpdate() 
+    {
+        if (isScriptActive)
+        {
+            UpdateInputText();
         }
     }
 
@@ -91,7 +92,7 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviour
         }
     }
 
-    private List<TextMeshItem> InputTextMeshItems;
+    private List<TextMeshItem> InputTextMeshItems;    
 
     private void InitiateItemsDisplay()
     {
@@ -118,7 +119,7 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviour
                 "/" +
                 itemsRequiredForBuilding.Amount;
         }
-    }
+    }    
 
     public class TextMeshItem
     {

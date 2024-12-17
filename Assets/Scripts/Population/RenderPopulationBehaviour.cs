@@ -8,13 +8,12 @@ public class RenderPopulationBehaviour : MonoBehaviour
     public Text Text;
 
     [ComponentInject] private Image image;
-    // Start is called before the first frame update
+
     void Awake()
     {
         this.ComponentInject();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Text.text = $"{GameManager.CurrentPopulation}/{GameManager.PopulationLimit}";

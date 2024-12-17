@@ -5,7 +5,7 @@ using Assets;
 using Assets.CrossCutting;
 using UnityEngine;
 
-public class BuildingBehaviour : MonoBehaviour
+public class BuildingBehaviour : BaseAEMono
 {
     //private int completed = 0;
 
@@ -54,7 +54,8 @@ public class BuildingBehaviour : MonoBehaviour
         GhostBuildingBehaviour.gameObject.SetActive(false);
         Destroy(GhostBuildingBehaviour.gameObject.GetComponentInChildren<RangeDisplayBehaviour>());
 
-        Real.SetActive(true);
+        Real.SetActive(true); // staat al aan; zekerheidje
+
         var children = Real.GetComponentsInChildren<MonoBehaviour>();
         foreach (var monoBehaviour in children) monoBehaviour.enabled = true;
 
@@ -65,23 +66,13 @@ public class BuildingBehaviour : MonoBehaviour
             rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
             rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();
         }
-
-        ActionEvents.OrderStatusChanged -= OrderStatusChanged; // stop met luisteren naar dit event
-    }
-
-    private void OnDestroy()
-    {
-        if (!DEBUG_RealImmediately)
-        {
-            ActionEvents.OrderStatusChanged -= OrderStatusChanged;
-            ActionEvents.BuilderRequestStatusChanged -= BuilderRequestStatusChanged;
-        }
     }
 
     [HideInInspector]
     public BuildStatus CurrentBuildStatus;
 
-    private void BuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
+
+    protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
         if (builderRequest.GameObject == GhostBuildingBehaviour.transform.parent.gameObject)
         {
@@ -134,7 +125,7 @@ public class BuildingBehaviour : MonoBehaviour
                 statusForNewReq = BuildStatus.NEEDS_BUILDING;
                 break;
             default:
-                throw new Exception("Geen buildstatus dat mogelijk is");
+                throw new Exception($"Geen buildstatus ('{previousStatus}') dat mogelijk is");
         }
 
         var newBuilderRequest = new BuilderRequest
@@ -143,11 +134,11 @@ public class BuildingBehaviour : MonoBehaviour
             Purpose = builderRequest.Purpose,
             GameObject = builderRequest.GameObject
         };
-        ActionEvents.BuilderRequest(newBuilderRequest);
+        AE.BuilderRequest(newBuilderRequest);
         newBuilderRequest.Status = statusForNewReq; // forceert change; maakt het makkelijker
     }
 
-    private void OrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
         if (serfOrder.To != null && serfOrder.To.GameObject == GhostBuildingBehaviour.gameObject)
         {
@@ -174,7 +165,7 @@ public class BuildingBehaviour : MonoBehaviour
                     IsOriginator = true
                 };
 
-                ActionEvents.SerfRequest(serfRequest);
+                AE.SerfRequest(serfRequest);
                 count++;
             }
         }
@@ -218,7 +209,6 @@ public class BuildingBehaviour : MonoBehaviour
 
     private void ActivateBuildersRequest()
     {
-        ActionEvents.BuilderRequestStatusChanged += BuilderRequestStatusChanged;
         if (DEBUG_RealImmediately)
         {
             // Forceer event met een change -> niet alleen voor Current BuildStatus, maar ook voor entrance exit
@@ -228,22 +218,18 @@ public class BuildingBehaviour : MonoBehaviour
                 Status = BuildStatus.NONE,
                 GameObject = GhostBuildingBehaviour.transform.parent.gameObject
             };
-            ActionEvents.BuilderRequest(req);
+            AE.BuilderRequest(req);
             req.Status = BuildStatus.COMPLETED_BUILDING;
 
             ActivateReal();            
-        }
-        else
-        {
-            ActionEvents.OrderStatusChanged += OrderStatusChanged;
-        }
+        }     
     }
 
     public void TryCallBuilderToFinish()
     {
         if (AllRequiredItemsCompleted())
         {
-            ActionEvents.BuilderRequest(new BuilderRequest
+            AE.BuilderRequest(new BuilderRequest
             {
                 Purpose = Purpose,
                 Status = BuildStatus.NEEDS_BUILDING,

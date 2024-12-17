@@ -5,7 +5,7 @@ using Assets;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
+public class StockpileUiBehaviour : MonoBehaviourSlowUpdate, ICardCarousselDisplay
 {
     [HideInInspector]
     public StockpileBehaviour CallingStockpile;
@@ -48,27 +48,19 @@ public class StockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
         }
     }
 
-    // Update is called once per frame
-
-    private int frame;
-
-    private void Update()
-    {
-        frame++;
-        if (frame == 20)
+    protected override int FramesTillSlowUpdate => 20;
+    protected override void SlowUpdate()
+    {        
+        if (CallingStockpile != null)
         {
-            frame = 0;
-            if (CallingStockpile != null)
+            foreach (var itemSprite in GameManager.Instance.ResourcePrefabItems)
             {
-                foreach (var itemSprite in GameManager.Instance.ResourcePrefabItems)
-                {
-                    var itemType = CallingStockpile.CurrentItemAmount.Single(x => x.ItemType == itemSprite.ItemType);
-                    var wrapper = StockpileResourceWrappers.Single(x => x.ItemType == itemSprite.ItemType);
+                var itemType = CallingStockpile.CurrentItemAmount.Single(x => x.ItemType == itemSprite.ItemType);
+                var wrapper = StockpileResourceWrappers.Single(x => x.ItemType == itemSprite.ItemType);
 
-                    wrapper.SetAmount(itemType.Amount);
-                }
+                wrapper.SetAmount(itemType.Amount);
             }
-        }
+        }        
     }
 
     public int GetCount() => StockpileResourceWrappers.Count;

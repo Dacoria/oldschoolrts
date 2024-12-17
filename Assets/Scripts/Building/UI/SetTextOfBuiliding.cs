@@ -5,11 +5,11 @@ public class SetTextOfBuiliding : MonoBehaviour
 {
     [ComponentInject] private TextMeshPro TextMeshPro;
 
-    public void Awake() {
+    public void Awake() 
+    {
         this.ComponentInject();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         if(TextMeshPro != null)
@@ -29,14 +29,7 @@ public class SetTextOfBuiliding : MonoBehaviour
                 if(i == 4) { throw new System.Exception("onwaarschijnlijk dat er zoveel parent-niveaus zijn --> hoe dan?"); }
             }
 
-
             TextMeshPro.text = highestParentGo.name.Replace("Prefab", "").Replace("(Clone)", "");
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

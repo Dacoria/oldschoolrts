@@ -26,7 +26,7 @@ public class ConsumeRefillItemsBehaviour : MonoBehaviour
         return TryConsumeRefillItems(itemsConsumedToProduce.ConvertAll(x => (ItemAmount)x).ToList());
     }
 
-        public bool TryConsumeRefillItems(List<ItemAmount> itemsConsumedToProduce)
+    public bool TryConsumeRefillItems(List<ItemAmount> itemsConsumedToProduce)
     {
         if(CanConsumeRefillItems(itemsConsumedToProduce))
         {
@@ -42,5 +42,4 @@ public class ConsumeRefillItemsBehaviour : MonoBehaviour
 
         return false;
     }
-
 }

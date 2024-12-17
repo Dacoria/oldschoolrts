@@ -19,7 +19,7 @@ public class FindFarmWheatScript : MonoBehaviour, ILocationOfNewResource, ILocat
 
     public GameObject GetGameObjectForNewResource()
     {
-        var wheatFields = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_WHEATFIELD);
+        var wheatFields = GameObject.FindGameObjectsWithTag(Constants.TAG_WHEATFIELD);
 
         foreach (var wheatField in wheatFields)
         {
@@ -47,7 +47,7 @@ public class FindFarmWheatScript : MonoBehaviour, ILocationOfNewResource, ILocat
 
     public GameObject GetResourceToRetrieve()
     {
-        var wheatFields = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_WHEATFIELD);
+        var wheatFields = GameObject.FindGameObjectsWithTag(Constants.TAG_WHEATFIELD);
         GameObject closestWheatField = null;
         var closestDistance = 9999999f;
 

@@ -1,16 +1,10 @@
 using UnityEngine;
 
-public class ShowHideExitEntranceScript : MonoBehaviour
+public class ShowHideExitEntranceScript : BaseAEMono
 {
-    public GameObject Mark;
+    public GameObject Mark;   
 
-    private void Start()
-    {
-        ActionEvents.KeyCodeAction += OnKeyCodeActionChanged;
-        ActionEvents.BuilderRequestStatusChanged += OnBuilderRequestStatusChanged;
-    }
-
-    private void OnBuilderRequestStatusChanged(BuilderRequest builderReq, BuildStatus previousStatus)
+    protected override void OnBuilderRequestStatusChanged(BuilderRequest builderReq, BuildStatus previousStatus)
     {
         // bij initieren v/e gebouwen verversen (normaal of via insta build)
         if(builderReq.Status == BuildStatus.COMPLETED_BUILDING || builderReq.Status == BuildStatus.NEEDS_PREPARE)
@@ -20,7 +14,7 @@ public class ShowHideExitEntranceScript : MonoBehaviour
         }
     }
 
-    private void OnKeyCodeActionChanged(KeyCodeAction keyCodeAction)
+    protected override void OnKeyCodeAction(KeyCodeAction keyCodeAction)
     {
         if (keyCodeAction.KeyCodeActionType == KeyCodeActionType.ToggleEntranceExitDisplay)
         {
@@ -30,7 +24,7 @@ public class ShowHideExitEntranceScript : MonoBehaviour
 
     private void HideShowDisplayEntranceExit(bool showEntranceExit, GameObject goJustFinishedBuilding = null)
     {
-        var allEntranceExits = GameObject.FindGameObjectsWithTag(StaticHelper.TAG_ENTRANCE_EXIT);
+        var allEntranceExits = GameObject.FindGameObjectsWithTag(Constants.TAG_ENTRANCE_EXIT);
         foreach (var entranceExitGo in allEntranceExits)
         {
             if (showEntranceExit)

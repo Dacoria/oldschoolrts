@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Unity.AI.Navigation;
 
-public class GameManager : MonoBehaviour
+public class GameManager : BaseAEMono
 {
     public GameObject MainCastle;
     public GameObject RoadNavMeshSurfacePrefab;
@@ -38,25 +38,12 @@ public class GameManager : MonoBehaviour
 
 
     public static int PopulationLimit = 8;
-    public static int CurrentPopulation = 0;
+    public static int CurrentPopulation = 0;       
 
-    internal void RegisterStockpile(StockpileBehaviour stockpileBehaviour)
-    {
-        stockpiles.Add(stockpileBehaviour);
-    }
-
-    internal void TryRemoveStockpile(StockpileBehaviour stockpileBehaviour)
-    {
-        var stockpile = stockpiles.FirstOrDefault(x => x == stockpileBehaviour);
-        if (stockpile != null)
-        {
-            stockpiles.Remove(stockpile);
-        }
-    }
-
-    void Awake()
+    private new void Awake()
     {
         Instance = this;
+        base.Awake();        
 
         foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)))
         {
@@ -99,12 +86,6 @@ public class GameManager : MonoBehaviour
 
         freeSerfs = new List<SerfBehaviour>();
         freeBuilders = new List<BuilderBehaviour>();
-
-        ActionEvents.FreeBuilder += OnFreeBuilder;
-        ActionEvents.BuilderRequest += OnBuilderRequest;
-        ActionEvents.SerfRequest += OnSerfRequest;
-        ActionEvents.FreeSerf += OnFreeSerf;
-        ActionEvents.OrderStatusChanged += OnOrderStatusChanged;
     }
 
     private NavMeshSurface _roadNavMeshSurfaceComponent;
@@ -124,7 +105,7 @@ public class GameManager : MonoBehaviour
         set => _roadNavMeshSurfaceComponent = value;
     }
 
-    private void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
         switch (serfOrder.Status)
         {
@@ -159,17 +140,18 @@ public class GameManager : MonoBehaviour
             IsOriginator = true
         };
 
-        ActionEvents.SerfRequest(serfRequest);
+        AE.SerfRequest(serfRequest);
     }
 
     public void RegisterRoad(Transform transform)
     {
+        transform.gameObject.tag = Constants.TAG_ROAD;
         transform.SetParent(RoadNavMeshSurface.transform);
         RoadNavMeshSurfaceComponent.BuildNavMesh();
         ManagePossibleNewSerfOrders();
     }
 
-    private void OnBuilderRequest(BuilderRequest builderRequest)
+    protected override void OnBuilderRequest(BuilderRequest builderRequest)
     {
         if (freeBuilders.Count > 0)
         {
@@ -182,7 +164,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnFreeBuilder(BuilderBehaviour builder)
+    protected override void OnFreeBuilder(BuilderBehaviour builder)
     {
         var request = BuilderRequests.Pop();
         if (request != null)
@@ -204,7 +186,7 @@ public class GameManager : MonoBehaviour
         ManagePossibleNewSerfOrders();
     }
 
-    private void OnSerfRequest(SerfRequest serfRequest)
+    protected override void OnSerfRequest(SerfRequest serfRequest)
     {
         ManagePossibleNewSerfOrders(serfRequest:serfRequest);
     }
@@ -277,7 +259,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    private void OnFreeSerf(SerfBehaviour serf)
+    protected override void OnFreeSerf(SerfBehaviour serf)
     {
         ManagePossibleNewSerfOrders(serfBehaviour:serf);
     }
@@ -457,5 +439,19 @@ public class GameManager : MonoBehaviour
         }
 
         return order;
+    }
+
+    public void RegisterStockpile(StockpileBehaviour stockpileBehaviour)
+    {
+        stockpiles.Add(stockpileBehaviour);
+    }
+
+    public void TryRemoveStockpile(StockpileBehaviour stockpileBehaviour)
+    {
+        var stockpile = stockpiles.FirstOrDefault(x => x == stockpileBehaviour);
+        if (stockpile != null)
+        {
+            stockpiles.Remove(stockpile);
+        }
     }
 }

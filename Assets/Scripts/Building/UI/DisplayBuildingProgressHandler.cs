@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowUpdateFramesCI
+public class DisplayBuildingProgressHandler : BaseAEMonoCI
 {
     public GameObject BuildingProgressDisplayPrefab;
-    [HideInInspector]
-    public GameObject BuildingProgressDisplayGo;
+    [HideInInspector] public GameObject BuildingProgressDisplayGo;
 
     [ComponentInject] private BuildingBehaviour BuildingBehaviourScript;
 
@@ -26,9 +25,12 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowU
         }
     }
 
-    new void Update()
+    private int frameCounter;
+    private int framesTillSlowUpdate = 20;
+
+    // niet via mono-extension --> deze class extend al AE-base
+    void Update()
     {
-        base.Update();
         if(!isScriptActive)
         {
             if(BuildingBehaviourScript.CurrentBuildStatus == BuildStatus.NEEDS_PREPARE)
@@ -45,30 +47,56 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowU
                 Destroy(this);
             }                     
         }
-    }
 
-    protected override int FramesTillSlowUpdate => 20;
-    protected override void SlowUpdate() 
+        // niet via mono-extension --> deze class extend al AE-base
+        frameCounter++;
+        if (frameCounter >= framesTillSlowUpdate)
+        {
+            frameCounter = 0;
+            SlowUpdate();
+        }
+    } 
+
+    private void SlowUpdate()
     {
-        if (isScriptActive)
+        if (isScriptActive && KeyCodeStatusSettings.ToggleBuildingProgressDisplay_Active)
         {
             UpdateInputText();
         }
     }
 
+    protected override void OnKeyCodeAction(KeyCodeAction keyCodeAction)
+    {
+        if (keyCodeAction.KeyCodeActionType == KeyCodeActionType.ToggleBuildingProgressDisplay)
+        {
+            UpdateEnabledStatusOfDisplayObjects();
+        }
+    }
+
+    private void UpdateEnabledStatusOfDisplayObjects()
+    {
+        for (var i = 0; i < BuildingProgressDisplayGo.transform.childCount; i++)
+        {
+            var child = BuildingProgressDisplayGo.transform.GetChild(i);
+            child.gameObject.SetActive(KeyCodeStatusSettings.ToggleBuildingProgressDisplay_Active);
+        }
+    }
+
     private void StartCreatingBuildProgressDisplay()
     {
-        isScriptActive = true;
-
         BuildingProgressDisplayGo = Instantiate(BuildingProgressDisplayPrefab, transform);
         BuildingProgressDisplayGo.transform.position = transform.position + GoSpawnOffset;
         BuildingProgressDisplayGo.transform.localScale = BuildingProgressDisplayGo.transform.localScale.MultiplyVector(GoSpawnScaleOffset);
 
         InputDisplayGoPrefab = BuildingProgressDisplayGo.transform.Find("InputPrefab").gameObject;
-        var buildPrefab = BuildingProgressDisplayGo.transform.Find("BuildPrefab").gameObject;
-        
+        var buildPrefab = BuildingProgressDisplayGo.transform.Find("BuildPrefab").gameObject;       
+
         buildPrefab.SetActive(true);
         InitiateItemsDisplay();
+
+        Destroy(InputDisplayGoPrefab);
+
+        isScriptActive = true;
     }
 
     public void FixDisplayForItemtype(List<TextMeshItem> ListToAddResult, ItemType itemType, GameObject displayGo)

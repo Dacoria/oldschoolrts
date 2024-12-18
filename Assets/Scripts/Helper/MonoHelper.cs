@@ -9,6 +9,7 @@ public class MonoHelper : MonoBehaviour
     public static MonoHelper Instance { get; set; }
     public Camera MainCamera;
 
+    public GameObject ProcessingDisplayPrefab;
 
     void Awake()
     {

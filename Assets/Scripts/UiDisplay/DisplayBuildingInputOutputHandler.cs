@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 
-public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdateFramesCI
+public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 {    
     public GameObject ProcessingDisplayPrefab;
 
@@ -20,14 +20,13 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
     public Vector3 GoSpawnOffset = new Vector3(0, 0, 0);
     public Vector3 GoSpawnScaleOffset = new Vector3(1, 1, 1);
     
-    private GameObject InputDisplayGo;
-    private GameObject OutputDisplayGo;
+    private GameObject InputDisplayPrefabGo;
+    private GameObject OutputDisplayPrefabGo;
     private GameObject ProgressCircleGo;
     private GameObject ProgressCircleGoRunning;
 
     private bool scriptIsLoaded;
-
-
+    
     IEnumerator Start()
     {
         // altijd wachten tot alles klaar is
@@ -41,8 +40,8 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
         ProcessingDisplayGo.transform.position = transform.position + GoSpawnOffset;
         ProcessingDisplayGo.transform.localScale = ProcessingDisplayGo.transform.localScale.MultiplyVector(GoSpawnScaleOffset);
 
-        InputDisplayGo = ProcessingDisplayGo.transform.Find("InputPrefab").gameObject;
-        OutputDisplayGo = ProcessingDisplayGo.transform.Find("OutputPrefab").gameObject;
+        InputDisplayPrefabGo = ProcessingDisplayGo.transform.Find("InputPrefab").gameObject;
+        OutputDisplayPrefabGo = ProcessingDisplayGo.transform.Find("OutputPrefab").gameObject;
         ProgressCircleGo = ProcessingDisplayGo.transform.Find("ProgressCirclePrefab").gameObject;
 
         var gearsDisplayGo = ProcessingDisplayGo.transform.Find("GearPrefab").gameObject;
@@ -54,13 +53,33 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
         if (ProduceResourceBehaviourScript != null)
         {
             InitiateOutputDisplayProdScript();
-            gearsDisplayGo.SetActive(ProduceResourceBehaviourScript.IsProducingResourcesOverTime()); // gears draaien als het prod script produceert
+            if(ProduceResourceBehaviourScript.IsProducingResourcesOverTime())
+            {
+                gearsDisplayGo.SetActive(true); // gears draaien als het prod script produceert
+            }
+            else
+            {
+                Destroy(gearsDisplayGo);
+            }            
+        }
+        else
+        {
+            Destroy(gearsDisplayGo);
         }
         if (QueueForBuildingBehaviour != null)
         {
             ProgressCircleGoRunning = ProgressCircleGo.transform.Find("fragment").gameObject;
         }
+        else
+        {
+            Destroy(ProgressCircleGo);
+        }
 
+        Destroy(InputDisplayPrefabGo);
+        Destroy(OutputDisplayPrefabGo);
+
+        UpdateEnabledStatusOfDisplayObjects();
+        
         scriptIsLoaded = true;
     }
 
@@ -72,7 +91,7 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
         InputTextMeshItems = new List<TextMeshItem>();
         for (int i = 0;i < RefillBehaviour.GetItemsToRefill().Count; i ++)
         {
-            var inputDisplayGo = Instantiate(InputDisplayGo, ProcessingDisplayGo.transform);
+            var inputDisplayGo = Instantiate(InputDisplayPrefabGo, ProcessingDisplayGo.transform);
             var extraYDistance = ((RefillBehaviour.GetItemsToRefill().Count - 1) * 0.6f) - (i * 0.6f);
             inputDisplayGo.transform.position = new Vector3(inputDisplayGo.transform.position.x, inputDisplayGo.transform.position.y + extraYDistance, inputDisplayGo.transform.position.z);
             FixInputOutputDisplayForItemtype(InputTextMeshItems, RefillBehaviour.GetItemsToRefill()[i].ItemType, inputDisplayGo);
@@ -84,7 +103,7 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
         OutputTextMeshItems = new List<TextMeshItem>();
         for (int i = 0; i < ProduceResourceBehaviourScript.ResourcesToProduce.GetAvailableItemsToProduce().Count(); i++)
         {
-            var outputDisplayGo = Instantiate(OutputDisplayGo, ProcessingDisplayGo.transform);
+            var outputDisplayGo = Instantiate(OutputDisplayPrefabGo, ProcessingDisplayGo.transform);
             var extraYDistance = ((ProduceResourceBehaviourScript.ResourcesToProduce.GetAvailableItemsToProduce().Count() - 1) * 0.6f) - (i * 0.6f);
             outputDisplayGo.transform.position = new Vector3(outputDisplayGo.transform.position.x, outputDisplayGo.transform.position.y + extraYDistance, outputDisplayGo.transform.position.z);
             FixInputOutputDisplayForItemtype(OutputTextMeshItems, ProduceResourceBehaviourScript.ResourcesToProduce.GetAvailableItemsToProduce()[i].ItemType, outputDisplayGo);
@@ -105,14 +124,44 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
         }        
     }
 
-    protected override int FramesTillSlowUpdate => 10;
-    protected override void SlowUpdate()
+    private int framesTillSlowUpdate = 10;
+    private int frameCounter;
+
+    // niet via mono-extension --> deze class extend al AE-base
+    private void Update()
     {
-        if (scriptIsLoaded)
+        frameCounter++;
+        if (frameCounter >= framesTillSlowUpdate)
+        {
+            frameCounter = 0;
+            SlowUpdate();
+        }
+    }
+
+    private void SlowUpdate()
+    {
+        if (scriptIsLoaded && KeyCodeStatusSettings.ToggleInputOutputDisplay_Active)
         {
             UpdateInputText();
             UpdateOutputText();
             UpdateProgressCircleText();
+        }
+    }
+
+    protected override void OnKeyCodeAction(KeyCodeAction keyCodeAction)
+    {
+        if (keyCodeAction.KeyCodeActionType == KeyCodeActionType.ToggleInputOutputDisplay)
+        {
+            UpdateEnabledStatusOfDisplayObjects();
+        }
+    }
+
+    private void UpdateEnabledStatusOfDisplayObjects()
+    {
+        for (var i = 0; i < ProcessingDisplayGo.transform.childCount; i++)
+        {
+            var child = ProcessingDisplayGo.transform.GetChild(i);
+            child.gameObject.SetActive(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
         }
     }
 

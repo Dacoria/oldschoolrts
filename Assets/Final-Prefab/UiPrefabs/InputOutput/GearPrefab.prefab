@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6185001971665404220}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -182,7 +181,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6185001971665404220}
   - component: {fileID: 6185001971665404221}
-  - component: {fileID: 3432965354068642056}
   - component: {fileID: 7440741231041993201}
   m_Layer: 0
   m_Name: GearPrefab
@@ -198,6 +196,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6185001971665404218}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -207,7 +206,6 @@ Transform:
   - {fileID: 5935519987099289434}
   - {fileID: 1600901412937303070}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6185001971665404221
 MonoBehaviour:
@@ -226,18 +224,6 @@ MonoBehaviour:
   GearsRunningMaterial: {fileID: 2100000, guid: 8ac9cfa8cf3ad4a46a36755667d59b3b, type: 2}
   GearsNotRunningMaterial: {fileID: 2100000, guid: 0bab2307c624e17458200205700de9b2, type: 2}
   RotateGears: 0
---- !u!114 &3432965354068642056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6185001971665404218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963a706cc0b8d954e86616a870849c4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7440741231041993201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +242,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6185001971665404220}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: dad2b2288000ce542a8ca8d473cd5aec, type: 3}
@@ -307,6 +294,9 @@ PrefabInstance:
       value: GearModelBig
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dad2b2288000ce542a8ca8d473cd5aec, type: 3}
 --- !u!4 &5935519987650840772 stripped
 Transform:
@@ -323,6 +313,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6185001971665404220}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: dad2b2288000ce542a8ca8d473cd5aec, type: 3}
@@ -386,6 +377,9 @@ PrefabInstance:
       value: GearModelSmall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dad2b2288000ce542a8ca8d473cd5aec, type: 3}
 --- !u!4 &5935519987099289434 stripped
 Transform:

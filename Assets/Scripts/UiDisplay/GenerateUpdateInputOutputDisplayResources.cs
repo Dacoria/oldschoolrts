@@ -10,11 +10,8 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
 
     private GameObject ProcessingDisplayGo;
 
-    [ComponentInject(Required.OPTIONAL)] 
-    private RefillBehaviour RefillBehaviour;
-
-    [ComponentInject(Required.OPTIONAL)] 
-    private ProduceResourceOrderBehaviour ProduceResourceBehaviourScript;
+    [ComponentInject(Required.OPTIONAL)] private RefillBehaviour RefillBehaviour;
+    [ComponentInject(Required.OPTIONAL)] private ProduceResourceOrderBehaviour ProduceResourceBehaviourScript;
 
     private BarracksBehaviour BarracksBehaviour;
     private QueueForBuildingBehaviour QueueForBuildingBehaviour;

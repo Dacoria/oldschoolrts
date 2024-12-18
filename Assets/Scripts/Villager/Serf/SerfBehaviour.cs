@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,6 +16,7 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     //public bool IsCarryingResource => CarryingResource != ItemType.NONE;
     //public ItemType CarryingResource => _currentSerfOrder?.Status == Status.IN_PROGRESS_TO ? _currentSerfOrder.ItemType : ItemType.NONE;
 
+    public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Serf;
 
     void Start()
     {
@@ -191,7 +191,5 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
             this._currentSerfOrder.Status = Status.FAILED;
         }
         GameManager.Instance.TryRemoveSerfFromFreeSerfList(this);
-    }
-
-    public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Serf;
+    }    
 }

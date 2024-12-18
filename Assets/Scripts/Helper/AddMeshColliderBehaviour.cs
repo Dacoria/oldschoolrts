@@ -6,6 +6,7 @@ public class AddMeshColliderBehaviour : MonoBehaviour
     {
         AddMeshCollider(gameObject);
     }
+
     private void AddMeshCollider(GameObject containerModel)
     {
         // Add mesh collider

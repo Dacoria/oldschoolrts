@@ -1,25 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NoEnemiesLeftVictoryCondition : MonoBehaviour
+public class NoEnemiesLeftVictoryCondition : MonoBehaviourSlowUpdateFramesCI
 {
-
     public GameObject Sprite;
+    protected override int FramesTillSlowUpdate => 100;
 
-
-    private int updateCounter;
-    void Update()
+    protected override void SlowUpdate()
     {
-        if (updateCounter == 0 && this.GetComponentsInChildren<Transform>().Length <= 1)
+        if(this.GetComponentsInChildren<Transform>().Length <= 1)
         {
-            this.Sprite.SetActive(true);
-        }
-
-        updateCounter++;
-        if(updateCounter > 100)
-        {
-            updateCounter = 0;
+            Sprite.SetActive(true);
         }
     }
 }

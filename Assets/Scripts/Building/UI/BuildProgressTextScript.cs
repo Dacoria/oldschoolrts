@@ -10,7 +10,6 @@ public class BuildProgressTextScript : MonoBehaviourCI
 
     void Start()
     {
-        //BuildingBehaviour = GetComponentInParent<BuildingBehaviour>();
         if (BuildingBehaviour == null)
         {
             throw new Exception("Progressie met text vereist BuildingBehaviour in parent!");

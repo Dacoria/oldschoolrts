@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.IO;
 using System.Linq;
-using System;
 
 public class SkillTreeReader : MonoBehaviour 
 {

@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-public static class Constants
+﻿public static class Constants
 {
     //layers
     public static int LAYER_TERRAIN = 3;

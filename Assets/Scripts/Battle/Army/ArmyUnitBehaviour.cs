@@ -70,7 +70,5 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
         var rangedHomingMissile = Instantiate(RangedHomingMissilePrefab, RangedHomingMissileSpawnPosition.position, Quaternion.identity) as RangedHomingMissileBehaviour;
         rangedHomingMissile.SetTarget(Target);
         rangedHomingMissile.Offence = this.Offence;
-    }
-
-    
+    }    
 }

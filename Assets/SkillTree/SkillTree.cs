@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class SkillTree 
 {
     public Skill[] skilltree;

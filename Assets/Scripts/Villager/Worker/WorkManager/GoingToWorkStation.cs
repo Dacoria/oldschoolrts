@@ -3,18 +3,24 @@ using UnityEngine.AI;
 
 public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
 {
-    [HideInInspector]
-    public bool actionIsAvailable;
-
+    [HideInInspector] public bool actionIsAvailable;
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     private GameObject ObjectToBringResourceBackTo;
 
     private bool isActive;
 
-    public void SetReturnTargetForAction(GameObject objectToBringResourceBackTo)
+    public void Start()
     {
-        ObjectToBringResourceBackTo = objectToBringResourceBackTo;
+        actionIsAvailable = true;
     }
+
+    public void Update()
+    {
+        if (isActive && NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
+        {
+            UpdateDestNavAgentReached();
+        }
+    }    
 
     public int GetPrio() => 1;
     public bool IsActive() => isActive;
@@ -29,7 +35,7 @@ public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
     {
         isActive = true;
         GoBackToGatherPoint();
-   }
+    }
 
     public void Finished()
     {
@@ -45,19 +51,6 @@ public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
         };
     }
 
-    public void Start()
-    {
-        actionIsAvailable = true;
-    }
-
-    public void Update()
-    {
-        if(isActive && NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
-        {
-            UpdateDestNavAgentReached();
-        }
-    }
-
     private void UpdateDestNavAgentReached()
     {
         if (NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
@@ -70,5 +63,10 @@ public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
     {
         NavMeshAgent.isStopped = false;
         NavMeshAgent.destination = ObjectToBringResourceBackTo.EntranceExit();
+    }
+
+    public void SetReturnTargetForAction(GameObject objectToBringResourceBackTo)
+    {
+        ObjectToBringResourceBackTo = objectToBringResourceBackTo;
     }
 }

@@ -55,8 +55,6 @@ public class TooltipBuilder : MonoBehaviourCI, ITooltipUIText
         return content;
     }
 
-
-
     private string GetDisplayName(string name)
     {
         return name.Replace("Prefab", "").Replace("(Clone)", "");

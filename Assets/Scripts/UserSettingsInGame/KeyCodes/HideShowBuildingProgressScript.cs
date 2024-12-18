@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class HideShowBuildingProgressScript : BaseAEMonoCI
 {
     private void Start()

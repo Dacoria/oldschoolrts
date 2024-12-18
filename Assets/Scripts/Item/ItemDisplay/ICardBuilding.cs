@@ -11,4 +11,3 @@ public interface ICardBuilding
     QueueForBuildingBehaviour GetQueueForBuildingBehaviour();
     GameObject GetGameObject();
 }
-

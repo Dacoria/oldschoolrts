@@ -7,7 +7,6 @@ public class TreeFallingScript : MonoBehaviour
     private GameObject TreeStanding;
     public float FallingSpeed = 60f;
 
-
     private void Awake()
     {
         for(var i  = 0; i < transform.childCount; i++)

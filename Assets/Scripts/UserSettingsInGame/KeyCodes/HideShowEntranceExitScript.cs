@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class HideShowEntranceExitScript : BaseAEMonoCI
 {
     private void Start()

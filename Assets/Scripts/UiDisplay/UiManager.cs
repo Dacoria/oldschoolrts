@@ -219,4 +219,3 @@ public class UiManager : MonoBehaviour
         QueueUiGo.SetActive(false);
     }
 }
-

@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
-using TMPro.EditorUtilities;
 
 public class FoodConsumptionBehaviour : BaseAEMonoCI
 {
@@ -19,15 +18,9 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
     public bool UseTavernBubble = true;
     private GameObject GoToTavernBubble;
 
-
-    private new void Awake()
-    {
-        base.Awake();
-        FoodConsumption = new FoodConsumption(FoodSatisfactionPercentage, FoodDeclinePercPerSecond, PercLimitForFoodRefill);
-    }
-
     void Start()
     {
+        FoodConsumption = new FoodConsumption(FoodSatisfactionPercentage, FoodDeclinePercPerSecond, PercLimitForFoodRefill);
         StartCoroutine(ProcessFoodDecline());
     }
 

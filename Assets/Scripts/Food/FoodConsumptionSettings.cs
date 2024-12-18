@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public static class FoodConsumptionSettings
 {
     public static bool ToggleUseFoodConsumption_Active = false;

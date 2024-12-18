@@ -1,4 +1,3 @@
-using Assets;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -60,10 +59,7 @@ public class QueueForBuildingBehaviour : MonoBehaviour
         }
     }
 
-    public QueueItem GetCurrentItemProcessed()
-    {
-        return QueueItems.FirstOrDefault(x => x.IsBeingBuild);
-    }
+    public QueueItem GetCurrentItemProcessed() => QueueItems.FirstOrDefault(x => x.IsBeingBuild);
 
     private void CheckItemFinished(QueueItem item)
     {

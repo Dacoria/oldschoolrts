@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIQueueProgressBarScript : MonoBehaviour
+public class UIQueueProgressBarScript : MonoBehaviourSlowUpdateFramesCI
 {
     public Image ProgressionBar;
     public Text ProgressText;
@@ -10,25 +10,15 @@ public class UIQueueProgressBarScript : MonoBehaviour
     private UiQueueHandler DisplayQueueUIHandler;
 
 
-    void Awake()
+    void Start()
     {
         DisplayQueueUIHandler = transform.parent.parent.GetComponentInChildren<UiQueueHandler>();
     }
 
-
-    private int updateCounter;
-
-    void Update()
+    protected override int FramesTillSlowUpdate => 20;
+    protected override void SlowUpdate()
     {
-        if(updateCounter == 0)
-        {
-            UpdateDisplayQueueProgression();
-        }
-        updateCounter++;
-        if(updateCounter >= 10)
-        {
-            updateCounter = 0;
-        }
+        UpdateDisplayQueueProgression();
     }
 
     private void UpdateDisplayQueueProgression()

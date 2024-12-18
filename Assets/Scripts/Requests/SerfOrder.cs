@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 public class SerfOrder: IComparable<SerfOrder>
 {
     public SerfRequest From { 

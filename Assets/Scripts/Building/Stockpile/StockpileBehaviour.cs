@@ -5,8 +5,7 @@ using UnityEngine;
 public class StockpileBehaviour : BaseAEMonoCI
 {
     public ItemAmountBuffer[] InitialItemAmount;
-    [HideInInspector]
-    public ItemAmountBuffer[] CurrentItemAmount;
+    [HideInInspector] public ItemAmountBuffer[] CurrentItemAmount;
 
     private new void Awake()
     {

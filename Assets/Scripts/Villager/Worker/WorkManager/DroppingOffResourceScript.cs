@@ -1,4 +1,3 @@
-using Assets;
 using UnityEngine;
 
 public class DroppingOffResourceScript : MonoBehaviour

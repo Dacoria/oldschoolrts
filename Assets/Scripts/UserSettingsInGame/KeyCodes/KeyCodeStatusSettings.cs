@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public static class KeyCodeStatusSettings
 {
     // nodig voor nieuwe GO die niet eerder de status weten vd keycodes

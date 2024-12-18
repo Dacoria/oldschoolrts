@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Linq;
-using System;
 
 public class FindLumberScript : MonoBehaviour, ILocationOfNewResource, ILocationOfResource
 {
     public int MinRangeForTrees = 1;
     public int MaxRangeForTrees;
+
+    public int GetMaxRangeForResource() => MaxRangeForTrees;
+    public RangeType GetRangeTypeToFindResource() => RangeType.Circle;
+
     public Vector3 GetCoordinatesForNewResource()
     {
         // 20x random positie proberen, anders 0-vector teruggeven
@@ -75,7 +78,4 @@ public class FindLumberScript : MonoBehaviour, ILocationOfNewResource, ILocation
 
         return closestTree;
     }
-
-    public int GetMaxRangeForResource() => MaxRangeForTrees;
-    public RangeType GetRangeTypeToFindResource() => RangeType.Circle;
 }

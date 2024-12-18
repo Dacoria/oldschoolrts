@@ -1,5 +1,4 @@
-﻿
-public enum SkillType
+﻿public enum SkillType
 {
     None,
     Test,
@@ -9,4 +8,3 @@ public enum SkillType
     Population_Increase_Five,
     Population_Increase_Ten
 }
-

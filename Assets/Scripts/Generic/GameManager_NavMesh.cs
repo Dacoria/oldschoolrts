@@ -1,5 +1,4 @@
-﻿using Unity.AI.Navigation;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using NavMeshSurface = Unity.AI.Navigation.NavMeshSurface;
 

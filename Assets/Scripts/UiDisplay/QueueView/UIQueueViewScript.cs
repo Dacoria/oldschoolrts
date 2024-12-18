@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,8 +29,4 @@ public class UIQueueViewScript : MonoBehaviour
         ServeQueueList.gameObject.SetActive(!ServeQueueList.gameObject.activeSelf);
         BuildQueueList.gameObject.SetActive(false);
     }
-
-
-
-
 }

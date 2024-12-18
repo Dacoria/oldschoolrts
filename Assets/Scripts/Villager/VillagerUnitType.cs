@@ -9,4 +9,3 @@
     Hunter,
     Gatherer
 }
-

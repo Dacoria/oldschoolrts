@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class HarvestMaterialResource
 {
     public MaterialResourceType Type;

@@ -5,8 +5,7 @@ using UnityEngine;
 using System.Collections;
 
 public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdateFramesCI
-{
-    
+{    
     public GameObject ProcessingDisplayPrefab;
 
     private GameObject ProcessingDisplayGo;

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Collections.Generic;
 
-public class UiQueueHandler : MonoBehaviour
+public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI
 {
     // GO om te showen/hiden
     public Text QueueTitle;
@@ -13,11 +13,10 @@ public class UiQueueHandler : MonoBehaviour
     public UiQueueCardBehaviour UIQueueCardPrefab;    
 
     // setten van queue -> dit zorgt dat de queue ververst voor het gebouw
-    [HideInInspector]
-    public QueueForBuildingBehaviour CallingQueueForBuildingBehaviour;
+    [HideInInspector] public QueueForBuildingBehaviour CallingQueueForBuildingBehaviour;
 
     // display queue (weergave van items uit CallingQueueForBuildingBehaviour)
-    private List<UiQueueItem> PlacedDisplayItemsOnQueue;
+    private List<UiQueueItem> PlacedDisplayItemsOnQueue = new List<UiQueueItem>();
 
     public class UiQueueItem
     {
@@ -25,10 +24,14 @@ public class UiQueueHandler : MonoBehaviour
         public QueueItem QueueItem;
     }
 
-    public void Awake()
+    protected override int FramesTillSlowUpdate => 20;
+    protected override void SlowUpdate()
     {
-        PlacedDisplayItemsOnQueue = new List<UiQueueItem>();
+        UpdateBuildingSelected();
+        UpdateQueue();
     }
+
+    public QueueItem GetCurrentItemProcessed() => CallingQueueForBuildingBehaviour?.QueueItems.FirstOrDefault(x => x.IsBeingBuild);
 
     public void OnCancelQueueItemClick(UiQueueCardBehaviour uiQueueCardBehaviour)
     {
@@ -37,23 +40,7 @@ public class UiQueueHandler : MonoBehaviour
         CallingQueueForBuildingBehaviour.RemoveItemFromQueue(item.QueueItem);
 
         // TODO Items/resources teruggeven? (nog eerst regelen dat resources worden gebruikt.... )
-    }  
-
-    private int updateCounter = 0;
-
-    public void Update()
-    {
-        if(updateCounter == 0)
-        {
-            UpdateBuildingSelected();
-            UpdateQueue();
-        }
-        updateCounter++;
-        if(updateCounter > 10)
-        {
-            updateCounter = 0;
-        }
-    }
+    }      
 
     private void UpdateBuildingSelected()
     {
@@ -68,7 +55,7 @@ public class UiQueueHandler : MonoBehaviour
         }
     }
 
-    private QueueForBuildingBehaviour LastKnownQueue;
+    private QueueForBuildingBehaviour LastKnownQueue;    
 
     private void UpdateQueue()
     {
@@ -125,10 +112,5 @@ public class UiQueueHandler : MonoBehaviour
         queueCardGo.DisplayQueueUIHandler = this;
 
         return queueCardGo;
-    }
-
-    public QueueItem GetCurrentItemProcessed()
-    {
-        return CallingQueueForBuildingBehaviour?.QueueItems.FirstOrDefault(x => x.IsBeingBuild);
-    }    
+    }   
 }

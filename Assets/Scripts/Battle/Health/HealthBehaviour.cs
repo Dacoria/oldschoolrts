@@ -15,15 +15,10 @@ public class HealthBehaviour : BaseAEMonoCI
 
     [ComponentInject(Required.OPTIONAL)] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
 
-    private new void Awake()
-    {
-        base.Awake();
-        InitialHeath = CurrentHealth;
-    }
-
     void Start()
     {
-        if(FoodConsumptionBehaviour != null)
+        InitialHeath = CurrentHealth;
+        if (FoodConsumptionBehaviour != null)
         {
             FoodConsumption = FoodConsumptionBehaviour.FoodConsumption;
         }

@@ -7,10 +7,6 @@ public class SerfResourceCarryingBehaviour : MonoBehaviour
     private GameObject ResourceBeingCarriedGo;
     private GameObject ResourceBubbleToPickupGo;
 
-    public void Start()
-    {
-    }    
-
     public void InitiateCarryingResource(ItemType itemType)
     {
         if (ResourceBubbleToPickupGo != null)

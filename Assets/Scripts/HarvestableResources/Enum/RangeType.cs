@@ -1,8 +1,6 @@
-﻿
-public enum RangeType
+﻿public enum RangeType
 {
     None,
     Circle,
     BoxColliderExpand
 }
-

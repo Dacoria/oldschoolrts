@@ -65,4 +65,3 @@ public class SerfRequest : IComparable<SerfRequest>
         };
     }
 }
-

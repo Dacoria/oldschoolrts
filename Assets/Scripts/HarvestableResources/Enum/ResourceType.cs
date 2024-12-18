@@ -1,10 +1,7 @@
-﻿namespace Assets
+﻿public enum ResourceType
 {
-    public enum ResourceType
-    { 
-      WOOD,
-      STONE,
-      BERRY,
-      GOLD_ORE,
-    }
+    WOOD,
+    STONE,
+    BERRY,
+    GOLD_ORE,
 }

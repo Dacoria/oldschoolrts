@@ -1,6 +1,4 @@
-﻿using Assets;
-using Assets.CrossCutting;
-using System;
+﻿using System;
 
 public class TavernRefillItem
 {

@@ -7,11 +7,9 @@ public class UiTavernBehaviour : MonoBehaviourCI, ICardCarousselDisplay
 {
     public TavernUiWrapperBehaviour TavernUiWrapperBehaviourPrefab;
 
-    [HideInInspector]
-    public List<TavernUiWrapperBehaviour> TavernUiWrapperBehaviours;
+    [HideInInspector] public List<TavernUiWrapperBehaviour> TavernUiWrapperBehaviours;
 
-    [HideInInspector]
-    public TavernBehaviour CallingTavern;
+    [HideInInspector] public TavernBehaviour CallingTavern;
 
     private bool CardsLoaded;
 
@@ -33,9 +31,7 @@ public class UiTavernBehaviour : MonoBehaviourCI, ICardCarousselDisplay
         CardsLoaded = true;
     }
 
-
     public int GetCount() => TavernUiWrapperBehaviours.Count;
-
     public bool CardsAreLoaded() => CardsLoaded;
 
     public void SetActiveStatusCardGo(int indexOfCard, bool activeYN)

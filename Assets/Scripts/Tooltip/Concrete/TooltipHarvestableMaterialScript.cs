@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class TooltipHarvestableMaterialScript : MonoBehaviourCI, ITooltipUIText
 {
@@ -67,6 +66,5 @@ public class TooltipHarvestableMaterialScript : MonoBehaviourCI, ITooltipUIText
 
         return content;
     }
-    public string GetHeaderText() => string.IsNullOrEmpty(HeaderOptional) ? HarvestableMaterialScript.MaterialType.ToString().Capitalize() : HeaderOptional;
-  
+    public string GetHeaderText() => string.IsNullOrEmpty(HeaderOptional) ? HarvestableMaterialScript.MaterialType.ToString().Capitalize() : HeaderOptional;  
 }

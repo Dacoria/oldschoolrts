@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public static class Colorr
 {
@@ -24,5 +23,4 @@ public static class Colorr
     private static Color CreateColor(int r, int g, int b, int a = 255) => new Color(r / 255f, g / 255f, b / 255f, a / 255f);
 
     public static Color SetA(this Color c, float a) => new Color(c.r / 255f, c.g / 255f, c.b / 255f, a);
-
 }

@@ -1,10 +1,12 @@
 using UnityEngine;
-using System;
 
 public class FindFarmWheatScript : MonoBehaviour, ILocationOfNewResource, ILocationOfResource
 {
     public int MinRangeForWheatField = 1;
     public int MaxRangeForWheatField = 20;
+
+    public int GetMaxRangeForResource() => MaxRangeForWheatField;
+    public RangeType GetRangeTypeToFindResource() => RangeType.Circle;
 
     public Vector3 GetCoordinatesForNewResource()
     {
@@ -41,9 +43,6 @@ public class FindFarmWheatScript : MonoBehaviour, ILocationOfNewResource, ILocat
 
         return null;
     }
-
-    public int GetMaxRangeForResource() => MaxRangeForWheatField;
-    public RangeType GetRangeTypeToFindResource() => RangeType.Circle;
 
     public GameObject GetResourceToRetrieve()
     {

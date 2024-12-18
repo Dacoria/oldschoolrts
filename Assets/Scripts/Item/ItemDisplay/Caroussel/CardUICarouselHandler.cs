@@ -111,8 +111,7 @@ public class CardUICarouselHandler : MonoBehaviourCI
                 CardCarousselDisplay.SetActiveStatusCardGo(i, true);               
             }
         }
-    }
-    
+    }    
 
     public void CarouselLeft_LeftClick()
     {

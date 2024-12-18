@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class RtsUnitManager : MonoBehaviour
@@ -102,7 +101,6 @@ public class RtsUnitManager : MonoBehaviour
                 //Debug.Log("Going to Pos: " + hit.point);
                 CurrentSelected.SetDestination(hit.point);
             }
-
         }
 
         if (InputExtensions.GetNumberDown(out int number))

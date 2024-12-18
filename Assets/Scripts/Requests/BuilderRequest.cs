@@ -61,4 +61,3 @@ public class BuilderRequest : IComparable<BuilderRequest>
         return RequestPriority.CompareTo(other.RequestPriority);
     }
 }
-

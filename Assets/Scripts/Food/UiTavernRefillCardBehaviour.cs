@@ -1,8 +1,6 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets;
-using Assets.CrossCutting;
 using System;
 
 public class UiTavernRefillCardBehaviour : MonoBehaviour

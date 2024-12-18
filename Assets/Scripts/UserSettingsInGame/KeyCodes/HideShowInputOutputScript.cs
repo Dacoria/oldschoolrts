@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class HideShowInputOutputScript : BaseAEMonoCI
 {
     private void Start()

@@ -47,8 +47,7 @@ public class SendKeyCodeEvents : MonoBehaviour
                 break;
 
             default:
-                throw new Exception("Actie voor keyCodeActionType " + keyCodeAction.KeyCodeActionType + " is niet gedefinieerd");
+                throw new Exception($"Actie voor keyCodeActionType {keyCodeAction.KeyCodeActionType} is niet gedefinieerd");
         }    
     }
-
 }

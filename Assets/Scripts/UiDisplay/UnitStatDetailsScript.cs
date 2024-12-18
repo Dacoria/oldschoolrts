@@ -1,6 +1,5 @@
 using Assets.Army;
 using System;
-using UnityEngine;
 
 public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
 {

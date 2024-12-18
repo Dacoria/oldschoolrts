@@ -72,4 +72,3 @@ public class SkillUIWrapperBehaviour: MonoBehaviour, IUiCardLeftClick
         }
     }
 }
-

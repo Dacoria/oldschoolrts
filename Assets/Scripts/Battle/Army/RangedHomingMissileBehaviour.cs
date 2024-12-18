@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Assets.Army;
 using UnityEngine;
 
@@ -9,11 +7,6 @@ public class RangedHomingMissileBehaviour : MonoBehaviour
     public GameObject GoOnDestroyOptionalPrefab;
     public float Speed;
     public Offence Offence { get; set; }
-
-    void Start()
-    {
-        
-    }
 
     void Update()
     {

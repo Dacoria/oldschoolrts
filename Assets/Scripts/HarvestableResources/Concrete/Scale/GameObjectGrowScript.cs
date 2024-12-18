@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameObjectGrowScript : MonoBehaviour
@@ -10,10 +8,7 @@ public class GameObjectGrowScript : MonoBehaviour
 
     private Vector3 TargetSize;
 
-    public bool HasReachedGrowthTarget()
-    {
-        return Vector3.SqrMagnitude(transform.localScale - TargetSize) < 0.01;
-    }
+    public bool HasReachedGrowthTarget() => Vector3.SqrMagnitude(transform.localScale - TargetSize) < 0.01;
 
     void Start()
     {

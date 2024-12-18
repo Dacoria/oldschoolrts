@@ -1,16 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FarmFieldScript : MonoBehaviour, IRetrieveResourceFromObject
 {
     public GameObject ObjectGrownOnField;
 
-    [HideInInspector]
-    public bool HasObjectGrownOnField;
-    [HideInInspector]
-    public bool HasObjectGrownOnFieldFinishedGrowing;
+    [HideInInspector] public bool HasObjectGrownOnField;
+    [HideInInspector] public bool HasObjectGrownOnFieldFinishedGrowing;
     private IGrowOnFarmField GrowOnFarmFieldScript;
 
     void Update()

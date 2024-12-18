@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public abstract class MonoBehaviourSlowUpdateFramesCI : MonoBehaviourCI
+﻿public abstract class MonoBehaviourSlowUpdateFramesCI : MonoBehaviourCI
 {
     protected abstract int FramesTillSlowUpdate { get; }
 

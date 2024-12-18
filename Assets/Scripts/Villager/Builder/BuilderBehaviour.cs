@@ -13,6 +13,8 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     private bool isWorking;
 
+    public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Builder;
+
     private void Start()
     {
         NavMeshAgent.areaMask = 1 << 0;
@@ -201,6 +203,4 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
             this._currentBuilderRequest.Status = BuildStatus.CANCEL;
         }
     }
-
-    public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Builder;
 }

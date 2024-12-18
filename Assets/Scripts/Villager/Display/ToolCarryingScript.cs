@@ -1,14 +1,9 @@
 using UnityEngine;
 
-public class ToolCarryingScript : MonoBehaviour
+public class ToolCarryingScript : MonoBehaviourCI
 {
     public GameObject ToolToShowHide;
     [ComponentInject] private IToolShowToRetrieveResource ToolShowToRetrieveResourceScript;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

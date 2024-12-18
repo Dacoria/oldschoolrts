@@ -2,16 +2,11 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class BuildProgressTextScript : MonoBehaviour
+public class BuildProgressTextScript : MonoBehaviourCI
 {
     public TextMeshPro BuildProgressText;
     public GameObject BuildProgressImage;
     [ComponentInject] private BuildingBehaviour BuildingBehaviour;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

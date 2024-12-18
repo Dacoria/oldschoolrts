@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ResourceCarryingBehaviour : MonoBehaviour
+public class ResourceCarryingBehaviour : MonoBehaviourCI
 {
     public GameObject HarvestedResourceToCarryPrefab;
     private GameObject HarvestedResourceToCarry;
@@ -10,11 +10,6 @@ public class ResourceCarryingBehaviour : MonoBehaviour
 
     [ComponentInject] private RetrieveResourceBehaviour RetrieveResourceScript;
     [ComponentInject(Required.OPTIONAL)] private PlantResourceBehaviour PlantResourceScript;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

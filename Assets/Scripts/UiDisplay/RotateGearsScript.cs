@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RotateGearsScript : MonoBehaviour
+public class RotateGearsScript : MonoBehaviourCI
 {
     public GameObject GearBig;
     public GameObject GearSmall;
@@ -13,11 +13,6 @@ public class RotateGearsScript : MonoBehaviour
 
     [ComponentInject(Required.OPTIONAL)] private ProduceResourceOrderBehaviour ProduceResourceBehaviour;
     [ComponentInject(Required.OPTIONAL)] private QueueForBuildingBehaviour QueueForBuildingBehaviour;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     private void Start()
     {

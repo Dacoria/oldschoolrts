@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckCollisionForBuilding : MonoBehaviour
+public class CheckCollisionForBuilding : MonoBehaviourCI
 {
     private int notUpdatedCollidingCounter;
 
@@ -18,11 +18,6 @@ public class CheckCollisionForBuilding : MonoBehaviour
 
 
     [ComponentInject(Required.OPTIONAL)] public CheckResourceCollisionForBuilding CheckResourceCollisionForBuilding;
-
-    public void Awake()
-    {
-        this.ComponentInject();
-    }
 
     private Vector3 LastPositionCheck;
 

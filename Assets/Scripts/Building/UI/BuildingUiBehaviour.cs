@@ -5,7 +5,7 @@ using Assets;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingUiBehaviour : MonoBehaviour, ICardCarousselDisplay
+public class BuildingUiBehaviour : MonoBehaviourCI, ICardCarousselDisplay
 {
     public BuildingUiWrapperBehaviour BuildingUiWrapperBehaviourPrefab;
     public List<BuildingUiWrapperBehaviour> BuildingUiWrapperBehaviours;
@@ -13,12 +13,6 @@ public class BuildingUiBehaviour : MonoBehaviour, ICardCarousselDisplay
     private UiManager UiManager;
 
     private bool CardsLoaded;
-
-
-    public void Awake()
-    {
-        this.ComponentInject();
-    }
 
     private void Start()
     {

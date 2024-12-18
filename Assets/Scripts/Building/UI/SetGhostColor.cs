@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SetGhostColor : BaseAEMono
+public class SetGhostColor : BaseAEMonoCI
 {
     public bool UseColorSetterOfMaterials = false; // voor als een building in 1 mesh meerdere materialen heeft -> die zijn niet op een temp material te zetten -> dan deze workaround....
 
@@ -11,11 +11,6 @@ public class SetGhostColor : BaseAEMono
     [ComponentInject] private List<Renderer> Renderers;
 
     private bool updateActive;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

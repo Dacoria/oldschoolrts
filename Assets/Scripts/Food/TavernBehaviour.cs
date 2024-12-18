@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class TavernBehaviour : BaseAEMono
+public class TavernBehaviour : BaseAEMonoCI
 {
     public int MaxBufferForEachFoodType = 5;
 
@@ -12,9 +12,9 @@ public class TavernBehaviour : BaseAEMono
     [ComponentInject]
     private TavernRefillingBehaviour TavernRefillingBehaviour;
 
-    void Awake()
+    new void Awake()
     {
-        this.ComponentInject();
+        base.Awake();
         InitiateStockpile(); // moet voor Start --> CanProduce wordt al eerder aangeroepen
     }
     void Start()

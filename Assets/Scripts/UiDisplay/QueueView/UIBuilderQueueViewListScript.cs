@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIBuilderQueueViewListScript : MonoBehaviourSlowUpdateFrames
+public class UIBuilderQueueViewListScript : MonoBehaviourSlowUpdateFramesCI
 {
     public UIQueueItemViewScript UIQueueItemViewPrefab;
     public Sprite BuildIcon;

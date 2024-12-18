@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using NavMeshSurface = Unity.AI.Navigation.NavMeshSurface;
 
-public partial class GameManager : BaseAEMono
+public partial class GameManager : BaseAEMonoCI
 {
     public GameObject RoadNavMeshSurfacePrefab;
     public GameObject RoadNavMeshSurface;

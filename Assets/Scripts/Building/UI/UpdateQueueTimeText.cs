@@ -2,17 +2,12 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class UpdateQueueTimeText : MonoBehaviour
+public class UpdateQueueTimeText : MonoBehaviourCI
 {
     public TextMeshPro TimeRemainingText;
 
     [ComponentInject(Required.OPTIONAL)] // optioneel; heb je niks, toon dan niks
     private QueueForBuildingBehaviour QueueForBuildingBehaviour;
-
-    public void Awake()
-    {
-        this.ComponentInject();
-    }   
 
     void Update()
     {        

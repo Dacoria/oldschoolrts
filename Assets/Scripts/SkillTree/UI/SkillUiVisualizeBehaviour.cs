@@ -5,10 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillUiVisualizeBehaviour : MonoBehaviour
+public class SkillUiVisualizeBehaviour : MonoBehaviourCI
 {
-    [ComponentInject]
-    private SkillUIBehaviour SkillUIBehaviour;
+    [ComponentInject] private SkillUIBehaviour SkillUIBehaviour;
 
     public SkillUIWrapperBehaviour SkillUIWrapperBehaviourPrefab;
     public Image TransparentImage;
@@ -17,12 +16,6 @@ public class SkillUiVisualizeBehaviour : MonoBehaviour
 
     public Sprite OutlineSelectedSprite;
     public Sprite OutlineNotSelectedSprite;
-
-
-    private void Awake()
-    {
-        this.ComponentInject();   
-    }
 
     private void Start()
     {

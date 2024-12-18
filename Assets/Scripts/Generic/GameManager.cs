@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public partial class GameManager : BaseAEMono
+public partial class GameManager : BaseAEMonoCI
 {
     public GameObject MainCastle;
 

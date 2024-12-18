@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public partial class GameManager : BaseAEMono
+public partial class GameManager : BaseAEMonoCI
 {
     public GameObject UnknownGameObjectPrefab;
     public Sprite UnknownSprite;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class VillagerManager : BaseAEMono
+public class VillagerManager : BaseAEMonoCI
 {
     public static VillagerManager Instance;
 
@@ -54,6 +54,25 @@ public class VillagerManager : BaseAEMono
                 default:
                     throw new System.Exception($"VillagerManager -> VillagerUnitType '{villagerUnit.GetVillagerUnitType()}' is niet ondersteund");
             }
+        }
+    }
+
+    public VillagerUnitType DetermineVillagerUnitType(GameObject go)
+    {
+        var typeInSameGo = go.GetComponent<IVillagerUnit>();
+        if(typeInSameGo != null)
+        {
+            return typeInSameGo.GetVillagerUnitType();
+        }
+
+        var typeInChildrenOfGo = go.GetComponentInChildren<IVillagerUnit>();
+        if (typeInChildrenOfGo != null)
+        {
+            return typeInChildrenOfGo.GetVillagerUnitType();
+        }
+        else
+        {
+            throw new System.Exception($"VillagerManager -> No IVillagerUnit found in go: {go.name}");
         }
     }
 }

@@ -2,42 +2,28 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UITavernFoodItemProgressBarScript : MonoBehaviour
+public class UITavernFoodItemProgressBarScript : MonoBehaviourSlowUpdateFramesCI
 {
     public Image ProgressionBar;
     public Image FullBar;
 
-    [ComponentInject]
-    private UiTavernRefillCardBehaviour UiTavernQueueCardBehaviour;
+    [ComponentInject] private UiTavernRefillCardBehaviour UiTavernQueueCardBehaviour;
 
-    void Awake()
+    protected override int FramesTillSlowUpdate => 20;
+
+    protected override void SlowUpdate()
     {
-        this.ComponentInject();
-    }
-
-
-    private int updateCounter;
-
-    void Update()
-    {
-        if (updateCounter == 0)
+        
+        if(UiTavernQueueCardBehaviour.SelectedTavernQueueItem != null)
         {
-            if(UiTavernQueueCardBehaviour.SelectedTavernQueueItem != null)
-            {
-                ProgressionBar.enabled = true;
-                FullBar.enabled = true;
-                UpdateDisplayQueueProgression();
-            }
-            else
-            {
-                ProgressionBar.enabled = false;
-                FullBar.enabled = false;
-            }            
+            ProgressionBar.enabled = true;
+            FullBar.enabled = true;
+            UpdateDisplayQueueProgression();
         }
-        updateCounter++;
-        if (updateCounter >= 10)
+        else
         {
-            updateCounter = 0;
+            ProgressionBar.enabled = false;
+            FullBar.enabled = false;
         }
     }
 

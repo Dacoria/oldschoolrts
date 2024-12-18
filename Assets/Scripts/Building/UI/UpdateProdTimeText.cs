@@ -2,17 +2,12 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class UpdateProdTimeText : MonoBehaviour
+public class UpdateProdTimeText : MonoBehaviourCI
 {
     public TextMeshPro TimeRemainingText;
 
     [ComponentInject(Required.OPTIONAL)] // optioneel; heb je niks, toon dan niks
     private ProduceResourceOrderBehaviour ProduceResourceBehaviour;
-
-    public void Awake()
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

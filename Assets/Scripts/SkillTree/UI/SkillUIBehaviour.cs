@@ -1,22 +1,14 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class SkillUIBehaviour : MonoBehaviour
+public class SkillUIBehaviour : MonoBehaviourCI
 {
 
-    [HideInInspector]
-    public ChurchBehaviour CallingChurch;
+    [HideInInspector] public ChurchBehaviour CallingChurch;
 
-    [ComponentInject]
-    private SkillUiVisualizeBehaviour SkillUIVisualizeBehaviour;
+    [ComponentInject] private SkillUiVisualizeBehaviour SkillUIVisualizeBehaviour;
 
     public SelectedSkillUiItemScript SelectedSkillUiItem;
-
-    private void Awake()
-    {
-        this.ComponentInject();
-    }
 
     private void OnDisable()
     {

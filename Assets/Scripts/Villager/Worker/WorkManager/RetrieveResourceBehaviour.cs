@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RetrieveResourceBehaviour : MonoBehaviour, IVillagerWorkAction, IToolShowToRetrieveResource
+public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, IToolShowToRetrieveResource
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     private GameObject ObjectToBringResourceBackTo;
@@ -26,10 +26,6 @@ public class RetrieveResourceBehaviour : MonoBehaviour, IVillagerWorkAction, ITo
     public int ResourceCountMaterialHarvestedPerRun = 1;
 
     private bool isActive;
-    void Awake()
-    {        
-        this.ComponentInject();
-    }
 
     public void SetReturnTargetForAction(GameObject objectToBringResourceBackTo)
     {
@@ -45,15 +41,8 @@ public class RetrieveResourceBehaviour : MonoBehaviour, IVillagerWorkAction, ITo
         }
     }
 
-    public int GetPrio()
-    {
-        return 2;
-    }
-
-    public bool IsActive()
-    {
-        return isActive;
-    }
+    public int GetPrio() => 2;
+    public bool IsActive() => isActive;
 
     public bool CanDoAction()
     {

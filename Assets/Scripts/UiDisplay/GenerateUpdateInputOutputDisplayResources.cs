@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 
-public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdateFrames
+public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdateFramesCI
 {
     
     public GameObject ProcessingDisplayPrefab;

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WorkManager : BaseAEMono, IHasStopped, IVillagerUnit
+public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
 {
     public List<BuildingType> BuildingTypeToBringResourceBackTo;
     public float timeToWaitForRetryIfNoNewAction = 1;
@@ -25,16 +25,9 @@ public class WorkManager : BaseAEMono, IHasStopped, IVillagerUnit
     private bool isIdle;
     private bool workerIsActive;
 
-    private new void Awake()
-    {
-        base.Awake();
-        this.ComponentInject();
-    }
-
     public void Start()
     {
         NavMeshAgent.isStopped = true;
-
         StartCoroutine(FindRelevantBuildingAndContinueAfterwards());
     }
 

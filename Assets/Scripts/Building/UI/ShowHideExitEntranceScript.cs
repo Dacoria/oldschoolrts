@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShowHideExitEntranceScript : BaseAEMono
+public class ShowHideExitEntranceScript : BaseAEMonoCI
 {
     public GameObject Mark;   
 

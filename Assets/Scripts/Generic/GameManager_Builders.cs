@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class GameManager : BaseAEMono
+public partial class GameManager : BaseAEMonoCI
 {
     public List<BuildingPrefabItem> BuildingPrefabItems;
 

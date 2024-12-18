@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowUpdateFrames
+public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowUpdateFramesCI
 {
     public GameObject BuildingProgressDisplayPrefab;
     [HideInInspector]
@@ -18,11 +18,6 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowU
     private bool isScriptActive = false;
     private GameObject InputDisplayGoPrefab;
 
-    void Awake()
-    {
-        this.ComponentInject();
-    }
-
     public void Start()
     {
         if (BuildingBehaviourScript == null)
@@ -30,8 +25,6 @@ public class GenerateUpdateBuildingProgressDisplayResources : MonoBehaviourSlowU
             throw new Exception("altijd BuildingBehaviour vereist voor GenerateBuildingProgressDisplayResources");
         }
     }
-
-    private int frames;
 
     new void Update()
     {

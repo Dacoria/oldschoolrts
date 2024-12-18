@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ReplaceGhostForRealAfterGhostActivationScript : MonoBehaviour
+public class ReplaceGhostForRealAfterGhostActivationScript : MonoBehaviourCI
 {
     public int TimeToWaitInSecondsForReplace = 5;
     [ComponentInject] private GhostBuildingBehaviour GhostBuildingBehaviour;
@@ -9,11 +9,6 @@ public class ReplaceGhostForRealAfterGhostActivationScript : MonoBehaviour
 
     private bool ScriptIsActive;
     private bool PreviousCheckIsInGhostMode;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

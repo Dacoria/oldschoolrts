@@ -2,7 +2,7 @@ using Assets.Army;
 using System;
 using UnityEngine;
 
-public class UnitStatDetailsScript : MonoBehaviour
+public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
 {
     public ImageTextBehaviour Attack;
     public ImageTextBehaviour Defence;
@@ -15,40 +15,26 @@ public class UnitStatDetailsScript : MonoBehaviour
     [ComponentInject]
     private SelectedDisplayCardScript SelectedDisplayCardScript;
 
-    public void Awake()
-    {
-        this.ComponentInject();
-    }
-
-    private int UpdateCounter;
     private BarracksUnitSetting LastUpdatedBarracksUnitSetting;
 
-    void Update()
+    protected override int FramesTillSlowUpdate => 40;
+    protected override void SlowUpdate()
     {
-        if (UpdateCounter == 0)
+        if(SelectedDisplayCardScript?.SelectedDisplayUiCard?.CardUiHandler?.CallingBuilding != null)
         {
-            if(SelectedDisplayCardScript?.SelectedDisplayUiCard?.CardUiHandler?.CallingBuilding != null)
+            var prodSettings = SelectedDisplayCardScript.SelectedDisplayUiCard.CardUiHandler.CallingBuilding.GetCardDisplaySetting(SelectedDisplayCardScript.SelectedDisplayUiCard.Type);
+
+
+            if (prodSettings is BarracksUnitSetting)
             {
-                var prodSettings = SelectedDisplayCardScript.SelectedDisplayUiCard.CardUiHandler.CallingBuilding.GetCardDisplaySetting(SelectedDisplayCardScript.SelectedDisplayUiCard.Type);
-
-
-                if (prodSettings is BarracksUnitSetting)
+                var barracksProdSettings = (BarracksUnitSetting)prodSettings;
+                if (LastUpdatedBarracksUnitSetting != barracksProdSettings)
                 {
-                    var barracksProdSettings = (BarracksUnitSetting)prodSettings;
-                    if (LastUpdatedBarracksUnitSetting != barracksProdSettings)
-                    {
-                        UpdateStats(barracksProdSettings.UnitStats);
-                    }
-                    LastUpdatedBarracksUnitSetting = barracksProdSettings;
+                    UpdateStats(barracksProdSettings.UnitStats);
                 }
+                LastUpdatedBarracksUnitSetting = barracksProdSettings;
             }
-        }
-
-        UpdateCounter++;
-        if(UpdateCounter > 25)
-        {
-            UpdateCounter = 0;
-        }
+        }    
     }
 
     private void UpdateStats(UnitStatsSetting unitStats)
@@ -87,13 +73,13 @@ public class UnitStatDetailsScript : MonoBehaviour
 
     private string GetAttackText(AttackType attackType)
     {
-        var attackText = "Base damage: Damage of unit (before calculations)\n" +
+        var attackText = $"Base damage: Damage of unit (before calculations)\n" +
             "Attackhit%: 35% base + this value - Dodge% -> hitchance between 1-100%\n" +
-            "Attacktype: " + attackType.ToString().Capitalize() + " -> Modifies the damage; depending on Armortype:";
+            "Attacktype: {attackType.ToString().Capitalize()} -> Modifies the damage; depending on Armortype:";
 
         foreach (ArmorType armorType in Enum.GetValues(typeof(ArmorType)))
         {
-            attackText += "\n- " + armorType.ToString().Capitalize() + ": " + DamageLookup.LookUp[attackType][armorType];
+            attackText += $"\n- {armorType.ToString().Capitalize()}: {DamageLookup.LookUp[attackType][armorType]}";
         }
 
         return attackText;
@@ -102,11 +88,11 @@ public class UnitStatDetailsScript : MonoBehaviour
     private string GetArmorText(ArmorType armorType)
     {
         var armorText = "Armor: Reduced the damage (between 1-100) if no armor penetration\n" +
-            "Armortype: " + armorType.ToString().Capitalize() + " -> Modifies the damage; depending on Attacktype:";
+            $"Armortype: {armorType.ToString().Capitalize()} -> Modifies the damage; depending on Attacktype:";
 
         foreach (AttackType attackType in Enum.GetValues(typeof(AttackType)))
         {
-            armorText += "\n- " + attackType.ToString().Capitalize() + ": " + DamageLookup.LookUp[attackType][armorType];
+            armorText += $"\n- {attackType.ToString().Capitalize()}: {DamageLookup.LookUp[attackType][armorType]}";
         }
 
         return armorText;

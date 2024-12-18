@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class BuildingBehaviour : BaseAEMono
+public class BuildingBehaviour : BaseAEMonoCI
 {
     //private int completed = 0;
 
@@ -24,12 +24,6 @@ public class BuildingBehaviour : BaseAEMono
 
     [HideInInspector]
     public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
-
-    public new void Awake()
-    {
-        base.Awake();
-        this.ComponentInject();        
-    }
 
     public void Start()
     {

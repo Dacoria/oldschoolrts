@@ -2,17 +2,11 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShowRequiredResourcesForBuildingBehaviour : MonoBehaviour
+public class ShowRequiredResourcesForBuildingBehaviour : MonoBehaviourCI
 {
     public ImageTextBehaviour ReqResourcesPrefab;
 
-    [ComponentInject]
-    private BuildingUiWrapperBehaviour BuildingUiWrapperBehaviour;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
+    [ComponentInject] private BuildingUiWrapperBehaviour BuildingUiWrapperBehaviour;
 
 
     void Start()

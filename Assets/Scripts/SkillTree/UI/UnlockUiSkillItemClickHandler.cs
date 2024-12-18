@@ -1,17 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UnlockUiSkillItemClickHandler : MonoBehaviour, IPointerClickHandler
+public class UnlockUiSkillItemClickHandler : MonoBehaviourCI, IPointerClickHandler
 {
-    [ComponentInject]
-    private SelectedSkillUiItemScript SelectedSkillUiItemScript;
-
-    private void Awake()
-    {
-        this.ComponentInject();
-    }
+    [ComponentInject] private SelectedSkillUiItemScript SelectedSkillUiItemScript;
 
     public void OnPointerClick(PointerEventData eventData)
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class TooltipUIHandler : BaseAEMono
+public class TooltipUIHandler : BaseAEMonoCI
 {
     private bool toolTipIsActive;
     private OutlineBehaviour OutlineComponent;
@@ -9,11 +9,6 @@ public class TooltipUIHandler : BaseAEMono
     [ComponentInject]
     public ITooltipUIText CallingTooltipBahaviour;
 
-    private new void Awake()
-    {
-        base.Awake();
-        this.ComponentInject();
-    }
 
     public void OnDestroy()
     {
@@ -83,7 +78,7 @@ public class TooltipUIHandler : BaseAEMono
         }
 
         updateCounter++;
-        if (updateCounter > 500)
+        if (updateCounter > 50)
         {
             updateCounter = 0;
         }

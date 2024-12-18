@@ -1,14 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-public class SetTextOfBuiliding : MonoBehaviour
+public class SetTextOfBuiliding : MonoBehaviourCI
 {
     [ComponentInject] private TextMeshPro TextMeshPro;
-
-    public void Awake() 
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

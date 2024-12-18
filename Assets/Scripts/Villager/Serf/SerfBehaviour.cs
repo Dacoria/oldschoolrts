@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SerfBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
+public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     public SerfOrder _currentSerfOrder { get; private set; }
@@ -14,27 +14,16 @@ public class SerfBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
     [ComponentInject] private SerfResourceCarryingBehaviour SerfResourceCarryingBehaviour;
     [ComponentInject] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
 
+    //public bool IsCarryingResource => CarryingResource != ItemType.NONE;
+    //public ItemType CarryingResource => _currentSerfOrder?.Status == Status.IN_PROGRESS_TO ? _currentSerfOrder.ItemType : ItemType.NONE;
 
-
-    public bool IsCarryingResource => CarryingResource != ItemType.NONE;
-    public ItemType CarryingResource => _currentSerfOrder?.Status == Status.IN_PROGRESS_TO ? _currentSerfOrder.ItemType : ItemType.NONE;
-
-    private new void Awake()
-    {
-        base.Awake();
-        this.ComponentInject();
-    }
 
     void Start()
     {
         AE.FreeSerf?.Invoke(this);
     }
-    
 
-    public bool HasStoppedWithLogic()
-    {
-        return stoppedWithOrders;
-    }
+    public bool HasStoppedWithLogic() => stoppedWithOrders;
 
     protected override void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
+public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 {    
     public BuilderRequest _currentBuilderRequest { private set; get; }
 
@@ -11,18 +11,11 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
     [ComponentInject] private Animator Animator;
     [ComponentInject] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
 
-    private bool IsWorking;
-
-    private new void Awake()
-    {
-        base.Awake();
-        this.ComponentInject();
-
-        NavMeshAgent.areaMask = 1 << 0;
-    }
+    private bool isWorking;
 
     private void Start()
     {
+        NavMeshAgent.areaMask = 1 << 0;
         AE.FreeBuilder?.Invoke(this);
     }   
 
@@ -101,7 +94,7 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
     private void Update()
     {
         UpdateFoodRefilling();
-        if (!IsWorking)
+        if (!isWorking)
         {
             if (_currentBuilderRequest != null && NavMeshAgent.isOnNavMesh)
             {
@@ -130,8 +123,8 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
         }
 
         Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, IsWalking());
-        Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, IsWorking && !IsWalking());
-        Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !IsWalking() && !IsWorking);
+        Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, isWorking && !IsWalking());
+        Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !IsWalking() && !isWorking);
     }
 
     private bool IsWalking()
@@ -156,7 +149,7 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
 
     private IEnumerator PrepareTheGround(float timeToPrepareGround)
     {
-        IsWorking = true;
+        isWorking = true;
         NavMeshAgent.enabled = false;
         myNavMeshObstacle.enabled = true;
         yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToPrepareGround);
@@ -166,13 +159,13 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
             myNavMeshObstacle.enabled = false;
             NavMeshAgent.enabled = true;
             this._currentBuilderRequest.Status = BuildStatus.COMPLETED_PREPARING;
-            IsWorking = false;
+            isWorking = false;
         }       
     }
 
     private IEnumerator FinishTheBuilding(float timeToBuildBuilding)
     {
-        IsWorking = true;
+        isWorking = true;
         NavMeshAgent.enabled = false;
         myNavMeshObstacle.enabled = true;
         yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToBuildBuilding);
@@ -182,7 +175,7 @@ public class BuilderBehaviour : BaseAEMono, IHasStopped, IVillagerUnit
             myNavMeshObstacle.enabled = false;
             NavMeshAgent.enabled = true;
             this._currentBuilderRequest.Status = BuildStatus.COMPLETED_BUILDING;
-            IsWorking = false;
+            isWorking = false;
         }
     }
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetTemplateMaterialInTemplateMode : MonoBehaviour
+public class SetTemplateMaterialInTemplateMode : MonoBehaviourCI
 {
     [ComponentInject] private GhostBuildingBehaviour GhostBuildingBehaviour;
     [ComponentInject] private CheckCollisionForBuilding CheckCollisionForBuilding;
@@ -13,11 +13,6 @@ public class SetTemplateMaterialInTemplateMode : MonoBehaviour
 
     private Color NormalColor;
     private Color CollidingColor;
-
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     void Start()
     {

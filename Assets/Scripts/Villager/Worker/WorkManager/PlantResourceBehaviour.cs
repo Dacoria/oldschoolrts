@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlantResourceBehaviour : MonoBehaviour, IVillagerWorkAction
+public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     private ILocationOfNewResource LocationOfNewResourceScript;
@@ -63,11 +63,6 @@ public class PlantResourceBehaviour : MonoBehaviour, IVillagerWorkAction
             IsWorking2 = isCreatingNewResource
         };
     }
-    void Awake()
-    {
-        this.ComponentInject();
-    }
-
     public void Update()
     {
         if(isActive && NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)

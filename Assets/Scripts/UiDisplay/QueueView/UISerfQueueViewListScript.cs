@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UISerfQueueViewListScript : MonoBehaviourSlowUpdateFrames
+public class UISerfQueueViewListScript : MonoBehaviourSlowUpdateFramesCI
 {
     public UIQueueItemViewScript UIQueueItemViewPrefab;
 

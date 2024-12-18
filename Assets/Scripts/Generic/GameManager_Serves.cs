@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public partial class GameManager : BaseAEMono
+public partial class GameManager : BaseAEMonoCI
 {
     private static SortedSet<SerfRequest> SerfRequests = new SortedSet<SerfRequest>();
     private SortedSet<SerfOrder> CurrentSerfOrders = new SortedSet<SerfOrder>();
@@ -24,7 +24,7 @@ public partial class GameManager : BaseAEMono
     private DateTime lastTimeCheckSerfOrders;
     private IEnumerator CheckOrdersEverySec()
     {
-        yield return new WaitForSeconds(1);        
+        yield return MonoHelper.Instance.GetCachedWaitForSeconds(1);        
         var msSinceLastCheck = (DateTime.Now - lastTimeCheckSerfOrders).TotalMilliseconds;
         if (msSinceLastCheck > 1000)
         {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GoingToWorkStation : MonoBehaviour, IVillagerWorkAction
+public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
 {
     [HideInInspector]
     public bool actionIsAvailable;
@@ -16,15 +16,8 @@ public class GoingToWorkStation : MonoBehaviour, IVillagerWorkAction
         ObjectToBringResourceBackTo = objectToBringResourceBackTo;
     }
 
-    public int GetPrio()
-    {
-        return 1;
-    }
-
-    public bool IsActive()
-    {
-        return isActive;
-    }
+    public int GetPrio() => 1;
+    public bool IsActive() => isActive;
 
     public bool CanDoAction()
     {
@@ -51,10 +44,6 @@ public class GoingToWorkStation : MonoBehaviour, IVillagerWorkAction
             IsWalking = NavMeshAgent.enabled && !NavMeshAgent.isStopped,
         };
     }
-    void Awake()
-    {
-        this.ComponentInject();
-    }
 
     public void Start()
     {
@@ -76,7 +65,6 @@ public class GoingToWorkStation : MonoBehaviour, IVillagerWorkAction
             Finished();
         }
     }
-
 
     private void GoBackToGatherPoint()
     {

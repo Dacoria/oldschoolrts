@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class UiTavernBehaviour : MonoBehaviour, ICardCarousselDisplay
+public class UiTavernBehaviour : MonoBehaviourCI, ICardCarousselDisplay
 {
     public TavernUiWrapperBehaviour TavernUiWrapperBehaviourPrefab;
 
@@ -14,11 +14,6 @@ public class UiTavernBehaviour : MonoBehaviour, ICardCarousselDisplay
     public TavernBehaviour CallingTavern;
 
     private bool CardsLoaded;
-
-    public void Awake()
-    {
-        this.ComponentInject();
-    }
 
     private void Start()
     {

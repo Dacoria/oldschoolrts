@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class VillagerBuilderScript : BaseAEMono
+public class VillagerBuilderScript : BaseAEMonoCI
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     [ComponentInject] private Animator Animator;
@@ -9,12 +9,6 @@ public class VillagerBuilderScript : BaseAEMono
     private bool IsBuilding;
 
     public GameObject ToLocation;
-
-    private new void Awake()
-    {
-        base.Awake();
-        this.ComponentInject();
-    }
 
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {

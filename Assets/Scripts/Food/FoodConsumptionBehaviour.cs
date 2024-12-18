@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using System;
 using TMPro.EditorUtilities;
 
-public class FoodConsumptionBehaviour : BaseAEMono
+public class FoodConsumptionBehaviour : BaseAEMonoCI
 {
     public float FoodSatisfactionPercentage = 0.6f;
     public float FoodDeclinePercPerSecond = 0.01f;
@@ -23,7 +23,6 @@ public class FoodConsumptionBehaviour : BaseAEMono
     private new void Awake()
     {
         base.Awake();
-        this.ComponentInject();
         FoodConsumption = new FoodConsumption(FoodSatisfactionPercentage, FoodDeclinePercPerSecond, PercLimitForFoodRefill);
     }
 

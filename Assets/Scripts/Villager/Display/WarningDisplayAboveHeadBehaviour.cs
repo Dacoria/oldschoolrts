@@ -1,8 +1,6 @@
-using System.Linq;
 using UnityEngine;
-using System;
 
-public class WarningDisplayAboveHeadBehaviour : BaseAEMono
+public class WarningDisplayAboveHeadBehaviour : BaseAEMonoCI
 {
     private GameObject WarningGo;
 
@@ -11,12 +9,6 @@ public class WarningDisplayAboveHeadBehaviour : BaseAEMono
 
     [ComponentInject]
     private WorkManager WorkManager;
-
-    private new void Awake()
-    {
-        base.Awake();
-        this.ComponentInject();
-    }
 
     protected override void OnNoWorkerAction(WorkManager workMangerChanged)
     {

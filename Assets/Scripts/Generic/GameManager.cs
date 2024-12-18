@@ -5,7 +5,7 @@ public partial class GameManager : BaseAEMonoCI
 {
     public GameObject MainCastle;
 
-    public static GameManager Instance { get; set; }
+    public static GameManager Instance;    
 
     public List<ItemFoodRefillValue> ItemFoodRefillValues; // verplaatsen later
 

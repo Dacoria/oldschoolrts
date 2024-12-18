@@ -9,6 +9,7 @@ public class MonoHelper : MonoBehaviour
     public static MonoHelper Instance { get; set; }
     public Camera MainCamera;
 
+
     void Awake()
     {
         Instance = this;     

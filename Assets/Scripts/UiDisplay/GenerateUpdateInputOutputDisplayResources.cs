@@ -25,6 +25,8 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
     private GameObject ProgressCircleGo;
     private GameObject ProgressCircleGoRunning;
 
+    private bool scriptIsLoaded;
+
 
     IEnumerator Start()
     {
@@ -58,6 +60,8 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
         {
             ProgressCircleGoRunning = ProgressCircleGo.transform.Find("fragment").gameObject;
         }
+
+        scriptIsLoaded = true;
     }
 
     private List<TextMeshItem> InputTextMeshItems;
@@ -104,9 +108,12 @@ public class GenerateUpdateInputOutputDisplayResources : MonoBehaviourSlowUpdate
     protected override int FramesTillSlowUpdate => 10;
     protected override void SlowUpdate()
     {
-        UpdateInputText();
-        UpdateOutputText();
-        UpdateProgressCircleText();
+        if (scriptIsLoaded)
+        {
+            UpdateInputText();
+            UpdateOutputText();
+            UpdateProgressCircleText();
+        }
     }
 
     private void UpdateProgressCircleText()

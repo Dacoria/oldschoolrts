@@ -12,15 +12,10 @@ public class TavernBehaviour : BaseAEMonoCI
     [ComponentInject]
     private TavernRefillingBehaviour TavernRefillingBehaviour;
 
-    new void Awake()
-    {
-        base.Awake();
-        InitiateStockpile(); // moet voor Start --> CanProduce wordt al eerder aangeroepen
-    }
     void Start()
     {
+        InitiateStockpile();
         IncomingOrders = new List<SerfRequest>();
-
         foreach (var itemAmount in GameManager.Instance.ItemFoodRefillValues)
         {
             AddSerfRequestTillBuffer(itemAmount.ItemType);

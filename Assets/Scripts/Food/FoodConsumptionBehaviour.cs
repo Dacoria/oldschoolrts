@@ -85,7 +85,7 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
 
     private IEnumerator ProcessFoodDecline()
     {
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(1);
+        yield return Wait4Seconds.Get(1);
         if (FoodConsumptionSettings.ToggleUseFoodConsumption_Active)
         {
             FoodConsumption.ConsumeFood();

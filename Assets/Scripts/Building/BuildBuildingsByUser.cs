@@ -15,7 +15,7 @@ public class BuildBuildingsByUser : MonoBehaviour
     private GameObject ObjectToBuild;
     private GameObject SelectedGameObjectToBuild; // hierin wordt het gameobject gezet wat wordt gebouwd. Hiermee wordt ObjectToBuild Initiated! (kan meerdere keren zijn door Roads)
 
-    [SerializeField] private bool UseCollorSetter; // voor wel/niet tonen collide colors --> Altijd aan tenzij 'gedoe'
+    private bool UseCollisionCollorForAllowBuild = true;
 
     [HideInInspector] public bool InstaBuild = false;
 
@@ -91,7 +91,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             //Debug.Log("Klik mouse 4 buildigs");
             if (isHighlightedFieldShown)
             {
-                if (!UseCollorSetter || !CheckCollisionForBuilding.IsColliding())
+                if (!UseCollisionCollorForAllowBuild || !CheckCollisionForBuilding.IsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
                     Build(ObjectToBuild);
@@ -107,7 +107,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private void UpdateDragLeftMouseInputForRoadOrField()
     {                 
-        if ((!UseCollorSetter || !CheckCollisionForBuilding.IsColliding()) && 
+        if ((!UseCollisionCollorForAllowBuild || !CheckCollisionForBuilding.IsColliding()) && 
             ObjectToBuild != null &&
             LastKnownGhostRoadOrFieldLocation != null && 
             !ObjectToBuild.transform.position.IsSameVector3(LastKnownGhostRoadOrFieldLocation)
@@ -152,7 +152,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             //Debug.Log("Klik mouse 4 Road or Field");
             if (isHighlightedFieldShown)
             {
-                if (!UseCollorSetter || !AnyOfRoadsOrFieldsColliding())
+                if (!UseCollisionCollorForAllowBuild || !AnyOfRoadsOrFieldsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
                     BuildRoadsOrFields(ObjectToBuild);
@@ -210,7 +210,7 @@ public class BuildBuildingsByUser : MonoBehaviour
         ObjectToBuild = Instantiate(SelectedGameObjectToBuild, new Vector3(0, 0.01f, 0), Quaternion.identity);
         FillBuildingType(SelectedGameObjectToBuild, ObjectToBuild);
 
-        if (UseCollorSetter)
+        if (UseCollisionCollorForAllowBuild)
         {
             CheckCollisionForBuilding = ObjectToBuild.GetComponentInChildren<CheckCollisionForBuilding>(); // voor bepalen of collide wordt met ander iets
             if(CheckCollisionForBuilding != null)

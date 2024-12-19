@@ -12,6 +12,7 @@
     public static string TAG_TAVERN = "Tavern";
     public static string TAG_RESOURCE = "Resource";
     public static string TAG_UNIT = "Unit";
+    public static string TAG_COLLIDE = "Collide";
 
     //animation trigger
     public static string ANIM_BOOL_IS_ATTACKING = "IS_ATTACKING";

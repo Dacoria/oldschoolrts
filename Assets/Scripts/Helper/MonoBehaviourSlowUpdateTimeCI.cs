@@ -11,7 +11,7 @@ public abstract class MonoBehaviourSlowUpdateTimeCI : MonoBehaviourCI
 
     private IEnumerator InitSlowUpdate()
     {
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(MsTillSlowUpdate / 1000f);
+        yield return Wait4Seconds.Get(MsTillSlowUpdate / 1000f);
         SlowUpdate();
 
         StartCoroutine(InitSlowUpdate());

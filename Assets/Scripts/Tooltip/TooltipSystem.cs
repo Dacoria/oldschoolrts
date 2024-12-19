@@ -70,7 +70,7 @@ public class TooltipSystem : MonoBehaviour
 
     public IEnumerator ShowAfterXSeconds()
     {
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(waitTimeToShow);
+        yield return Wait4Seconds.Get(waitTimeToShow);
         instance.StartCoroutine(instance.FadeIn());
     }
 

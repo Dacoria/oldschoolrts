@@ -28,7 +28,7 @@ public class ReplaceGhostForRealAfterGhostActivationScript : MonoBehaviourCI
 
     private IEnumerator ReplaceGhostForReal()
     {
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(TimeToWaitInSecondsForReplace);
+        yield return Wait4Seconds.Get(TimeToWaitInSecondsForReplace);
         BuildingBehaviour.Real.gameObject.SetActive(true);
         BuildingBehaviour.GhostBuildingBehaviour.gameObject.SetActive(false);
     }

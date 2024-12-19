@@ -97,7 +97,7 @@ public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
     private IEnumerator CreateNewResource()
     {
         isCreatingNewResource = true;
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToCreateNewResourceInSeconds);
+        yield return Wait4Seconds.Get(timeToCreateNewResourceInSeconds);
         isCreatingNewResource = false;
 
         IniatiatedPlantedNewResource.SetActive(true); // bv een boom -> maakt zichtbaar

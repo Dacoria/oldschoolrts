@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Assets.Army;
+using System.Collections;
 
 public class MonoHelper : MonoBehaviour
 {
@@ -98,19 +99,14 @@ public class MonoHelper : MonoBehaviour
         return closestTavern;
     }
 
-    private Dictionary<float, WaitForSeconds> WaitForSecondsCache = new Dictionary<float, WaitForSeconds>();
-    public WaitForSeconds GetCachedWaitForSeconds(float seconds)
+    public void Do_CR(float waitTimeInSeconds, Action callback)
     {
-        WaitForSeconds result;
-        if(WaitForSecondsCache.TryGetValue(seconds, out result))
-        {
-            return result;
-        }
-        else
-        {
-            result = new WaitForSeconds(seconds);
-            WaitForSecondsCache.Add(seconds, result);
-            return result;
-        }
+        StartCoroutine(CR_Do_CR(waitTimeInSeconds, callback));
+    }
+
+    private IEnumerator CR_Do_CR(float waitTimeInSeconds, Action callback)
+    {
+        yield return Wait4Seconds.Get(waitTimeInSeconds);
+        callback?.Invoke();
     }
 }

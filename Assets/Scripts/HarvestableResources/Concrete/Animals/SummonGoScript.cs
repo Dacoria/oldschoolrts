@@ -28,13 +28,13 @@ public class SummonGoScript : MonoBehaviour
         var currSummons = GetComponentsInChildren<SummonableBehaviour>();
         if(currSummons.Length >= SpawnLimit)
         {
-            yield return MonoHelper.Instance.GetCachedWaitForSeconds(0.5f);
+            yield return Wait4Seconds.Get(0.5f);
         }
         else
         {
             yield return new WaitForEndOfFrame(); // voor initieel laden spel; dan krijg je een vertraging de 1x -> dit voorkomt dat
             TimeStartedForSpawnTimer = DateTime.Now;
-            yield return MonoHelper.Instance.GetCachedWaitForSeconds(TimeToWaitForSpawnInSeconds);
+            yield return Wait4Seconds.Get(TimeToWaitForSpawnInSeconds);
 
             // refresh na wachten (summon kan gekilled zijn)
             currSummons = GetComponentsInChildren<SummonableBehaviour>();

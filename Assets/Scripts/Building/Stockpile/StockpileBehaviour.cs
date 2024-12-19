@@ -57,6 +57,6 @@ public class StockpileBehaviour : BaseAEMonoCI
 
     private void OnDestroy()
     {
-        GameManager.Instance.TryRemoveStockpile(this);
+        GameManager.Instance?.TryRemoveStockpile(this);
     }
 }

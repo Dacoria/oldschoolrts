@@ -30,7 +30,7 @@ public class ProduceResourceOrderBehaviour : BaseAEMonoCI
     {
         if (!ResourcesToProduce.CanProduceResource())
         {
-            yield return MonoHelper.Instance.GetCachedWaitForSeconds(0.3f); // kan nog niet produceren, doe check opnieuw na x secondes
+            yield return Wait4Seconds.Get(0.3f); // kan nog niet produceren, doe check opnieuw na x secondes
             StartCoroutine(TryToProduceResourceOverXSeconds());
         }
         else
@@ -54,13 +54,13 @@ public class ProduceResourceOrderBehaviour : BaseAEMonoCI
 
         IsProducingResourcesRightNow = true;
         StartTimeProducing = DateTime.Now;
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(ProduceOverTime.GetTimeToProduceResourceInSeconds());
+        yield return Wait4Seconds.Get(ProduceOverTime.GetTimeToProduceResourceInSeconds());
 
         ProduceOverTime.FinishProducing(itemProduceSetting);
         ProduceItemsOverTime(itemProduceSetting);
         IsProducingResourcesRightNow = false;
 
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(ProduceOverTime.GetTimeToWaitAfterProducingInSeconds());
+        yield return Wait4Seconds.Get(ProduceOverTime.GetTimeToWaitAfterProducingInSeconds());
         StartCoroutine(TryToProduceResourceOverXSeconds());
     }  
 

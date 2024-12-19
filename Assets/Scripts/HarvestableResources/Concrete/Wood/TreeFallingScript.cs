@@ -51,7 +51,7 @@ public class TreeFallingScript : MonoBehaviour
 
     private IEnumerator DestroyTreeAfterXSeconds(int secondToWait)
     {
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(secondToWait);
+        yield return Wait4Seconds.Get(secondToWait);
         if (TreeStanding != null)
         {
             Destroy(TreeStanding.transform.parent.gameObject);

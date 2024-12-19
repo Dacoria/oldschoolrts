@@ -24,7 +24,7 @@ public class RecoverHarvestableMaterialScript : MonoBehaviourSlowUpdateFramesCI
     private IEnumerator RecoverHarvestableMaterial()
     {
         StartDateRefilling = DateTime.Now;
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(RecoveryTimeInSeconds);
+        yield return Wait4Seconds.Get(RecoveryTimeInSeconds);
         HarvestableMaterialScript.MaterialCount = RecoverAmount;
         StartDateRefilling = null;
     }

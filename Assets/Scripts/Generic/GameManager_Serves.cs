@@ -24,7 +24,7 @@ public partial class GameManager : BaseAEMonoCI
     private DateTime lastTimeCheckSerfOrders;
     private IEnumerator CheckOrdersEverySec()
     {
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(1);        
+        yield return Wait4Seconds.Get(1);        
         var msSinceLastCheck = (DateTime.Now - lastTimeCheckSerfOrders).TotalMilliseconds;
         if (msSinceLastCheck > 1000)
         {

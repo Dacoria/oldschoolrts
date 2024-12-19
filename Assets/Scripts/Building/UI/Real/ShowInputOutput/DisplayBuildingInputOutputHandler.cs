@@ -28,7 +28,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     IEnumerator Start()
     {
         // altijd wachten tot alles klaar is
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(1);
+        yield return Wait4Seconds.Get(1);
 
         this.ComponentInject(); // later om zeker te zijn dat de component er zijn (soms gegenereert uit ander script)
         BarracksBehaviour = GetComponent<BarracksBehaviour>(); // eenmalig

@@ -156,7 +156,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     {
         isRetrievingResource = true;
         RetrieveResourceScript.StartRetrievingResource(ResourceCountMaterialHarvestedPerRun);
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToRetrieveResourceInSeconds);
+        yield return Wait4Seconds.Get(timeToRetrieveResourceInSeconds);
         isRetrievingResource = false;
         ResourceCarriedBack = RetrieveResourceScript.ResourceIsRetrieved();
              
@@ -174,7 +174,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     private IEnumerator WaitForRetrievingResource()
     {
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToWaitForRetrievalOfResourceInSeconds);
+        yield return Wait4Seconds.Get(timeToWaitForRetrievalOfResourceInSeconds);
         BringResourceBack();
     }
 
@@ -187,7 +187,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     private IEnumerator DroppingResourceOff()
     {
         isDroppingResourceOff = true;
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToDropOffResourceInSeconds);
+        yield return Wait4Seconds.Get(timeToDropOffResourceInSeconds);
 
         if (ObjectToBringResourceBackTo.GetComponent<ProduceResourceOrderBehaviour>() != null)
         {

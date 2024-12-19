@@ -154,7 +154,7 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
         isWorking = true;
         NavMeshAgent.enabled = false;
         myNavMeshObstacle.enabled = true;
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToPrepareGround);
+        yield return Wait4Seconds.Get(timeToPrepareGround);
         if(this._currentBuilderRequest != null)
         {
             // kan dood gegaan zijn
@@ -170,7 +170,7 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
         isWorking = true;
         NavMeshAgent.enabled = false;
         myNavMeshObstacle.enabled = true;
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToBuildBuilding);
+        yield return Wait4Seconds.Get(timeToBuildBuilding);
         if (this._currentBuilderRequest != null)
         {
             // kan doodgegaan zijn

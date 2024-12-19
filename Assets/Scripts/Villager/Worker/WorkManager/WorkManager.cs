@@ -41,7 +41,7 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
                 ObjectToBringResourceBackTo.GetComponent<WorkerBuildingBehaviour>().Worker = this.gameObject;
             }
             AE.NoWorkerAction?.Invoke(this);
-            yield return MonoHelper.Instance.GetCachedWaitForSeconds(1f);
+            yield return Wait4Seconds.Get(1f);
         }
 
         SetRelevantScripts();
@@ -191,7 +191,7 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
         isIdle = true;
         NavMeshAgent.isStopped = true; // idle = stilstaan animatie + navmesh stoppen
 
-        yield return MonoHelper.Instance.GetCachedWaitForSeconds(timeToWaitForRetryIfNoNewAction);
+        yield return Wait4Seconds.Get(timeToWaitForRetryIfNoNewAction);
         var success = DetermineNextWorkerAction();
         if(success || stoppedWithOrders)
         {

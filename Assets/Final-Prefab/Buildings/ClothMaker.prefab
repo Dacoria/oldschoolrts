@@ -177,8 +177,8 @@ GameObject:
   - component: {fileID: 5746219004657571085}
   - component: {fileID: 900158944959685203}
   - component: {fileID: 4789282421419578537}
-  - component: {fileID: 8968577633385023790}
   - component: {fileID: 7198309819227527407}
+  - component: {fileID: 947789964397049450}
   m_Layer: 0
   m_Name: ClothMaker
   m_TagString: Building
@@ -259,19 +259,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8968577633385023790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5746219004657571082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cce2d7eb77134f8d85fcfa6f97221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!65 &7198309819227527407
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -291,8 +278,22 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.98, y: 3.5, z: 2}
+  m_Size: {x: 2.98, y: 3.5, z: 1.99}
   m_Center: {x: 0, y: 1.75, z: -1.5}
+--- !u!114 &947789964397049450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5746219004657571082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &6049371921560387505
 GameObject:
   m_ObjectHideFlags: 0

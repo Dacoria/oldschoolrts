@@ -278,8 +278,8 @@ GameObject:
   - component: {fileID: 6121487394340713918}
   - component: {fileID: 1671765845106574048}
   - component: {fileID: 6429940819267925018}
-  - component: {fileID: 7438686751338441117}
   - component: {fileID: 8694418171832072284}
+  - component: {fileID: 3756406949563435005}
   m_Layer: 0
   m_Name: SheepFarmPrefab
   m_TagString: Building
@@ -360,19 +360,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7438686751338441117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6121487394340713913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cce2d7eb77134f8d85fcfa6f97221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!65 &8694418171832072284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -392,8 +379,22 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.95, y: 2.7, z: 2.95}
+  m_Size: {x: 4.99, y: 2.7, z: 2.99}
   m_Center: {x: 0, y: 1.35, z: 0}
+--- !u!114 &3756406949563435005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6121487394340713913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &6347644264434547985
 GameObject:
   m_ObjectHideFlags: 0

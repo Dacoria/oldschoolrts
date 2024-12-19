@@ -606,8 +606,8 @@ GameObject:
   - component: {fileID: 8437824895419108463}
   - component: {fileID: 3952339125744941873}
   - component: {fileID: 8705867410758782411}
-  - component: {fileID: 5102947139747336268}
   - component: {fileID: 6431718681601016205}
+  - component: {fileID: 4925128001052440871}
   m_Layer: 0
   m_Name: ThreadMaker
   m_TagString: Building
@@ -688,19 +688,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5102947139747336268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8437824895419108456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cce2d7eb77134f8d85fcfa6f97221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!65 &6431718681601016205
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -720,8 +707,22 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.95, y: 2.7, z: 1.95}
+  m_Size: {x: 2.99, y: 2.7, z: 1.99}
   m_Center: {x: 0, y: 1.35, z: -0.5}
+--- !u!114 &4925128001052440871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8437824895419108456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1001 &412772864352702604
 PrefabInstance:
   m_ObjectHideFlags: 0

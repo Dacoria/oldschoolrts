@@ -3,6 +3,10 @@
     //layers
     public static int LAYER_TERRAIN = 3;
     public static int LAYER_UI = 5;
+    public static int LAYER_RTS_UNIT = 6;
+    public static int LAYER_WALL_LAYER = 7;
+    public static int LAYER_ROAD = 8;
+    public static int LAYER_FARM_FIELD = 9;
 
     //tags
     public static string TAG_ROAD = "Road";

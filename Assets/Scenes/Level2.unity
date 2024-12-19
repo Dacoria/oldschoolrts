@@ -2320,6 +2320,11 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &187457221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+  m_PrefabInstance: {fileID: 1605546612}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &188902183
 GameObject:
   m_ObjectHideFlags: 0
@@ -9789,6 +9794,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &774707509 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+  m_PrefabInstance: {fileID: 1386385857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &782306500
 GameObject:
   m_ObjectHideFlags: 0
@@ -9908,6 +9918,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5037030731565394911, guid: 138edaba187ffc245b64c82f3a5dfcde, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6254611152164367048, guid: 138edaba187ffc245b64c82f3a5dfcde, type: 3}
       propertyPath: m_Name
       value: MainBuilding
@@ -20851,6 +20865,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Road (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9
@@ -20905,15 +20923,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4390418403150656218, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+    - {fileID: 2144359754, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1262054939}
   m_SourcePrefab: {fileID: 100100000, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
 --- !u!4 &1262054937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
   m_PrefabInstance: {fileID: 1262054936}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1262054938 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+  m_PrefabInstance: {fileID: 1262054936}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1262054939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262054938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &1267650253
 GameObject:
   m_ObjectHideFlags: 0
@@ -21813,6 +21854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Road
       objectReference: {fileID: 0}
+    - target: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9
@@ -21867,15 +21912,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4390418403150656218, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+    - {fileID: 2144359754, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1386385863}
   m_SourcePrefab: {fileID: 100100000, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
 --- !u!4 &1386385858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
   m_PrefabInstance: {fileID: 1386385857}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1386385863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774707509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!224 &1388371649 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3106655708413177379, guid: 3b35e2bf7ccfbd0459963835283495ea, type: 3}
@@ -24908,6 +24971,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Road (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9
@@ -24962,15 +25029,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4390418403150656218, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+    - {fileID: 2144359754, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1718953353206243737, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1605546618}
   m_SourcePrefab: {fileID: 100100000, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
 --- !u!4 &1605546613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
   m_PrefabInstance: {fileID: 1605546612}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1605546618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187457221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &1609732457
 GameObject:
   m_ObjectHideFlags: 0
@@ -35733,10 +35818,14 @@ PrefabInstance:
       propertyPath: CurrentBuildStatus
       value: 6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3397261825106832929, guid: 458bb00ce34e0de48a0a37b15a80895b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2084354960294146565, guid: 458bb00ce34e0de48a0a37b15a80895b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2140075459}
     - targetCorrespondingSourceObject: {fileID: 3530022084684763792, guid: 458bb00ce34e0de48a0a37b15a80895b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2140075457}
@@ -35764,6 +35853,25 @@ MonoBehaviour:
   DisplayProcessingInputOutputPrefab: {fileID: -5586510935880300235, guid: ad32582bdb1fd0948ac51bc26f60015a, type: 3}
   GoSpawnOffset: {x: -0.8, y: -0.2, z: -0.8}
   GoSpawnScaleOffset: {x: 1, y: 1, z: 1}
+--- !u!1 &2140075458 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2084354960294146565, guid: 458bb00ce34e0de48a0a37b15a80895b, type: 3}
+  m_PrefabInstance: {fileID: 2140075455}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2140075459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140075458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &2140909076
 GameObject:
   m_ObjectHideFlags: 0

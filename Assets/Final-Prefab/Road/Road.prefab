@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 1718953353206243739}
   - component: {fileID: 2144359756}
   - component: {fileID: 2144359755}
-  - component: {fileID: 2144359754}
-  m_Layer: 0
+  - component: {fileID: 4735239541793286767}
+  m_Layer: 8
   m_Name: Road
-  m_TagString: Untagged
+  m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99, y: 0.02, z: 0.99}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2144359754
+--- !u!114 &4735239541793286767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,9 +119,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1718953353206243737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cce2d7eb77134f8d85fcfa6f97221, type: 3}
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRoadCollider: 0
   CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &1718953353261927470
 GameObject:

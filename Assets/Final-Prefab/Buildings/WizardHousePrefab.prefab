@@ -309,8 +309,8 @@ GameObject:
   - component: {fileID: 7278305989881479145}
   - component: {fileID: 2792538308049848503}
   - component: {fileID: 7550819128994545229}
-  - component: {fileID: 6253774569109234634}
   - component: {fileID: 5285712645118128651}
+  - component: {fileID: 5278250917113017878}
   m_Layer: 0
   m_Name: WizardHousePrefab
   m_TagString: Building
@@ -391,19 +391,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6253774569109234634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7278305989881479150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cce2d7eb77134f8d85fcfa6f97221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!65 &5285712645118128651
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -425,6 +412,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.99, y: 6, z: 2.99}
   m_Center: {x: 1.5, y: 3, z: 1}
+--- !u!114 &5278250917113017878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278305989881479150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &8595422111493552452
 GameObject:
   m_ObjectHideFlags: 0

@@ -542,8 +542,8 @@ GameObject:
   - component: {fileID: 3585448430925175037}
   - component: {fileID: 8215331178258247587}
   - component: {fileID: 4326352959740631385}
-  - component: {fileID: 147053304631641310}
   - component: {fileID: 2132790053606462751}
+  - component: {fileID: 2797971165740461425}
   m_Layer: 0
   m_Name: WellPrefab
   m_TagString: Building
@@ -624,19 +624,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &147053304631641310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3585448430925175034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cce2d7eb77134f8d85fcfa6f97221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!65 &2132790053606462751
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -658,6 +645,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.99, y: 3, z: 1.99}
   m_Center: {x: 0, y: 1.5, z: 0.5}
+--- !u!114 &2797971165740461425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585448430925175034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &6286387168466250105
 GameObject:
   m_ObjectHideFlags: 0

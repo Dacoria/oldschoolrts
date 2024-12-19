@@ -271,8 +271,8 @@ GameObject:
   - component: {fileID: 653595425900581536}
   - component: {fileID: 5391551905008657918}
   - component: {fileID: 349680784150745860}
-  - component: {fileID: 4240820719933771395}
   - component: {fileID: 2686725427915530050}
+  - component: {fileID: 6523443422108760353}
   m_Layer: 0
   m_Name: ClothArmorMaker
   m_TagString: Building
@@ -353,19 +353,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4240820719933771395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653595425900581543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cce2d7eb77134f8d85fcfa6f97221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!65 &2686725427915530050
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -387,6 +374,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.99, y: 3.5, z: 2.99}
   m_Center: {x: -0.5, y: 1.75, z: 1}
+--- !u!114 &6523443422108760353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653595425900581543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRoadCollider: 0
+  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &753671808219022961
 GameObject:
   m_ObjectHideFlags: 0

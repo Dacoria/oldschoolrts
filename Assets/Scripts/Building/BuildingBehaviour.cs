@@ -46,6 +46,8 @@ public class BuildingBehaviour : BaseAEMonoCI
         GhostBuildingBehaviour.gameObject.SetActive(false);
         Destroy(GhostBuildingBehaviour.gameObject.GetComponentInChildren<RangeDisplayBehaviour>());
 
+        Destroy(gameObject.GetComponent<CheckCollisionForBuilding>());
+
         Real.SetActive(true); // staat al aan; zekerheidje
 
         var children = Real.GetComponentsInChildren<MonoBehaviour>();

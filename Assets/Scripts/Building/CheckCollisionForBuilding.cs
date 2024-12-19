@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CheckCollisionForBuilding : MonoBehaviourCI
 {
@@ -13,13 +14,33 @@ public class CheckCollisionForBuilding : MonoBehaviourCI
         public bool IsUnitCollision;
         public bool IsResourceCollision;
         public bool IsRelevantResourceCollision;
+        public bool IsRoad;
+        public bool IsFarmField;
         public GameObject GameObject;
     }
 
 
     [ComponentInject(Required.OPTIONAL)] public CheckResourceCollisionForBuilding CheckResourceCollisionForBuilding;
+    [ComponentInject] private BoxCollider boxCollider;
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     private Vector3 LastPositionCheck;
+
+    private void OnEnable()
+    {
+        if (GetComponentInChildren<GhostBuildingBehaviour>() != null && !this.gameObject.IsFarmField() && !this.gameObject.IsRoad())
+        {
+            boxCollider.size += new Vector3(1, 1, 1);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GetComponentInChildren<GhostBuildingBehaviour>() != null && !this.gameObject.IsFarmField() && !this.gameObject.IsRoad())
+        {
+            boxCollider.size -= new Vector3(1, 1, 1);
+        }
+    }
 
     private void Update()
     {
@@ -39,7 +60,6 @@ public class CheckCollisionForBuilding : MonoBehaviourCI
         }
     }
 
-
     void OnTriggerStay(Collider other)
     {
         if (other.transform.gameObject.layer != Constants.LAYER_TERRAIN)
@@ -50,6 +70,8 @@ public class CheckCollisionForBuilding : MonoBehaviourCI
                 IsRelevantResourceCollision = isRelevantResourceCollision,
                 IsResourceCollision = other.transform.tag == Constants.TAG_RESOURCE,
                 IsUnitCollision = other.transform.tag == Constants.TAG_UNIT,
+                IsRoad = other.gameObject.IsRoad(),
+                IsFarmField = other.gameObject.IsFarmField(),
                 GameObject = other.transform.gameObject
             };
 
@@ -61,13 +83,12 @@ public class CheckCollisionForBuilding : MonoBehaviourCI
     private void UpdateCollisionStatus()
     {
         var go = gameObject;
-        var relevantCollisions = CollisionsOnLocation.Where(x => !x.IsUnitCollision).ToList();
+        var relevantCollisions = CollisionsOnLocation.Where(x => !x.IsUnitCollision && !x.IsRoad && !x.IsFarmField).ToList();
 
         if (CheckResourceCollisionForBuilding != null)
         {
             isColliding =
                 relevantCollisions.All(x => !x.IsRelevantResourceCollision) || 
-
                 relevantCollisions
                 .Where(x => !x.IsRelevantResourceCollision)
                 .Any();

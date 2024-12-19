@@ -22,8 +22,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     
     private GameObject InputDisplayPrefabGo;
     private GameObject OutputDisplayPrefabGo;
-    private GameObject ProgressCircleGo;
-    private GameObject ProgressCircleGoRunning;
 
     private bool scriptIsLoaded;
     
@@ -42,7 +40,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
         InputDisplayPrefabGo = ProcessingDisplayGo.transform.Find("InputPrefab").gameObject;
         OutputDisplayPrefabGo = ProcessingDisplayGo.transform.Find("OutputPrefab").gameObject;
-        ProgressCircleGo = ProcessingDisplayGo.transform.Find("ProgressCirclePrefab").gameObject;
 
         var gearsDisplayGo = ProcessingDisplayGo.transform.Find("GearPrefab").gameObject;
 
@@ -65,14 +62,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
         else
         {
             Destroy(gearsDisplayGo);
-        }
-        if (QueueForBuildingBehaviour != null)
-        {
-            ProgressCircleGoRunning = ProgressCircleGo.transform.Find("fragment").gameObject;
-        }
-        else
-        {
-            Destroy(ProgressCircleGo);
         }
 
         Destroy(InputDisplayPrefabGo);
@@ -144,7 +133,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
         {
             UpdateInputText();
             UpdateOutputText();
-            UpdateProgressCircleText();
         }
     }
 
@@ -158,19 +146,13 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
     public void UpdateEnabledStatusOfDisplayObjects(bool isActive)
     {
-        for (var i = 0; i < ProcessingDisplayGo.transform.childCount; i++)
+        if (ProcessingDisplayGo?.transform?.childCount != null)
         {
-            var child = ProcessingDisplayGo.transform.GetChild(i);
-            child.gameObject.SetActive(isActive);
-        }
-    }
-
-    private void UpdateProgressCircleText()
-    {
-        if(QueueForBuildingBehaviour != null)
-        {
-            ProgressCircleGo.SetActive(QueueForBuildingBehaviour.QueueItems.Any());
-            ProgressCircleGoRunning.SetActive(QueueForBuildingBehaviour.GetCurrentItemProcessed() != null);
+            for (var i = 0; i < ProcessingDisplayGo.transform.childCount; i++)
+            {
+                var child = ProcessingDisplayGo.transform.GetChild(i);
+                child.gameObject.SetActive(isActive);
+            }
         }
     }
 

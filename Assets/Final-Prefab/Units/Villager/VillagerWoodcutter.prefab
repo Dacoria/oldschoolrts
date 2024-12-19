@@ -164,6 +164,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4871612295658306102, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}
+      propertyPath: m_Speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871612295658306102, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}
       propertyPath: m_WalkableMask
       value: 1
       objectReference: {fileID: 0}
@@ -323,10 +327,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fee194a02824de4b819fc0bd10592ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopDistanceFromObjectToRetrieveResourceFrom: 2
-  timeToDropOffResourceInSeconds: 1
+  stopDistanceFromObjectToRetrieveResourceFrom: 0.5
+  timeToDropOffResourceInSeconds: 2
   timeToRetrieveResourceInSeconds: 5
-  timeToWaitForRetrievalOfResourceInSeconds: 0
+  timeToWaitForRetrievalOfResourceInSeconds: 3
   ResourceCountMaterialHarvestedPerRun: 1
 --- !u!114 &2723404378029240779
 MonoBehaviour:

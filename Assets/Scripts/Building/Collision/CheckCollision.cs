@@ -12,7 +12,7 @@ public class CheckCollision : MonoBehaviour
 
     public void Init(int? inclLayers = null, int? exclLayers = null, Vector3? v3SizeChangeWhenEnabled = null)
     {
-        boxCollider.GetComponent<BoxCollider>(); // wordt pas later aangemaakt -> daarom geen CI gebruiken
+        boxCollider = GetComponent<BoxCollider>(); // wordt pas later aangemaakt -> daarom geen CI gebruiken
         boxCollider.isTrigger = false;
         initialBoxColliderSize = boxCollider.size;
 

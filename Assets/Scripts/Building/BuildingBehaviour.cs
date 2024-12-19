@@ -7,7 +7,7 @@ public class BuildingBehaviour : BaseAEMonoCI
     //private int completed = 0;
 
     [HideInInspector]
-    [ComponentInject] public GhostBuildingBehaviour GhostBuildingBehaviour;
+    [ComponentInject(Required.OPTIONAL)] public GhostBuildingBehaviour GhostBuildingBehaviour;
 
     public Purpose Purpose = Purpose.BUILDING;
     public GameObject Real;

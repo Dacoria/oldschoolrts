@@ -12,6 +12,7 @@ public class UiManager : MonoBehaviour
 
     public OutlineBehaviour ActiveOutlineBehaviour;
     public RangeDisplayBehaviour ActiveRangeDisplayBehaviour;
+    public DisplayBuildingInputOutputHandler ActiveDisplayBuildingInputOutputHandler;
 
     void Update()
     {
@@ -19,6 +20,7 @@ public class UiManager : MonoBehaviour
         {
             DisableActiveOutline();
             DisableActiveDisplayRange();
+            DisableActiveDisplayBuildingInputOutputHandler();
             var isClickingUi = EventSystem.current.IsPointerOverGameObject();
 
             if (!isClickingUi)
@@ -32,6 +34,7 @@ public class UiManager : MonoBehaviour
         {
             DisableActiveOutline();
             DisableActiveDisplayRange();
+            DisableActiveDisplayBuildingInputOutputHandler();
             SelectedBuildingPanel.SetActive(false);
             SelectedBuildingPanelSkillTree.SetActive(false);
         }
@@ -53,6 +56,15 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    private void DisableActiveDisplayBuildingInputOutputHandler()
+    {
+        if (ActiveDisplayBuildingInputOutputHandler != null)
+        {
+            ActiveDisplayBuildingInputOutputHandler.UpdateEnabledStatusOfDisplayObjects(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
+            ActiveDisplayBuildingInputOutputHandler = null;
+        }
+    }
+
     private void EnableOutline(GameObject go)
     {
         ActiveOutlineBehaviour = go.GetComponent<OutlineBehaviour>();
@@ -68,13 +80,16 @@ public class UiManager : MonoBehaviour
 
     private void ActOnRaycastHit(RaycastHit[] hits)
     {
-        MonoBehaviour toactivateGo = GetBuildingHitByRay(hits);
+        (MonoBehaviour toactivateUI, GameObject buildingHit) = GetBuildingHitByRay(hits);
 
-        if (toactivateGo != null)
+        if (buildingHit != null)
         {
-            EnableOutline(toactivateGo.gameObject);
+            EnableOutline(buildingHit);
 
-            var resourceRangeBuilding = toactivateGo.transform.parent.GetComponentInChildren<RangeDisplayBehaviour>(true);
+            var resourceRangeBuilding1 = buildingHit.transform.GetComponentInChildren<RangeDisplayBehaviour>(true);
+            var resourceRangeBuilding2 = buildingHit.transform.GetComponent<RangeDisplayBehaviour>();
+            var resourceRangeBuilding = resourceRangeBuilding1 != null ? resourceRangeBuilding1 : resourceRangeBuilding2;
+
             if (resourceRangeBuilding != null)
             {
                 ActiveRangeDisplayBehaviour = resourceRangeBuilding;
@@ -89,18 +104,30 @@ public class UiManager : MonoBehaviour
             }
         }
 
-        var uiBuildingHit = toactivateGo != null;
-        ActivateUI(uiBuildingHit, toactivateGo);
+        var shouldActivateUIPart = toactivateUI != null;
+        ActivateUI(shouldActivateUIPart, toactivateUI);
     }
 
-    private MonoBehaviour GetBuildingHitByRay(RaycastHit[] hits)
+    private (MonoBehaviour, GameObject) GetBuildingHitByRay(RaycastHit[] hits)
     {
         MonoBehaviour toactivateGo = null;
+        GameObject goBuildingHit = null;
+
         foreach (var hit in hits)
         {
+            // Altijd input altijd; bij overige: BREAK
+            var displayBuildingInputOutputHandler = hit.transform.gameObject.GetComponentInChildren<DisplayBuildingInputOutputHandler>();
+            if (displayBuildingInputOutputHandler != null && !displayBuildingInputOutputHandler.gameObject.IsRoad())
+            {
+                goBuildingHit = displayBuildingInputOutputHandler.gameObject;
+                ActiveDisplayBuildingInputOutputHandler = displayBuildingInputOutputHandler;
+                ActiveDisplayBuildingInputOutputHandler.UpdateEnabledStatusOfDisplayObjects(true);
+            }
+
             var stockpileBehaviour = hit.transform.gameObject.GetComponentInChildren<StockpileBehaviour>();
             if (stockpileBehaviour != null)
             {
+                goBuildingHit = stockpileBehaviour.gameObject;
                 var go = SelectedBuildingPanel.GetComponentInChildren<StockpileUiBehaviour>(true);
                 go.CallingStockpile = stockpileBehaviour;
                 toactivateGo = go;
@@ -110,22 +137,25 @@ public class UiManager : MonoBehaviour
             var displayCardBuilding = hit.transform.gameObject.GetComponentInChildren<ICardBuilding>();
             if (displayCardBuilding != null)
             {
+                goBuildingHit = displayCardBuilding.GetGameObject();
                 var go = GetDisplayCardUiHandlerToActivate(hit.transform.gameObject);
                 go.CallingBuilding = displayCardBuilding;
                 toactivateGo = go;
                 break;
             }
+
             var tavernBuilding = hit.transform.gameObject.GetComponentInChildren<TavernBehaviour>();
             if (tavernBuilding != null)
             {
+                goBuildingHit = tavernBuilding.gameObject;
                 var go = SelectedBuildingPanel.GetComponentInChildren<UiTavernBehaviour>(true);
                 go.CallingTavern = tavernBuilding;
                 toactivateGo = go;
                 break;
-            }            
+            }
         }
 
-        return toactivateGo;
+        return (toactivateGo, goBuildingHit);
     }
 
     private CardUiHandler GetDisplayCardUiHandlerToActivate(GameObject goClicked)
@@ -213,7 +243,6 @@ public class UiManager : MonoBehaviour
                 QueueUiGo.SetActive(true);
                 return;
             }
-
         }
 
         QueueUiGo.SetActive(false);

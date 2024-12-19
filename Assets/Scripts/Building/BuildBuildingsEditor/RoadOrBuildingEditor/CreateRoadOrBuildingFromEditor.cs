@@ -12,7 +12,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     public GameObject RoadPrefab;
     public NavMeshSurface NavMeshSurfaceParent;
     public GameManager GameManager;
-    public GameObject ProcessingDisplayPrefab;
+    public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
 
     private GameObject FirstBuildingOrRoadSelected;
     private GameObject SecondRoadSelected;
@@ -256,7 +256,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
             buildingBehaviour.BuildingType = EditorSettings.SelectedBuildingType.Value;
 
             var showResources = real.AddComponent<DisplayBuildingInputOutputHandler>();
-            showResources.ProcessingDisplayPrefab = ProcessingDisplayPrefab;
+            showResources.DisplayProcessingInputOutputPrefab = DisplayProcessingInputOutputPrefab;
             showResources.GoSpawnOffset = GetBuildingPrefabItem(EditorSettings.SelectedBuildingType.Value).DisplayOffset;
 
             var locOfResource = real.GetComponent<ILocationOfResource>();

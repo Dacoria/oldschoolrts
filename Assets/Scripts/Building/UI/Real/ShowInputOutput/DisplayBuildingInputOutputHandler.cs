@@ -6,7 +6,7 @@ using System.Collections;
 
 public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 {    
-    public GameObject ProcessingDisplayPrefab;
+    public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
 
     private GameObject ProcessingDisplayGo;
 
@@ -36,7 +36,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
         BarracksBehaviour = GetComponent<BarracksBehaviour>(); // eenmalig
         QueueForBuildingBehaviour = GetComponent<QueueForBuildingBehaviour>();
 
-        ProcessingDisplayGo = Instantiate(ProcessingDisplayPrefab, transform);
+        ProcessingDisplayGo = Instantiate(DisplayProcessingInputOutputPrefab.gameObject, transform);
         ProcessingDisplayGo.transform.position = transform.position + GoSpawnOffset;
         ProcessingDisplayGo.transform.localScale = ProcessingDisplayGo.transform.localScale.MultiplyVector(GoSpawnScaleOffset);
 
@@ -78,7 +78,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
         Destroy(InputDisplayPrefabGo);
         Destroy(OutputDisplayPrefabGo);
 
-        UpdateEnabledStatusOfDisplayObjects();
+        UpdateEnabledStatusOfDisplayObjects(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
         
         scriptIsLoaded = true;
     }
@@ -152,16 +152,16 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     {
         if (keyCodeAction.KeyCodeActionType == KeyCodeActionType.ToggleInputOutputDisplay)
         {
-            UpdateEnabledStatusOfDisplayObjects();
+            UpdateEnabledStatusOfDisplayObjects(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
         }
     }
 
-    private void UpdateEnabledStatusOfDisplayObjects()
+    public void UpdateEnabledStatusOfDisplayObjects(bool isActive)
     {
         for (var i = 0; i < ProcessingDisplayGo.transform.childCount; i++)
         {
             var child = ProcessingDisplayGo.transform.GetChild(i);
-            child.gameObject.SetActive(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
+            child.gameObject.SetActive(isActive);
         }
     }
 

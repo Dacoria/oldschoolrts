@@ -22,8 +22,8 @@ public class BuildBuildingsByUser : MonoBehaviour
     private bool isHighlightedFieldShown => ObjectToBuild != null;
     private bool isMouseDragging;
 
-    public GameObject BuildingProgressDisplayPrefab;
-    public GameObject ProcessingDisplayPrefab;
+    public DisplayBuildingProgress DisplayBuildingProgressPrefab;
+    public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
     public GameObject FoodDisplayPrefab;
 
     private bool IsSelectedGoToBuildARoadOrField() => SelectedGameObjectToBuild?.name.IndexOf("Road") >= 0 || SelectedGameObjectToBuild?.name.IndexOf("FarmField") >= 0;
@@ -300,17 +300,17 @@ public class BuildBuildingsByUser : MonoBehaviour
             if (!buildingBehaviour.gameObject.IsRoad() && !buildingBehaviour.gameObject.IsFarmField())
             {
                 var displayOffset = GameManager.Instance.BuildingPrefabItems.Single(x => x.BuildingPrefab == SelectedGameObjectToBuild).DisplayOffset;
-                building.AddComponent<DisplayBuildingProgressHandler>().BuildingProgressDisplayPrefab = BuildingProgressDisplayPrefab;
+                building.AddComponent<DisplayBuildingProgressHandler>().DisplayBuildingProgressPrefab = DisplayBuildingProgressPrefab;
                 building.GetComponent<DisplayBuildingProgressHandler>().GoSpawnOffset = displayOffset;
                                
-                buildingBehaviour.Real.AddComponent<DisplayBuildingInputOutputHandler>().ProcessingDisplayPrefab = ProcessingDisplayPrefab;
+                buildingBehaviour.Real.AddComponent<DisplayBuildingInputOutputHandler>().DisplayProcessingInputOutputPrefab = DisplayProcessingInputOutputPrefab;
                 buildingBehaviour.Real.GetComponent<DisplayBuildingInputOutputHandler>().GoSpawnOffset = displayOffset;
 
                 Destroy(buildingBehaviour.GetComponentInChildren<RangeDisplayBehaviour>()?.gameObject);
             }
             else if (buildingBehaviour.gameObject.IsRoad())
             {
-                building.AddComponent<DisplayBuildingProgressHandler>().BuildingProgressDisplayPrefab = BuildingProgressDisplayPrefab;
+                building.AddComponent<DisplayBuildingProgressHandler>().DisplayBuildingProgressPrefab = DisplayBuildingProgressPrefab;
                 building.GetComponent<DisplayBuildingProgressHandler>().GoSpawnOffset = new Vector3(0.8f, 0, 0.3f);
                 building.GetComponent<DisplayBuildingProgressHandler>().GoSpawnScaleOffset = new Vector3(0.85f, 0.85f, 0.85f);
             }

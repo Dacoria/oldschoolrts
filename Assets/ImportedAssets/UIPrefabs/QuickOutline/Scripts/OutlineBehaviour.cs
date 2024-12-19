@@ -252,9 +252,7 @@ public class OutlineBehaviour : MonoBehaviour {
         }
     }
 
-    return smoothNormals;
-
-    
+    return smoothNormals;    
   }
 
   void CombineSubmeshes(Mesh mesh, Material[] materials) {

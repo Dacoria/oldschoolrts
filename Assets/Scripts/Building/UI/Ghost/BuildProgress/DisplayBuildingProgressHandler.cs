@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class DisplayBuildingProgressHandler : BaseAEMonoCI
 {
-    public GameObject BuildingProgressDisplayPrefab;
-    [HideInInspector] public GameObject BuildingProgressDisplayGo;
+    public DisplayBuildingProgress DisplayBuildingProgressPrefab;
+    [HideInInspector] public GameObject DisplayBuildingProgressGo;
 
     [ComponentInject] private BuildingBehaviour BuildingBehaviourScript;
 
@@ -43,7 +43,7 @@ public class DisplayBuildingProgressHandler : BaseAEMonoCI
             if (BuildingBehaviourScript.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
             {
                 // DESTROY
-                Destroy(BuildingProgressDisplayGo);
+                Destroy(DisplayBuildingProgressGo);
                 Destroy(this);
             }                     
         }
@@ -75,24 +75,25 @@ public class DisplayBuildingProgressHandler : BaseAEMonoCI
 
     private void UpdateEnabledStatusOfDisplayObjects()
     {
-        for (var i = 0; i < BuildingProgressDisplayGo.transform.childCount; i++)
+        for (var i = 0; i < DisplayBuildingProgressGo.transform.childCount; i++)
         {
-            var child = BuildingProgressDisplayGo.transform.GetChild(i);
+            var child = DisplayBuildingProgressGo.transform.GetChild(i);
             child.gameObject.SetActive(KeyCodeStatusSettings.ToggleBuildingProgressDisplay_Active);
         }
     }
 
     private void StartCreatingBuildProgressDisplay()
     {
-        BuildingProgressDisplayGo = Instantiate(BuildingProgressDisplayPrefab, transform);
-        BuildingProgressDisplayGo.transform.position = transform.position + GoSpawnOffset;
-        BuildingProgressDisplayGo.transform.localScale = BuildingProgressDisplayGo.transform.localScale.MultiplyVector(GoSpawnScaleOffset);
+        DisplayBuildingProgressGo = Instantiate(DisplayBuildingProgressPrefab.gameObject, transform);
+        DisplayBuildingProgressGo.transform.position = transform.position + GoSpawnOffset;
+        DisplayBuildingProgressGo.transform.localScale = DisplayBuildingProgressGo.transform.localScale.MultiplyVector(GoSpawnScaleOffset);
 
-        InputDisplayGoPrefab = BuildingProgressDisplayGo.transform.Find("InputPrefab").gameObject;
-        var buildPrefab = BuildingProgressDisplayGo.transform.Find("BuildPrefab").gameObject;       
+        InputDisplayGoPrefab = DisplayBuildingProgressGo.transform.Find("InputPrefab").gameObject;
+        var buildPrefab = DisplayBuildingProgressGo.transform.Find("BuildPrefab").gameObject;       
 
         buildPrefab.SetActive(true);
         InitiateItemsDisplay();
+        UpdateEnabledStatusOfDisplayObjects();
 
         Destroy(InputDisplayGoPrefab);
 
@@ -120,7 +121,7 @@ public class DisplayBuildingProgressHandler : BaseAEMonoCI
         InputTextMeshItems = new List<TextMeshItem>();
         for (var i = 0; i < BuildingBehaviourScript.RequiredItems.Length; i ++)
         {
-            var inputDisplayGo = Instantiate(InputDisplayGoPrefab, BuildingProgressDisplayGo.transform);
+            var inputDisplayGo = Instantiate(InputDisplayGoPrefab, DisplayBuildingProgressGo.transform);
 
             var extraYDistance = ((BuildingBehaviourScript.RequiredItems.Length - 1) * 0.6f) - (i * 0.6f);
             inputDisplayGo.transform.position = new Vector3(inputDisplayGo.transform.position.x, inputDisplayGo.transform.position.y + extraYDistance, inputDisplayGo.transform.position.z);

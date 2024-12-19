@@ -9,8 +9,6 @@ public class BuildingBehaviour : BaseAEMonoCI
     [HideInInspector]
     [ComponentInject] public GhostBuildingBehaviour GhostBuildingBehaviour;
 
-    [ComponentInject] public CheckCollisionForBuilding colScript;
-
     public Purpose Purpose = Purpose.BUILDING;
     public GameObject Real;
     public bool DEBUG_RealImmediately;
@@ -25,11 +23,6 @@ public class BuildingBehaviour : BaseAEMonoCI
     [HideInInspector]
     public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
 
-    public void Start()
-    {
-        CheckDisableCollisionScript();
-    }
-
     private void EnableRealWithoutActivating()
     {
         var children = Real.GetComponentsInChildren<MonoBehaviour>();
@@ -43,10 +36,9 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     private void ActivateReal()
     {
-        GhostBuildingBehaviour.gameObject.SetActive(false);
+        Destroy(GhostBuildingBehaviour.gameObject);
         Destroy(GhostBuildingBehaviour.gameObject.GetComponentInChildren<RangeDisplayBehaviour>());
-
-        Destroy(gameObject.GetComponent<CheckCollisionForBuilding>());
+        Destroy(gameObject.GetComponent<CheckCollisionHandler>());
 
         Real.SetActive(true); // staat al aan; zekerheidje
 
@@ -68,7 +60,7 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
-        if (builderRequest.GameObject == GhostBuildingBehaviour.transform.parent.gameObject)
+        if (GhostBuildingBehaviour != null && builderRequest.GameObject == GhostBuildingBehaviour.transform.parent.gameObject)
         {
             CurrentBuildStatus = builderRequest.Status;
 
@@ -134,6 +126,11 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
+        if(GhostBuildingBehaviour == null)
+        {
+            return; // al afgebouwd -> niet van toepassing
+        }
+
         if (serfOrder.To != null && serfOrder.To.GameObject == GhostBuildingBehaviour.gameObject)
         {
             if (serfOrder.Status == Status.SUCCESS)
@@ -145,6 +142,11 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     private void CreateSerfRequests()
     {
+        if (GhostBuildingBehaviour == null)
+        {
+            return; // al afgebouwd -> niet van toepassing
+        }
+
         foreach (var requiredItem in RequiredItems)
         {
             var count = 0;
@@ -167,11 +169,14 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     public void ActivateGhost()
     {
+        if (GhostBuildingBehaviour == null)
+        {
+            return; // al afgebouwd -> niet van toepassing
+        }
         GhostBuildingBehaviour.gameObject.SetActive(true);
         var children = GhostBuildingBehaviour.GetComponentsInChildren<MonoBehaviour>();
         foreach (var monoBehaviour in children) monoBehaviour.enabled = true;
 
-        CheckDisableCollisionScript();
         ActivateBuildersRequest();        
     }
 
@@ -187,17 +192,6 @@ public class BuildingBehaviour : BaseAEMonoCI
         if (buildProgressTextScript != null)
         {
             buildProgressTextScript.enabled = true;
-        }
-    }
-
-    private void CheckDisableCollisionScript()
-    {
-        if(colScript != null)
-        {
-            if(Real.activeSelf || GhostBuildingBehaviour.isActiveAndEnabled)
-            {
-                colScript.enabled = false; // alleen collisions (rode kleur) bij template mode, niet Gost of Real
-            }
         }
     }
 

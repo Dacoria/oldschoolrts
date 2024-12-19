@@ -28,7 +28,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private bool IsSelectedGoToBuildARoadOrField() => SelectedGameObjectToBuild?.name.IndexOf("Road") >= 0 || SelectedGameObjectToBuild?.name.IndexOf("FarmField") >= 0;
 
-    private CheckCollisionForBuilding CheckCollisionForBuilding;
+    private CheckCollisionHandler CheckCollisionForBuilding;
 
     private void Update()
     {
@@ -180,7 +180,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
         foreach(var roadOrFieldGo in RoadsOrFieldsHighlightedToBuild)
         {
-            var checkCol = roadOrFieldGo.GetComponent<CheckCollisionForBuilding>();
+            var checkCol = roadOrFieldGo.GetComponent<CheckCollisionHandler>();
             if(checkCol == null || checkCol.IsColliding())
             {
                 return true;
@@ -212,7 +212,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
         if (UseCollisionCollorForAllowBuild)
         {
-            CheckCollisionForBuilding = ObjectToBuild.GetComponentInChildren<CheckCollisionForBuilding>(); // voor bepalen of collide wordt met ander iets
+            CheckCollisionForBuilding = ObjectToBuild.GetComponentInChildren<CheckCollisionHandler>(); // voor bepalen of collide wordt met ander iets
             if(CheckCollisionForBuilding != null)
             {
                 CheckCollisionForBuilding.enabled = true;                

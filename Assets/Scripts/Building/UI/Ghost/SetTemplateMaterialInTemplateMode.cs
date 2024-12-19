@@ -4,7 +4,7 @@ using UnityEngine;
 public class SetTemplateMaterialInTemplateMode : MonoBehaviourCI
 {
     [ComponentInject] private GhostBuildingBehaviour GhostBuildingBehaviour;
-    [ComponentInject] private CheckCollisionForBuilding CheckCollisionForBuilding;
+    [ComponentInject] private CheckCollisionHandler CheckCollisionForBuilding;
     [ComponentInject] private List<Renderer> Renderers;
 
     public bool UseColorSetterOfMaterials = false; // voor als een building in 1 mesh meerdere materialen heeft -> die zijn niet op een temp material te zetten -> dan deze workaround....

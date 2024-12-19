@@ -4,18 +4,56 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public partial class CheckCollisionForBuilding : MonoBehaviourCI
+public class CheckCollision : MonoBehaviour
 {
+    [ComponentInject] private BoxCollider boxCollider;
+    private Vector3 sizeChangeInCollisionCheck = Vector3.zero;
+    private Vector3 initialBoxColliderSize;
+
+    public void Init(int? inclLayers = null, int? exclLayers = null, Vector3? v3SizeChangeWhenEnabled = null)
+    {
+        this.ComponentInject(); // boxcollider wordt later aangemaakt :o
+        boxCollider.isTrigger = false;
+        initialBoxColliderSize = boxCollider.size;
+
+        if (inclLayers.HasValue)
+        {
+            boxCollider.includeLayers = inclLayers.Value;
+        }
+        if (exclLayers.HasValue)
+        {
+            boxCollider.excludeLayers = exclLayers.Value;
+        }
+        if (v3SizeChangeWhenEnabled.HasValue)
+        {
+            boxCollider.size += v3SizeChangeWhenEnabled.Value;
+        }
+    }    
+
+    private void OnDestroy()
+    {
+        // back to defaults
+        StopAllCoroutines();
+        boxCollider.isTrigger = true;
+        boxCollider.size = initialBoxColliderSize;
+        boxCollider.excludeLayers = 1 << Constants.LAYER_TERRAIN;
+    }
+
+
     private int notUpdatedCollidingCounter;
     private List<Collision> CollisionsOnLocation = new List<Collision>();
+    [HideInInspector][ComponentInject(Required.OPTIONAL)] public CheckResourceCollisionForBuilding CheckResourceCollisionForBuilding;
+
+    // Deze waarde gaat het om; deze moet correct zijn
+    public bool IsColliding;
 
     protected class Collision
     {
         public bool IsUnitCollision;
         public bool IsResourceCollision;
         public bool IsRelevantResourceCollision;
-        public bool IsRoad;
-        public bool IsFarmField;
+        public bool IsRoadCollision;
+        public bool IsFarmFieldCollision;
         public GameObject GameObject;
     }
 
@@ -32,7 +70,7 @@ public partial class CheckCollisionForBuilding : MonoBehaviourCI
 
         notUpdatedCollidingCounter++;
 
-        var framesToCheckAgain = isColliding ? 50 : 10; // sneller collision checken; die wil je sneller goed hebben
+        var framesToCheckAgain = IsColliding ? 50 : 10; // sneller collision checken; die wil je sneller goed hebben
 
         if(notUpdatedCollidingCounter > framesToCheckAgain)
         {
@@ -49,25 +87,12 @@ public partial class CheckCollisionForBuilding : MonoBehaviourCI
             IsRelevantResourceCollision = isRelevantResourceCollision,
             IsResourceCollision = other.transform.tag == Constants.TAG_RESOURCE,
             IsUnitCollision = other.transform.tag == Constants.TAG_UNIT,
-            IsRoad = other.gameObject.IsRoad(),
-            IsFarmField = other.gameObject.IsFarmField(),
+            IsRoadCollision = other.gameObject.IsRoad(),
+            IsFarmFieldCollision = other.gameObject.IsFarmField(),
             GameObject = other.transform.gameObject
         };
 
         CollisionsOnLocation.Add(collision);        
-    }
-
-    private bool isColliding;
-    public bool IsColliding()
-    {
-        if (IsRoadCollider || roadColliderCheckScript == null)
-        {
-            return isColliding;
-        }
-        else
-        {
-            return isColliding || roadColliderCheckScript.isColliding;
-        }
     }
 
     private DateTime? notCollidingDateTime;
@@ -104,23 +129,23 @@ public partial class CheckCollisionForBuilding : MonoBehaviourCI
     private void UpdateCollisionStatusWithCheckResult(bool isCollidingInThisCheck, DateTime? checkNotCollidingDateTime)
     {
         // Check + huidige status zeggen: collide. Consistent; alleen resetten
-        if (isCollidingInThisCheck && isColliding)
+        if (isCollidingInThisCheck && IsColliding)
         {
             notCollidingDateTime = null;
             return;
         }
 
         // Check + huidige status zeggen: geen collide. Consistent; alleen resetten
-        if (!isCollidingInThisCheck && !isColliding)
+        if (!isCollidingInThisCheck && !IsColliding)
         {
             notCollidingDateTime = null;
             return;
         }
 
         // Check zegt collide + huidige status zegt niet -> update huidige status
-        if (isCollidingInThisCheck && !isColliding)
+        if (isCollidingInThisCheck && !IsColliding)
         {
-            isColliding = true;
+            IsColliding = true;
             notCollidingDateTime = null;
             return;
         }
@@ -128,7 +153,7 @@ public partial class CheckCollisionForBuilding : MonoBehaviourCI
         // Check zegt GEEN collide + huidige status zegt wel -> Dan wachten tot het zo blijft; zo ja updaten. Manier: Via timestamp dat je zolang hebt gewacht
         // Waarom zo? Voorkomt flikkeren + veilig qua bouwen
 
-        if (!isCollidingInThisCheck && isColliding)
+        if (!isCollidingInThisCheck && IsColliding)
         {
             if (!notCollidingDateTime.HasValue)
             {
@@ -145,7 +170,7 @@ public partial class CheckCollisionForBuilding : MonoBehaviourCI
                 notCollidingDateTime.HasValue &&
                 checkNotCollidingDateTime.Value == notCollidingDateTime.Value)
                 {
-                    isColliding = false;
+                    IsColliding = false;
                     notCollidingDateTime = null;
                 }
             }

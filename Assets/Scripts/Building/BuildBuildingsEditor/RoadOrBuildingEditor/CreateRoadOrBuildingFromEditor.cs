@@ -232,7 +232,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     private void FinalizeRoadOrBuilding(GameObject go, bool isRoad)
     {
         var ghost = go.GetComponentInChildren<GhostBuildingBehaviour>();
-        ghost.gameObject.SetActive(false);
+        DestroyImmediate(ghost.gameObject);
 
         var real = GetReal(go);
         real.gameObject.SetActive(true);

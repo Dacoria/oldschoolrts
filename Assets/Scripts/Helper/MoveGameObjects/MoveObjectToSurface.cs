@@ -49,7 +49,7 @@ public class MoveObjectToSurface : MonoBehaviourCI
             }
             else
             {
-                enabled = false; // disable script (onnodige updates voorkomen)                
+                Destroy(this);
             }
         }
     }

@@ -6,13 +6,13 @@ using System.Collections;
 
 public class CheckCollision : MonoBehaviour
 {
-    [ComponentInject] private BoxCollider boxCollider;
+    private BoxCollider boxCollider;
     private Vector3 sizeChangeInCollisionCheck = Vector3.zero;
     private Vector3 initialBoxColliderSize;
 
     public void Init(int? inclLayers = null, int? exclLayers = null, Vector3? v3SizeChangeWhenEnabled = null)
     {
-        this.ComponentInject(); // boxcollider wordt later aangemaakt :o
+        boxCollider.GetComponent<BoxCollider>(); // wordt pas later aangemaakt -> daarom geen CI gebruiken
         boxCollider.isTrigger = false;
         initialBoxColliderSize = boxCollider.size;
 

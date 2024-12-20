@@ -577,7 +577,6 @@ GameObject:
   - component: {fileID: 4110746429550712075}
   - component: {fileID: 8576187601274905585}
   - component: {fileID: 6239675126735335351}
-  - component: {fileID: 3008703610102954126}
   m_Layer: 0
   m_Name: TavernPrefab
   m_TagString: Building
@@ -616,7 +615,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 5203347845683673915}
   DEBUG_RealImmediately: 1
@@ -679,20 +677,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.99, y: 6, z: 4.99}
   m_Center: {x: 1, y: 3, z: 1}
---- !u!114 &3008703610102954126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8848698533043479122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1001 &111684216397872037
 PrefabInstance:
   m_ObjectHideFlags: 0

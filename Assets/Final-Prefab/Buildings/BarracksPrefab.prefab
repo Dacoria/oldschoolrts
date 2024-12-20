@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 5803920541974935959}
   - component: {fileID: 2198699783764889453}
   - component: {fileID: 4544171148567839531}
-  - component: {fileID: 8215521018362037436}
   m_Layer: 0
   m_Name: BarracksPrefab
   m_TagString: Building
@@ -134,7 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 2427974211878623143}
   DEBUG_RealImmediately: 1
@@ -197,20 +195,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.99, y: 6, z: 3.99}
   m_Center: {x: 0.5, y: 3, z: 0.5}
---- !u!114 &8215521018362037436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1390205512955645646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &2069943271057972579
 GameObject:
   m_ObjectHideFlags: 0

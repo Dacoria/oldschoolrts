@@ -88,7 +88,6 @@ GameObject:
   - component: {fileID: 64234139698033356}
   - component: {fileID: 5687139963715290166}
   - component: {fileID: 8034349111405856880}
-  - component: {fileID: 7065058389744306795}
   m_Layer: 0
   m_Name: IronSmelterPrefab
   m_TagString: Building
@@ -127,7 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 8013217940820927744}
   DEBUG_RealImmediately: 1
@@ -190,20 +188,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.99, y: 3.5, z: 2.99}
   m_Center: {x: -0.5, y: 1.75, z: 1}
---- !u!114 &7065058389744306795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4838166635928323477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &4844777841528025492
 GameObject:
   m_ObjectHideFlags: 0

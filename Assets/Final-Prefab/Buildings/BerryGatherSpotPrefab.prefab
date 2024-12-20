@@ -279,7 +279,6 @@ GameObject:
   - component: {fileID: 5983841144268644438}
   - component: {fileID: 2090282549824001708}
   - component: {fileID: 4364364895484566250}
-  - component: {fileID: 7057420852248019777}
   m_Layer: 0
   m_Name: BerryGatherSpotPrefab
   m_TagString: Building
@@ -318,7 +317,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 4384887623944222618}
   DEBUG_RealImmediately: 1
@@ -381,20 +379,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99, y: 1, z: 0.99}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &7057420852248019777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209908808982140687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &2542986439173441335
 GameObject:
   m_ObjectHideFlags: 0

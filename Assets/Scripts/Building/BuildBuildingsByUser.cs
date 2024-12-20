@@ -15,8 +15,6 @@ public class BuildBuildingsByUser : MonoBehaviour
     private GameObject ObjectToBuild;
     private GameObject SelectedGameObjectToBuild; // hierin wordt het gameobject gezet wat wordt gebouwd. Hiermee wordt ObjectToBuild Initiated! (kan meerdere keren zijn door Roads)
 
-    private bool UseCollisionCollorForAllowBuild = true;
-
     [HideInInspector] public bool InstaBuild = false;
 
     private bool isHighlightedFieldShown => ObjectToBuild != null;
@@ -28,7 +26,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private bool IsSelectedGoToBuildARoadOrField() => SelectedGameObjectToBuild?.name.IndexOf("Road") >= 0 || SelectedGameObjectToBuild?.name.IndexOf("FarmField") >= 0;
 
-    private CheckCollisionHandler CheckCollisionForBuilding;
+    private CheckCollisionHandler checkCollisionForBuilding;
 
     private void Update()
     {
@@ -91,7 +89,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             //Debug.Log("Klik mouse 4 buildigs");
             if (isHighlightedFieldShown)
             {
-                if (!UseCollisionCollorForAllowBuild || !CheckCollisionForBuilding.IsColliding())
+                if (!checkCollisionForBuilding.IsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
                     Build(ObjectToBuild);
@@ -107,7 +105,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private void UpdateDragLeftMouseInputForRoadOrField()
     {                 
-        if ((!UseCollisionCollorForAllowBuild || !CheckCollisionForBuilding.IsColliding()) && 
+        if (!checkCollisionForBuilding.IsColliding() && 
             ObjectToBuild != null &&
             LastKnownGhostRoadOrFieldLocation != null && 
             !ObjectToBuild.transform.position.IsSameVector3(LastKnownGhostRoadOrFieldLocation)
@@ -152,7 +150,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             //Debug.Log("Klik mouse 4 Road or Field");
             if (isHighlightedFieldShown)
             {
-                if (!UseCollisionCollorForAllowBuild || !AnyOfRoadsOrFieldsColliding())
+                if (!checkCollisionForBuilding.IsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
                     BuildRoadsOrFields(ObjectToBuild);
@@ -171,25 +169,6 @@ public class BuildBuildingsByUser : MonoBehaviour
         }
     }
 
-    private bool AnyOfRoadsOrFieldsColliding()
-    {
-        if(CheckCollisionForBuilding.IsColliding())
-        {
-            return true;
-        }
-
-        foreach(var roadOrFieldGo in RoadsOrFieldsHighlightedToBuild)
-        {
-            var checkCol = roadOrFieldGo.GetComponent<CheckCollisionHandler>();
-            if(checkCol == null || checkCol.IsColliding())
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void UpdateLocationHighlightField()
     {
         var rayCastLocation = Get2DRaycastLocation();
@@ -200,7 +179,6 @@ public class BuildBuildingsByUser : MonoBehaviour
         else
         {
             // muis hovert niet over locatie
-            //Debug.Log("UpdateLocationHighlightField -> muis hovert niet over locatie -> Destroy");
             DestroyHighlightedObjects();
         }
     }  
@@ -210,14 +188,7 @@ public class BuildBuildingsByUser : MonoBehaviour
         ObjectToBuild = Instantiate(SelectedGameObjectToBuild, new Vector3(0, 0.01f, 0), Quaternion.identity);
         FillBuildingType(SelectedGameObjectToBuild, ObjectToBuild);
 
-        if (UseCollisionCollorForAllowBuild)
-        {
-            CheckCollisionForBuilding = ObjectToBuild.GetComponentInChildren<CheckCollisionHandler>(); // voor bepalen of collide wordt met ander iets
-            if(CheckCollisionForBuilding != null)
-            {
-                CheckCollisionForBuilding.enabled = true;                
-            }
-        }
+        checkCollisionForBuilding = ObjectToBuild.AddComponent<CheckCollisionHandler>(); // voor bepalen of collide wordt met ander iets
 
         var locOfResource = ObjectToBuild.GetComponentInChildren<ILocationOfResource>(true);
         if (locOfResource != null)

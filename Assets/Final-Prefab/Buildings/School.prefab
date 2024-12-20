@@ -279,7 +279,6 @@ GameObject:
   - component: {fileID: 6858339829523350876}
   - component: {fileID: 1235469035461538726}
   - component: {fileID: 3510062031284879328}
-  - component: {fileID: 5444336233099037955}
   m_Layer: 0
   m_Name: School
   m_TagString: Building
@@ -318,7 +317,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 3530022084684763792}
   DEBUG_RealImmediately: 1
@@ -381,20 +379,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.99, y: 3, z: 1.99}
   m_Center: {x: 0, y: 1.5, z: -0.5}
---- !u!114 &5444336233099037955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084354960294146565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &2912841349473650255
 GameObject:
   m_ObjectHideFlags: 0

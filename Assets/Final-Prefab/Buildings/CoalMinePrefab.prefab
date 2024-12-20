@@ -449,8 +449,6 @@ GameObject:
   - component: {fileID: 512425492987196940}
   - component: {fileID: 5265960802083520758}
   - component: {fileID: 7531998985287765168}
-  - component: {fileID: 4950570471017084768}
-  - component: {fileID: 581728286907190375}
   m_Layer: 0
   m_Name: CoalMinePrefab
   m_TagString: Building
@@ -489,7 +487,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 7551445428627530176}
   DEBUG_RealImmediately: 1
@@ -552,33 +549,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.99, y: 3.5, z: 1.99}
   m_Center: {x: 0, y: 1.5, z: 0.5}
---- !u!114 &4950570471017084768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4961887286894248277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af00ebad507bc6647bf4f1fc580ffeec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaterialResourceTypeToCheck: 5
---- !u!114 &581728286907190375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4961887286894248277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &7057998302903976468
 GameObject:
   m_ObjectHideFlags: 0

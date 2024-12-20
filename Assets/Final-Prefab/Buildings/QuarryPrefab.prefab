@@ -424,7 +424,6 @@ GameObject:
   - component: {fileID: 152075901279111652}
   - component: {fileID: 5482212322211102494}
   - component: {fileID: 7892489451922174808}
-  - component: {fileID: 6203563136457709673}
   m_Layer: 0
   m_Name: QuarryPrefab
   m_TagString: Building
@@ -463,7 +462,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 8297327528166827988}
   DEBUG_RealImmediately: 0
@@ -526,20 +524,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.99, y: 2.7, z: 2.99}
   m_Center: {x: 0, y: 1.35, z: 0}
---- !u!114 &6203563136457709673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4745916932499406525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &4884037562092879119
 GameObject:
   m_ObjectHideFlags: 0

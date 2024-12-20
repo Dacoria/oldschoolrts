@@ -577,7 +577,6 @@ GameObject:
   - component: {fileID: 3040630156320169123}
   - component: {fileID: 7222241298693433945}
   - component: {fileID: 5019811998154155551}
-  - component: {fileID: 7931777718907315079}
   m_Layer: 0
   m_Name: FishingCabinPrefab
   m_TagString: Building
@@ -678,18 +677,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.99, y: 2.7, z: 2.99}
   m_Center: {x: 0.5, y: 1.35, z: 1}
---- !u!114 &7931777718907315079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634401209638267898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &256037793765983480
 PrefabInstance:
   m_ObjectHideFlags: 0

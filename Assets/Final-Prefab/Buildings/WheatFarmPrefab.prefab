@@ -546,7 +546,6 @@ GameObject:
   - component: {fileID: 1740885028045215537}
   - component: {fileID: 6206011429936734667}
   - component: {fileID: 8625331013043318157}
-  - component: {fileID: 7962755801860461381}
   m_Layer: 0
   m_Name: WheatFarmPrefab
   m_TagString: Building
@@ -585,7 +584,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 7571275416962988289}
   DEBUG_RealImmediately: 1
@@ -648,20 +646,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.99, y: 2.7, z: 2.99}
   m_Center: {x: 1.5, y: 1.35, z: 0}
---- !u!114 &7962755801860461381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6622674929285242984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &8027973989642736674
 GameObject:
   m_ObjectHideFlags: 0

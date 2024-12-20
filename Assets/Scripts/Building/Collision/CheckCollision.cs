@@ -7,11 +7,14 @@ using System.Collections;
 public class CheckCollision : MonoBehaviour
 {
     private BoxCollider boxCollider;
+    [HideInInspector] public CheckResourceCollisionForBuilding checkResourceCollisionForBuilding;
     private Vector3 sizeChangeInCollisionCheck = Vector3.zero;
     private Vector3 initialBoxColliderSize;
 
     public void Init(int? inclLayers = null, int? exclLayers = null, Vector3? v3SizeChangeWhenEnabled = null)
     {
+        checkResourceCollisionForBuilding = GetComponent<CheckResourceCollisionForBuilding>(); // wordt pas later aangemaakt -> daarom geen CI gebruiken
+
         boxCollider = GetComponent<BoxCollider>(); // wordt pas later aangemaakt -> daarom geen CI gebruiken
         boxCollider.isTrigger = false;
         initialBoxColliderSize = boxCollider.size;
@@ -42,7 +45,7 @@ public class CheckCollision : MonoBehaviour
 
     private int notUpdatedCollidingCounter;
     private List<Collision> CollisionsOnLocation = new List<Collision>();
-    [HideInInspector][ComponentInject(Required.OPTIONAL)] public CheckResourceCollisionForBuilding CheckResourceCollisionForBuilding;
+    
 
     // Deze waarde gaat het om; deze moet correct zijn
     public bool IsColliding;
@@ -81,7 +84,7 @@ public class CheckCollision : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        var isRelevantResourceCollision = CheckResourceCollisionForBuilding != null && CheckResourceCollisionForBuilding.IsCollidingWithRequiredResource(other);
+        var isRelevantResourceCollision = checkResourceCollisionForBuilding != null && checkResourceCollisionForBuilding.IsCollidingWithRequiredResource(other);
         var collision = new Collision
         {
             IsRelevantResourceCollision = isRelevantResourceCollision,
@@ -106,17 +109,15 @@ public class CheckCollision : MonoBehaviour
     private void UpdateCollisionStatus(DateTime? checkNotCollidingDateTime = null)
     {
         var go = gameObject;
-        var relevantCollisions = CollisionsOnLocation.Where(x => !x.IsUnitCollision).ToList();
+
+        var hasRelevantResourceCollision = CollisionsOnLocation.Any(x => x.IsRelevantResourceCollision);
+        var relevantCollisions = CollisionsOnLocation.Where(x => !x.IsUnitCollision && !x.IsResourceCollision).ToList();
 
         bool isCollidingInThisCheck;
 
-        if (CheckResourceCollisionForBuilding != null)
+        if (checkResourceCollisionForBuilding != null)
         {
-            isCollidingInThisCheck =
-                relevantCollisions.All(x => !x.IsRelevantResourceCollision) ||
-                relevantCollisions
-                .Where(x => !x.IsRelevantResourceCollision)
-                .Any();
+            isCollidingInThisCheck = relevantCollisions.Any() || !hasRelevantResourceCollision;
         }
         else
         {

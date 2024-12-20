@@ -366,8 +366,6 @@ GameObject:
   - component: {fileID: 179537050072249300}
   - component: {fileID: 5509350163649987886}
   - component: {fileID: 7919120967486851432}
-  - component: {fileID: 8966593846647008701}
-  - component: {fileID: 4488469458873808299}
   m_Layer: 0
   m_Name: IronMinePrefab
   m_TagString: Building
@@ -406,7 +404,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 7903052223865660440}
   DEBUG_RealImmediately: 1
@@ -469,33 +466,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.99, y: 3.5, z: 1.99}
   m_Center: {x: 0, y: 1.5, z: 0.5}
---- !u!114 &8966593846647008701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4737080410563085453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af00ebad507bc6647bf4f1fc580ffeec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaterialResourceTypeToCheck: 6
---- !u!114 &4488469458873808299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4737080410563085453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &4952773359957595177
 GameObject:
   m_ObjectHideFlags: 0

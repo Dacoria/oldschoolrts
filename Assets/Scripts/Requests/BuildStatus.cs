@@ -1,6 +1,7 @@
 ﻿public enum BuildStatus
 {
     NONE,
+    NEEDS_PLACEMENT,
     NEEDS_PREPARE,
     PREPARING,
     COMPLETED_PREPARING,

@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
 public class CheckCollisionHandler : BaseAEMonoCI
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
-    
+
     private int terrainLayer = 1 << Constants.LAYER_TERRAIN;
     private int roadLayer = 1 << Constants.LAYER_ROAD;
     private int farmFieldLayer = 1 << Constants.LAYER_FARM_FIELD;
@@ -20,13 +19,14 @@ public class CheckCollisionHandler : BaseAEMonoCI
 
         if (isBuildingToBuild)
         {
-            CreateBuildingAndRoadCollisions();
+            CreateResourceCollisionIfNeeded();
+            CreateBuildingAndRoadCollisions();            
         }
         else
         {
             CreateStandardCollision();
         }
-    }
+    }    
 
     public bool IsColliding()
     {
@@ -37,6 +37,16 @@ public class CheckCollisionHandler : BaseAEMonoCI
         else
         {
             return mainCollision.IsColliding;
+        }
+    }
+
+    private void CreateResourceCollisionIfNeeded()
+    {
+        var miningResourceBehaviour = gameObject.GetComponentInChildren<MiningResourceBehaviour>(true);
+        if (miningResourceBehaviour != null)
+        {
+            var checkResourceCollisionForBuilding = gameObject.AddComponent<CheckResourceCollisionForBuilding>();
+            checkResourceCollisionForBuilding.MaterialResourceTypeToCheck = miningResourceBehaviour.MaterialResourceType;
         }
     }
 

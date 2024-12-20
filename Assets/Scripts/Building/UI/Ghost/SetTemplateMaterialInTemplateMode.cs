@@ -1,20 +1,68 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetTemplateMaterialInTemplateMode : MonoBehaviourCI
+public class SetTemplateMaterialInTemplateMode : BaseAEMonoCI
 {
     [ComponentInject] private GhostBuildingBehaviour GhostBuildingBehaviour;
-    [ComponentInject] private CheckCollisionHandler CheckCollisionForBuilding;
     [ComponentInject] private List<Renderer> Renderers;
+
+    private CheckCollisionHandler checkCollisionForBuilding; // init via start --> wordt later toegevoegd
 
     public bool UseColorSetterOfMaterials = false; // voor als een building in 1 mesh meerdere materialen heeft -> die zijn niet op een temp material te zetten -> dan deze workaround....
 
-    private bool ScriptIsActive;
+    private bool scriptIsActive;
 
     private Color NormalColor;
     private Color CollidingColor;
 
     void Start()
+    {
+        InitColorSettings();
+        StartCoroutine(InitScriptWhenPossible());
+    }
+
+    private IEnumerator InitScriptWhenPossible()
+    {
+        //zorg dat er een CheckCollisionHandler is
+        for (var i = 0; i <= 30; i++)
+        {
+            checkCollisionForBuilding = GetComponentInParent<CheckCollisionHandler>();
+            if (checkCollisionForBuilding != null)
+            {
+                break;
+            }
+            if (i == 30)
+            {
+                throw new System.Exception("SetTemplateMaterialInTemplateMode -> No CheckCollisionHandler found");
+            }
+
+            yield return Wait4Seconds.Get(0.1f);
+        }
+
+        InitScript();
+    }
+
+    private void InitScript()
+    {
+        if(GhostBuildingBehaviour == null || GhostBuildingBehaviour.isActiveAndEnabled)
+        {
+            Destroy(this);
+        }
+
+        if (!UseColorSetterOfMaterials)
+        {
+            SetMaterialsToTemplateMaterial();
+        }
+        else
+        {
+            SetAllMaterialsToColor(NormalColor);
+        }
+
+        scriptIsActive = true;
+    }
+
+    private void InitColorSettings()
     {
         NormalColor = Color.white;
         CollidingColor = Color.red;
@@ -27,37 +75,31 @@ public class SetTemplateMaterialInTemplateMode : MonoBehaviourCI
             this.CollidingMaterial = new Material(Shader.Find("Standard"));
             this.CollidingMaterial.color = CollidingColor;
         }
+    }        
 
-        ScriptIsActive = GhostBuildingBehaviour != null && !GhostBuildingBehaviour.isActiveAndEnabled;
-        if(ScriptIsActive)
+    protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
+    {
+        if (GhostBuildingBehaviour != null &&
+            GhostBuildingBehaviour.isActiveAndEnabled &&
+            builderRequest.GameObject == GhostBuildingBehaviour.transform.parent.gameObject)
         {
-            if(!UseColorSetterOfMaterials)
+            if(builderRequest.Status == BuildStatus.NEEDS_PREPARE)
             {
-                SetMaterialsToTemplateMaterial();
+                Destroy(this);
             }
-            else
-            {
-                SetAllMaterialsToColor(NormalColor);
-            }
-            PreviousCheckIsInGhostMode = GhostBuildingBehaviour.isActiveAndEnabled;
         }
     }
 
-    private bool PreviousCheckIsInGhostMode;
-    private bool PreviousIsColliding;
+    private bool previousIsColliding;
 
     void Update()
     {
-        if(ScriptIsActive)
+        if(scriptIsActive)
         {
-            if (GhostBuildingBehaviour != null && PreviousCheckIsInGhostMode != GhostBuildingBehaviour.isActiveAndEnabled)
-            {
-                ScriptIsActive = false;
-            }
-            else if (CheckCollisionForBuilding != null && CheckCollisionForBuilding.IsColliding() != PreviousIsColliding)
+            if (checkCollisionForBuilding.IsColliding() != previousIsColliding)
             {
                 var colorToSet = NormalColor;
-                if(CheckCollisionForBuilding.IsColliding())
+                if(checkCollisionForBuilding.IsColliding())
                 {
                     colorToSet = CollidingColor;
                 } 
@@ -71,9 +113,8 @@ public class SetTemplateMaterialInTemplateMode : MonoBehaviourCI
                     TemplateMaterial.color = colorToSet;
                 }                
             }
-        }
-
-        PreviousIsColliding = CheckCollisionForBuilding.IsColliding();
+            previousIsColliding = checkCollisionForBuilding.IsColliding();
+        }       
     }
 
     // VOOR OPSLAAN VAN RENDERERS & ZETTEN VAN KLEUREN
@@ -81,7 +122,7 @@ public class SetTemplateMaterialInTemplateMode : MonoBehaviourCI
     [ComponentInject] private Renderer[] OriginalChildrenRenderers;
     private Material TemplateMaterial;
     private Material CollidingMaterial;
-    private Material ResourceMatchedMaterial;
+    private Material ResourceMatchedMaterial;    
 
     private void SetMaterialsToTemplateMaterial()
     {

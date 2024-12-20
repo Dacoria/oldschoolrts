@@ -240,6 +240,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
 
         var components = real.GetComponents<MonoBehaviour>();
         foreach (var monoBehaviour in components) monoBehaviour.enabled = true;
+        DestroyImmediate(real.GetComponent<MoveObjectToSurface>());
 
         var children = real.GetComponentsInChildren<MonoBehaviour>();
         foreach (var monoBehaviour in children) monoBehaviour.enabled = true;

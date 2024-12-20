@@ -15,8 +15,7 @@ public class BuildingBehaviour : BaseAEMonoCI
     public float TimeToBuildRealInSeconds = 5; //kan overschreven worden per prefab
     public float TimeToPrepareBuildingInSeconds = 3; //kan overschreven worden per prefab
 
-    //[HideInInspector]
-    public BuildingType BuildingType;// wordt geset door builder bij bouwen   
+    [HideInInspector] public BuildingType BuildingType;// wordt geset door builder bij bouwen   
 
     public ItemAmountBuffer[] RequiredItems;
 
@@ -54,9 +53,7 @@ public class BuildingBehaviour : BaseAEMonoCI
         }
     }
 
-    [HideInInspector]
-    public BuildStatus CurrentBuildStatus;
-
+    [HideInInspector] public BuildStatus CurrentBuildStatus;
 
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {

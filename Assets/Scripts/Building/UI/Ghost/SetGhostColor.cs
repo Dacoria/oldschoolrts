@@ -10,45 +10,26 @@ public class SetGhostColor : BaseAEMonoCI
     [ComponentInject] private SetTemplateMaterialInTemplateMode SetTemplateMaterialInTemplateMode; // error als deze er niet is
     [ComponentInject] private List<Renderer> Renderers;
 
-    private bool updateActive;
-
-    void Start()
-    {
-        updateActive = GhostBuildingBehaviour != null;
-    }
-
     private bool hasSetColorGhostToBuild = false;
 
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
         if (GhostBuildingBehaviour != null && 
             GhostBuildingBehaviour.isActiveAndEnabled && 
-            builderRequest.GameObject == GhostBuildingBehaviour.transform.parent.gameObject && 
-            builderRequest.Status == BuildStatus.COMPLETED_PREPARING)
+            builderRequest.GameObject == GhostBuildingBehaviour.transform.parent.gameObject)
         {
-            var colorGhostWaitForBeingBuild = new Color(0.7f, 0.7f, 0.9f, 0.1f); // licht paars;
-            SetColorBuilding(colorGhostWaitForBeingBuild);
-        }
-    }
-
-    void Update()
-    {
-        if (updateActive)
-        {
-            if (GhostBuildingBehaviour != null && GhostBuildingBehaviour.isActiveAndEnabled)
+            if (builderRequest.Status == BuildStatus.NEEDS_PREPARE)
             {
-                // als ghost mode enabled is, zet eenmaal de kleur
-                if(!hasSetColorGhostToBuild)
-                {
-                    var colorGhostToBuild = new Color(0.5f, 0.8f, 0.9f, 0.1f); // aquamarine blauw;
-                    SetColorBuilding(colorGhostToBuild);
-                    hasSetColorGhostToBuild = true;
-                } 
-                
-                updateActive = false;//onnodige checks stoppen; verandert van kleur naar paars in BuilderRequestStatusChanged
+                var colorGhostToBuild = new Color(0.5f, 0.8f, 0.9f, 0.1f); // aquamarine blauw;
+                SetColorBuilding(colorGhostToBuild);
             }
-        }
-    }        
+            else if (builderRequest.Status == BuildStatus.COMPLETED_PREPARING)
+            {
+                var colorGhostWaitForBeingBuild = new Color(0.7f, 0.7f, 0.9f, 0.1f); // licht paars;
+                SetColorBuilding(colorGhostWaitForBeingBuild);
+            }            
+        }            
+    } 
 
     private void SetColorBuilding(Color colorGhost)
     {

@@ -9963,6 +9963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4925128001052440871, guid: 3d6fcc3907514394b845aca68d574a7f, type: 3}
+    - {fileID: 1865335552616097778, guid: 3d6fcc3907514394b845aca68d574a7f, type: 3}
     m_RemovedGameObjects:
     - {fileID: 414022188536843274, guid: 3d6fcc3907514394b845aca68d574a7f, type: 3}
     m_AddedGameObjects: []
@@ -12010,6 +12011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1621282926543570433, guid: 683c6bee454d10f42bc404d3684f03ea, type: 3}
+    - {fileID: 8553535661940571039, guid: 683c6bee454d10f42bc404d3684f03ea, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5750848757198153321, guid: 683c6bee454d10f42bc404d3684f03ea, type: 3}
     m_AddedGameObjects: []
@@ -19620,6 +19622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5444336233099037955, guid: 458bb00ce34e0de48a0a37b15a80895b, type: 3}
+    - {fileID: 4857670290289761904, guid: 458bb00ce34e0de48a0a37b15a80895b, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6342365801913307739, guid: 458bb00ce34e0de48a0a37b15a80895b, type: 3}
     m_AddedGameObjects: []
@@ -21950,6 +21953,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1718953353206243739, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: GhostBuildingBehaviour
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -22918,6 +22925,10 @@ PrefabInstance:
     - target: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718953353206243739, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: GhostBuildingBehaviour
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_Enabled
@@ -26035,6 +26046,10 @@ PrefabInstance:
     - target: {fileID: 1718953353206243738, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718953353206243739, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
+      propertyPath: GhostBuildingBehaviour
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1718953353261927441, guid: 3df06c5714fbbc046b41cd4f24e8e88c, type: 3}
       propertyPath: m_Enabled

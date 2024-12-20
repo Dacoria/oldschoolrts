@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 5037030731565394911}
   - component: {fileID: 3195152125553189446}
   m_Layer: 0
-  m_Name: MainBuildingPrefab
+  m_Name: OLD_MainBuildingPrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

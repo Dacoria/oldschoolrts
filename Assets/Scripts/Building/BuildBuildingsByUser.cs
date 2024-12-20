@@ -22,7 +22,6 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     public DisplayBuildingProgress DisplayBuildingProgressPrefab;
     public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
-    public GameObject FoodDisplayPrefab;
 
     private bool IsSelectedGoToBuildARoadOrField() => SelectedGameObjectToBuild?.name.IndexOf("Road") >= 0 || SelectedGameObjectToBuild?.name.IndexOf("FarmField") >= 0;
 

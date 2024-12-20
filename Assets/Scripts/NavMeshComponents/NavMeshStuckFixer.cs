@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class NavMeshStuckFixer : MonoBehaviourSlowUpdateTimeCI
 {
+    // Truc: Zit vast? Dan randomize 'initialAvoidancePriority' elke 0.5 sec
+
     [ComponentInject] private UnityEngine.AI.NavMeshAgent NavMashAgent;
     
     new void Start()

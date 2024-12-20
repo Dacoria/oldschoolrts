@@ -6,8 +6,7 @@ public class BuildingBehaviour : BaseAEMonoCI
 {
     //private int completed = 0;
 
-    [HideInInspector]
-    [ComponentInject(Required.OPTIONAL)] public GhostBuildingBehaviour GhostBuildingBehaviour;
+    [HideInInspector][ComponentInject(Required.OPTIONAL)] public GhostBuildingBehaviour GhostBuildingBehaviour;
 
     public Purpose Purpose = Purpose.BUILDING;
     public GameObject Real;
@@ -15,7 +14,7 @@ public class BuildingBehaviour : BaseAEMonoCI
     public float TimeToBuildRealInSeconds = 5; //kan overschreven worden per prefab
     public float TimeToPrepareBuildingInSeconds = 3; //kan overschreven worden per prefab
 
-    [HideInInspector] public BuildingType BuildingType;// wordt geset door builder bij bouwen   
+    [HideInInspector] public BuildingType BuildingType;// wordt geset door builder bij bouwen
 
     public ItemAmountBuffer[] RequiredItems;
 
@@ -230,7 +229,7 @@ public class BuildingBehaviour : BaseAEMonoCI
             return -1; // al afgebouwd -> niet van toepassing
         }
 
-        var allCompletedSerfOrdersForThisBuilding = GameManager.Instance.CompletedOrders.Where(x => x.To.GameObject == GhostBuildingBehaviour.gameObject).ToList();
+        var allCompletedSerfOrdersForThisBuilding = GameManager.Instance.CompletedOrdersIncFailed.Where(x => x.Status == Status.SUCCESS && x.To.GameObject == GhostBuildingBehaviour.gameObject).ToList();
         return allCompletedSerfOrdersForThisBuilding.Count(x => x.ItemType == itemtype);
     }
 

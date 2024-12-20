@@ -129,14 +129,13 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
                     break;
             }
 
-
-            // ik ben niet meer teleurgesteld in mezelf
             if (NavMeshAgent.StoppedAtDestination())
             {
                 switch (_currentSerfOrder.Status)
-                {
+                {                    
                     case Status.IN_PROGRESS_FROM:
                         {
+                            // indien niet kan (bv warehouse is leeg), dan daarna naar failed setten PER actie (in stockpilebehaviour in dit vb). Met delay.
                             _currentSerfOrder.Status = Status.IN_PROGRESS_TO;
                             break;
                         }

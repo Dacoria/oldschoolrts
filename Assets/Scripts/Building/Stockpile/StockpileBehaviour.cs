@@ -38,10 +38,18 @@ public class StockpileBehaviour : BaseAEMonoCI
     {
         if (serfOrder.From != null && serfOrder.From.GameObject == gameObject && serfOrder.Status == Status.IN_PROGRESS_TO)
         {
+            // TODO beetje hacky maar het werkt
 
             var itemAmount = this.CurrentItemAmount.Single(x => x.ItemType == serfOrder.ItemType);
-            // TODO beetje hacky maar het werkt
-            itemAmount.Amount--;
+            if(itemAmount.Amount > 0)
+            {
+                itemAmount.Amount--;
+            }
+            else
+            {
+                // via delay, zodat overige 'OnOrderStatusChanged' eerst afgehandeld kunnen worden
+                MonoHelper.Instance.Do_CR(0.05f, () => serfOrder.Status = Status.FAILED);                
+            }
         }
 
         if (serfOrder.To != null && serfOrder.To.GameObject == this.gameObject && serfOrder.Status == Status.SUCCESS)

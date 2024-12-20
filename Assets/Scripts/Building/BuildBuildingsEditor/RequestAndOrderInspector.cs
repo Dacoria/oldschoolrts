@@ -34,8 +34,8 @@ public class RequestAndOrderInspector : EditorWindow
                     }
                     break;
                 case 1:
-                    EditorGUILayout.LabelField("Completed orders:", gameManager.CompletedOrders.Count.ToString());
-                    foreach (var serfOrder in gameManager.CompletedOrders)
+                    EditorGUILayout.LabelField("Completed orders:", gameManager.CompletedOrdersIncFailed.Count.ToString());
+                    foreach (var serfOrder in gameManager.CompletedOrdersIncFailed)
                     {
                         DrawOrder(serfOrder);
                     }

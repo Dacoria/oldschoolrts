@@ -10,11 +10,10 @@ public partial class GameManager : BaseAEMonoCI
     private SortedSet<SerfOrder> CurrentSerfOrders = new SortedSet<SerfOrder>();
     private static List<SerfBehaviour> freeSerfs = new List<SerfBehaviour>();
 
-    public SortedSet<SerfOrder> CompletedOrders = new SortedSet<SerfOrder>();   
+    public SortedSet<SerfOrder> CompletedOrdersIncFailed = new SortedSet<SerfOrder>();   
 
     public SortedSet<SerfRequest> GetSerfRequests() => SerfRequests;
     public SortedSet<SerfOrder> GetCurrentSerfOrders() => CurrentSerfOrders;
-
 
     private void InitServes()
     {
@@ -41,18 +40,20 @@ public partial class GameManager : BaseAEMonoCI
             case Status.SUCCESS:
                 if (!CurrentSerfOrders.Remove(serfOrder))
                 {
+                    // Vermoedelijke oorzaak -> tijdens een OnOrderStatusChanged wordt de status geupdate naar een nieuwe --> oplossing: mini delay voor nieuwe update
                     throw new Exception("Kon serforder niet verwijderen. Dit is 'DE' bug, die we gezien hadden met debuggen.");
                 }
-                CompletedOrders.Add(serfOrder);
+                CompletedOrdersIncFailed.Add(serfOrder);
                 break;
             case Status.FAILED:
                 if (!CurrentSerfOrders.Remove(serfOrder))
                 {
+                    // Vermoedelijke oorzaak -> tijdens een OnOrderStatusChanged wordt de status geupdate naar een nieuwe --> oplossing: mini delay voor nieuwe update
                     throw new Exception(
                         "Kon serforder niet verwijderen. Dit is 'DE' bug, die we gezien hadden met debuggen.");
                 }
 
-                CompletedOrders.Add(serfOrder);
+                CompletedOrdersIncFailed.Add(serfOrder);
                 CreateNewSerfReqAfterFailing(serfOrder);
                 break;
         }

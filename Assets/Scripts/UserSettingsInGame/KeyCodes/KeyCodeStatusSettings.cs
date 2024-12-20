@@ -4,4 +4,5 @@ public static class KeyCodeStatusSettings
     public static bool ToggleInputOutputDisplay_Active = false;
     public static bool ToggleBuildingProgressDisplay_Active = true;
     public static bool ToggleEntranceExitDisplay_Active = true;
+    public static bool ToggleBuildingNameImgDisplay_Active = true;
 }

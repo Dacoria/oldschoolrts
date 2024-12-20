@@ -306,6 +306,9 @@ public class BuildBuildingsByUser : MonoBehaviour
                 buildingBehaviour.Real.AddComponent<DisplayBuildingInputOutputHandler>().DisplayProcessingInputOutputPrefab = DisplayProcessingInputOutputPrefab;
                 buildingBehaviour.Real.GetComponent<DisplayBuildingInputOutputHandler>().GoSpawnOffset = displayOffset;
 
+                buildingBehaviour.Real.AddComponent<DisplayBuildingNameImgHandler>();
+
+
                 Destroy(buildingBehaviour.GetComponentInChildren<RangeDisplayBehaviour>()?.gameObject);
             }
             else if (buildingBehaviour.gameObject.IsRoad())

@@ -129,7 +129,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
     private void SlowUpdate()
     {
-        if (scriptIsLoaded && KeyCodeStatusSettings.ToggleInputOutputDisplay_Active)
+        if (scriptIsLoaded)
         {
             UpdateInputText();
             UpdateOutputText();

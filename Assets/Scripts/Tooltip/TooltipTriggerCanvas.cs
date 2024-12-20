@@ -13,12 +13,18 @@ public class TooltipTriggerCanvas : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void Update()
     {
-        if(!activeTooltip)
+        // voor de zekerheid altijd doen - zo kom je altijd vd tooltips af (vb: on hover stockpile -> rechter muisknop op item na hover)
+        if (Input.GetMouseButtonDown(1))
+        {
+            StopTooltip();
+        }
+
+        if (!activeTooltip)
         {
             return;
         }
 
-        if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(0))
         {
             StopTooltip();
         }

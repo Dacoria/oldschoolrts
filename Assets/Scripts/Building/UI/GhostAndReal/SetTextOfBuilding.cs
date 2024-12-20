@@ -1,6 +1,6 @@
 using TMPro;
 
-public class SetTextOfBuiliding : MonoBehaviourCI
+public class SetTextOfBuilding : MonoBehaviourCI
 {
     [ComponentInject] private TextMeshPro TextMeshPro;
 

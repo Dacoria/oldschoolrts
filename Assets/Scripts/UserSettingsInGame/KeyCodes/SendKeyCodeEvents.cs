@@ -45,7 +45,12 @@ public class SendKeyCodeEvents : MonoBehaviour
                 keyCodeAction.Active = KeyCodeStatusSettings.ToggleEntranceExitDisplay_Active;
                 AE.KeyCodeAction?.Invoke(keyCodeAction);
                 break;
+            case KeyCodeActionType.ToggleBuildingNameImgDisplay:
 
+                KeyCodeStatusSettings.ToggleBuildingNameImgDisplay_Active = !KeyCodeStatusSettings.ToggleBuildingNameImgDisplay_Active;
+                keyCodeAction.Active = KeyCodeStatusSettings.ToggleEntranceExitDisplay_Active;
+                AE.KeyCodeAction?.Invoke(keyCodeAction);
+                break;
             default:
                 throw new Exception($"Actie voor keyCodeActionType {keyCodeAction.KeyCodeActionType} is niet gedefinieerd");
         }    

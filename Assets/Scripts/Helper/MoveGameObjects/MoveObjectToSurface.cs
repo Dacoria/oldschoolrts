@@ -39,7 +39,7 @@ public class MoveObjectToSurface : MonoBehaviourCI
     {
         if(BuildingBehaviour != null && BuildingBehaviour.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
         {
-            enabled = false;
+            Destroy(this);
         }
         else if(!EndPositionReached)
         {

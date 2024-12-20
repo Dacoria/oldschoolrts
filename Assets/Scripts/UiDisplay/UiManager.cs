@@ -13,6 +13,7 @@ public class UiManager : MonoBehaviour
     public OutlineBehaviour ActiveOutlineBehaviour;
     public RangeDisplayBehaviour ActiveRangeDisplayBehaviour;
     public DisplayBuildingInputOutputHandler ActiveDisplayBuildingInputOutputHandler;
+    public DisplayBuildingNameImgHandler ActiveDisplayBuildingNameImgHandler;
 
     void Update()
     {
@@ -21,6 +22,7 @@ public class UiManager : MonoBehaviour
             DisableActiveOutline();
             DisableActiveDisplayRange();
             DisableActiveDisplayBuildingInputOutputHandler();
+            DisableActiveDisplayBuildingNameImgHandler();
             var isClickingUi = EventSystem.current.IsPointerOverGameObject();
 
             if (!isClickingUi)
@@ -35,6 +37,7 @@ public class UiManager : MonoBehaviour
             DisableActiveOutline();
             DisableActiveDisplayRange();
             DisableActiveDisplayBuildingInputOutputHandler();
+            DisableActiveDisplayBuildingNameImgHandler();
             SelectedBuildingPanel.SetActive(false);
             SelectedBuildingPanelSkillTree.SetActive(false);
         }
@@ -62,6 +65,15 @@ public class UiManager : MonoBehaviour
         {
             ActiveDisplayBuildingInputOutputHandler.UpdateEnabledStatusOfDisplayObjects(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
             ActiveDisplayBuildingInputOutputHandler = null;
+        }
+    }
+
+    private void DisableActiveDisplayBuildingNameImgHandler()
+    {
+        if (ActiveDisplayBuildingNameImgHandler != null)
+        {
+            ActiveDisplayBuildingNameImgHandler.UpdateEnabledStatusOfDisplayObjects(KeyCodeStatusSettings.ToggleBuildingNameImgDisplay_Active);
+            ActiveDisplayBuildingNameImgHandler = null;
         }
     }
 
@@ -122,6 +134,13 @@ public class UiManager : MonoBehaviour
                 goBuildingHit = displayBuildingInputOutputHandler.gameObject;
                 ActiveDisplayBuildingInputOutputHandler = displayBuildingInputOutputHandler;
                 ActiveDisplayBuildingInputOutputHandler.UpdateEnabledStatusOfDisplayObjects(true);
+
+                var displayBuildingNameImgHandler = goBuildingHit.GetComponent<DisplayBuildingNameImgHandler>();
+                if (displayBuildingNameImgHandler != null)
+                {
+                    ActiveDisplayBuildingNameImgHandler = displayBuildingNameImgHandler;
+                    ActiveDisplayBuildingNameImgHandler.UpdateEnabledStatusOfDisplayObjects(true);
+                }
             }
 
             var stockpileBehaviour = hit.transform.gameObject.GetComponentInChildren<StockpileBehaviour>();

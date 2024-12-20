@@ -616,7 +616,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 0}
-  colScript: {fileID: 0}
   Purpose: 1
   Real: {fileID: 5035836761859787631}
   DEBUG_RealImmediately: 1
@@ -677,8 +676,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.99, y: 2.7, z: 1.99}
-  m_Center: {x: 0.5, y: 1.35, z: 0.5}
+  m_Size: {x: 3.99, y: 2.7, z: 2.99}
+  m_Center: {x: 0.5, y: 1.35, z: 1}
 --- !u!114 &7931777718907315079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,8 +690,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1001 &256037793765983480
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -73,8 +73,8 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
     private string GetAttackText(AttackType attackType)
     {
         var attackText = $"Base damage: Damage of unit (before calculations)\n" +
-            "Attackhit%: 35% base + this value - Dodge% -> hitchance between 1-100%\n" +
-            "Attacktype: {attackType.ToString().Capitalize()} -> Modifies the damage; depending on Armortype:";
+            $"Attackhit%: 35% base + this value - Dodge% -> hitchance between 1-100%\n" +
+            $"Attacktype: {attackType.ToString().Capitalize()} -> Modifies the damage; depending on Armortype:";
 
         foreach (ArmorType armorType in Enum.GetValues(typeof(ArmorType)))
         {

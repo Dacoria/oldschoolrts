@@ -233,9 +233,14 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     {
         var ghost = go.GetComponentInChildren<GhostBuildingBehaviour>();
         DestroyImmediate(ghost.gameObject);
+        DestroyImmediate(go.GetComponent<CheckCollisionHandler>());
 
         var real = GetReal(go);
         real.gameObject.SetActive(true);
+
+        var components = real.GetComponents<MonoBehaviour>();
+        foreach (var monoBehaviour in components) monoBehaviour.enabled = true;
+
         var children = real.GetComponentsInChildren<MonoBehaviour>();
         foreach (var monoBehaviour in children) monoBehaviour.enabled = true;
 
@@ -258,6 +263,8 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
             var showResources = real.AddComponent<DisplayBuildingInputOutputHandler>();
             showResources.DisplayProcessingInputOutputPrefab = DisplayProcessingInputOutputPrefab;
             showResources.GoSpawnOffset = GetBuildingPrefabItem(EditorSettings.SelectedBuildingType.Value).DisplayOffset;
+
+            real.AddComponent<DisplayBuildingNameImgHandler>();
 
             var locOfResource = real.GetComponent<ILocationOfResource>();
             if (locOfResource != null)

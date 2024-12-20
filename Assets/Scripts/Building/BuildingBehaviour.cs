@@ -228,12 +228,21 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     public int GetItemCountDeliveredForBuilding(ItemType itemtype)
     {
+        if (GhostBuildingBehaviour == null)
+        {
+            return -1; // al afgebouwd -> niet van toepassing
+        }
+
         var allCompletedSerfOrdersForThisBuilding = GameManager.Instance.CompletedOrders.Where(x => x.To.GameObject == GhostBuildingBehaviour.gameObject).ToList();
         return allCompletedSerfOrdersForThisBuilding.Count(x => x.ItemType == itemtype);
     }
 
     private bool AllRequiredItemsCompleted()
     {
+        if (GhostBuildingBehaviour == null)
+        {
+            return true; // al afgebouwd -> niet van toepassing
+        }
         foreach (var requiredItem in RequiredItems)
         {
             var countItemsForItemTypeDelivered = GetItemCountDeliveredForBuilding(requiredItem.ItemType);

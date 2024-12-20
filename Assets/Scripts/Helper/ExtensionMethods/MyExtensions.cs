@@ -135,7 +135,8 @@ public static class MyExtensions
     {
             new KeyCodeAction(KeyCode.U, KeyCodeActionType.ToggleInputOutputDisplay),
             new KeyCodeAction(KeyCode.I, KeyCodeActionType.ToggleBuildingProgressDisplay),
-            new KeyCodeAction(KeyCode.O, KeyCodeActionType.ToggleEntranceExitDisplay)
+            new KeyCodeAction(KeyCode.O, KeyCodeActionType.ToggleEntranceExitDisplay),
+            new KeyCodeAction(KeyCode.P, KeyCodeActionType.ToggleBuildingNameImgDisplay)
     };
 
     public static List<ProductionSetting> GetProductionSettings(BuildingType type)

@@ -2,5 +2,6 @@
 {
     ToggleInputOutputDisplay,
     ToggleBuildingProgressDisplay,
-    ToggleEntranceExitDisplay
+    ToggleEntranceExitDisplay,
+    ToggleBuildingNameImgDisplay,
 }

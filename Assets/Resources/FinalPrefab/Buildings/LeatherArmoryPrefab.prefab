@@ -2156,7 +2156,7 @@ GameObject:
   - component: {fileID: 5218172354435335272}
   - component: {fileID: 7636370227594135598}
   m_Layer: 0
-  m_Name: LeatherArmory
+  m_Name: LeatherArmoryPrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

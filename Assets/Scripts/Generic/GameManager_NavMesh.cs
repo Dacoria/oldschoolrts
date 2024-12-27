@@ -4,7 +4,6 @@ using NavMeshSurface = Unity.AI.Navigation.NavMeshSurface;
 
 public partial class GameManager : BaseAEMonoCI
 {
-    public GameObject RoadNavMeshSurfacePrefab;
     public GameObject RoadNavMeshSurface;
 
     public NavMeshAgent Agent; // voor path check
@@ -14,11 +13,7 @@ public partial class GameManager : BaseAEMonoCI
     {
         get {
             if (_roadNavMeshSurfaceComponent == null)
-            {
-                if (RoadNavMeshSurface == null)
-                {
-                    RoadNavMeshSurface = Instantiate(RoadNavMeshSurfacePrefab);
-                }                
+            {                
                 _roadNavMeshSurfaceComponent = RoadNavMeshSurface.GetComponent<NavMeshSurface>();
             }
             return _roadNavMeshSurfaceComponent;

@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 7222241298693433945}
   - component: {fileID: 5019811998154155551}
   m_Layer: 0
-  m_Name: FishingCabinPrefab
+  m_Name: FishingLodgePrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

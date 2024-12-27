@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public static partial class Load
@@ -6,6 +7,8 @@ public static partial class Load
     private static List<string> goList = new List<string>
     {
         Constants.LOAD_PATH_GO_UI_PREFAB,
+        Constants.LOAD_PATH_GO_BUILDINGS,
+        Constants.LOAD_PATH_GO_RSC_TO_CARRY
     };
 
     private static Dictionary<string, GameObject> __goMap;
@@ -20,16 +23,5 @@ public static partial class Load
 
             return __goMap;
         }
-    }
-
-    public static GameObject Get(this Dictionary<string, GameObject> dict, string key)
-    {
-        var go = dict[key];
-        if (go == null)
-        {
-            throw new System.Exception("No Gameobject for key: " + key);
-        }
-
-        return go;
     }
 }

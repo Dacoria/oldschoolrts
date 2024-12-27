@@ -2016,7 +2016,7 @@ GameObject:
   - component: {fileID: 3049111811846085654}
   - component: {fileID: 3049111812578058502}
   m_Layer: 7
-  m_Name: ClimbableWall
+  m_Name: ClimableWallPrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

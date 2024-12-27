@@ -7,10 +7,6 @@ public partial class GameManager : BaseAEMonoCI
 
     public static GameManager Instance;    
 
-    public List<ItemFoodRefillValue> ItemFoodRefillValues; // verplaatsen later
-
-    public GameObject GoToTavernBubble; // verplaatsen later
-
     public static int PopulationLimit = 8;
     public static int CurrentPopulation = 0;
 

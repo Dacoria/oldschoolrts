@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -25,12 +26,26 @@ public static class LoadHelper
     public static Dictionary<string, GameObject> CreateGoDict(List<string> rscPathList)
     {
         var prefabs = CreatePrefabsFromRscList<GameObject>(rscPathList);
-        return prefabs.ToDictionary(x => x.name, y => y);
+        var prefabDict = prefabs.ToDictionary(x => x.name, y => y);
+        var dictResult = new Dictionary<string, GameObject>(StringComparer.InvariantCultureIgnoreCase);
+        foreach (var kv in prefabDict)
+        {
+            dictResult.Add(kv.Key, kv.Value);
+        }
+
+        return dictResult;
     }
 
     public static Dictionary<string, Sprite> CreateSpriteDict(List<string> rscPathList)
     {
         var prefabs = CreatePrefabsFromRscList<Sprite>(rscPathList);
-        return prefabs.ToDictionary(x => x.name, y => y);
+        var prefabDict = prefabs.ToDictionary(x => x.name, y => y);
+        var dictResult = new Dictionary<string, Sprite>(StringComparer.InvariantCultureIgnoreCase);
+        foreach(var kv in prefabDict)
+        {
+            dictResult.Add(kv.Key, kv.Value);
+        }
+
+        return dictResult;
     }
 }

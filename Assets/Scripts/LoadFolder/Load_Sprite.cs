@@ -6,7 +6,8 @@ public static partial class Load
 {
     private static List<string> spriteRscList = new List<string>
     {
-        Constants.LOAD_PATH_SPRITE,
+        Constants.LOAD_PATH_SPRITE_BUILDINGS,
+        Constants.LOAD_PATH_SPRITE_RESOURCES
     };
 
     private static Dictionary<string, Sprite> __spriteMap;
@@ -19,16 +20,5 @@ public static partial class Load
 
             return __spriteMap;
         }
-    }
-
-    public static Sprite Get(this Dictionary<string, Sprite> dict, string key)
-    {
-        var sprite = dict[key];
-        if(sprite == null)
-        {
-            throw new System.Exception("No sprite for key: " + key);
-        }
-
-        return sprite;
     }
 }

@@ -18,7 +18,7 @@ public class SerfResourceCarryingBehaviour : MonoBehaviour
         GameObject resourceGoPrefab = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is          
 
         ResourceBeingCarriedGo = Instantiate(resourceGoPrefab, this.transform, false);
-        if (resourceGoPrefab == GameManager.Instance.UnknownGameObjectPrefab)
+        if (resourceGoPrefab == Load.GoMap["CubeUnknownBeingCarried"])
         {
             ResourceBeingCarriedGo.GetComponent<SetMaterialForItemTypeBehaviour>().SetMaterial(itemType); // juiste material
         }
@@ -32,7 +32,7 @@ public class SerfResourceCarryingBehaviour : MonoBehaviour
 
         GameObject resourceGoPrefab = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is
         ResourceBubbleToPickupGo = Instantiate(resourceGoPrefab, this.transform, false);
-        if (resourceGoPrefab == GameManager.Instance.UnknownGameObjectPrefab)
+        if (resourceGoPrefab == Load.GoMap["CubeUnknownBeingCarried"])
         {
             ResourceBubbleToPickupGo.GetComponent<SetMaterialForItemTypeBehaviour>().SetMaterial(itemType); // juiste material
         }

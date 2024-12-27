@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 349680784150745860}
   - component: {fileID: 2686725427915530050}
   m_Layer: 0
-  m_Name: ClothArmorMaker
+  m_Name: ClothArmorMakerPrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

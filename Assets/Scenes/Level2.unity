@@ -3579,6 +3579,11 @@ MonoBehaviour:
   DisplayProcessingInputOutputPrefab: {fileID: -5586510935880300235, guid: ad32582bdb1fd0948ac51bc26f60015a, type: 3}
   GoSpawnOffset: {x: 0, y: 0, z: 0}
   GoSpawnScaleOffset: {x: 1, y: 1, z: 1}
+--- !u!1 &437440922 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9138803442770642806, guid: ba5e96acfc6cb484181fa630df4bb013, type: 3}
+  m_PrefabInstance: {fileID: 412734547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &450339486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25977,14 +25982,18 @@ PrefabInstance:
     - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: MainCastle
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 437440922}
     - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: RoadNavMeshSurface
       value: 
       objectReference: {fileID: 270072586}
     - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: BuildingPrefabItems.Array.size
-      value: 34
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
+      propertyPath: ResourcePrefabItems.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: BuildingPrefabItems.Array.data[28].Icon
@@ -26039,6 +26048,10 @@ PrefabInstance:
       value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
+      propertyPath: BuildingPrefabItems.Array.data[15].DisplayOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: BuildingPrefabItems.Array.data[16].DisplayOffset.x
       value: -0.25
       objectReference: {fileID: 0}
@@ -26065,6 +26078,10 @@ PrefabInstance:
     - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: BuildingPrefabItems.Array.data[22].DisplayOffset.x
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
+      propertyPath: BuildingPrefabItems.Array.data[24].DisplayOffset.z
+      value: -1.6
       objectReference: {fileID: 0}
     - target: {fileID: 1409061581661283399, guid: 616e48e94eb128c42abb6366b208b82c, type: 3}
       propertyPath: BuildingPrefabItems.Array.data[26].DisplayOffset.x

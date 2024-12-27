@@ -5,33 +5,47 @@ using UnityEngine;
 
 public partial class GameManager : BaseAEMonoCI
 {
-    public GameObject UnknownGameObjectPrefab;
-    public Sprite UnknownSprite;
-
     private List<StockpileBehaviour> stockpiles = new List<StockpileBehaviour>();
-    public List<ResourcePrefabItem> ResourcePrefabItems;
+    [HideInInspector] public List<ResourcePrefabItem> ResourcePrefabItems = new List<ResourcePrefabItem>();
 
     private void InitResourcesStockpile()
     {
-        foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)))
+        ResourcePrefabItems = new List<ResourcePrefabItem>();
+        foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)).Cast<ItemType>().OrderBy(x => x.ToString()))
         {
-            var countItemTypeInDict = ResourcePrefabItems.Count(x => x.ItemType == itemType);
-            if (countItemTypeInDict != 1)
+            if (Load.SpriteMap.TryGetValue($"{itemType.ToString()}Image", out Sprite itemSprite))
             {
-                throw new Exception($"ItemType {itemType} komt {countItemTypeInDict} keer voor ipv 1 -- > Zie Grass -> ResourcePrefabDictionary");
-            }
+                var prefabBuilding = new ResourcePrefabItem
+                {
+                    Icon = itemSprite,
+                    ItemType = itemType
+                };
 
-            var resourceItem = ResourcePrefabItems.Single(x => x.ItemType == itemType);
-            if (resourceItem.Icon == null)
-            {
-                resourceItem.Icon = UnknownSprite;
+                if(resourceCarriedGoName.TryGetValue(itemType, out var name))
+                {
+                    prefabBuilding.ResourcePrefab = Load.GoMap[name];
+                }
+                else
+                {
+                    prefabBuilding.ResourcePrefab = Load.GoMap["CubeUnknownBeingCarried"];
+                }
+
+                ResourcePrefabItems.Add(prefabBuilding);
             }
-            if (resourceItem.ResourcePrefab == null)
+            else
             {
-                resourceItem.ResourcePrefab = UnknownGameObjectPrefab;
+                throw new Exception($"ResourceType {itemType} heeft geen Icon :O");
             }
         }
     }
+
+    private Dictionary<ItemType, string> resourceCarriedGoName = new Dictionary<ItemType, string>
+    {
+        { ItemType.NONE, "CubeUnknownBeingCarried" },
+        { ItemType.LUMBER, "LogPrefab" },
+        { ItemType.WATER, "WaterBucket" },
+        { ItemType.FISH, "Fish" },
+    };
 
     public void RegisterStockpile(StockpileBehaviour stockpileBehaviour)
     {

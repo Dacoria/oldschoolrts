@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 4789282421419578537}
   - component: {fileID: 7198309819227527407}
   m_Layer: 0
-  m_Name: ClothMaker
+  m_Name: ClothMakerPrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

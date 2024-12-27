@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 8705867410758782411}
   - component: {fileID: 6431718681601016205}
   m_Layer: 0
-  m_Name: ThreadMaker
+  m_Name: ThreadMakerPrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -544,7 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 130752437403134138}
   m_Layer: 0
-  m_Name: SardineNoAnimation
+  m_Name: Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

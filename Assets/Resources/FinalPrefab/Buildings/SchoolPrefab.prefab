@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 1235469035461538726}
   - component: {fileID: 3510062031284879328}
   m_Layer: 0
-  m_Name: School
+  m_Name: SchoolPrefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

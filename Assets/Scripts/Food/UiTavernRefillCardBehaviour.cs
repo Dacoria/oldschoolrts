@@ -46,7 +46,7 @@ public class UiTavernRefillCardBehaviour : MonoBehaviour
     {
         var schoolPrefab = BuildingPrefabs.Get().Single(x => x.BuildingType == BuildingType.SCHOOL).BuildingPrefab;
         var schoolbehaviour = schoolPrefab.GetComponentInChildren<SchoolBehaviour>(true);
-        var villager = schoolbehaviour.VillagerUnitSettings.Single(x => x.Type == villagerType);
+        var villager = VillagerPrefabs.Get().Single(x => x.Type == villagerType);
         return villager.Icon;
     }
 

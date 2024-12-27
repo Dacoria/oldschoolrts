@@ -3,7 +3,7 @@
     Serf,
     Builder,
     StoneMason,
-    Forrester,
+    Forester,
     Farmer,
     Fisherman,
     Hunter,

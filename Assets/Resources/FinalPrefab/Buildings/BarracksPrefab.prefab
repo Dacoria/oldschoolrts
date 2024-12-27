@@ -971,10 +971,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 95687303378408286, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
-    - {fileID: 33674874795119530, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
-    - {fileID: 23351761649221842, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4245403422759288, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
@@ -1007,157 +1004,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4245403422759288, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9187895563181899381}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1284534867303558, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5934040111426540691}
-    - targetCorrespondingSourceObject: {fileID: 1284534867303558, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7167907612769364334}
-    - targetCorrespondingSourceObject: {fileID: 1284534867303558, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9201185302238160212}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
 --- !u!1 &2427974211878623143 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1284534867303558, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}
   m_PrefabInstance: {fileID: 2428977220084173601}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5934040111426540691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427974211878623143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64e638bd226a3244a5af6233da6edb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BuildTimeInSeconds: 5
---- !u!114 &7167907612769364334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427974211878623143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fe22cf26a108b44fbbebf91dddd7264, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BarracksUnitSettings:
-  - ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 200
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 210
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 220
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 230
-      MaxBuffer: 5
-    Type: 1
-    ResourcePrefab: {fileID: 789998536657988896, guid: 8e4c357a73be3754e80143238f31eb78, type: 3}
-    Icon: {fileID: 21300000, guid: b36299e2241cd774fb45ca8c788a0b9b, type: 3}
-    UnitStats:
-      Offence:
-        AttackHitRate: 40
-        AttackType: 1
-        BaseBonusArmorPenetrationPercentage: 0.2
-        BaseDamage: 10
-        BaseFlatArmorPenetration: 2
-      Defence:
-        Dodge: 5
-        ArmorValue: 20
-        ArmorType: 2
-      Health: 200
-      RangeToAttack: 1.5
-      RangeToAttractEnemies: 5
-      Speed: 3.5
-  - ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 290
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 300
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 320
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 250
-      MaxBuffer: 5
-    Type: 2
-    ResourcePrefab: {fileID: 3764231029707838796, guid: 9ea3bff854d82c74d8dcefb517324a3f, type: 3}
-    Icon: {fileID: 21300000, guid: ded7233df885c8240be15acab2b9249f, type: 3}
-    UnitStats:
-      Offence:
-        AttackHitRate: 40
-        AttackType: 0
-        BaseBonusArmorPenetrationPercentage: 0.1
-        BaseDamage: 10
-        BaseFlatArmorPenetration: 5
-      Defence:
-        Dodge: 20
-        ArmorValue: 10
-        ArmorType: 1
-      Health: 150
-      RangeToAttack: 10
-      RangeToAttractEnemies: 20
-      Speed: 4.5
-  - ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 330
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 340
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 350
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 360
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 285
-      MaxBuffer: 5
-    Type: 3
-    ResourcePrefab: {fileID: 6305794961001521563, guid: 7a0c2907826528e4fbc2d33e7ab3b9a5, type: 3}
-    Icon: {fileID: 21300000, guid: 23d2647cf6b621e4d8e26b495a05f34a, type: 3}
-    UnitStats:
-      Offence:
-        AttackHitRate: 60
-        AttackType: 4
-        BaseBonusArmorPenetrationPercentage: 0.1
-        BaseDamage: 30
-        BaseFlatArmorPenetration: 5
-      Defence:
-        Dodge: 5
-        ArmorValue: 0.1
-        ArmorType: 0
-      Health: 120
-      RangeToAttack: 15
-      RangeToAttractEnemies: 20
-      Speed: 3.5
---- !u!114 &9201185302238160212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427974211878623143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4
 --- !u!4 &2430361350565991001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4245403422759288, guid: 1f434b7092c98b9498412a8ed230d22d, type: 3}

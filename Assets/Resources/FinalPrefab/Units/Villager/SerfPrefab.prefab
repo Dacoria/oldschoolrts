@@ -1216,7 +1216,7 @@ GameObject:
   - component: {fileID: 6026260299867103497}
   - component: {fileID: 6779166740270853960}
   m_Layer: 0
-  m_Name: Serf
+  m_Name: SerfPrefab
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

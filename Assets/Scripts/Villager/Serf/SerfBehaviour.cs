@@ -25,8 +25,8 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     protected override void Awake()
     {
-        // Geen CI -> components worden door onderstaand event pas toegevoegd        
-        NewVillagerComponentsManager.NewVillagerUnit(this); // event is te traag
+        // Geen CI -> components via start toegevoegd (event is te traag -> via awake unit)
+        NewVillagerComponentsManager.NewVillagerUnit(this);
     }
 
     void Start()

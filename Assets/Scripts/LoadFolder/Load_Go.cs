@@ -10,7 +10,8 @@ public static partial class Load
     {
         Constants.LOAD_PATH_GO_UI_PREFAB,
         Constants.LOAD_PATH_GO_BUILDINGS,
-        Constants.LOAD_PATH_GO_RSC_TO_CARRY
+        Constants.LOAD_PATH_GO_RSC_TO_CARRY,
+        Constants.LOAD_PATH_GO_UNITS
     };
 
     private static Dictionary<string, GameObject> __goMap;

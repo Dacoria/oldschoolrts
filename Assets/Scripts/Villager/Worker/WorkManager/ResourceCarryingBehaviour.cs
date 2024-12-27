@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ResourceCarryingBehaviour : MonoBehaviourCI
+public class ResourceCarryingBehaviour : MonoBehaviour
 {
     public GameObject HarvestedResourceToCarryPrefab;
     private GameObject HarvestedResourceToCarry;
@@ -13,6 +13,7 @@ public class ResourceCarryingBehaviour : MonoBehaviourCI
 
     void Start()
     {
+        this.ComponentInject(); // in awake van villager worden componenten pas toegevoegd
         if (HarvestedResourceToCarryPrefab != null && RetrieveResourceScript != null)
         {
             HarvestedResourceToCarry = Instantiate(HarvestedResourceToCarryPrefab, this.transform, false);

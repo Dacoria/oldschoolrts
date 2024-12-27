@@ -9,7 +9,6 @@ using UnityEngine;
 public class CreateRoadOrBuildingFromEditor: MonoBehaviour
 {
     public Camera MainCamera;         
-    public GameObject RoadPrefab;
     public NavMeshSurface NavMeshSurfaceParent;
     public GameManager GameManager;
     public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
@@ -17,12 +16,11 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     private GameObject FirstBuildingOrRoadSelected;
     private GameObject SecondRoadSelected;
 
+    private GameObject GetRoadPrefab() => Load.GoMap["Road"];
 
     // editor --> bij opnieuw compileren wordt dit altijd aangeroepen -> cleanup
     private void OnEnable()
     {        
-        RoadPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Final-Prefab/Road/Road.prefab", typeof(GameObject));
-
         var editorRoads = FindObjectsOfType<EditorBuildBehaviour>();
         for (int i = editorRoads.Length - 1; i >= 0; i--)
         {
@@ -115,7 +113,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
 
     private GameObject InstantiateRoadGo(Vector3 position)
     {
-        var roadSelected = PrefabUtility.InstantiatePrefab(RoadPrefab) as GameObject;
+        var roadSelected = PrefabUtility.InstantiatePrefab(GetRoadPrefab()) as GameObject;
         roadSelected.name = "Road_To_Place";
         roadSelected.AddComponent<EditorBuildBehaviour>();
         roadSelected.transform.position = position;

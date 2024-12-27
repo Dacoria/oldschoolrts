@@ -37,10 +37,10 @@ public class NewVillagerComponentsManager : BaseAEMonoCI
         // Worker stuff
         if (newVillagerUnit.IsVillagerWorker())
         {
-            go.AddComponent<WorkManager>();
-            go.AddComponent<ResourceCarryingBehaviour>();
+            // go.AddComponent<ResourceCarryingBehaviour>(); // Vanwege verschillende prefabs -> zelf toevoegen
             go.AddComponent<GoingToWorkStation>();
             go.AddComponent<RetrieveResourceBehaviour>();
+            go.AddComponent<WarningDisplayAboveHeadBehaviour>();
         }        
 
         // meer specifieke dingen staan nog op GO zelf! (bv tool carrying)
@@ -52,6 +52,11 @@ public class NewVillagerComponentsManager : BaseAEMonoCI
         if (go.GetComponent<PopulationEligibleBehaviour>() == null)
         {
             throw new System.Exception($"Geen standaard behaviours gevonden op nieuwe unit --> Check awake van villager '{go.name}', type '{newVillagerUnit.GetVillagerUnitType()}'");
+        }
+
+        if(newVillagerUnit.IsVillagerWorker() && go.GetComponent<ResourceCarryingBehaviour>() == null)
+        {
+            throw new System.Exception($"Geen ResourceCarryingBehaviour gevonden op villager worker --> '{go.name}', type '{newVillagerUnit.GetVillagerUnitType()}'");
         }
     }
 }

@@ -9,7 +9,7 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
     public List<BuildingType> BuildingTypeToBringResourceBackTo;
     public float timeToWaitForRetryIfNoNewAction = 1;
 
-    [HideInInspector] // wordt geset bij initieren van unit in school
+    // wordt geset bij initieren van unit in school
     public VillagerUnitType VillagerUnitType;
     public VillagerUnitType GetVillagerUnitType() => VillagerUnitType;
     public GameObject GetGO() => this.gameObject;
@@ -29,8 +29,11 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     protected override void Awake()
     {
-        // Geen CI -> components worden door onderstaand event pas toegevoegd        
-        NewVillagerComponentsManager.NewVillagerUnit(this); // event is te traag
+        if (VillagerUnitType == VillagerUnitType.Serf || VillagerUnitType == VillagerUnitType.Builder)
+            throw new System.Exception($"Worker found unsupported type: {VillagerUnitType}");
+
+        // Geen CI -> components via start toegevoegd (event is te traag -> via awake unit)
+        NewVillagerComponentsManager.NewVillagerUnit(this);
     }
 
     public void Start()

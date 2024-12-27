@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
 {
-    public List<VillagerUnitSetting> VillagerUnitSettings;
 
-    [ComponentInject]
-    private ConsumeRefillItemsBehaviour ConsumeRefillItemsBehaviour;
+    [ComponentInject] private ConsumeRefillItemsBehaviour ConsumeRefillItemsBehaviour;
 
     public void AddItem(Enum type)
     {        
@@ -21,28 +19,29 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
 
     public void DecreaseItem(Enum type) { }
 
-    public ProductionSetting GetCardDisplaySetting(Enum type) => VillagerUnitSettings.First(x => x.Type == (VillagerUnitType)type);
+    public ProductionSetting GetCardDisplaySetting(Enum type) => VillagerPrefabs.Get().First(x => x.Type == (VillagerUnitType)type);
 
 
     public int GetCount(Enum type) => 0;
 
     public void Train(VillagerUnitType type)
     {
-        var villagerUnitSetting = VillagerUnitSettings.Single(x => x.Type == type);
+        var villagerUnitSetting = VillagerPrefabs.Get().Single(x => x.Type == type);
         if (GameManager.CurrentPopulation < GameManager.PopulationLimit)
         {
-            var villagerGo = Instantiate(villagerUnitSetting.ResourcePrefab, gameObject.EntranceExit(), Quaternion.identity);
-            if(villagerGo.GetComponent<WorkManager>() != null)
+            var villagerVillagerBehaviour = villagerUnitSetting.VillagerBehaviour;
+            if (villagerVillagerBehaviour.IsVillagerWorker())
             {
-                villagerGo.GetComponent<WorkManager>().VillagerUnitType = villagerUnitSetting.Type;
-                villagerGo.AddComponent<WarningDisplayAboveHeadBehaviour>();
+                ((WorkManager)villagerVillagerBehaviour).VillagerUnitType = villagerUnitSetting.Type;
             }
+
+            var villagerGo = Instantiate(villagerUnitSetting.VillagerBehaviour.GetGO(), gameObject.EntranceExit(), Quaternion.identity);
         }
     }
 
     private List<ItemAmountBuffer> GetItemsToConsumeForProduction(VillagerUnitType type)
     {
-        return VillagerUnitSettings
+        return VillagerPrefabs.Get()
             .Single(x => x.Type == type)
             .ItemsConsumedToProduce;
     }
@@ -50,7 +49,7 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
     public bool CanProces(Enum type)
     {
         var itemsNeeded = GetItemsToConsumeForProduction((VillagerUnitType)type);
-        var itemsToProduce = VillagerUnitSettings.Single(x => x.Type == (VillagerUnitType)type).ConvertToSingleProduceItem();
+        var itemsToProduce = VillagerPrefabs.Get().Single(x => x.Type == (VillagerUnitType)type).ConvertToSingleProduceItem();
         return HasPopulationRoom && ConsumeRefillItemsBehaviour.CanConsumeRefillItems(itemsNeeded);
     }
     
@@ -61,7 +60,7 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
     public bool AlwaysRefillItemsIgnoreBuffer() => false;
 
     public List<ItemProduceSetting> GetItemProduceSettings() =>
-        VillagerUnitSettings.ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
+        VillagerPrefabs.Get().ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
 
     public GameObject GetGameObject() => gameObject;
 }

@@ -152,7 +152,7 @@ public static class MyExtensions
             case BuildingType.BARRACKS:
                 return building.BuildingPrefab.GetComponentInChildren<BarracksBehaviour>(true).BarracksUnitSettings.ConvertAll<ProductionSetting>(x => x);
             case BuildingType.SCHOOL:
-                return building.BuildingPrefab.GetComponentInChildren<SchoolBehaviour>(true).VillagerUnitSettings.ConvertAll<ProductionSetting>(x => x);
+                return VillagerPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
 
             default:
                 throw new Exception("Cards for " + type.ToString() + " not specified");

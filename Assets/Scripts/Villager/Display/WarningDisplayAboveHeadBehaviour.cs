@@ -7,8 +7,7 @@ public class WarningDisplayAboveHeadBehaviour : BaseAEMonoCI
     public int NoWorkCounterToDisplayWarning = 5;
     private int currentNoWorkCounter;
 
-    [ComponentInject]
-    private WorkManager WorkManager;
+    [ComponentInject] private WorkManager WorkManager;
 
     protected override void OnNoWorkerAction(WorkManager workMangerChanged)
     {

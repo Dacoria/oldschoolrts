@@ -35,25 +35,19 @@ public class VillagerManager : BaseAEMonoCI
 
         foreach (var villagerUnit in VillagerUnits)
         {
-            switch(villagerUnit.GetVillagerUnitType())
-            {
-                case VillagerUnitType.Serf:
-                    Serfs.Add((SerfBehaviour)villagerUnit); 
-                    break;
-                case VillagerUnitType.Builder:
-                    Builders.Add((BuilderBehaviour)villagerUnit);
-                    break;
-                case VillagerUnitType.StoneMason:
-                case VillagerUnitType.Forrester:
-                case VillagerUnitType.Farmer:
-                case VillagerUnitType.Fisherman:
-                case VillagerUnitType.Hunter:
-                case VillagerUnitType.Gatherer:
-                    Workers.Add((WorkManager)villagerUnit);
-                    break;
-                default:
-                    throw new System.Exception($"VillagerManager -> VillagerUnitType '{villagerUnit.GetVillagerUnitType()}' is niet ondersteund");
-            }
+            var type = villagerUnit.GetVillagerUnitType();
+            
+            if(type == VillagerUnitType.Serf)
+                Serfs.Add((SerfBehaviour)villagerUnit);
+
+            else if(type == VillagerUnitType.Builder)
+                Builders.Add((BuilderBehaviour)villagerUnit);
+
+            else if(villagerUnit.IsVillagerWorker())
+                Workers.Add((WorkManager)villagerUnit);
+
+            else
+                throw new System.Exception($"VillagerManager -> VillagerUnitType '{villagerUnit.GetVillagerUnitType()}' is niet ondersteund");
         }
     }
 

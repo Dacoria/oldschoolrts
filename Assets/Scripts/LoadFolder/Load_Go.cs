@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
@@ -18,10 +20,17 @@ public static partial class Load
         {
             if (__goMap == null || !Application.isPlaying)
             {
-                __goMap = LoadHelper.CreateGoDict(goList);                
+                __goMap = CreateGoDict(goList);                
             }
 
             return __goMap;
         }
+    }
+
+    public static Dictionary<string, GameObject> CreateGoDict(List<string> rscPathList)
+    {
+        var prefabs = LoadHelper.CreatePrefabsFromRscList<GameObject>(rscPathList);
+        var prefabDict = prefabs.ToDictionary(x => x.name, y => y);
+        return LoadHelper.ConvertDictToCaseIgnoreKey(prefabDict);
     }
 }

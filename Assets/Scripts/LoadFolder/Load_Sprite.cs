@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -16,9 +17,16 @@ public static partial class Load
         get
         {
             if (__spriteMap == null || !Application.isPlaying)            
-                __spriteMap = LoadHelper.CreateSpriteDict(spriteRscList);            
+                __spriteMap = CreateSpriteDict(spriteRscList);            
 
             return __spriteMap;
         }
+    }
+
+    public static Dictionary<string, Sprite> CreateSpriteDict(List<string> rscPathList)
+    {
+        var prefabs = LoadHelper.CreatePrefabsFromRscList<Sprite>(rscPathList);
+        var prefabDict = prefabs.ToDictionary(x => x.name, y => y);
+        return LoadHelper.ConvertDictToCaseIgnoreKey(prefabDict);
     }
 }

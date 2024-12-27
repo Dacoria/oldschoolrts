@@ -277,6 +277,7 @@ public class BuildBuildingsByUser : MonoBehaviour
                 buildingBehaviour.Real.GetComponent<DisplayBuildingInputOutputHandler>().GoSpawnOffset = displayOffset;
 
                 buildingBehaviour.Real.AddComponent<DisplayBuildingNameImgHandler>();
+                buildingBehaviour.GhostBuildingBehaviour.gameObject.AddComponent<DisplayBuildingNameImgHandler>();
 
 
                 Destroy(buildingBehaviour.GetComponentInChildren<RangeDisplayBehaviour>()?.gameObject);

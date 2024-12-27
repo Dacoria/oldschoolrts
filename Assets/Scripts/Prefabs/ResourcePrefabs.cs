@@ -25,9 +25,10 @@ public static class ResourcePrefabs
                 var prefabBuilding = new ResourcePrefabItem
                 {
                     Icon = itemSprite,
-                    ItemType = itemType
+                    ItemType = itemType,
+                    ResourcePrefab = Load.GoMap["CubeUnknownBeingCarried"]
                 };
-
+/*
                 if (resourceCarriedGoName.TryGetValue(itemType, out var name))
                 {
                     prefabBuilding.ResourcePrefab = Load.GoMap[name];
@@ -35,7 +36,7 @@ public static class ResourcePrefabs
                 else
                 {
                     prefabBuilding.ResourcePrefab = Load.GoMap["CubeUnknownBeingCarried"];
-                }
+                }*/
 
                 result.Add(prefabBuilding);
             }
@@ -48,6 +49,7 @@ public static class ResourcePrefabs
         return result;
     }
 
+    // Voor nu: Ongebruikt
     private static Dictionary<ItemType, string> resourceCarriedGoName = new Dictionary<ItemType, string>
     {
         { ItemType.NONE, "CubeUnknownBeingCarried" },

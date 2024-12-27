@@ -18,8 +18,7 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     public ItemAmountBuffer[] RequiredItems;
 
-    [HideInInspector]
-    public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
+    [HideInInspector] public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
 
     private void EnableRealWithoutActivating()
     {

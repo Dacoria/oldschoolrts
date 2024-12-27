@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using UnityEngine;
 
@@ -11,14 +12,15 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnBuilderRequestStatusChanged")) AE.BuilderRequestStatusChanged += OnBuilderRequestStatusChanged;
         if (IsOverwritten("OnBuilderRequest")) AE.BuilderRequest += OnBuilderRequest;
         if (IsOverwritten("OnSerfRequest")) AE.SerfRequest += OnSerfRequest;
+        if (IsOverwritten("OnStartCompletingSerfRequest")) AE.StartCompletingSerfRequest += OnStartCompletingSerfRequest;
         if (IsOverwritten("OnKeyCodeAction")) AE.KeyCodeAction += OnKeyCodeAction;
         if (IsOverwritten("OnLeftClickOnGo")) AE.LeftClickOnGo += OnLeftClickOnGo;
         if (IsOverwritten("OnFoodStatusHasChanged")) AE.FoodStatusHasChanged += OnFoodStatusHasChanged;
         if (IsOverwritten("OnReachedFoodRefillingPoint")) AE.ReachedFoodRefillingPoint += OnReachedFoodRefillingPoint;
         if (IsOverwritten("OnNoFoodToConsume")) AE.NoFoodToConsume += OnNoFoodToConsume;
         if (IsOverwritten("OnNoWorkerAction")) AE.NoWorkerAction += OnNoWorkerAction;
-        if (IsOverwritten("OnStartNewWorkerAction")) AE.StartNewWorkerAction += OnStartNewWorkerAction;       
-        if (IsOverwritten("OnVillagerUnitCreated")) AE.VillagerUnitCreated += OnVillagerUnitCreated;
+        if (IsOverwritten("OnStartNewWorkerAction")) AE.StartNewWorkerAction += OnStartNewWorkerAction;
+        if (IsOverwritten("OnVillagerUnitCreated")) AE.VillagerUnitCreated += OnVillagerUnitCreated;        
     }
 
     protected void OnDisable()
@@ -29,6 +31,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnBuilderRequestStatusChanged")) AE.BuilderRequestStatusChanged -= OnBuilderRequestStatusChanged;
         if (IsOverwritten("OnBuilderRequest")) AE.BuilderRequest -= OnBuilderRequest;
         if (IsOverwritten("OnSerfRequest")) AE.SerfRequest -= OnSerfRequest;
+        if (IsOverwritten("OnStartCompletingSerfRequest")) AE.StartCompletingSerfRequest -= OnStartCompletingSerfRequest;
         if (IsOverwritten("OnKeyCodeAction")) AE.KeyCodeAction -= OnKeyCodeAction;
         if (IsOverwritten("OnLeftClickOnGo")) AE.LeftClickOnGo -= OnLeftClickOnGo;
         if (IsOverwritten("OnFoodStatusHasChanged")) AE.FoodStatusHasChanged -= OnFoodStatusHasChanged;
@@ -45,6 +48,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
     protected virtual void OnBuilderRequestStatusChanged(BuilderRequest request, BuildStatus status) { }
     protected virtual void OnBuilderRequest(BuilderRequest request) { }
     protected virtual void OnSerfRequest(SerfRequest request) { }
+    protected virtual void OnStartCompletingSerfRequest(SerfOrder order) { }
     protected virtual void OnKeyCodeAction(KeyCodeAction action) { }
     protected virtual void OnLeftClickOnGo(GameObject go) { }
     protected virtual void OnFoodStatusHasChanged(FoodConsumption consumption, FoodConsumptionStatus status) { }

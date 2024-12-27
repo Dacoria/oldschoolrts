@@ -35,6 +35,8 @@ public partial class GameManager : BaseAEMonoCI
     
     protected override void OnOrderStatusChanged(SerfOrder serfOrder)
     {
+        RemoveSerfOrderBeingCompleted(serfOrder); // blijkbaar een status afgerond; anders kom je hier niet
+
         switch (serfOrder.Status)
         {
             case Status.SUCCESS:
@@ -83,6 +85,11 @@ public partial class GameManager : BaseAEMonoCI
         ManagePossibleNewSerfOrders(serfRequest:serfRequest);
     }
 
+    protected override void OnFreeSerf(SerfBehaviour serf)
+    {
+        ManagePossibleNewSerfOrders(serfBehaviour: serf);
+    }
+
     private void ManagePossibleNewSerfOrders(SerfRequest serfRequest = null, SerfBehaviour serfBehaviour = null)
     {
         AddPotentialFreeSerf(serfBehaviour);
@@ -119,13 +126,10 @@ public partial class GameManager : BaseAEMonoCI
         if (newSerfBehaviour != null && !IsFreeSerf(newSerfBehaviour))
         {
             freeSerfs.Add(newSerfBehaviour);
-        }        
+        }
     }
 
-    public bool IsFreeSerf(SerfBehaviour serf)
-    {
-        return freeSerfs.Any(x => x == serf);
-    }
+    public bool IsFreeSerf(SerfBehaviour serf) => freeSerfs.Any(x => x == serf);
 
     public bool TryRemoveSerfFromFreeSerfList(SerfBehaviour serf)
     {
@@ -135,12 +139,7 @@ public partial class GameManager : BaseAEMonoCI
         }
 
         return false;
-    }
-
-    protected override void OnFreeSerf(SerfBehaviour serf)
-    {
-        ManagePossibleNewSerfOrders(serfBehaviour:serf);
-    }
+    }    
 
     private SerfOrder TryCreateNewOrder()
     {
@@ -317,5 +316,29 @@ public partial class GameManager : BaseAEMonoCI
         }
 
         return order;
+    }
+
+    private List<SerfOrder> SerfOrdersBeingCompleted = new List<SerfOrder>();
+    protected override void OnStartCompletingSerfRequest(SerfOrder order)
+    {
+        SerfOrdersBeingCompleted.Add(order);
+    }
+
+    public bool SerfOrderIsBeingCompletedForGo(GameObject go)
+    {
+        if(SerfOrdersBeingCompleted.Any(x => x.Status == Status.IN_PROGRESS_FROM && x.From.GameObject == go))
+        {
+            return true;
+        }
+        if (SerfOrdersBeingCompleted.Any(x => x.Status == Status.IN_PROGRESS_TO && x.To.GameObject == go))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void RemoveSerfOrderBeingCompleted(SerfOrder serfOrder)
+    {
+        SerfOrdersBeingCompleted.Remove(serfOrder);
     }
 }

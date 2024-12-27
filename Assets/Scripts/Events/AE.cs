@@ -15,6 +15,9 @@ public static class AE
     public static Action<BuilderRequest> BuilderRequest;
     public static Action<SerfRequest> SerfRequest;
 
+    // SERF ORDER CHANGE IN PROGRESS
+    public static Action<SerfOrder> StartCompletingSerfRequest;
+
     // KEYACTION
     public static Action<KeyCodeAction> KeyCodeAction;
 
@@ -32,4 +35,6 @@ public static class AE
 
     // VILLAGER CREATED
     public static Action<VillagerUnitType> VillagerUnitCreated;
+
+    
 }

@@ -52,7 +52,7 @@ public class ShowHideExitEntranceScript : BaseAEMonoCI
         var buildingScript = entranceExitGo.GetComponentInParent<BuildingBehaviour>();
         if (buildingScript != null || entranceExitGo.transform.parent.name == "MainBuilding")
         {
-            var mark = Instantiate(Mark, new Vector3(entranceExitGo.transform.position.x, 0.03f, entranceExitGo.transform.position.z), Quaternion.identity);
+            var mark = Instantiate(Mark, new Vector3(entranceExitGo.transform.position.x, 0, entranceExitGo.transform.position.z), Quaternion.identity);
             mark.transform.parent = entranceExitGo.transform;
         }
     }

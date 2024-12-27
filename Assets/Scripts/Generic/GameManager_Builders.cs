@@ -52,10 +52,7 @@ public partial class GameManager : BaseAEMonoCI
         }
     }
 
-    public bool IsFreeBuilder(BuilderBehaviour builder)
-    {
-        return freeBuilders.Any(x => x == builder);
-    }
+    public bool IsFreeBuilder(BuilderBehaviour builder) => freeBuilders.Any(x => x == builder);
 
     public bool TryRemoveBuilderFromFreeBuilderList(BuilderBehaviour builder)
     {

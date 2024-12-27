@@ -1,6 +1,6 @@
 ﻿public static class Constants
 {
-    //layers
+    //layers (collision + nav mesh)
     public static int LAYER_TERRAIN = 3;
     public static int LAYER_UI = 5;
     public static int LAYER_RTS_UNIT = 6;
@@ -25,4 +25,11 @@
     public static string ANIM_BOOL_IS_WORKING = "IS_WORKING";
     public static string ANIM_BOOL_IS_IDLE = "IS_IDLE";
     public static string ANIM_TRIGGER_DIE = "Die";
+
+    // Load paths
+    public static string LOAD_PATH_GO_UI_PREFAB = "FinalPrefab/UiPrefabs";
+    public static string LOAD_PATH_SPRITE = "UNKNOWN -> TODO";
+
+    // RscLoadName
+    public static string RSC_NAME_GO_SERF_PROCESSING = "SerfProcessingDisplayGo";
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,8 +15,8 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     [ComponentInject] private SerfResourceCarryingBehaviour SerfResourceCarryingBehaviour;
     [ComponentInject] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
 
-    //public bool IsCarryingResource => CarryingResource != ItemType.NONE;
-    //public ItemType CarryingResource => _currentSerfOrder?.Status == Status.IN_PROGRESS_TO ? _currentSerfOrder.ItemType : ItemType.NONE;
+    private float WaitTimeInSecCompletingSerfFromRequest = 2;
+    private float WaitTimeInSecCompletingSerfToRequest = 1;
 
     public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Serf;
 
@@ -100,53 +102,90 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     {
         if (_currentSerfOrder != null && NavMeshAgent.isActiveAndEnabled)
         {
-            NavMeshAgent.isStopped = false;
+            UpdateNavMesh();
 
-            var destination = _currentSerfOrder.Location;
-
-            var path = new NavMeshPath();
-            if (!NavMesh.CalculatePath(
-                this.transform.position,
-                destination,
-                _currentSerfOrder.Purpose.ToAreaMask(),
-                path))
-            {
-                // This may be a terribly expensive operation. May be better to remember the currentOrder.From and if it changed, reevaluate the areamask?
-                //Debug.LogWarning("Overwriting the navmesh-areaMask for the serf because there is no path.");
-                NavMeshAgent.areaMask = 1 << 0; // can happen, so lets just make an exception here
-            }
-            else
-            {
-                NavMeshAgent.areaMask = _currentSerfOrder.Purpose.ToAreaMask();
-            }
-
-
-            switch (_currentSerfOrder.Status)
-            {
-                case Status.IN_PROGRESS_FROM:
-                case Status.IN_PROGRESS_TO:
-                    NavMeshAgent.destination = destination;
-                    break;
-            }
-
-            if (NavMeshAgent.StoppedAtDestination())
+            if (NavMeshAgent.StoppedAtDestination() && !isHandlingStatusSwitch() && canCompleteOrder(_currentSerfOrder))
             {
                 switch (_currentSerfOrder.Status)
-                {                    
+                {
                     case Status.IN_PROGRESS_FROM:
                         {
                             // indien niet kan (bv warehouse is leeg), dan daarna naar failed setten PER actie (in stockpilebehaviour in dit vb). Met delay.
-                            _currentSerfOrder.Status = Status.IN_PROGRESS_TO;
+                            StartCoroutine(CompletedFromRequest(_currentSerfOrder));
                             break;
                         }
                     case Status.IN_PROGRESS_TO:
                         {
-                            _currentSerfOrder.Status = Status.SUCCESS;
+                            StartCoroutine(CompletedToRequest(_currentSerfOrder));
                             break;
                         }
                 }
             }
         }
+    }    
+
+    private void UpdateNavMesh()
+    {
+        NavMeshAgent.isStopped = false;
+        var destination = _currentSerfOrder.Location;
+
+        var path = new NavMeshPath();
+        if (!NavMesh.CalculatePath(
+            this.transform.position,
+            destination,
+            _currentSerfOrder.Purpose.ToAreaMask(),
+            path))
+        {
+            // This may be a terribly expensive operation. May be better to remember the currentOrder.From and if it changed, reevaluate the areamask?
+            //Debug.LogWarning("Overwriting the navmesh-areaMask for the serf because there is no path.");
+            NavMeshAgent.areaMask = 1 << 0; // can happen, so lets just make an exception here
+        }
+        else
+        {
+            NavMeshAgent.areaMask = _currentSerfOrder.Purpose.ToAreaMask();
+        }
+
+
+        switch (_currentSerfOrder.Status)
+        {
+            case Status.IN_PROGRESS_FROM:
+            case Status.IN_PROGRESS_TO:
+                NavMeshAgent.destination = destination;
+                break;
+        }
+    }
+
+    private bool canCompleteOrder(SerfOrder currentSerfOrder)
+    {
+        var relevantGo = currentSerfOrder.To.GameObject;
+        if (currentSerfOrder.Status == Status.IN_PROGRESS_FROM)
+        {
+            relevantGo = currentSerfOrder.From.GameObject;
+        }
+
+        return !GameManager.Instance.SerfOrderIsBeingCompletedForGo(relevantGo);
+    }
+
+    private bool isHandlingStatusSwitch() => serfShowPackageHandling != null;
+
+    private SerfShowPackageHandling serfShowPackageHandling;    
+
+    private IEnumerator CompletedFromRequest(SerfOrder currentSerfOrder)
+    {
+        serfShowPackageHandling = gameObject.AddComponent<SerfShowPackageHandling>();
+        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder);
+        yield return Wait4Seconds.Get(WaitTimeInSecCompletingSerfFromRequest);
+        Destroy(serfShowPackageHandling);
+        _currentSerfOrder.Status = Status.IN_PROGRESS_TO;
+    }
+
+    private IEnumerator CompletedToRequest(SerfOrder currentSerfOrder)
+    {
+        serfShowPackageHandling = gameObject.AddComponent<SerfShowPackageHandling>();
+        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder);
+        yield return Wait4Seconds.Get(WaitTimeInSecCompletingSerfToRequest);
+        Destroy(serfShowPackageHandling);
+        _currentSerfOrder.Status = Status.SUCCESS;
     }
 
     private void UpdateAnimation()

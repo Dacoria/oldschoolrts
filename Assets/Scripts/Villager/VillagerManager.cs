@@ -23,7 +23,7 @@ public class VillagerManager : BaseAEMonoCI
         RefreshVillagerUnits();
     }
 
-    protected override void OnVillagerUnitCreated(VillagerUnitType villagerUnitType) => RefreshVillagerUnits();
+    protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit) => RefreshVillagerUnits();
 
     private void RefreshVillagerUnits()
     {

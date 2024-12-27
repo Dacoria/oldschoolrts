@@ -3,7 +3,6 @@ using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 using System.Linq;
-using System;
 
 public class BuildBuildingMenuButton : EditorWindow
 {
@@ -41,8 +40,7 @@ public class BuildBuildingMenuButton : EditorWindow
         splitView.Add(leftPane);
         //rightPane = new ScrollView(ScrollViewMode.VerticalAndHorizontal);
         rightPane = new VisualElement();
-        splitView.Add(rightPane);        
-
+        splitView.Add(rightPane);
 
         var allBuildings = GetRoadAndAllBuildingTypes();
 
@@ -96,20 +94,13 @@ public class BuildBuildingMenuButton : EditorWindow
         else
         {
             EditorSettings.SelectedBuildingType = null;
-        }
-            
-              
-    }
-
-    private void CaptureMouse()
-    {
-        throw new NotImplementedException();
+        }    
     }
 
     private List<BuildingPrefabItem> GetRoadAndAllBuildingTypes()
     {
         var gamemanager = FindObjectOfType<GameManager>();
-        var allBuildingPrefabs = gamemanager.BuildingPrefabItems.OrderBy(x => x.BuildingType.ToString()).ToList();
+        var allBuildingPrefabs = BuildingPrefabs.Get().OrderBy(x => x.BuildingType.ToString()).ToList();
 
         if(!allBuildingPrefabs.Any(x => x.BuildingType == BuildingType.NONE))
         {

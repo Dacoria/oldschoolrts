@@ -34,7 +34,7 @@ public static class AE
     public static Action<WorkManager> StartNewWorkerAction;
 
     // VILLAGER CREATED
-    public static Action<VillagerUnitType> VillagerUnitCreated;
+    public static Action<IVillagerUnit> NewVillagerUnit;
 
     
 }

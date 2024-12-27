@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class MonoBehaviourCI : MonoBehaviour
 {
-    protected void Awake()
+    protected virtual void Awake()
     {
         this.ComponentInject();
     }

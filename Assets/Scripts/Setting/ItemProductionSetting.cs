@@ -9,5 +9,5 @@ public class ItemProductionSetting : ProductionSetting
 
     public int MaxBuffer = 5;
     public override Enum GetType() => Type;
-    public override Sprite GetIcon() => GameManager.Instance.ResourcePrefabItems.First(x => x.ItemType == Type).Icon;
+    public override Sprite GetIcon() => ResourcePrefabs.Get().First(x => x.ItemType == Type).Icon;
 }

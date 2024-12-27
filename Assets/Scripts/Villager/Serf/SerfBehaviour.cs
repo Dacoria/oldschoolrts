@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,9 +20,17 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     private float WaitTimeInSecCompletingSerfToRequest = 1;
 
     public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Serf;
+    public GameObject GetGO() => this.gameObject;
+
+    protected override void Awake()
+    {
+        // Geen CI -> components worden door onderstaand event pas toegevoegd
+        AE.NewVillagerUnit?.Invoke(this);
+    }
 
     void Start()
     {
+        this.ComponentInject(); // nu CI; components zijn toegevoegd
         AE.FreeSerf?.Invoke(this);
     }
 

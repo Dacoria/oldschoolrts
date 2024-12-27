@@ -141,7 +141,7 @@ public static class MyExtensions
 
     public static List<ProductionSetting> GetProductionSettings(BuildingType type)
     {
-        var building = GameManager.Instance.BuildingPrefabItems.Single(x => x.BuildingType == type);
+        var building = BuildingPrefabs.Get().Single(x => x.BuildingType == type);
         switch (type)
         {
             case BuildingType.BLACKSMITH:

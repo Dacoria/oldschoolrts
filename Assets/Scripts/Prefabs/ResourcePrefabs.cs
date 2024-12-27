@@ -1,16 +1,23 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public partial class GameManager : BaseAEMonoCI
+public static class ResourcePrefabs
 {
-    private List<StockpileBehaviour> stockpiles = new List<StockpileBehaviour>();
-    [HideInInspector] public List<ResourcePrefabItem> ResourcePrefabItems = new List<ResourcePrefabItem>();
-
-    private void InitResourcesStockpile()
+    private static List<ResourcePrefabItem> _prefabs;
+    public static List<ResourcePrefabItem> Get()
     {
-        ResourcePrefabItems = new List<ResourcePrefabItem>();
+        if (_prefabs == null)
+        {
+            _prefabs = GenerateResourcePrefabItems();
+        }
+        return _prefabs;        
+    }
+
+    private static List<ResourcePrefabItem> GenerateResourcePrefabItems()
+    {
+        var result = new List<ResourcePrefabItem>();
         foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)).Cast<ItemType>().OrderBy(x => x.ToString()))
         {
             if (Load.SpriteMap.TryGetValue($"{itemType.ToString()}Image", out Sprite itemSprite))
@@ -21,7 +28,7 @@ public partial class GameManager : BaseAEMonoCI
                     ItemType = itemType
                 };
 
-                if(resourceCarriedGoName.TryGetValue(itemType, out var name))
+                if (resourceCarriedGoName.TryGetValue(itemType, out var name))
                 {
                     prefabBuilding.ResourcePrefab = Load.GoMap[name];
                 }
@@ -30,34 +37,22 @@ public partial class GameManager : BaseAEMonoCI
                     prefabBuilding.ResourcePrefab = Load.GoMap["CubeUnknownBeingCarried"];
                 }
 
-                ResourcePrefabItems.Add(prefabBuilding);
+                result.Add(prefabBuilding);
             }
             else
             {
                 throw new Exception($"ResourceType {itemType} heeft geen Icon :O");
             }
         }
+
+        return result;
     }
 
-    private Dictionary<ItemType, string> resourceCarriedGoName = new Dictionary<ItemType, string>
+    private static Dictionary<ItemType, string> resourceCarriedGoName = new Dictionary<ItemType, string>
     {
         { ItemType.NONE, "CubeUnknownBeingCarried" },
         { ItemType.LUMBER, "LogPrefab" },
         { ItemType.WATER, "WaterBucket" },
         { ItemType.FISH, "Fish" },
     };
-
-    public void RegisterStockpile(StockpileBehaviour stockpileBehaviour)
-    {
-        stockpiles.Add(stockpileBehaviour);
-    }
-
-    public void TryRemoveStockpile(StockpileBehaviour stockpileBehaviour)
-    {
-        var stockpile = stockpiles.FirstOrDefault(x => x == stockpileBehaviour);
-        if (stockpile != null)
-        {
-            stockpiles.Remove(stockpile);
-        }
-    }
 }

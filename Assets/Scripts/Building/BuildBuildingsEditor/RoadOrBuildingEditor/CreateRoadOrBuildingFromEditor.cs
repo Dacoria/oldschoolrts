@@ -36,7 +36,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
 
     private BuildingPrefabItem GetBuildingPrefabItem(BuildingType buildingType)
     {
-        return GameManager.BuildingPrefabItems.FirstOrDefault(x => x.BuildingType == buildingType);        
+        return BuildingPrefabs.Get().FirstOrDefault(x => x.BuildingType == buildingType);        
     }
 
     private void OnGUI()

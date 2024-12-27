@@ -45,7 +45,7 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
         for(int i = 0; i < productionSetting.ItemsConsumedToProduce.Count; i++)
         {
             var prodSettingForItemTypeRequired = productionSetting.ItemsConsumedToProduce[i];
-            var prefabSettingForItemTypeRequired = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == prodSettingForItemTypeRequired.ItemType);
+            var prefabSettingForItemTypeRequired = ResourcePrefabs.Get().Single(x => x.ItemType == prodSettingForItemTypeRequired.ItemType);
 
             SetImageAndActiveGoForItemConsumed(prodSettingForItemTypeRequired, prefabSettingForItemTypeRequired);            
         }

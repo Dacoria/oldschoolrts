@@ -20,7 +20,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnNoFoodToConsume")) AE.NoFoodToConsume += OnNoFoodToConsume;
         if (IsOverwritten("OnNoWorkerAction")) AE.NoWorkerAction += OnNoWorkerAction;
         if (IsOverwritten("OnStartNewWorkerAction")) AE.StartNewWorkerAction += OnStartNewWorkerAction;
-        if (IsOverwritten("OnVillagerUnitCreated")) AE.VillagerUnitCreated += OnVillagerUnitCreated;        
+        if (IsOverwritten("OnNewVillagerUnit")) AE.NewVillagerUnit += OnNewVillagerUnit;        
     }
 
     protected void OnDisable()
@@ -39,7 +39,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnNoFoodToConsume")) AE.NoFoodToConsume -= OnNoFoodToConsume;
         if (IsOverwritten("OnNoWorkerAction")) AE.NoWorkerAction -= OnNoWorkerAction;
         if (IsOverwritten("OnStartNewWorkerAction")) AE.StartNewWorkerAction -= OnStartNewWorkerAction;
-        if (IsOverwritten("OnVillagerUnitCreated")) AE.VillagerUnitCreated -= OnVillagerUnitCreated;
+        if (IsOverwritten("OnNewVillagerUnit")) AE.NewVillagerUnit -= OnNewVillagerUnit;
     }
 
     protected virtual void OnFreeBuilder(BuilderBehaviour behaviour) { }
@@ -56,7 +56,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
     protected virtual void OnNoFoodToConsume(FoodConsumption consumption) { }
     protected virtual void OnNoWorkerAction(WorkManager manager) { }
     protected virtual void OnStartNewWorkerAction(WorkManager manager) { }
-    protected virtual void OnVillagerUnitCreated(VillagerUnitType villagerUnitType) { }
+    protected virtual void OnNewVillagerUnit(IVillagerUnit newVillagerUnit) { }
 
 
     // GEEN ABSTRACTE CLASSES!

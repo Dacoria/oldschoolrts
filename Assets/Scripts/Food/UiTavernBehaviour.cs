@@ -16,10 +16,10 @@ public class UiTavernBehaviour : MonoBehaviourCI, ICardCarousselDisplay
     private void Start()
     {
         TavernUiWrapperBehaviours = new List<TavernUiWrapperBehaviour>();
-        foreach (var itemFoodSetting in GameManager.Instance.ItemFoodRefillValues)
+        foreach (var itemFoodSetting in FoodConsumptionSettings.ItemFoodRefillValues)
         {
             var tavernUiWrapper = Instantiate(TavernUiWrapperBehaviourPrefab, transform);
-            var resourceItemSettings = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == itemFoodSetting.ItemType);
+            var resourceItemSettings = ResourcePrefabs.Get().Single(x => x.ItemType == itemFoodSetting.ItemType);
             tavernUiWrapper.Image.sprite = resourceItemSettings.Icon;
 
             tavernUiWrapper.ItemType = itemFoodSetting.ItemType;

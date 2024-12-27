@@ -15,7 +15,7 @@ public class BuildingUiBehaviour : MonoBehaviourCI, ICardCarousselDisplay
     private void Start()
     {
         BuildingUiWrapperBehaviours = new List<BuildingUiWrapperBehaviour>();
-        foreach (var BuildingSettings in GameManager.Instance.BuildingPrefabItems.OrderBy(x => (int)x.BuildingType))
+        foreach (var BuildingSettings in BuildingPrefabs.Get().OrderBy(x => (int)x.BuildingType))
         {
             var buildingUiWrapper = Instantiate(BuildingUiWrapperBehaviourPrefab, transform);
             buildingUiWrapper.GetComponentInChildren<Image>().sprite = BuildingSettings.Icon;
@@ -36,7 +36,7 @@ public class BuildingUiBehaviour : MonoBehaviourCI, ICardCarousselDisplay
 
     public void BuildBuilding(BuildingType buildingType)
     {
-        var buildingItem = GameManager.Instance.BuildingPrefabItems.Single(x => x.BuildingType == buildingType);
+        var buildingItem = BuildingPrefabs.Get().Single(x => x.BuildingType == buildingType);
         BuildBuildingsByUser.BuildGeneric(buildingItem.BuildingPrefab);
         UiManager.ActivateUI(false);
     }

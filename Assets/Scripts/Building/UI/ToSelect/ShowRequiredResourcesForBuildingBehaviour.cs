@@ -9,7 +9,7 @@ public class ShowRequiredResourcesForBuildingBehaviour : MonoBehaviourCI
 
     void Start()
     {        
-        var buildingTypeSettings = GameManager.Instance.BuildingPrefabItems.Single(x => x.BuildingType == BuildingUiWrapperBehaviour.BuildingType);
+        var buildingTypeSettings = BuildingPrefabs.Get().Single(x => x.BuildingType == BuildingUiWrapperBehaviour.BuildingType);
         var itemsToBuildBuilding = buildingTypeSettings.BuildingPrefab.GetComponent<BuildingBehaviour>();
         if(itemsToBuildBuilding != null)
         {
@@ -18,7 +18,7 @@ public class ShowRequiredResourcesForBuildingBehaviour : MonoBehaviourCI
                 var reqItemCard = Instantiate(ReqResourcesPrefab, transform);
                 reqItemCard.Text.text = reqItemToBuild.Amount.ToString();
 
-                var itemSetting = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == reqItemToBuild.ItemType);
+                var itemSetting = ResourcePrefabs.Get().Single(x => x.ItemType == reqItemToBuild.ItemType);
                 reqItemCard.Image.sprite = itemSetting.Icon;
 
                 reqItemCard.ItemType = reqItemToBuild.ItemType;

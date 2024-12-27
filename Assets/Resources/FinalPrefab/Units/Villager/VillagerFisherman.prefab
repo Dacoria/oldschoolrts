@@ -171,16 +171,9 @@ GameObject:
   - component: {fileID: 8780287823986067006}
   - component: {fileID: 8780287823986067007}
   - component: {fileID: 1527497291369057831}
-  - component: {fileID: 1527497291369057850}
-  - component: {fileID: -7127549502815171500}
-  - component: {fileID: 1153274213913951838}
-  - component: {fileID: 4790776669072215685}
-  - component: {fileID: 3932028128377518577}
-  - component: {fileID: 8785124148495051789}
-  - component: {fileID: 306131626898107173}
-  - component: {fileID: 3027680290563721359}
   - component: {fileID: 7707883753757933090}
-  - component: {fileID: 3596423245578182500}
+  - component: {fileID: 1527497291369057850}
+  - component: {fileID: 1023955965425927706}
   m_Layer: 0
   m_Name: VillagerFisherman
   m_TagString: Unit
@@ -254,131 +247,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!195 &1527497291369057850
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 2
-  m_Acceleration: 5
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 4
---- !u!114 &-7127549502815171500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c1d3fa8802243a4e86f3a5001b2f3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1153274213913951838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5481a9ee2beb73941885876da97f1380, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HarvestedResourceToCarryPrefab: {fileID: 130752437402864174, guid: e246547b215d6084d824cf680706437e, type: 3}
-  PlantResourceToCarryPrefab: {fileID: 0}
---- !u!114 &4790776669072215685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec63a1f81a7a2cc41ba9d04af90a9a34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FoodSatisfactionPercentage: 0.6
-  FoodDeclinePercPerSecond: 0.01
-  PercLimitForFoodRefill: 0.2
-  UseTavernBubble: 1
---- !u!114 &3932028128377518577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146b1cbcc85ede949851b7b52b93e1fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BuildingTypeToBringResourceBackTo: 50000000
-  timeToWaitForRetryIfNoNewAction: 1
-  VillagerUnitType: 0
---- !u!114 &8785124148495051789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f92e6948f311ac24a839921430eecf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionIsAvailable: 0
---- !u!114 &306131626898107173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fee194a02824de4b819fc0bd10592ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stopDistanceFromObjectToRetrieveResourceFrom: 2
-  timeToDropOffResourceInSeconds: 1
-  timeToRetrieveResourceInSeconds: 8
-  timeToWaitForRetrievalOfResourceInSeconds: 0
-  ResourceCountMaterialHarvestedPerRun: 1
---- !u!114 &3027680290563721359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8780287823986067001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fa0b0a3aa010a34388f768c366c75e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InitialHeath: 100
-  CurrentHealth: 100
-  DamageForNoFood: 1
-  InstantiatedGoOnDeath: {fileID: 8737125830721756014, guid: 87f11529a38bff2449755aa6c3de67fb, type: 3}
 --- !u!136 &7707883753757933090
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -402,7 +270,29 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3596423245578182500
+--- !u!195 &1527497291369057850
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8780287823986067001}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 5
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 1
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1023955965425927706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -411,9 +301,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8780287823986067001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76dc7fe2dec8ed54f98ccbcab01628c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cc898986f26c2b42838feb11ac85966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ToolToShowHide: {fileID: 6927569815148045828}
 --- !u!1 &8780287824152428118
 GameObject:
   m_ObjectHideFlags: 0
@@ -2631,5 +2522,10 @@ PrefabInstance:
 --- !u!4 &6927569815147756068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1871937558990367418, guid: 422c6cc9382646440b6c952fd1da4bb2, type: 3}
+  m_PrefabInstance: {fileID: 8780287824848785566}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6927569815148045828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1871937558990206618, guid: 422c6cc9382646440b6c952fd1da4bb2, type: 3}
   m_PrefabInstance: {fileID: 8780287824848785566}
   m_PrefabAsset: {fileID: 0}

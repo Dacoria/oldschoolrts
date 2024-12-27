@@ -14,9 +14,17 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     private bool isWorking;
 
     public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Builder;
+    public GameObject GetGO() => this.gameObject;
+
+    protected override void Awake()
+    {
+        // Geen CI -> components worden door onderstaand event pas toegevoegd
+        AE.NewVillagerUnit?.Invoke(this);
+    }
 
     private void Start()
     {
+        this.ComponentInject(); // nu CI; components zijn toegevoegd
         NavMeshAgent.areaMask = 1 << 0;
         AE.FreeBuilder?.Invoke(this);
     }   

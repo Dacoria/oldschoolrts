@@ -22,7 +22,7 @@ public class TavernRefillingBehaviour : MonoBehaviour
             FoodType = foodType,
             FoodConsumptionBehaviour = foodConsumptionBehaviour,
             VillagerType = villagerUnitType,
-            TimeToConsumeFoodInSeconds = GameManager.Instance.ItemFoodRefillValues.Single(x => x.ItemType == foodType).TimeToConsumeInSec,
+            TimeToConsumeFoodInSeconds = FoodConsumptionSettings.ItemFoodRefillValues.Single(x => x.ItemType == foodType).TimeToConsumeInSec,
             StartTimeConsumingFood = DateTime.Now
         };
 

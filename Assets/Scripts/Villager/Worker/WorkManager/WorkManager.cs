@@ -12,6 +12,7 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
     [HideInInspector] // wordt geset bij initieren van unit in school
     public VillagerUnitType VillagerUnitType;
     public VillagerUnitType GetVillagerUnitType() => VillagerUnitType;
+    public GameObject GetGO() => this.gameObject;
 
     [ComponentInject] private Animator Animator;
     [ComponentInject] private NavMeshAgent NavMeshAgent;
@@ -25,8 +26,15 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
     private bool isIdle;
     private bool workerIsActive;
 
+    protected override void Awake()
+    {
+        // Geen CI -> components worden door onderstaand event pas toegevoegd
+        AE.NewVillagerUnit?.Invoke(this);
+    }
+
     public void Start()
     {
+        this.ComponentInject(); // nu CI; components zijn toegevoegd
         NavMeshAgent.isStopped = true;
         StartCoroutine(FindRelevantBuildingAndContinueAfterwards());
     }

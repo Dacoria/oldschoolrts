@@ -16,7 +16,7 @@ public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarous
     private void Start()
     {
         StockpileResourceWrappers = new List<StockpileResourceWrapperBehaviour>();
-        foreach (var item in GameManager.Instance.ResourcePrefabItems.OrderBy(x => x.ItemType))
+        foreach (var item in ResourcePrefabs.Get().OrderBy(x => x.ItemType))
         {
             var stockpileResourceWrapper = Instantiate(StockpileResourceWrapperPrefab, transform);
             stockpileResourceWrapper.Image.sprite = item.Icon;          
@@ -50,7 +50,7 @@ public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarous
     {        
         if (CallingStockpile != null)
         {
-            foreach (var itemSprite in GameManager.Instance.ResourcePrefabItems)
+            foreach (var itemSprite in ResourcePrefabs.Get())
             {
                 var itemType = CallingStockpile.CurrentItemAmount.Single(x => x.ItemType == itemSprite.ItemType);
                 var wrapper = StockpileResourceWrappers.Single(x => x.ItemType == itemSprite.ItemType);

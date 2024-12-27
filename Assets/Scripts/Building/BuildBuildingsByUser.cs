@@ -201,7 +201,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private void FillBuildingType(GameObject PrefabToBuild, GameObject GoToBuild)
     {
-        var buildingSettings = GameManager.Instance.BuildingPrefabItems.FirstOrDefault(x => x.BuildingPrefab == PrefabToBuild);
+        var buildingSettings = BuildingPrefabs.Get().FirstOrDefault(x => x.BuildingPrefab == PrefabToBuild);
         if(buildingSettings != null)
         {
             var buildingBehaviour = GoToBuild.GetComponent<BuildingBehaviour>();
@@ -269,7 +269,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
             if (!buildingBehaviour.gameObject.IsRoad() && !buildingBehaviour.gameObject.IsFarmField())
             {
-                var displayOffset = GameManager.Instance.BuildingPrefabItems.Single(x => x.BuildingPrefab == SelectedGameObjectToBuild).DisplayOffset;
+                var displayOffset = BuildingPrefabs.Get().Single(x => x.BuildingPrefab == SelectedGameObjectToBuild).DisplayOffset;
                 building.AddComponent<DisplayBuildingProgressHandler>().DisplayBuildingProgressPrefab = DisplayBuildingProgressPrefab;
                 building.GetComponent<DisplayBuildingProgressHandler>().GoSpawnOffset = displayOffset;
                                

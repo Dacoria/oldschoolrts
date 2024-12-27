@@ -1211,14 +1211,10 @@ GameObject:
   - component: {fileID: 7480121780544086203}
   - component: {fileID: 8243483472346767353}
   - component: {fileID: 6779166740270853961}
-  - component: {fileID: 6779166740270853960}
-  - component: {fileID: 6779166740270853963}
-  - component: {fileID: 1419010647}
-  - component: {fileID: 2478415806686293074}
-  - component: {fileID: 7292488018526281398}
   - component: {fileID: 6126068151766656915}
-  - component: {fileID: 7273982680110790953}
-  - component: {fileID: -393857110382086669}
+  - component: {fileID: 6779166740270853963}
+  - component: {fileID: 6026260299867103497}
+  - component: {fileID: 6779166740270853960}
   m_Layer: 0
   m_Name: Serf
   m_TagString: Unit
@@ -1292,80 +1288,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6779166740270853960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4862582928633410447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a4487ec164148e46906af32935d1e8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!195 &6779166740270853963
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4862582928633410447}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.3
-  m_Speed: 2
-  m_Acceleration: 5
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0.5
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &1419010647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4862582928633410447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09fab12a5b818eb4492d84c2ee32eb41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2478415806686293074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4862582928633410447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c1d3fa8802243a4e86f3a5001b2f3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7292488018526281398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4862582928633410447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec63a1f81a7a2cc41ba9d04af90a9a34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FoodSatisfactionPercentage: 0.6
-  FoodDeclinePercPerSecond: 0.01
-  PercLimitForFoodRefill: 0.2
-  UseTavernBubble: 1
 --- !u!136 &6126068151766656915
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1389,7 +1311,45 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &7273982680110790953
+--- !u!195 &6779166740270853963
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862582928633410447}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.3
+  m_Speed: 2
+  m_Acceleration: 5
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!208 &6026260299867103497
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862582928633410447}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.2, y: 1, z: 1.2}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &6779166740270853960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1398,23 +1358,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4862582928633410447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fa0b0a3aa010a34388f768c366c75e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InitialHeath: 100
-  CurrentHealth: 100
-  DamageForNoFood: 1
-  InstantiatedGoOnDeath: {fileID: 8868451336055206481, guid: cba4b9f82cd33d7419d0925ca231cf2d, type: 3}
---- !u!114 &-393857110382086669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4862582928633410447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9b43f18a354de442a4acd8efe49288a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a4487ec164148e46906af32935d1e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4879724550527056146

@@ -109,7 +109,7 @@ public class DisplayBuildingProgressHandler : BaseAEMonoCI
         var rendererResourceImage = displayGo.GetComponentsInChildren<Renderer>().FirstOrDefault(x => x.name.StartsWith("ResourceImage"));
         if (rendererResourceImage != null)
         {
-            var prefabsForItemtype = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == itemType);
+            var prefabsForItemtype = ResourcePrefabs.Get().Single(x => x.ItemType == itemType);
             rendererResourceImage.material.mainTexture = prefabsForItemtype.Icon.texture;
         }
     }

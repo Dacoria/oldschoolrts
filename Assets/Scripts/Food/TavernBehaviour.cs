@@ -16,7 +16,7 @@ public class TavernBehaviour : BaseAEMonoCI
     {
         InitiateStockpile();
         IncomingOrders = new List<SerfRequest>();
-        foreach (var itemAmount in GameManager.Instance.ItemFoodRefillValues)
+        foreach (var itemAmount in FoodConsumptionSettings.ItemFoodRefillValues)
         {
             AddSerfRequestTillBuffer(itemAmount.ItemType);
         }
@@ -45,7 +45,7 @@ public class TavernBehaviour : BaseAEMonoCI
     public void ConsumeFoodItem(TavernRefillItem item)
     {
         var foodConsumption = item.FoodConsumptionBehaviour.FoodConsumption;
-        var refillValueOfFood = GameManager.Instance.ItemFoodRefillValues.Single(x => x.ItemType == item.FoodType).RefillValue;
+        var refillValueOfFood = FoodConsumptionSettings.ItemFoodRefillValues.Single(x => x.ItemType == item.FoodType).RefillValue;
 
         foodConsumption.RefillFood(refillValueOfFood);
     }
@@ -68,7 +68,7 @@ public class TavernBehaviour : BaseAEMonoCI
     private void InitiateStockpile()
     {
         StockpileOfItemsRequired = new List<ItemAmount>();
-        foreach (var itemConsumedToProduce in GameManager.Instance.ItemFoodRefillValues)
+        foreach (var itemConsumedToProduce in FoodConsumptionSettings.ItemFoodRefillValues)
         {
             StockpileOfItemsRequired.Add(new ItemAmount() { ItemType = itemConsumedToProduce.ItemType, Amount = 0 });
         }
@@ -78,7 +78,7 @@ public class TavernBehaviour : BaseAEMonoCI
     {
         var orderCountIncoming = IncomingOrders.Count(x => x.ItemType == itemType);
         var orderCountStocked = StockpileOfItemsRequired.Single(x => x.ItemType == itemType).Amount;
-        var itemTypeConfig = GameManager.Instance.ItemFoodRefillValues.Single(x => x.ItemType == itemType);
+        var itemTypeConfig = FoodConsumptionSettings.ItemFoodRefillValues.Single(x => x.ItemType == itemType);
 
         for (var i = (orderCountIncoming + orderCountStocked); i < MaxBufferForEachFoodType; i++)
         {

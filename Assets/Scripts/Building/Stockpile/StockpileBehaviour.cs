@@ -31,7 +31,7 @@ public class StockpileBehaviour : BaseAEMonoCI
 
     void Start()
     {
-        GameManager.Instance.RegisterStockpile(this);
+        StockPilesManager.Instance.RegisterStockpile(this);
     }
 
     protected override void OnOrderStatusChanged(SerfOrder serfOrder)
@@ -65,6 +65,6 @@ public class StockpileBehaviour : BaseAEMonoCI
 
     private void OnDestroy()
     {
-        GameManager.Instance?.TryRemoveStockpile(this);
+        StockPilesManager.Instance?.TryRemoveStockpile(this);
     }
 }

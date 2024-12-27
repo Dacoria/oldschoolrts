@@ -96,7 +96,7 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
             foreach (var itemInStockpile in BarracksStockpile.StockpileOfItemsRequired)
             {
                 var itemCountUiWrapper = Instantiate(ImageTextBehaviourPrefab, transform);
-                itemCountUiWrapper.Image.sprite = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == itemInStockpile.ItemType).Icon;
+                itemCountUiWrapper.Image.sprite = ResourcePrefabs.Get().Single(x => x.ItemType == itemInStockpile.ItemType).Icon;
                 itemCountUiWrapper.Text.text = itemInStockpile.Amount.ToString();
                 itemCountUiWrapper.ItemType = itemInStockpile.ItemType;
 

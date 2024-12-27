@@ -15,7 +15,7 @@ public class SerfResourceCarryingBehaviour : MonoBehaviour
         }
 
         if (ResourceBeingCarriedGo != null) { throw new Exception("zou al destroyed moeten zijn"); }
-        GameObject resourceGoPrefab = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is          
+        GameObject resourceGoPrefab = ResourcePrefabs.Get().Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is          
 
         ResourceBeingCarriedGo = Instantiate(resourceGoPrefab, this.transform, false);
         if (resourceGoPrefab == Load.GoMap["CubeUnknownBeingCarried"])
@@ -30,7 +30,7 @@ public class SerfResourceCarryingBehaviour : MonoBehaviour
         //if (ResourceBubbleToPickup != null) { throw new Exception("zou al destroyed moeten zijn"); }
         if (ResourceBubbleToPickupGo != null) { Destroy(ResourceBubbleToPickupGo); }
 
-        GameObject resourceGoPrefab = GameManager.Instance.ResourcePrefabItems.Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is
+        GameObject resourceGoPrefab = ResourcePrefabs.Get().Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is
         ResourceBubbleToPickupGo = Instantiate(resourceGoPrefab, this.transform, false);
         if (resourceGoPrefab == Load.GoMap["CubeUnknownBeingCarried"])
         {

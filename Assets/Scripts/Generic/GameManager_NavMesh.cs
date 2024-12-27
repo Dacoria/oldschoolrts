@@ -32,7 +32,6 @@ public partial class GameManager : BaseAEMonoCI
     private bool HasPathForBuilding(StockpileBehaviour stockpile, Vector3 targetBuildingLoc, int areaMask, UnityEngine.AI.NavMeshPath path)
     {
         return IsFullPathAvailable(stockpile.Location, targetBuildingLoc, areaMask, path);
-
     }
 
     private bool IsFullPathAvailable(Vector3 loc1, Vector3 loc2, int areaMask, UnityEngine.AI.NavMeshPath path)

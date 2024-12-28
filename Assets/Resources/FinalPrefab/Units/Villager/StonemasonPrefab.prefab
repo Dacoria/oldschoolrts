@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 2990106715961862989}
   - component: {fileID: 1177875718638166246}
   - component: {fileID: -2066077650977667454}
+  - component: {fileID: -5438414809791308754}
   m_Layer: 0
   m_Name: StonemasonPrefab
   m_TagString: Unit
@@ -495,6 +496,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HarvestedResourceToCarryPrefab: {fileID: 6746141556656791956, guid: 0dca71cc646752e409384f3bd13d7aab, type: 3}
   PlantResourceToCarryPrefab: {fileID: 0}
+--- !u!114 &-5438414809791308754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533383691756147120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fee194a02824de4b819fc0bd10592ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopDistanceFromObjectToRetrieveResourceFrom: 1
+  timeToDropOffResourceInSeconds: 1.5
+  timeToRetrieveResourceInSeconds: 7
+  timeToWaitForRetrievalOfResourceInSeconds: 1
+  ResourceCountMaterialHarvestedPerRun: 1
 --- !u!1 &2533383691794721296
 GameObject:
   m_ObjectHideFlags: 0

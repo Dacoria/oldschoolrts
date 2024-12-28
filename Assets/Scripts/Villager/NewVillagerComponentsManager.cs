@@ -1,6 +1,3 @@
-using System.Diagnostics;
-using UnityEngine;
-
 public class NewVillagerComponentsManager : BaseAEMonoCI
 {
     // niet via event - dat is te traag voor de awake
@@ -37,15 +34,17 @@ public class NewVillagerComponentsManager : BaseAEMonoCI
         // Worker stuff
         if (newVillagerUnit.IsVillagerWorker())
         {
-            // go.AddComponent<ResourceCarryingBehaviour>(); // Vanwege verschillende prefabs -> zelf toevoegen
+            // go.AddComponent<ResourceCarryingBehaviour>(); // Vanwege verschillende prefabs + settings -> zelf toevoegen
+            // go.AddComponent<RetrieveResourceBehaviour>(); // Vanwege verschillende prefabs + settings -> zelf toevoegen
             go.AddComponent<GoingToWorkStation>();
-            go.AddComponent<RetrieveResourceBehaviour>();
             go.AddComponent<WarningDisplayAboveHeadBehaviour>();
         }        
 
         // meer specifieke dingen staan nog op GO zelf! (bv tool carrying)
     }
 
+
+    // Alleen checks/validaties....
     protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit)
     {
         var go = newVillagerUnit.GetGO();
@@ -57,6 +56,11 @@ public class NewVillagerComponentsManager : BaseAEMonoCI
         if(newVillagerUnit.IsVillagerWorker() && go.GetComponent<ResourceCarryingBehaviour>() == null)
         {
             throw new System.Exception($"Geen ResourceCarryingBehaviour gevonden op villager worker --> '{go.name}', type '{newVillagerUnit.GetVillagerUnitType()}'");
+        }
+
+        if (newVillagerUnit.IsVillagerWorker() && go.GetComponent<RetrieveResourceBehaviour>() == null)
+        {
+            throw new System.Exception($"Geen RetrieveResourceBehaviour gevonden op villager worker --> '{go.name}', type '{newVillagerUnit.GetVillagerUnitType()}'");
         }
     }
 }

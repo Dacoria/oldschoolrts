@@ -1127,6 +1127,7 @@ GameObject:
   - component: {fileID: -192370658900652778}
   - component: {fileID: 5322479395910123089}
   - component: {fileID: 697136732556443797}
+  - component: {fileID: 9074901929576405987}
   m_Layer: 0
   m_Name: FarmerPrefab
   m_TagString: Unit
@@ -1303,6 +1304,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HarvestedResourceToCarryPrefab: {fileID: 2838814454133065868, guid: 0e6e230725dd4e142b03f8ef7c201478, type: 3}
   PlantResourceToCarryPrefab: {fileID: 0}
+--- !u!114 &9074901929576405987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7327147359203952382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fee194a02824de4b819fc0bd10592ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopDistanceFromObjectToRetrieveResourceFrom: 0.2
+  timeToDropOffResourceInSeconds: 1.5
+  timeToRetrieveResourceInSeconds: 7
+  timeToWaitForRetrievalOfResourceInSeconds: 1
+  ResourceCountMaterialHarvestedPerRun: 1
 --- !u!1 &7327147359254440236
 GameObject:
   m_ObjectHideFlags: 0

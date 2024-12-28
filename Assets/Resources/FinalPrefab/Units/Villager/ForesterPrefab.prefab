@@ -214,6 +214,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 931603124180231959, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}
       insertIndex: 6
       addedObject: {fileID: -170872310046019597}
+    - targetCorrespondingSourceObject: {fileID: 931603124180231959, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4372916705134367035}
   m_SourcePrefab: {fileID: 100100000, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}
 --- !u!1 &6757304457716220106 stripped
 GameObject:
@@ -249,6 +252,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HarvestedResourceToCarryPrefab: {fileID: 4475306733710602681, guid: c5b0f972b0c3b8e42a592da64012cb36, type: 3}
   PlantResourceToCarryPrefab: {fileID: 6718156614032422642, guid: 6fc645fa0447b76468972308652465e0, type: 3}
+--- !u!114 &-4372916705134367035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6757304457716220106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fee194a02824de4b819fc0bd10592ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopDistanceFromObjectToRetrieveResourceFrom: 1
+  timeToDropOffResourceInSeconds: 1.5
+  timeToRetrieveResourceInSeconds: 7
+  timeToWaitForRetrievalOfResourceInSeconds: 1
+  ResourceCountMaterialHarvestedPerRun: 1
 --- !u!4 &6757304458627507730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 931603125089403343, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}

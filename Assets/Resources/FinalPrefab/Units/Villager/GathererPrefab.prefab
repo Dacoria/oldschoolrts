@@ -1714,6 +1714,7 @@ GameObject:
   - component: {fileID: 8434991149964210430}
   - component: {fileID: 2949106141728913122}
   - component: {fileID: -3222750716960333354}
+  - component: {fileID: -3206201419414043340}
   m_Layer: 0
   m_Name: GathererPrefab
   m_TagString: Unit
@@ -1861,6 +1862,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HarvestedResourceToCarryPrefab: {fileID: 6771706823381889048, guid: 34d44f2a4256b004887374cb2be006af, type: 3}
   PlantResourceToCarryPrefab: {fileID: 0}
+--- !u!114 &-3206201419414043340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2814646624247004106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fee194a02824de4b819fc0bd10592ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopDistanceFromObjectToRetrieveResourceFrom: 1
+  timeToDropOffResourceInSeconds: 1.5
+  timeToRetrieveResourceInSeconds: 7
+  timeToWaitForRetrievalOfResourceInSeconds: 1
+  ResourceCountMaterialHarvestedPerRun: 1
 --- !u!1 &2814646624247004112
 GameObject:
   m_ObjectHideFlags: 0

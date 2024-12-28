@@ -2,17 +2,13 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MultipleGameObjectGrowScript : MonoBehaviourCI, IGrowOnFarmField
+public class MultipleGameObjectGrowScript : MonoBehaviour, IGrowOnFarmField
 {
     public float GrowSpeed = 10f;
     public float StartScale = 0.1f;
     public float EndScale = 1f;
 
-    public bool DynamicallyRetrieveGoToGrow; //bij ja, wordt MultipleGameObjectToGrow opgehaald adhv children die de klasse 'GameObjectGrowTarget' hebben
-
-    public List<GameObject> MultipleGameObjectToGrow; // welke go gepakt worden
-    private List<ObjectToGrow> GrowProgressMultipleGameObjectToGrow; // welke go gepakt worden
-    [ComponentInject] private List<GameObjectGrowTarget> GameObjectGrowTargets;
+    private List<ObjectToGrow> growTargetProcessList; // welke go gepakt worden
 
     private bool hasFinishedGrowingAllGameObjects;
 
@@ -20,32 +16,18 @@ public class MultipleGameObjectGrowScript : MonoBehaviourCI, IGrowOnFarmField
 
     void Start()
     {
-        if(DynamicallyRetrieveGoToGrow)
+        var growTargets = GetComponentsInChildren<GameObjectGrowTarget>(true).ToList(); // script dat op elke GO zit die je wilt laten groeien
+        if (growTargets.Count == 0) { throw new System.Exception("Hoort meerdere resultaten te hebben"); }
+                
+        growTargetProcessList = new List<ObjectToGrow>();
+
+        foreach (var targetToGrow in growTargets)
         {
-            SetMultipleGameObjectToGrow();
-        }
-        if (MultipleGameObjectToGrow.Count == 0) { throw new System.Exception("Hoort meerdere resultaten te hebben"); }
+            var go = targetToGrow.gameObject;
+            var targetSize = go.transform.localScale * EndScale;
+            go.transform.localScale = targetToGrow.gameObject.transform.localScale * StartScale;
 
-        GrowProgressMultipleGameObjectToGrow = new List<ObjectToGrow>();
-
-        foreach(var gameObjectToGrow in MultipleGameObjectToGrow)
-        {
-            var targetSize = gameObjectToGrow.transform.localScale * EndScale;
-            GrowProgressMultipleGameObjectToGrow.Add(new ObjectToGrow { GameObject = gameObjectToGrow, TargetSize = targetSize });
-
-            //gameObjectToGrow.transform.localPosition = new Vector3(gameObjectToGrow.transform.localPosition.x, 0.04f, gameObjectToGrow.transform.localPosition.z);
-            gameObjectToGrow.transform.localScale = gameObjectToGrow.transform.localScale * StartScale;
-        }
-    }
-
-    private void SetMultipleGameObjectToGrow()
-    {
-        if(GameObjectGrowTargets.Count == 0) { throw new System.Exception("Hoort meerdere resultaten te hebben"); }
-
-        MultipleGameObjectToGrow = new List<GameObject>();
-        foreach (var targetToGrow in GameObjectGrowTargets)
-        {
-            MultipleGameObjectToGrow.Add(targetToGrow.gameObject);
+            growTargetProcessList.Add(new ObjectToGrow { GameObject = go, TargetSize = targetSize });
         }
     }
 
@@ -53,7 +35,7 @@ public class MultipleGameObjectGrowScript : MonoBehaviourCI, IGrowOnFarmField
     {
         if(!hasFinishedGrowingAllGameObjects)
         {
-            foreach (var gameObjectToGrow in GrowProgressMultipleGameObjectToGrow.Where(x => !x.HasReachedTarget))
+            foreach (var gameObjectToGrow in growTargetProcessList.Where(x => !x.HasReachedTarget))
             {
                 gameObjectToGrow.HasReachedTarget = Vector3.SqrMagnitude(gameObjectToGrow.GameObject.transform.localScale - gameObjectToGrow.TargetSize) < 0.01f;
 
@@ -64,7 +46,7 @@ public class MultipleGameObjectGrowScript : MonoBehaviourCI, IGrowOnFarmField
             }
         }
 
-        hasFinishedGrowingAllGameObjects = GrowProgressMultipleGameObjectToGrow.All(x => x.HasReachedTarget);
+        hasFinishedGrowingAllGameObjects = growTargetProcessList.All(x => x.HasReachedTarget);
     }
 
     public class ObjectToGrow

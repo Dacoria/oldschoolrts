@@ -36,5 +36,6 @@ public static class AE
     // VILLAGER CREATED
     public static Action<IVillagerUnit> NewVillagerUnit;
 
-    
+    // BUILDING NEEDS WORKER
+    public static Action<WorkerBuildingBehaviour> BuildingNeedsWorker;
 }

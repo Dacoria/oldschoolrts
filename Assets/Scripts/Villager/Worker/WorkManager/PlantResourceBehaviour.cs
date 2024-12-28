@@ -5,9 +5,9 @@ using UnityEngine.AI;
 public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
-    private ILocationOfNewResource LocationOfNewResourceScript;
+    private ILocForNewResource LocForNewResourceScript;
 
-    private GameObject IniatiatedPlantedNewResource;
+    private GameObject NewRscToPlantGo;
     private GameObject ObjectToBringResourceBackTo;
     public GameObject ObjectToPlantPrefab;
 
@@ -25,19 +25,13 @@ public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
     public void SetReturnTargetForAction(GameObject objectToBringResourceBackTo)
     {
         ObjectToBringResourceBackTo = objectToBringResourceBackTo;
-        LocationOfNewResourceScript = ObjectToBringResourceBackTo.GetComponent<ILocationOfNewResource>(); // waar kan/mag de nieuwe resource gemaakt & geplaatst worden? + teruggeven prefab nieuwe GO
-        if (LocationOfNewResourceScript == null) { throw new System.Exception("LocationOfNewResourceScript -> Nodig voor bepalen objectToRetrieveResourceFrom"); }
+        LocForNewResourceScript = ObjectToBringResourceBackTo.GetComponent<ILocForNewResource>(); // waar kan/mag de nieuwe resource gemaakt & geplaatst worden? + teruggeven prefab nieuwe GO
+        if (LocForNewResourceScript == null) { throw new System.Exception("LocationOfNewResourceScript -> Nodig voor bepalen objectToRetrieveResourceFrom"); }
     }
 
     public bool CanDoAction()
     {
-        if(PlantNewResourceOnFarmField)
-        {
-            // voor bv farmfields
-            return LocationOfNewResourceScript.GetGameObjectForNewResource() != null;
-        }
-
-        return !LocationOfNewResourceScript.GetCoordinatesForNewResource().IsAlmostEmptyVector();        
+        return LocForNewResourceScript.GetLocationForNewResource() != null;
     }
 
     public void Init()
@@ -76,18 +70,17 @@ public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
         if (NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
         {
             NavMeshAgent.isStopped = true;
-            if (IniatiatedPlantedNewResource != null && IniatiatedPlantedNewResource.transform.position.IsSameXAndZ(NavMeshAgent.destination))
+            if (NewRscToPlantGo != null && NewRscToPlantGo.transform.position.IsSameXAndZ(NavMeshAgent.destination))
             {                
                 StartCoroutine(CreateNewResource());
             }
             else if (ObjectToBringResourceBackTo != null && ObjectToBringResourceBackTo.EntranceExit().IsSameXAndZ(NavMeshAgent.destination))
             {
-                NavMeshAgent.isStopped = true;
                 Finished();                
             }
             else
             {
-                // Wel bestemming bereikt; maar licht blijkbaar niks --> terug naar basis voor fallback
+                // Wel bestemming bereikt; maar ligt blijkbaar niks --> terug naar basis voor fallback
                 Debug.Log("Bestemming bereikt zonder actie --> zou niet moeten");
                 GoBackToGatherPoint();
             }
@@ -97,11 +90,13 @@ public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
     private IEnumerator CreateNewResource()
     {
         isCreatingNewResource = true;
+        NavMeshAgent.angularSpeed = 0;
         yield return Wait4Seconds.Get(timeToCreateNewResourceInSeconds);
         isCreatingNewResource = false;
+        NavMeshAgent.angularSpeed = 120; // terug naar default
 
-        IniatiatedPlantedNewResource.SetActive(true); // bv een boom -> maakt zichtbaar
-        IniatiatedPlantedNewResource = null; // wordt evt later gekoppeld als resource om te harvesten --> nu resetten
+        NewRscToPlantGo.SetActive(true); // bv een boom -> maakt zichtbaar
+        NewRscToPlantGo = null; // wordt evt later gekoppeld als resource om te harvesten --> nu resetten
 
         GoBackToGatherPoint();
     }
@@ -115,37 +110,21 @@ public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
     private bool CreateNewResourceTarget()
     {
         // bij een boom wil je alleen een locatie, bij een farmfield, wil je het farmfield terugkrijgen, en die als parent maken van het nieuwe obj --> nu maar zo gedaan (niet trots op :( )
-        
-        if(PlantNewResourceOnFarmField)
+        var locRsc = LocForNewResourceScript.GetLocationForNewResource();
+        if (locRsc == null)
         {
-            // TODO expliciet casten naar object ongewenst; moet mooier/netter kunnen
-            var farmField = LocationOfNewResourceScript.GetGameObjectForNewResource();
-            var farmFieldScript = farmField.GetComponent<FarmFieldScript>();
-
-            IniatiatedPlantedNewResource = Instantiate(ObjectToPlantPrefab, farmField.transform.position, Quaternion.identity);
-            IniatiatedPlantedNewResource.SetActive(false); // wordt active gemaakt bij het planten van de resource
-
-            farmFieldScript.ObjectGrownOnField = IniatiatedPlantedNewResource;
-            IniatiatedPlantedNewResource.transform.parent = farmField.transform;
-        }
-        else
-        {
-            var newLocNewResource = LocationOfNewResourceScript.GetCoordinatesForNewResource();
-            if(newLocNewResource.IsAlmostEmptyVector())
-            {
-                return false;
-            }
-
-            IniatiatedPlantedNewResource = Instantiate(ObjectToPlantPrefab, newLocNewResource, Quaternion.identity);
-            IniatiatedPlantedNewResource.SetActive(false); // wordt active gemaakt bij het planten van de resource
+            return false;
         }
 
-        NavMeshAgent.SetDestination(IniatiatedPlantedNewResource.transform.position);
+        NewRscToPlantGo = Instantiate(ObjectToPlantPrefab, locRsc.V3, Quaternion.identity, locRsc?.GO?.transform);
+        NewRscToPlantGo.SetActive(false); // wordt active gemaakt bij het planten van de resource
+
+        NavMeshAgent.SetDestination(NewRscToPlantGo.transform.position);
         NavMeshAgent.stoppingDistance = stopDistanceFromObjectToCreateNewResource;
         NavMeshAgent.isStopped = false;
 
         return true;
     }
 
-    public bool IsCarryingResource() => IniatiatedPlantedNewResource != null && (!NavMeshAgent.isStopped && NavMeshAgent.destination.IsSameXAndZ(IniatiatedPlantedNewResource.transform.position));
+    public bool IsCarryingResource() => NewRscToPlantGo != null && (!NavMeshAgent.isStopped && NavMeshAgent.destination.IsSameXAndZ(NewRscToPlantGo.transform.position));
 }

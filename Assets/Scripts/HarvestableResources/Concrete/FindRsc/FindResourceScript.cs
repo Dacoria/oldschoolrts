@@ -8,7 +8,6 @@ public class FindResourceScript : MonoBehaviour, ILocationOfResource
 
     public int GetMaxRangeForResource() => MaxRangeForResource;
     public RangeType GetRangeTypeToFindResource() => RangeType.Circle;
-
     public GameObject GetResourceToRetrieve()
     {
         var goResources = GetResourceGameObjects(MaterialResourceType);

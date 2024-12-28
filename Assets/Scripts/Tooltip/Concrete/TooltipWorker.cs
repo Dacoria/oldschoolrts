@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class TooltipWorker : MonoBehaviourCI, ITooltipUIText
 {
-    [ComponentInject]
-    private WorkManager WorkManager;
+    [ComponentInject] private WorkManager WorkManager;
 
-    [ComponentInject]
-    private HealthBehaviour HealthBehaviour;
+    [ComponentInject] private HealthBehaviour HealthBehaviour;
 
     [ComponentInject(Required.OPTIONAL)]
     private FoodConsumptionBehaviour FoodConsumptionBehaviour;
@@ -36,12 +34,13 @@ public class TooltipWorker : MonoBehaviourCI, ITooltipUIText
             }
         }
 
-        if(WorkManager.LatestVillagerWorkAction == null)
+        var currentWorkAction = WorkManager.GetActiveWorkAction();
+        if (currentWorkAction == null)
         {
             content += "No action";
         }
         else{
-            content += $"Action: {WorkManager.LatestVillagerWorkAction.GetType().ToString().Replace("Behaviour", "")}";
+            content += $"Action: {currentWorkAction.GetType().ToString().Replace("Behaviour", "")}";
         }
 
         return content;

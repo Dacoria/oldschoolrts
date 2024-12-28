@@ -15,11 +15,13 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
     public GameObject GetGO() => this.gameObject;
     public bool IsVillagerWorker() => true;
 
-    [ComponentInject] private Animator Animator;
-    [ComponentInject] private NavMeshAgent NavMeshAgent;
-    [ComponentInject] private GoingToWorkStation GoingToWorkStation;
-    private GameObject ObjectToBringResourceBackTo;
-    private FoodConsumptionBehaviour FoodConsumptionBehaviour;
+    [ComponentInject] private Animator animator;
+    [ComponentInject] private NavMeshAgent navMeshAgent;
+    [ComponentInject] private GoingToWorkStation goingToWorkStation;
+    private List<IVillagerWorkAction> villagerWorkActions;
+
+    private GameObject objectToBringResourceBackTo;
+    private FoodConsumptionBehaviour foodConsumptionBehaviour;
 
     private bool stopAsapWithOrders;
     private bool stoppedWithOrders;
@@ -39,46 +41,38 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
     public void Start()
     {        
         this.ComponentInject(); // nu CI; components zijn toegevoegd
+        villagerWorkActions = GetComponents<IVillagerWorkAction>().ToList(); // via CI krijg je soms dubbele :o
+
         AE.NewVillagerUnit?.Invoke(this);
-        NavMeshAgent.isStopped = true;
+        navMeshAgent.isStopped = true;
         StartCoroutine(FindRelevantBuildingAndContinueAfterwards());
     }
 
     private IEnumerator FindRelevantBuildingAndContinueAfterwards()
     {
-        while (ObjectToBringResourceBackTo == null)
+        while (true)
         {
-            ObjectToBringResourceBackTo = TryFindFreeObjectToBringResourceBackTo();
-            if (ObjectToBringResourceBackTo?.activeSelf == true)
+            var buildingMatchForVillager = BuildingForVillagerManager.Instance.TryCoupleBuildingWithVillager(this, BuildingTypeToBringResourceBackTo);
+            if (buildingMatchForVillager != null)
             {
-                ObjectToBringResourceBackTo.GetComponent<WorkerBuildingBehaviour>().Worker = this.gameObject;
+                objectToBringResourceBackTo = buildingMatchForVillager.gameObject;
+                villagerWorkActions.ForEach(x => x.SetReturnTargetForAction(objectToBringResourceBackTo));
+                break;
             }
+
+            // probeer elke seconde
             AE.NoWorkerAction?.Invoke(this);
             yield return Wait4Seconds.Get(1f);
         }
 
-        SetRelevantScripts();
         workerIsActive = true;
     }
 
-    private void SetRelevantScripts()
-    {
-        //TODO jelle list injecten
-        var workActions = this.GetComponents<IVillagerWorkAction>();
-        foreach(var workActionScript in workActions)
-        {
-            workActionScript.SetReturnTargetForAction(ObjectToBringResourceBackTo);
-        }        
-    }
-
-    public bool HasStoppedWithLogic()
-    {
-        return stoppedWithOrders;
-    }
+    public bool HasStoppedWithLogic() => stoppedWithOrders;
 
     protected override void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
     {
-        if (foodConsumption == FoodConsumptionBehaviour.FoodConsumption)
+        if (foodConsumption == foodConsumptionBehaviour.FoodConsumption)
         {
             switch (foodConsumption.FoodConsumptionStatus)
             {
@@ -89,24 +83,10 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
                 case FoodConsumptionStatus.REFILL_FAILED:
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    GoingToWorkStation.actionIsAvailable = true;// prio 1 -> deze wordt als 1e weer gepakt                    
+                    goingToWorkStation.actionIsAvailable = true;// prio 1 -> deze wordt als 1e weer gepakt                    
                     break;
             }
         }
-    }
-
-    private GameObject TryFindFreeObjectToBringResourceBackTo()
-    {
-        var gameObjects = GameObject.FindGameObjectsWithTag(Constants.TAG_BUILDING);
-        var firstOrNullUninhabitedBuilding = gameObjects.FirstOrDefault(x =>
-            x.activeSelf &&
-            BuildingTypeToBringResourceBackTo.Any(y => y == x.GetComponent<BuildingBehaviour>()?.BuildingType) &&
-            x.GetComponentInChildren<WorkerBuildingBehaviour>() != null &&
-            x.GetComponentInChildren<WorkerBuildingBehaviour>().Worker == null &&
-            x.GetComponent<BuildingBehaviour>()?.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING
-            );
-
-        return firstOrNullUninhabitedBuilding?.GetComponentInChildren<WorkerBuildingBehaviour>()?.gameObject;
     }
 
     void Update()
@@ -114,53 +94,63 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
         if(workerIsActive && !isIdle)
         {
             var activeWorkerAction = GetActiveWorkAction();
-            if(activeWorkerAction == null)
+            if (activeWorkerAction == null)
             {
-                var success = DetermineNextWorkerAction();
-                if (success)
-                {
-                    AE.StartNewWorkerAction?.Invoke(this);                    
-                }
-                else
-                {
-                    StartCoroutine(IdleForRetryNewAction());
-                }
+                DoNextAction();
             }
         }
         UpdateAnimation();
     }
 
-    private bool DetermineNextWorkerAction()
+    private void DoNextAction()
     {
-        if(GetActiveWorkAction() == null)
+        if (stopAsapWithOrders || stoppedWithOrders)
         {
-            if(stopAsapWithOrders || stoppedWithOrders)
-            {
-                stoppedWithOrders = true;
-                return false;
-            }
-
-            var workActions = this.GetComponents<IVillagerWorkAction>();
-            var availableActions = workActions.Where(x => x.CanDoAction()).ToList();
-            var highestPrioWorkActions = availableActions
-                .Where(y => y.GetPrio() == availableActions.Min(z => z.GetPrio()))
-                .ToList();
-
-            if (highestPrioWorkActions.Count() == 1)
-            {                
-                highestPrioWorkActions.First().Init();
-                return true;
-            }
-            else if(highestPrioWorkActions.Count() > 1)
-            {            
-                var randomValue = Random.Range(1, highestPrioWorkActions.Count() * 50);
-                var index = (int)randomValue / 50;
-                highestPrioWorkActions.ToList()[index].Init();
-                return true;
-            }
+            stoppedWithOrders = true;
+            return;
         }
 
-        return false; // geen workacties geactiveerd
+        var nextWorkerAction = DetermineNextWorkerAction();
+        if (nextWorkerAction != null)
+        {
+            nextWorkerAction.Init();
+            AE.StartNewWorkerAction?.Invoke(this);
+        }
+        else
+        {
+            StartCoroutine(IdleForRetryNewAction());
+        }
+    }
+
+    private IVillagerWorkAction DetermineNextWorkerAction()
+    {
+        if (GetActiveWorkAction() != null)
+        {
+            throw new System.Exception("DetermineNextWorkerAction? zou niet moeten bij actieve acties");
+        }
+
+        var availableActions = villagerWorkActions.Where(x => x.CanDoAction()).ToList();
+        if(!availableActions.Any())
+        {
+            return null; 
+        }
+
+        var highestPrioWorkActions = availableActions
+            .Where(y => y.GetPrio() == availableActions.Min(z => z.GetPrio()))
+            .ToList();
+
+        return highestPrioWorkActions[Random.Range(0, highestPrioWorkActions.Count)];
+    }   
+
+    public IVillagerWorkAction GetActiveWorkAction() => villagerWorkActions.FirstOrDefault(x => x.IsActive());
+
+    private IEnumerator IdleForRetryNewAction()
+    {
+        isIdle = true;
+        navMeshAgent.isStopped = true; // idle = stilstaan animatie + navmesh stoppen
+
+        yield return Wait4Seconds.Get(timeToWaitForRetryIfNoNewAction);
+        isIdle = false; // via update nieuwe poging
     }
 
     private void UpdateAnimation()
@@ -168,52 +158,18 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
         var activeWorkAction = GetActiveWorkAction();
         if (!workerIsActive || activeWorkAction == null)
         {
-            Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.isStopped);
-            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, false);
-            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING_2, false);
-            Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, NavMeshAgent.isStopped);
+            animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !navMeshAgent.isStopped);
+            animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, false);
+            animator.SetBool(Constants.ANIM_BOOL_IS_WORKING_2, false);
+            animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, navMeshAgent.isStopped);
         }
         else
         {
             var animationStatus = activeWorkAction.GetAnimationStatus();
-            Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, animationStatus.IsWalking);
-            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, animationStatus.IsWorking);
-            Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING_2, animationStatus.IsWorking2);
-            Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, animationStatus.IsIdle);
-        }       
-    }
-
-    public IVillagerWorkAction LatestVillagerWorkAction;
-    private IVillagerWorkAction GetActiveWorkAction()
-    {
-        if(LatestVillagerWorkAction?.IsActive() == true)
-        {
-            // soort cache, zodat je niet elke update get components hoeft te doen
-            return LatestVillagerWorkAction;
-        }
-
-        LatestVillagerWorkAction = null;
-
-        var workActions = this.GetComponents<IVillagerWorkAction>();
-        LatestVillagerWorkAction = workActions.FirstOrDefault(x => x.IsActive());
-        return LatestVillagerWorkAction;
-    }
-
-    private IEnumerator IdleForRetryNewAction()
-    {
-        isIdle = true;
-        NavMeshAgent.isStopped = true; // idle = stilstaan animatie + navmesh stoppen
-
-        yield return Wait4Seconds.Get(timeToWaitForRetryIfNoNewAction);
-        var success = DetermineNextWorkerAction();
-        if(success || stoppedWithOrders)
-        {
-            isIdle = false;
-        }
-        else
-        {
-            StartCoroutine(IdleForRetryNewAction());
-            AE.NoWorkerAction?.Invoke(this);
+            animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, animationStatus.IsWalking);
+            animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, animationStatus.IsWorking);
+            animator.SetBool(Constants.ANIM_BOOL_IS_WORKING_2, animationStatus.IsWorking2);
+            animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, animationStatus.IsIdle);
         }
     }
 }

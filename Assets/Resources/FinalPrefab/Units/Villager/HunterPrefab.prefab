@@ -92,6 +92,10 @@ PrefabInstance:
       propertyPath: m_WalkableMask
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4871612295658306105, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7509736241828762774, guid: a7a468f67ec0e8e46a4fd85fdb686c21, type: 3}
       propertyPath: ToolToShowHide
       value: 

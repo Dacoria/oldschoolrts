@@ -64,9 +64,7 @@ public class VillagerManager : BaseAEMonoCI
         {
             return typeInChildrenOfGo.GetVillagerUnitType();
         }
-        else
-        {
-            throw new System.Exception($"VillagerManager -> No IVillagerUnit found in go: {go.name}");
-        }
+        
+        throw new System.Exception($"VillagerManager -> No IVillagerUnit found in go: {go.name}");
     }
 }

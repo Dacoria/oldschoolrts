@@ -36,6 +36,10 @@ public class FarmFieldScript : MonoBehaviour, IRetrieveResourceFromObject
         if(!HasObjectGrownOnField)
         {
             HasObjectGrownOnFieldFinishedGrowing = false;
+            if(transform.childCount > 0)
+            {
+                ObjectGrownOnField = transform.GetChild(0).gameObject;
+            }
         }
     }
 

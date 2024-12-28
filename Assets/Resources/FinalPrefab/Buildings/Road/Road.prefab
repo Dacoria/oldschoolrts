@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBuildingBehaviour: {fileID: 1718953353888058831}
-  colScript: {fileID: 0}
   Purpose: 0
   Real: {fileID: 3599541607727559818}
   DEBUG_RealImmediately: 0
@@ -122,8 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cfc7f84366f684282fe1ea6d4edc7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsRoadCollider: 0
-  CheckResourceCollisionForBuilding: {fileID: 0}
 --- !u!1 &1718953353261927470
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +182,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f90c7b814db960942affd43946074d0c, type: 2}
+  - {fileID: 2100000, guid: d695516d82fd60e46bb5bebcbe33df1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1718953353888058827
 Transform:
   m_ObjectHideFlags: 0
@@ -348,7 +345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5240825361138019372
 Transform:
   m_ObjectHideFlags: 0

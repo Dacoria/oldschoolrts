@@ -190,7 +190,7 @@ public class UiManager : MonoBehaviour
             }
         }
 
-        throw new System.Exception("Geen Building gevonden om te activerren in UI -> Building type " + buildingTypeOfGo);
+        throw new System.Exception($"Geen Building gevonden om te activerren in UI -> Building type: {buildingTypeOfGo}");
     }
 
     private BuildingType GetBuildingType(GameObject gameObject)

@@ -268,7 +268,8 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
             var locOfResource = real.GetComponent<ILocationOfResource>();
             if (locOfResource != null)
             {
-                var rangedDisplay = Instantiate(MonoHelper.Instance.RangedDisplayPrefab, ((MonoBehaviour)locOfResource).transform);
+                var rangedDisplayGo = Instantiate(Load.GoMap["RangeDisplay"], ((MonoBehaviour)locOfResource).transform);
+                var rangedDisplay = rangedDisplayGo.GetComponent<RangeDisplayBehaviour>();
                 rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
                 rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();
             }

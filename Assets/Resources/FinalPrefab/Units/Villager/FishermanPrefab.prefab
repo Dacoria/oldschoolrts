@@ -281,7 +281,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8780287823986067001}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Speed: 2
   m_Acceleration: 5
   avoidancePriority: 50
@@ -292,7 +292,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 1
+  m_WalkableMask: 8
   m_ObstacleAvoidanceType: 4
 --- !u!114 &8504473176452575741
 MonoBehaviour:
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuildingTypeToBringResourceBackTo: 50000000
   timeToWaitForRetryIfNoNewAction: 1
-  VillagerUnitType: 0
+  VillagerUnitType: 5
 --- !u!114 &1023955965425927706
 MonoBehaviour:
   m_ObjectHideFlags: 0

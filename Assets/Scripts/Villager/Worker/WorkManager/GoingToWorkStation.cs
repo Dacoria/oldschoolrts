@@ -41,6 +41,7 @@ public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
     {
         actionIsAvailable = false; // standaard maar 1x -> kan overschreven worden (public)
         isActive = false;
+        NavMeshAgent.areaMask = 1 << NavMesh.GetAreaFromName(Constants.AREA_MASK_WALKABLE);
     }
 
     public AnimationStatus GetAnimationStatus()

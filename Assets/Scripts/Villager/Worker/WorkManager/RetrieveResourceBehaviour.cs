@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, IToolShowToRetrieveResource
+public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, IToolShowVillager
 {
     [ComponentInject] private NavMeshAgent NavMeshAgent;
     private GameObject ObjectToBringResourceBackTo;
@@ -159,40 +159,23 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
         yield return Wait4Seconds.Get(timeToRetrieveResourceInSeconds);
         isRetrievingResource = false;
         ResourceCarriedBack = RetrieveResourceScript.ResourceIsRetrieved();
-             
 
-        if (ResourceCarriedBack?.MaterialCount > 0)
-        {
-            StartCoroutine(WaitForRetrievingResource());
-        }
-        else
-        {
-            // bv als een andere villiager de resource voor je neus heeft weggekaapt
-            BringResourceBack();
-        }
-    }
-
-    private IEnumerator WaitForRetrievingResource()
-    {
-        yield return Wait4Seconds.Get(timeToWaitForRetrievalOfResourceInSeconds);
-        BringResourceBack();
+        var waitTime = ResourceCarriedBack?.MaterialCount > 0 ? timeToWaitForRetrievalOfResourceInSeconds : 0; // bv als een andere villiager de resource voor je neus heeft weggekaapt; dan niet wachten
+        MonoHelper.Instance.Do_CR(waitTime, () => BringResourceBack());
     }
 
     private void BringResourceBack()
     {
         NavMeshAgent.isStopped = false;
         NavMeshAgent.destination = ObjectToBringResourceBackTo.EntranceExit();
+        NavMeshAgent.stoppingDistance = 0;
     }
 
     private IEnumerator DroppingResourceOff()
     {
         isDroppingResourceOff = true;
         yield return Wait4Seconds.Get(timeToDropOffResourceInSeconds);
-
-        if (ObjectToBringResourceBackTo.GetComponent<ProduceResourceOrderBehaviour>() != null)
-        {
-            ObjectToBringResourceBackTo.GetComponent<ProduceResourceOrderBehaviour>().ProduceItems();
-        }
+        ObjectToBringResourceBackTo.GetComponent<ProduceResourceOrderBehaviour>()?.ProduceItems();
 
         isDroppingResourceOff = false;
         ResourceCarriedBack = null;
@@ -219,11 +202,13 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
         );
     }
 
-    public bool ShowToolToRetrieveResourceWith()
+    public bool ShouldShowTool()
     {
-        return isRetrievingResource || 
+        return
+            !isActive || // nog niet actief script
+            isRetrievingResource || // bezig met ophalen resources
             (
-            objectToRetrieveResourceFrom != null && 
+            objectToRetrieveResourceFrom != null && // gaat naar resource toe lopen
             NavMeshAgent.destination.IsSameXAndZ(objectToRetrieveResourceFrom.transform.position)
             );
     }

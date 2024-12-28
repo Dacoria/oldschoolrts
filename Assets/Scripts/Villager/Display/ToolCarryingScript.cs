@@ -3,14 +3,14 @@ using UnityEngine;
 public class ToolCarryingScript : MonoBehaviour
 {
     public GameObject ToolToShowHide;
-    [ComponentInject] private IToolShowToRetrieveResource ToolShowToRetrieveResourceScript;
+    [ComponentInject] private IToolShowVillager toolShowVillager;
 
     void Start()
     {
         this.ComponentInject(); // in awake worden pas comp. toegevoegd
-        if(ToolShowToRetrieveResourceScript == null)
+        if(toolShowVillager == null)
         {
-            throw new System.Exception("Script verwacht een interface in dit gameobject met een IToolShowToRetrieveResource interface");
+            throw new System.Exception("Script verwacht een interface in dit gameobject met een IToolShowVillager interface");
         }
 
         if (ToolToShowHide == null)
@@ -21,6 +21,6 @@ public class ToolCarryingScript : MonoBehaviour
 
     void Update()
     {
-        ToolToShowHide.SetActive(ToolShowToRetrieveResourceScript.ShowToolToRetrieveResourceWith());
+        ToolToShowHide.SetActive(toolShowVillager.ShouldShowTool());
     }
 }

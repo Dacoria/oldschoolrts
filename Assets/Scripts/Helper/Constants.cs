@@ -40,4 +40,9 @@
 
     // RscLoadName
     public static string RSC_NAME_GO_SERF_PROCESSING = "SerfProcessingDisplayGo";
+
+    // Area Mask
+    public static string AREA_MASK_EVERYTHING = "Everything";
+    public static string AREA_MASK_WALKABLE = "Walkable";
+    public static string AREA_MASK_ROAD = "Road";
 }

@@ -112,39 +112,45 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
         if (NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
         {
             NavMeshAgent.isStopped = true;
-            if (objectToRetrieveResourceFrom != null && objectToRetrieveResourceFrom.transform.position.IsSameXAndZ(NavMeshAgent.destination))
+            DestinationReached();
+        }
+    }
+
+    private void DestinationReached()
+    {
+        // probeert rsc op te halen?
+        if (objectToRetrieveResourceFrom != null && objectToRetrieveResourceFrom.transform.position.IsSameXAndZ(NavMeshAgent.destination))
+        {
+            if (RetrieveResourceScript.CanRetrieveResource())
             {
-                if(RetrieveResourceScript.CanRetrieveResource())
-                {
-                    StartCoroutine(RetrievingResource());
-                }
-                else
-                {
-                    // bv bij boom omhakken, dat een andere forester al bezig is --> ga dan terug
-                    GoBackToGatherPoint();
-                }
+                StartCoroutine(RetrievingResource());
             }
-            // brengt resource terug?
-            else if (ObjectToBringResourceBackTo != null && ObjectToBringResourceBackTo.EntranceExit().IsSameXAndZ(NavMeshAgent.destination))
-            {
-                NavMeshAgent.isStopped = true;
-                if(isCarryingResourceToBringBack)
-                {
-                    StartCoroutine(DroppingResourceOff());
-                }
-                else
-                {
-                    Finished();
-                }               
-            }        
             else
             {
-                // Wel bestemming bereikt; maar licht blijkbaar niks --> terug naar basis voor fallback
-                Debug.Log("Bestemming bereikt zonder actie --> zou niet moeten");
+                // bv bij boom omhakken, dat een andere forester al bezig is --> ga dan terug
                 GoBackToGatherPoint();
             }
         }
-    }   
+        // brengt resource terug?
+        else if (ObjectToBringResourceBackTo != null && ObjectToBringResourceBackTo.EntranceExit().IsSameXAndZ(NavMeshAgent.destination))
+        {
+            NavMeshAgent.isStopped = true;
+            if (isCarryingResourceToBringBack)
+            {
+                StartCoroutine(DroppingResourceOff());
+            }
+            else
+            {
+                Finished();
+            }
+        }
+        else
+        {
+            // Wel bestemming bereikt; maar licht blijkbaar niks --> terug naar basis voor fallback
+            Debug.Log("Bestemming bereikt zonder actie --> zou niet moeten");
+            GoBackToGatherPoint();
+        }
+    }
 
     private void GoBackToGatherPoint()
     {

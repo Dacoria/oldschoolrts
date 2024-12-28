@@ -29,11 +29,6 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
         NavMeshAgent.areaMask = 1 << 0;
         AE.NewVillagerUnit?.Invoke(this);
         AE.FreeBuilder?.Invoke(this);
-    }   
-
-    public bool HasStoppedWithLogic()
-    {
-        return stoppedWithOrders;
     }
 
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
@@ -73,17 +68,11 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
                 case FoodConsumptionStatus.NEEDS_REFILL:
                     stopAsapWithOrders = true;
                     break;
-                case FoodConsumptionStatus.REFILL_SUCCESS:
-                    Debug.Log("FoodConsumptionStatus.REFILL_SUCCESS");
-                    stopAsapWithOrders = false;
-                    stoppedWithOrders = false;
-                    AE.FreeBuilder?.Invoke(this);
-                    break;
+                case FoodConsumptionStatus.REFILL_SUCCESS:         
                 case FoodConsumptionStatus.REFILL_FAILED:
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
                     AE.FreeBuilder?.Invoke(this);
-                    Debug.Log("FoodConsumptionStatus.REFILL_FAILED");
                     break;
             }
         }
@@ -92,7 +81,7 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     private bool stopAsapWithOrders;
     private bool stoppedWithOrders;
 
-    private void UpdateFoodRefilling()
+    private void UpdateStopOrders()
     {
         if (stopAsapWithOrders &&
             !stoppedWithOrders &&
@@ -103,9 +92,11 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
         }
     }
 
+    public bool HasStoppedWithLogic() => stoppedWithOrders;
+
     private void Update()
     {
-        UpdateFoodRefilling();
+        UpdateStopOrders();
         if (!isWorking)
         {
             if (_currentBuilderRequest != null && NavMeshAgent.isOnNavMesh)

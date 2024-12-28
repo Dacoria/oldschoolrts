@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
+using System.Collections.Generic;
 
 public class FoodConsumptionBehaviour : BaseAEMonoCI
 {
@@ -14,6 +14,7 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
     public FoodConsumptionStatus Status => FoodConsumption != null ? FoodConsumption.FoodConsumptionStatus : FoodConsumptionStatus.NONE; // alleen voor gemak
 
     [ComponentInject] private NavMeshAgent NavMeshAgent;
+    private List<IHasStopped> hasStoppedScripts;
 
     public bool UseTavernBubble = true;
     private GameObject GoToTavernBubble;
@@ -21,6 +22,7 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
     void Start()
     {
         FoodConsumption = new FoodConsumption(FoodSatisfactionPercentage, FoodDeclinePercPerSecond, PercLimitForFoodRefill);
+        hasStoppedScripts = GetComponents<IHasStopped>().ToList();
         StartCoroutine(ProcessFoodDecline());
     }
 
@@ -70,13 +72,12 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
     }
 
     private void TryStartRefillProcess()
-    {
-        var hasStoppedScripts = GetComponents<IHasStopped>();
+    {        
         if(hasStoppedScripts.All(x => x.HasStoppedWithLogic()))
         {
             if(FoodConsumption.TrySetTavernToGetFood())
             {
-                NavMeshAgent.destination = FoodConsumption.TavernTargetedForFoodRefill.EntranceExit();
+                NavMeshAgent.destination = FoodConsumption.TavernTargetedForFoodRefill.gameObject.EntranceExit();
                 NavMeshAgent.isStopped = false;
                 FoodConsumption.FoodConsumptionStatus = FoodConsumptionStatus.GO_TOWARDS_REFILLL_POINT;
             }
@@ -122,10 +123,7 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
 
     public void ReachedRefillPoint()
     {
-        var tavernScript = FoodConsumption.TavernTargetedForFoodRefill.GetComponent<TavernBehaviour>();
-        if (tavernScript == null) { throw new Exception("Tavern heeft altijd Tavernscript!"); }
-
-        AE.ReachedFoodRefillingPoint?.Invoke(tavernScript, this);
+        AE.ReachedFoodRefillingPoint?.Invoke(FoodConsumption.TavernTargetedForFoodRefill, this);
         FoodConsumption.TavernTargetedForFoodRefill = null;
     }
 }

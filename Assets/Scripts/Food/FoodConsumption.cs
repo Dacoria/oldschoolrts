@@ -8,7 +8,7 @@ public class FoodConsumption
     private float PercLimitForFoodRefill;
 
     public bool NeedsFoodRefill;
-    public GameObject TavernTargetedForFoodRefill;
+    public TavernBehaviour TavernTargetedForFoodRefill;
 
     public FoodConsumption(float FoodSatisfactionPercentage, float FoodDeclinePercPerSecond, float PercLimitForFoodRefill)
     {

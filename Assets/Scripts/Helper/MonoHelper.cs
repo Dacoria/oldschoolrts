@@ -76,10 +76,11 @@ public class MonoHelper : MonoBehaviour
     public GameObject RightArrowCarousselUiPrefab;
     public RangeDisplayBehaviour RangedDisplayPrefab;
     public GameObject WarningGoPrefab;
-    public GameObject GetClosestTavernWithFood()
+
+    public TavernBehaviour GetClosestTavernWithFood()
     {
         var allTaverns = GameObject.FindGameObjectsWithTag(Constants.TAG_TAVERN);
-        GameObject closestTavern = null;
+        TavernBehaviour closestTavern = null;
         var closestDistance = 9999999f;
 
         foreach (var tavern in allTaverns)
@@ -90,7 +91,7 @@ public class MonoHelper : MonoBehaviour
                 var tavernScript = tavern.GetComponent<TavernBehaviour>();
                 if (tavernScript.HasFoodForRefill())
                 {
-                    closestTavern = tavern;
+                    closestTavern = tavernScript;
                     closestDistance = distance;
                 }
             }

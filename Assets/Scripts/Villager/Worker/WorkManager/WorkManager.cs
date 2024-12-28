@@ -91,7 +91,7 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     void Update()
     {   
-        if(workerIsActive && !isIdle)
+        if(workerIsActive && !stoppedWithOrders && !isIdle)
         {
             var activeWorkerAction = GetActiveWorkAction();
             if (activeWorkerAction == null)
@@ -147,8 +147,6 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
     private IEnumerator IdleForRetryNewAction()
     {
         isIdle = true;
-        navMeshAgent.isStopped = true; // idle = stilstaan animatie + navmesh stoppen
-
         yield return Wait4Seconds.Get(timeToWaitForRetryIfNoNewAction);
         isIdle = false; // via update nieuwe poging
     }

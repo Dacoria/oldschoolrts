@@ -127,7 +127,7 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
             return; // al afgebouwd -> niet van toepassing
         }
 
-        if (serfOrder.To != null && serfOrder.To.GameObject == GhostBuildingBehaviour.gameObject)
+        if (serfOrder.To != null && serfOrder.To.GameObject == this.gameObject)
         {
             if (serfOrder.Status == Status.SUCCESS)
             {
@@ -229,7 +229,7 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
             return -1; // al afgebouwd -> niet van toepassing
         }
 
-        var allCompletedSerfOrdersForThisBuilding = GameManager.Instance.CompletedOrdersIncFailed.Where(x => x.Status == Status.SUCCESS && x.To.GameObject == GhostBuildingBehaviour.gameObject).ToList();
+        var allCompletedSerfOrdersForThisBuilding = GameManager.Instance.CompletedOrdersIncFailed.Where(x => x.Status == Status.SUCCESS && x.To.GameObject == this.gameObject).ToList();
         return allCompletedSerfOrdersForThisBuilding.Count(x => x.ItemType == itemtype);
     }
 

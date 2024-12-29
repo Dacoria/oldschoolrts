@@ -15,7 +15,7 @@ public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarous
     private void Start()
     {
         StockpileResourceWrappers = new List<StockpileResourceWrapperBehaviour>();
-        foreach (var item in ResourcePrefabs.Get().OrderBy(x => x.ItemType))
+        foreach (var item in ResourcePrefabs.Get().Where(x => x.ItemType != ItemType.NONE).OrderBy(x => x.ItemType))
         {
             var stockpileResourceWrapper = Instantiate(StockpileResourceWrapperPrefab, transform);
             stockpileResourceWrapper.Image.sprite = item.Icon;          

@@ -12,6 +12,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     private ILocationOfResource LocationOfResourceScript;
 
     private HarvestMaterialResource ResourceCarriedBack;
+    private ProduceResourceManualBehaviour produceResourceBehaviour;
 
     public float stopDistanceFromObjectToRetrieveResourceFrom = 2f;
 
@@ -23,8 +24,6 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     public float timeToRetrieveResourceInSeconds = 5f;
     public float timeToWaitForRetrievalOfResourceInSeconds = 0f;
 
-    public int ResourceCountMaterialHarvestedPerRun = 1;
-
     private bool isActive;
 
     public void SetReturnTargetForAction(GameObject objectToBringResourceBackTo)
@@ -33,12 +32,8 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
         LocationOfResourceScript = ObjectToBringResourceBackTo.GetComponent<ILocationOfResource>(); // waar moet de resource vandaan gehaald worden?
         if (LocationOfResourceScript == null) { throw new System.Exception("LocationOfResourceScript -> Nodig voor bepalen objectToRetrieveResourceFrom"); }
 
-        // 1 resources te halen? dan is dat je rec. count
-        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceOverTimeBehaviour>();
-        if (produceResourceBehaviour != null && produceResourceBehaviour.IsSingleProducingItemWithoutConsuming())
-        {
-            ResourceCountMaterialHarvestedPerRun = produceResourceBehaviour.GetSingleProducingItemWithoutConsuming().ProducedPerProdCycle;
-        }
+        produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceManualBehaviour>();
+        if (produceResourceBehaviour == null) { throw new System.Exception("ProduceResourceManualBehaviour -> Nodig voor ophalen rsc"); }
     }
 
     public int GetPrio() => 2;
@@ -57,12 +52,12 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     private bool HasEnoughBufferForResource()
     {
-        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceOverTimeBehaviour>();
-        if (produceResourceBehaviour != null && produceResourceBehaviour.IsSingleProducingItemWithoutConsuming())
+        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceManualBehaviour>();
+        if (produceResourceBehaviour != null)
         {
             var stockPile = ObjectToBringResourceBackTo.GetComponent<HandleProduceResourceOrderBehaviour>().OutputOrders.Count;
-            var producedPerRun = ResourceCountMaterialHarvestedPerRun;
-            var maxBuffer = produceResourceBehaviour.GetSingleProducingItemWithoutConsuming().MaxBuffer;
+            var producedPerRun = produceResourceBehaviour.ProducedPerRun;
+            var maxBuffer = produceResourceBehaviour.MaxBuffer;
 
             return stockPile + producedPerRun <= maxBuffer;
         }
@@ -161,7 +156,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     private IEnumerator RetrievingResource()
     {
         isRetrievingResource = true;
-        RetrieveResourceScript.StartRetrievingResource(ResourceCountMaterialHarvestedPerRun);
+        RetrieveResourceScript.StartRetrievingResource(produceResourceBehaviour.ProducedPerRun);
         yield return Wait4Seconds.Get(timeToRetrieveResourceInSeconds);
         isRetrievingResource = false;
         ResourceCarriedBack = RetrieveResourceScript.ResourceIsRetrieved();

@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 3924363556721149839}
   - component: {fileID: 6629487537290416462}
   - component: {fileID: 7078928482825155592}
+  - component: {fileID: 2341965864960469246}
   m_Layer: 0
   m_Name: Real
   m_TagString: FishermanCabin
@@ -248,6 +249,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeForResource: 20
   MaterialResourceType: 7
+--- !u!114 &2341965864960469246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035836761859787631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155192e5e03dd3f4389667e9c120bff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemToProduce:
+    ItemType: 50
+    MaxBuffer: 5
+    ProducedPerProdCycle: 1
 --- !u!1 &5071016037042838349
 GameObject:
   m_ObjectHideFlags: 0

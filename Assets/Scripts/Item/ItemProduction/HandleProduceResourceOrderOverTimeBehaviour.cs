@@ -18,9 +18,6 @@ public class HandleProduceResourceOrderOverTimeBehaviour : BaseAEMonoCI
         ProduceResourceOrderBehaviour = gameObject.AddComponent<HandleProduceResourceOrderBehaviour>();        
     }
 
-    [HideInInspector] public bool IsProducingResourcesRightNow; // voor wel/niet tonen gears die draaien -> animatie door ander script
-    [HideInInspector] public DateTime StartTimeProducing; // voor wel/niet tonen van rest. sec prod in text
-
     public void ProduceResourceOverTime(ItemProduceSetting itemProduceSetting, float produceTimeInSec, float waitTimeInSec)
     {        
         StartCoroutine(CR_ProduceResourceOverTime(itemProduceSetting, produceTimeInSec, waitTimeInSec));
@@ -28,13 +25,10 @@ public class HandleProduceResourceOrderOverTimeBehaviour : BaseAEMonoCI
 
     private IEnumerator CR_ProduceResourceOverTime(ItemProduceSetting itemProduceSetting, float produceTimeInSec, float waitTimeInSec)
     {
-        IsProducingResourcesRightNow = true; 
-        StartTimeProducing = DateTime.Now;
         yield return Wait4Seconds.Get(produceTimeInSec);
 
         FinishedProducingAction?.Invoke();
         ProduceResourceOrderBehaviour.ProduceItems(itemProduceSetting);
-        IsProducingResourcesRightNow = false;
 
         yield return Wait4Seconds.Get(waitTimeInSec);
         FinishedWaitingAfterProducingAction?.Invoke();

@@ -42,7 +42,7 @@ public class CheckCollisionHandler : BaseAEMonoCI
 
     private void CreateResourceCollisionIfNeeded()
     {
-        var miningResourceBehaviour = gameObject.GetComponentInChildren<MiningResourceBehaviour>(true);
+        var miningResourceBehaviour = gameObject.GetComponentInChildren<ProduceMiningResourceBehaviour>(true);
         if (miningResourceBehaviour != null)
         {
             var checkResourceCollisionForBuilding = gameObject.AddComponent<CheckResourceCollisionForBuilding>();

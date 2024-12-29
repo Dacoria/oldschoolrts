@@ -8,12 +8,9 @@ public class QueueForBuildingBehaviour : MonoBehaviourCI
     public List<QueueItem> QueueItems = new List<QueueItem>();
 
     [ComponentInject] public ICardBuilding CallingBuilding;
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
-    public BuildingType GetBuildingType()
-    {
-        var buildingBehaviour = transform.GetComponentInParent<BuildingBehaviour>();
-        return buildingBehaviour.BuildingType;
-    }
+    public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
 
     public void AddItemOnQueue(Enum type)
     {

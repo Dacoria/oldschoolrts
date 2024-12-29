@@ -765,6 +765,7 @@ GameObject:
   - component: {fileID: 343193919457537400}
   - component: {fileID: 302220325632136942}
   - component: {fileID: 7977507833398590393}
+  - component: {fileID: 877122340415510703}
   m_Layer: 0
   m_Name: Real
   m_TagString: Forrester
@@ -830,6 +831,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingBehaviour: {fileID: 0}
+--- !u!114 &877122340415510703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8599487197945323928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155192e5e03dd3f4389667e9c120bff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemToProduce:
+    ItemType: 55
+    MaxBuffer: 5
+    ProducedPerProdCycle: 1
 --- !u!1001 &6652746522713137889
 PrefabInstance:
   m_ObjectHideFlags: 0

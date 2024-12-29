@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResourcesToProduce, IProduceResourceOverTimeInteraction, IRefillItems
+public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResourcesToProduce, IRefillItems, IProduceResourceOverTimeDurations
 {
     public List<ItemProductionSetting> ItemProductionSettings;
 
     private RefillBehaviour refillBehaviour;
     private QueueForBuildingBehaviour queueForBuildingBehaviour;
     private ConsumeRefillItemsBehaviour consumeRefillItems;
-    private HandleAutoProduceResourceOrderOverTimeBehaviour produceResourceOrderBehaviour;
+    private HandleProduceResourceOrderOverTimeBehaviour handleProduceResourceOrderOverTimeBehaviour;
 
     private List<ItemLimit> ItemsToProcess;
 
@@ -24,8 +24,45 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
         refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
         queueForBuildingBehaviour = gameObject.AddComponent<QueueForBuildingBehaviour>();
         consumeRefillItems = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
-        produceResourceOrderBehaviour = gameObject.AddComponent<HandleAutoProduceResourceOrderOverTimeBehaviour>();        
+        handleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();        
     }
+
+    public bool IsProducingResourcesOverTime() => true;
+    public bool IsProducingResourcesRightNow;
+    public DateTime StartTimeProducing;
+
+    private void OnEnable()
+    {
+        handleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction += OnFinishedProducingAction;
+        handleProduceResourceOrderOverTimeBehaviour.FinishedWaitingAfterProducingAction += OnFinishedWaitingAfterProducingAction;
+    }
+
+    private void OnDisable()
+    {
+        handleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction -= OnFinishedProducingAction;
+        handleProduceResourceOrderOverTimeBehaviour.FinishedWaitingAfterProducingAction -= OnFinishedWaitingAfterProducingAction;
+    }    
+
+    private void OnFinishedProducingAction()
+    {
+        //throw new NotImplementedException();
+    }
+
+    private void OnFinishedWaitingAfterProducingAction()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void StartedProducing(ItemProduceSetting itemProduceSetting)
+    {
+        var itemProcessed = ItemsToProcess.Single(x => x.ItemType == itemProduceSetting.ItemsToProduce.First().ItemType);
+        itemProcessed.ItemsToProduce--;
+    }
+
+
+
+
+
 
     public QueueForBuildingBehaviour GetQueueForBuildingBehaviour() => queueForBuildingBehaviour;
 
@@ -55,7 +92,7 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
     {
         foreach (var itemToProduce in itemProductionSetting.ItemsConsumedToProduce)
         {
-            var outputOrders = produceResourceOrderBehaviour.HandleProduceResourceOrderOverTimeBehaviour.ProduceResourceOrderBehaviour.OutputOrders;
+            var outputOrders = handleProduceResourceOrderOverTimeBehaviour.ProduceResourceOrderBehaviour.OutputOrders;
             var outstandingOrders = outputOrders.Where(x => x.ItemType == itemToProduce.ItemType);
             if (outstandingOrders.Count() + itemToProduce.Amount > itemToProduce.MaxBuffer)
             {
@@ -102,22 +139,13 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
     {
         var itemsToConsume = GetItemsToConsume((ItemType)type);
         return consumeRefillItems.CanConsumeRefillItems(itemsToConsume);
-    }    
-
-    public void StartedProducing(ItemProduceSetting itemProduceSetting)
-    {
-        var itemProcessed = ItemsToProcess.Single(x => x.ItemType == itemProduceSetting.ItemsToProduce.First().ItemType);
-        itemProcessed.ItemsToProduce--;
     }
-    public void FinishedProducing(ItemProduceSetting itemProduceSetting) { }
 
-    public float TimeToProduceResourceInSeconds = 5;
-    public float TimeToWaitAfterProducingInSeconds = 1.5f;
-
-    public float GetTimeToProduceResourceInSeconds() => TimeToProduceResourceInSeconds;
-    public float GetTimeToWaitAfterProducingInSeconds() => TimeToWaitAfterProducingInSeconds;
+    public float ProduceTimeInSeconds = 5;
+    public float WaitTimeAfterProducingInSeconds = 1.5f;
+    public float TimeToProduceResourceInSeconds => ProduceTimeInSeconds;
+    public float TimeToWaitAfterProducingInSeconds => WaitTimeAfterProducingInSeconds;
 
     public GameObject GetGameObject() => gameObject;
-    public float GetProductionTime(Enum type) => TimeToProduceResourceInSeconds;
-    public void FinishedWaitingAfterProducing(ItemProduceSetting itemProduceSetting) { }
+    public float GetProductionTime(Enum type) => TimeToProduceResourceInSeconds;    
 }

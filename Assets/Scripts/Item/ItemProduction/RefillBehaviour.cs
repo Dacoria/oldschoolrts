@@ -8,6 +8,7 @@ public class RefillBehaviour : BaseAEMonoCI
 
     [ComponentInject] public IRefillItems RefillItems;
     [ComponentInject] private IOrderDestination orderDestination;
+
     private new void Awake()
     {
         base.Awake();

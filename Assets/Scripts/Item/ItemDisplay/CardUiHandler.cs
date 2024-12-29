@@ -5,19 +5,15 @@ using System;
 public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay
 {   
     public UiCardBehaviour UiCardBehaviourPrefab;
-    [HideInInspector]
-    public List<UiCardBehaviour> UiCardBehaviours;
+    [HideInInspector] public List<UiCardBehaviour> UiCardBehaviours;
 
     public BuildingType BuildingType; // het type building waar de kaarten voor worden gehaald
 
-    [HideInInspector]
-    public bool CardsAreLoaded;
+    [HideInInspector] public bool CardsAreLoaded;
 
     public bool ShowRequiredItemsUnderCard = true;
 
-    [HideInInspector]
-    public ICardBuilding CallingBuilding;
-    
+    [HideInInspector] public ICardBuilding CallingBuilding;    
 
     void Start()
     {

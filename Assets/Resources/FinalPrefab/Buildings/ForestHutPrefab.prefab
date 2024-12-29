@@ -653,7 +653,6 @@ GameObject:
   - component: {fileID: 8059843931178854328}
   - component: {fileID: 2036857216772490856}
   - component: {fileID: 7069746252617450308}
-  - component: {fileID: 7862587812756493617}
   - component: {fileID: 8517106027695640745}
   m_Layer: 0
   m_Name: ForesterReal
@@ -710,25 +709,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinRangeForTrees: 1
   MaxRangeForTrees: 15
---- !u!114 &7862587812756493617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8057115511373269640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 0
-  ResourcesToProduce:
-  - ItemsToProduce:
-    - ItemType: 20
-      MaxBuffer: 5
-      ProducedPerProdCycle: 1
-    ItemsConsumedToProduce: []
 --- !u!114 &8517106027695640745
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -109,5 +109,5 @@ public class MonoHelper : MonoBehaviour
     {
         yield return Wait4Seconds.Get(waitTimeInSeconds);
         callback?.Invoke();
-    }
+    }    
 }

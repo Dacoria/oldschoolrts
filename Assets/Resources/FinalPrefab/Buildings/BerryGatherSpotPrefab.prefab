@@ -505,7 +505,6 @@ GameObject:
   - component: {fileID: 5714646855441742714}
   - component: {fileID: 2681903607579749819}
   - component: {fileID: 5745598943749439724}
-  - component: {fileID: 4828277397940608047}
   m_Layer: 0
   m_Name: Real
   m_TagString: Forrester
@@ -571,25 +570,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeForResource: 20
   MaterialResourceType: 9
---- !u!114 &4828277397940608047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4384887623944222618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 0
-  ResourcesToProduce:
-  - ItemsToProduce:
-    - ItemType: 54
-      MaxBuffer: 5
-      ProducedPerProdCycle: 1
-    ItemsConsumedToProduce: []
 --- !u!1 &6062958329023969105
 GameObject:
   m_ObjectHideFlags: 0

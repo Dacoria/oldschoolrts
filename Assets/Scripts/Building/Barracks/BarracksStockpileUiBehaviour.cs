@@ -6,29 +6,27 @@ using UnityEngine.UI;
 public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
 {
     public ImageTextBehaviour ImageTextBehaviourPrefab;
-    private List<ImageTextBehaviour> ImageTextBehaviours;
+    private List<ImageTextBehaviour> imageTextBehaviours;
 
-    private CardUiHandler BarracksUIHandler;
+    private CardUiHandler barracksUIHandler;
 
     public Text Title;
+    private bool cardsLoaded;
 
-    [HideInInspector]
-    private bool CardsLoaded;
+    public bool CardsAreLoaded() => cardsLoaded;
 
-    public bool CardsAreLoaded() => CardsLoaded;
-
-    public int GetCount() => ImageTextBehaviours == null ? 0 : ImageTextBehaviours.Count;
+    public int GetCount() => imageTextBehaviours == null ? 0 : imageTextBehaviours.Count;
 
     public void SetActiveStatusCardGo(int indexOfCard, bool activeYN)
     {
-        ImageTextBehaviours[indexOfCard].gameObject.SetActive(activeYN);
+        imageTextBehaviours[indexOfCard].gameObject.SetActive(activeYN);
     }
 
     public int GetIndexFirstEnabledCard()
     {
-        for (int i = 0; i < ImageTextBehaviours.Count; i++)
+        for (int i = 0; i < imageTextBehaviours.Count; i++)
         {
-            var card = ImageTextBehaviours[i];
+            var card = imageTextBehaviours[i];
             if (card.gameObject.activeSelf)
             {
                 return i;
@@ -40,8 +38,8 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
 
     private void Awake()
     {
-        ImageTextBehaviours = new List<ImageTextBehaviour>();
-        BarracksUIHandler = transform.parent.GetComponentInChildren<CardUiHandler>();
+        imageTextBehaviours = new List<ImageTextBehaviour>();
+        barracksUIHandler = transform.parent.GetComponentInChildren<CardUiHandler>();
     }
 
     private void OnDisable()
@@ -66,14 +64,14 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
 
     private void ClearAllCards()
     {
-        for (int i = ImageTextBehaviours.Count - 1; i >= 0; i--)
+        for (int i = imageTextBehaviours.Count - 1; i >= 0; i--)
         {
-            var imageTextBehaviour = ImageTextBehaviours[i];
+            var imageTextBehaviour = imageTextBehaviours[i];
             Destroy(imageTextBehaviour.gameObject);
         }
-        ImageTextBehaviours.RemoveAll(x => true);
+        imageTextBehaviours.RemoveAll(x => true);
         Title.gameObject.SetActive(false);
-        CardsLoaded = false;
+        cardsLoaded = false;
     }
 
     private void OnEnable()
@@ -87,10 +85,8 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
     {
         ClearAllCards();
 
-        ImageTextBehaviours = new List<ImageTextBehaviour>();
-
-        // ja, omslachtig :')
-        BarracksStockpile = BarracksUIHandler?.CallingBuilding?.GetQueueForBuildingBehaviour()?.GetComponent<RefillBehaviour>();
+        imageTextBehaviours = new List<ImageTextBehaviour>();
+        SetBarracksStockpile();
         if (BarracksStockpile != null)
         {
             foreach (var itemInStockpile in BarracksStockpile.StockpileOfItemsRequired)
@@ -100,19 +96,29 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
                 itemCountUiWrapper.Text.text = itemInStockpile.Amount.ToString();
                 itemCountUiWrapper.ItemType = itemInStockpile.ItemType;
 
-                ImageTextBehaviours.Add(itemCountUiWrapper);
+                imageTextBehaviours.Add(itemCountUiWrapper);
             }
 
-            CardsLoaded = true;
+            cardsLoaded = true;
             Title.gameObject.SetActive(true);
+        }
+    }
+
+    private void SetBarracksStockpile()
+    {
+        BarracksStockpile = null;
+        var barracks = barracksUIHandler?.CallingBuilding;
+        if(barracks != null)
+        {
+            BarracksStockpile = ((BarracksBehaviour)barracks).RefillBehaviour;
         }
     }
 
     private void UpdateValuesOfCard()
     {
-        if (CardsLoaded && BarracksStockpile != null)
+        if (cardsLoaded && BarracksStockpile != null)
         {
-            foreach (var card in ImageTextBehaviours)
+            foreach (var card in imageTextBehaviours)
             {
                 card.Text.text = BarracksStockpile.StockpileOfItemsRequired.Single(x => x.ItemType == card.ItemType).Amount.ToString();
             }

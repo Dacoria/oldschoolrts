@@ -1,20 +1,13 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class QueueForBuildingBehaviour : MonoBehaviour
+public class QueueForBuildingBehaviour : MonoBehaviourCI
 {
-    public float BuildTimeInSeconds;
-    public List<QueueItem> QueueItems;
+    public float GetBuildTimeInSeconds() => GetCurrentItemProcessed() == null ? 0f : CallingBuilding.GetProductionTime(GetCurrentItemProcessed().Type);
+    public List<QueueItem> QueueItems = new List<QueueItem>();
 
-    public ICardBuilding CallingBuilding;
-
-    void Awake()
-    {
-        QueueItems = new List<QueueItem>();
-        CallingBuilding = GetComponent<ICardBuilding>();
-    }    
+    [ComponentInject] public ICardBuilding CallingBuilding;
 
     public BuildingType GetBuildingType()
     {
@@ -24,7 +17,6 @@ public class QueueForBuildingBehaviour : MonoBehaviour
 
     public void AddItemOnQueue(Enum type)
     {
-
         var itemToPutOnQueue = new QueueItem
         {
             Type = type,
@@ -45,12 +37,15 @@ public class QueueForBuildingBehaviour : MonoBehaviour
             var itemProcessed = GetCurrentItemProcessed();
             if (itemProcessed != null)
             {
-                CheckItemFinished(itemProcessed);
+                var isFinished = CheckItemFinished(itemProcessed);
+                if (isFinished)
+                {
+                    HandleItemFinished(itemProcessed);
+                }
             }
             else
             {
                 var itemToStartWith = QueueItems.First();
-
                 if (CallingBuilding.CanProces(itemToStartWith.Type))
                 {
                     itemToStartWith.StartTimeBeingBuild = DateTime.Now;
@@ -61,13 +56,10 @@ public class QueueForBuildingBehaviour : MonoBehaviour
 
     public QueueItem GetCurrentItemProcessed() => QueueItems.FirstOrDefault(x => x.IsBeingBuild);
 
-    private void CheckItemFinished(QueueItem item)
+    private bool CheckItemFinished(QueueItem item)
     {
-        var timeItemFinished = item.StartTimeBeingBuild.Value.AddSeconds(BuildTimeInSeconds);
-        if (timeItemFinished <= DateTime.Now)
-        {
-            HandleItemFinished(item);
-        }
+        var timeItemFinished = item.StartTimeBeingBuild.Value.AddSeconds(GetBuildTimeInSeconds());
+        return timeItemFinished <= DateTime.Now;       
     }
 
     private void HandleItemFinished(QueueItem item)

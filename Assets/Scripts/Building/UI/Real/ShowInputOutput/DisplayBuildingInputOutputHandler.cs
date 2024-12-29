@@ -11,7 +11,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     private GameObject ProcessingDisplayGo;
 
     [ComponentInject(Required.OPTIONAL)] private RefillBehaviour RefillBehaviour;
-    [ComponentInject(Required.OPTIONAL)] private ProduceResourceOrderBehaviour ProduceResourceBehaviourScript;
+    [ComponentInject(Required.OPTIONAL)] private HandleAutoProduceResourceOrderOverTimeBehaviour ProduceResourceBehaviourScript;
 
     private BarracksBehaviour BarracksBehaviour;
     private QueueForBuildingBehaviour QueueForBuildingBehaviour;
@@ -90,12 +90,13 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     private void InitiateOutputDisplayProdScript()
     {
         OutputTextMeshItems = new List<TextMeshItem>();
-        for (int i = 0; i < ProduceResourceBehaviourScript.ResourcesToProduce.GetAvailableItemsToProduce().Count(); i++)
+        var rscToProduce = ProduceResourceBehaviourScript.HandleProduceResourceOrderOverTimeBehaviour.ProduceResourceOrderBehaviour.ResourcesToProduce;
+        for (int i = 0; i < rscToProduce.GetAvailableItemsToProduce().Count(); i++)
         {
             var outputDisplayGo = Instantiate(OutputDisplayPrefabGo, ProcessingDisplayGo.transform);
-            var extraYDistance = ((ProduceResourceBehaviourScript.ResourcesToProduce.GetAvailableItemsToProduce().Count() - 1) * 0.6f) - (i * 0.6f);
+            var extraYDistance = ((rscToProduce.GetAvailableItemsToProduce().Count() - 1) * 0.6f) - (i * 0.6f);
             outputDisplayGo.transform.position = new Vector3(outputDisplayGo.transform.position.x, outputDisplayGo.transform.position.y + extraYDistance, outputDisplayGo.transform.position.z);
-            FixInputOutputDisplayForItemtype(OutputTextMeshItems, ProduceResourceBehaviourScript.ResourcesToProduce.GetAvailableItemsToProduce()[i].ItemType, outputDisplayGo);
+            FixInputOutputDisplayForItemtype(OutputTextMeshItems, rscToProduce.GetAvailableItemsToProduce()[i].ItemType, outputDisplayGo);
         }               
     }
 
@@ -160,11 +161,13 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     {
         if (ProduceResourceBehaviourScript != null)
         {
-            foreach (var itemToProduce in ProduceResourceBehaviourScript.ResourcesToProduce.GetAvailableItemsToProduce())
+            var rscToProduce = ProduceResourceBehaviourScript.HandleProduceResourceOrderOverTimeBehaviour.ProduceResourceOrderBehaviour.ResourcesToProduce;
+            var outputOrders = ProduceResourceBehaviourScript.HandleProduceResourceOrderOverTimeBehaviour.ProduceResourceOrderBehaviour.OutputOrders;
+            foreach (var itemToProduce in rscToProduce.GetAvailableItemsToProduce())
             {
                 var textMesh = OutputTextMeshItems.Single(x => x.ItemType == itemToProduce.ItemType).TextMesh;
 
-                textMesh.text = ProduceResourceBehaviourScript.OutputOrders.Count(x => x.ItemType == itemToProduce.ItemType) + 
+                textMesh.text = outputOrders.Count(x => x.ItemType == itemToProduce.ItemType) + 
                     "/" + 
                     itemToProduce.MaxBuffer + 
                     " (" + itemToProduce.ProducedPerProdCycle + "x)";

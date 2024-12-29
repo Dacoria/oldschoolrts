@@ -4,8 +4,7 @@ public class OnlyShowWhileProducing : MonoBehaviour
 {
     public GameObject GoToShowDuringProducing;
 
-    [ComponentInject] 
-    private ProduceResourceOrderBehaviour ProduceResourceBehaviour;   
+    [ComponentInject] private HandleAutoProduceResourceOrderOverTimeBehaviour ProduceResourceBehaviour;   
 
     private void Start()
     {

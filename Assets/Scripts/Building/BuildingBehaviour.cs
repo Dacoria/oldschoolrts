@@ -18,11 +18,13 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
 
     [HideInInspector] public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
 
-    public GameObject GetGO() => this.gameObject;
+    public GameObject GetGO() {try { return this.gameObject; } catch (Exception e) {return null; }} // voor stoppen unity.... TODO
     [ComponentInject(Required.OPTIONAL)] private IValidateOrder validateOrder;
     
     private void EnableRealWithoutActivating()
     {
+        
+
         var children = Real.GetComponentsInChildren<MonoBehaviour>();
         foreach (var monoBehaviour in children) monoBehaviour.enabled = false;
 

@@ -11,7 +11,7 @@ public class RotateGearsScript : MonoBehaviourCI
     public bool RotateGears;
     private Renderer[] RenderersChildren;
 
-    [ComponentInject(Required.OPTIONAL)] private ProduceResourceOrderBehaviour ProduceResourceBehaviour;
+    [ComponentInject(Required.OPTIONAL)] private HandleAutoProduceResourceOrderOverTimeBehaviour ProduceResourceBehaviour;
     [ComponentInject(Required.OPTIONAL)] private QueueForBuildingBehaviour QueueForBuildingBehaviour;
 
     private void Start()

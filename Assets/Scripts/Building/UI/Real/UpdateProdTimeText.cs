@@ -6,7 +6,7 @@ public class UpdateProdTimeText : MonoBehaviourCI
     public TextMeshPro TimeRemainingText;
 
     [ComponentInject(Required.OPTIONAL)] // optioneel; heb je niks, toon dan niks
-    private ProduceResourceOrderBehaviour ProduceResourceBehaviour;
+    private HandleAutoProduceResourceOrderOverTimeBehaviour ProduceResourceBehaviour;
 
     void Start()
     {
@@ -20,9 +20,16 @@ public class UpdateProdTimeText : MonoBehaviourCI
     {        
         if (ProduceResourceBehaviour != null && ProduceResourceBehaviour.IsProducingResourcesOverTime() && ProduceResourceBehaviour.IsProducingResourcesRightNow)
         {
-            var producingTimeInSeconds = ProduceResourceBehaviour.ProduceOverTime.GetTimeToProduceResourceInSeconds();
+            var producingTimeInSeconds = ProduceResourceBehaviour.Durations.TimeToProduceResourceInSeconds;
             var timeProducingInMs = producingTimeInSeconds - (DateTime.Now - ProduceResourceBehaviour.StartTimeProducing).TotalMilliseconds / 1000f;
-            TimeRemainingText.SetText(timeProducingInMs.ToString("F1") + " sec");
+            if (timeProducingInMs >= 0)
+            {
+                TimeRemainingText.SetText(timeProducingInMs.ToString("F1") + " sec");
+            }
+            else
+            {
+                TimeRemainingText.SetText("");
+            }
         }
         else
         {

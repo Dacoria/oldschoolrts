@@ -9,11 +9,11 @@ public class DisplayBuildingNameImgHandler : BaseAEMonoCI
     void Start()
     {
         text = GetComponentInChildren<SetTextOfBuilding>();
-        imageGo = GetComponentsInChildren<MeshRenderer>().Where(x => x.gameObject.name.StartsWith("Image")).First().gameObject; // lelijk; maar minste werk :P
+        imageGo = GetComponentsInChildren<MeshRenderer>()?.Where(x => x.gameObject.name.StartsWith("Image")).FirstOrDefault()?.gameObject;
 
         text.gameObject.SetActive(KeyCodeStatusSettings.ToggleBuildingNameImgDisplay_Active);
-        imageGo.SetActive(KeyCodeStatusSettings.ToggleBuildingNameImgDisplay_Active);
-    }
+        imageGo?.SetActive(KeyCodeStatusSettings.ToggleBuildingNameImgDisplay_Active);
+    }  
 
     protected override void OnKeyCodeAction(KeyCodeAction action)
     {
@@ -26,6 +26,6 @@ public class DisplayBuildingNameImgHandler : BaseAEMonoCI
     public void UpdateEnabledStatusOfDisplayObjects(bool show)
     {
         text.gameObject.SetActive(show);
-        imageGo.SetActive(show);
+        imageGo?.SetActive(show);
     }
 }

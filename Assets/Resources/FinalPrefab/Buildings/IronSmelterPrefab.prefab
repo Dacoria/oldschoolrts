@@ -675,9 +675,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8015956289334691888}
   - component: {fileID: 2062765472447785440}
-  - component: {fileID: 8547693949588902901}
-  - component: {fileID: 4539402806198892736}
-  - component: {fileID: 2716980277668635819}
   - component: {fileID: 606972819039138082}
   m_Layer: 0
   m_Name: Real
@@ -717,43 +714,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistanceSpawnedBelowSurface: -4.5
---- !u!114 &8547693949588902901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8013217940820927744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4845c7ec9e45e234db0dbca6d7c5c252, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4539402806198892736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8013217940820927744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e65e8378eb5aea48b47079b0220ca07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2716980277668635819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8013217940820927744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64e638bd226a3244a5af6233da6edb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BuildTimeInSeconds: 5
 --- !u!114 &606972819039138082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,10 +723,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8013217940820927744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cc7b888d814c8d4eb0a4799daaecdf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 1
   ResourcesToProduce:
   - ItemsToProduce:
     - ItemType: 190
@@ -776,9 +735,8 @@ MonoBehaviour:
     - Amount: 1
       ItemType: 180
       MaxBuffer: 5
-    - Amount: 1
-      ItemType: 150
-      MaxBuffer: 5
+  ProduceTimeInSeconds: 5
+  WaitAfterProduceTimeInSeconds: 2
 --- !u!1 &8041186554518384630
 GameObject:
   m_ObjectHideFlags: 0

@@ -488,8 +488,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6657296682684257634}
   - component: {fileID: 3458051538229048498}
-  - component: {fileID: 5026755599838400167}
-  - component: {fileID: 982399366922184082}
   - component: {fileID: 3127274562906845652}
   m_Layer: 0
   m_Name: Real
@@ -532,30 +530,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistanceSpawnedBelowSurface: -4.5
---- !u!114 &5026755599838400167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6659054232722307154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4845c7ec9e45e234db0dbca6d7c5c252, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &982399366922184082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6659054232722307154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e65e8378eb5aea48b47079b0220ca07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3127274562906845652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,19 +539,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6659054232722307154}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cc7b888d814c8d4eb0a4799daaecdf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 1
   ResourcesToProduce:
   - ItemsToProduce:
     - ItemType: 30
       MaxBuffer: 5
-      ProducedPerProdCycle: 1
+      ProducedPerProdCycle: 2
     ItemsConsumedToProduce:
     - Amount: 1
       ItemType: 20
       MaxBuffer: 5
+  ProduceTimeInSeconds: 5
+  WaitAfterProduceTimeInSeconds: 2
 --- !u!1 &8104653187383154887
 GameObject:
   m_ObjectHideFlags: 0

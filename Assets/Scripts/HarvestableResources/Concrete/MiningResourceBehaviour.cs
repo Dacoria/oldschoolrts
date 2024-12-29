@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiningResourceBehaviour : MonoBehaviour, IProduceResourceOverTime, ILocationOfResource
+public class MiningResourceBehaviour : MonoBehaviour, IProduceResourceOverTimeInteraction, ILocationOfResource
 {
     public MaterialResourceType MaterialResourceType;        
 
@@ -15,9 +15,9 @@ public class MiningResourceBehaviour : MonoBehaviour, IProduceResourceOverTime, 
     public float GetTimeToWaitAfterProducingInSeconds() => TimeToWaitAfterProducingInSeconds;
     public RangeType GetRangeTypeToFindResource() => RangeType.BoxColliderExpand;
 
-    public void StartProducing(ItemProduceSetting itemProduceSetting) { }
+    public void StartedProducing(ItemProduceSetting itemProduceSetting) { }
     public bool CanProduceResource() => MineResource(consumeResource: false);    
-    public void FinishProducing(ItemProduceSetting itemProduceSetting) => MineResource(consumeResource: true);
+    public void FinishedProducing(ItemProduceSetting itemProduceSetting) => MineResource(consumeResource: true);
 
     private bool MineResource(bool consumeResource)
     {
@@ -73,5 +73,10 @@ public class MiningResourceBehaviour : MonoBehaviour, IProduceResourceOverTime, 
         }
 
         return null;
-    }    
+    }
+
+    public void FinishedWaitingAfterProducing(ItemProduceSetting itemProduceSetting)
+    {
+        throw new System.NotImplementedException();
+    }
 }

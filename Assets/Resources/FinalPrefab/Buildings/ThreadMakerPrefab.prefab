@@ -200,9 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5181476310789558527}
   - component: {fileID: 1865335552616097778}
-  - component: {fileID: 5162154132026505260}
-  - component: {fileID: 3770763739097986292}
-  - component: {fileID: 8454746129926046092}
+  - component: {fileID: 3084091941927600158}
   m_Layer: 0
   m_Name: Real
   m_TagString: WheatFarm
@@ -241,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistanceSpawnedBelowSurface: -4
---- !u!114 &5162154132026505260
+--- !u!114 &3084091941927600158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,43 +248,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5180204085867975937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4845c7ec9e45e234db0dbca6d7c5c252, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cc7b888d814c8d4eb0a4799daaecdf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3770763739097986292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5180204085867975937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e65e8378eb5aea48b47079b0220ca07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8454746129926046092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5180204085867975937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 1
   ResourcesToProduce:
   - ItemsToProduce:
     - ItemType: 120
       MaxBuffer: 5
       ProducedPerProdCycle: 1
     ItemsConsumedToProduce:
-    - Amount: 1
+    - Amount: 2
       ItemType: 110
-      MaxBuffer: 5
+      MaxBuffer: 8
+  ProduceTimeInSeconds: 5
+  WaitAfterProduceTimeInSeconds: 2
 --- !u!1 &6661760122668879981
 GameObject:
   m_ObjectHideFlags: 0

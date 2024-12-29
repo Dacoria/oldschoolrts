@@ -45,7 +45,7 @@ public class UIQueueProgressBarScript : MonoBehaviourSlowUpdateFramesCI
         if (item != null && item.IsBeingBuild)
         {
             var timeBetweenStartProcessAndNow = (DateTime.Now - item.StartTimeBeingBuild.Value).TotalSeconds;
-            var perc = (float)timeBetweenStartProcessAndNow / DisplayQueueUIHandler.CallingQueueForBuildingBehaviour.BuildTimeInSeconds;
+            var perc = (float)timeBetweenStartProcessAndNow / DisplayQueueUIHandler.CallingQueueForBuildingBehaviour.GetBuildTimeInSeconds();
             return Math.Min(perc, 1);
         }
 

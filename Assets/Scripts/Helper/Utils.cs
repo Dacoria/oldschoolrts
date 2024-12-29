@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public static class Utils
@@ -128,6 +130,18 @@ public static class Utils
                 throw new Exception($"Required component '{type}' on behaviour '{monoBehaviour}' not found");
             }
             return component;
+        }
+    }
+
+    public static T DeepClone<T>(this T obj)
+    {
+        using (var ms = new MemoryStream())
+        {
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(ms, obj);
+            ms.Position = 0;
+
+            return (T)formatter.Deserialize(ms);
         }
     }
 }

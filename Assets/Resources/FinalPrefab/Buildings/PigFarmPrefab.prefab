@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1919124464024387518}
   - component: {fileID: 4947578050017429683}
-  - component: {fileID: 6364516909066361316}
-  - component: {fileID: 4360607432937734929}
   - component: {fileID: 3797737579598732084}
   m_Layer: 0
   m_Name: Real
@@ -51,30 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistanceSpawnedBelowSurface: -4
---- !u!114 &6364516909066361316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1921239215415884352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4845c7ec9e45e234db0dbca6d7c5c252, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4360607432937734929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1921239215415884352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e65e8378eb5aea48b47079b0220ca07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3797737579598732084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,25 +58,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1921239215415884352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cc7b888d814c8d4eb0a4799daaecdf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 1
   ResourcesToProduce:
   - ItemsToProduce:
     - ItemType: 90
-      MaxBuffer: 5
+      MaxBuffer: 6
       ProducedPerProdCycle: 1
     - ItemType: 130
-      MaxBuffer: 5
+      MaxBuffer: 6
       ProducedPerProdCycle: 1
     ItemsConsumedToProduce:
-    - Amount: 1
+    - Amount: 3
       ItemType: 60
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 40
-      MaxBuffer: 5
+      MaxBuffer: 6
+  ProduceTimeInSeconds: 30
+  WaitAfterProduceTimeInSeconds: 2
 --- !u!1 &2076750744306521955
 GameObject:
   m_ObjectHideFlags: 0

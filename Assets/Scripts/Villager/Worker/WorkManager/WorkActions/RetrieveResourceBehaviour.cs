@@ -34,7 +34,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
         if (LocationOfResourceScript == null) { throw new System.Exception("LocationOfResourceScript -> Nodig voor bepalen objectToRetrieveResourceFrom"); }
 
         // 1 resources te halen? dan is dat je rec. count
-        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceBehaviour>();
+        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceOverTimeBehaviour>();
         if (produceResourceBehaviour != null && produceResourceBehaviour.IsSingleProducingItemWithoutConsuming())
         {
             ResourceCountMaterialHarvestedPerRun = produceResourceBehaviour.GetSingleProducingItemWithoutConsuming().ProducedPerProdCycle;
@@ -57,10 +57,10 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     private bool HasEnoughBufferForResource()
     {
-        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceBehaviour>();
+        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceOverTimeBehaviour>();
         if (produceResourceBehaviour != null && produceResourceBehaviour.IsSingleProducingItemWithoutConsuming())
         {
-            var stockPile = ObjectToBringResourceBackTo.GetComponent<ProduceResourceOrderBehaviour>().CurrentOutstandingOrders;
+            var stockPile = ObjectToBringResourceBackTo.GetComponent<HandleProduceResourceOrderBehaviour>().OutputOrders.Count;
             var producedPerRun = ResourceCountMaterialHarvestedPerRun;
             var maxBuffer = produceResourceBehaviour.GetSingleProducingItemWithoutConsuming().MaxBuffer;
 
@@ -181,7 +181,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     {
         isDroppingResourceOff = true;
         yield return Wait4Seconds.Get(timeToDropOffResourceInSeconds);
-        ObjectToBringResourceBackTo.GetComponent<ProduceResourceOrderBehaviour>()?.ProduceItems();
+        ObjectToBringResourceBackTo.GetComponent<HandleProduceResourceOrderBehaviour>()?.ProduceItems();
 
         isDroppingResourceOff = false;
         ResourceCarriedBack = null;

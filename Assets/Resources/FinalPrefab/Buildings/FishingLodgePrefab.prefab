@@ -175,7 +175,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5037324966109963871}
   - component: {fileID: 3924363556721149839}
-  - component: {fileID: 5289163339513984508}
   - component: {fileID: 6629487537290416462}
   - component: {fileID: 7078928482825155592}
   m_Layer: 0
@@ -222,25 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistanceSpawnedBelowSurface: -4.5
---- !u!114 &5289163339513984508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5035836761859787631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 0
-  ResourcesToProduce:
-  - ItemsToProduce:
-    - ItemType: 50
-      MaxBuffer: 5
-      ProducedPerProdCycle: 1
-    ItemsConsumedToProduce: []
 --- !u!114 &6629487537290416462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f26f0120023cf46928716bfe6968ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Worker: {fileID: 0}
+  BuildingBehaviour: {fileID: 0}
 --- !u!114 &7078928482825155592
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,11 +10,16 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
     public List<SerfRequest> IncomingOrders;
     public List<ItemAmount> StockpileOfItemsRequired;
 
-    private ConsumeRefillItemsBehaviour ConsumeRefillItemsBehaviour;
+    private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
+    [HideInInspector] public RefillBehaviour RefillBehaviour;
+
     public void Awake()
     {
-        gameObject.AddComponent<RefillBehaviour>();
-        ConsumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
+        gameObject.AddComponent<ValidComponents>().DoCheck(
+            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour)});
+
+        RefillBehaviour = gameObject.AddComponent<RefillBehaviour>();
+        consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
     }    
 
     public void AddItem(Enum type)
@@ -22,7 +27,7 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
         var unit = (BarracksUnitSetting)GetCardDisplaySetting(type);
         var itemsNeeded = GetCardDisplaySetting(type).ItemsConsumedToProduce.ConvertAll(x => (ItemAmount)x).ToList();
 
-        if(ConsumeRefillItemsBehaviour.TryConsumeRefillItems(itemsNeeded))
+        if(consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsNeeded))
         {
             var unitGo = Instantiate(unit.ResourcePrefab);
             unitGo.GetComponent<OwnedByPlayerBehaviour>().Player = Player.PLAYER1;
@@ -36,8 +41,8 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
         var armyUnitBehaviour = unitGo.GetComponent<ArmyUnitBehaviour>();
         if (armyUnitBehaviour != null)
         {
-            armyUnitBehaviour.Offence = unitSettings.UnitStats.Offence;
-            armyUnitBehaviour.Defence = unitSettings.UnitStats.Defence;
+            armyUnitBehaviour.Offence = unitSettings.UnitStats.Offence.DeepClone();
+            armyUnitBehaviour.Defence = unitSettings.UnitStats.Defence.DeepClone();
             armyUnitBehaviour.EnemyAttractRadius = unitSettings.UnitStats.RangeToAttractEnemies;
             armyUnitBehaviour.Reach = unitSettings.UnitStats.RangeToAttack;
             armyUnitBehaviour.NavMeshAgent.stoppingDistance = unitSettings.UnitStats.RangeToAttack;
@@ -46,13 +51,13 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
             var healthBehaviour = unitGo.GetComponent<HealthBehaviour>();
             if (healthBehaviour != null)
             {
-                healthBehaviour.InitialHeath = unitSettings.UnitStats.Health;
-                healthBehaviour.CurrentHealth = unitSettings.UnitStats.Health;
+                healthBehaviour.InitialHeath = unitSettings.UnitStats.Health.DeepClone();
+                healthBehaviour.CurrentHealth = unitSettings.UnitStats.Health.DeepClone();
             }
         }
         else
         {
-            throw new Exception("unit " + unitSettings.Type + " vereist ArmyUnitBehaviour");
+            throw new Exception($"Unit '{unitSettings.Type} -> {unitGo.name}' vereist ArmyUnitBehaviour");
         }
     }
 
@@ -65,7 +70,7 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
     public bool CanProces(Enum type) 
     {
         var itemsNeeded = GetCardDisplaySetting(type).ItemsConsumedToProduce;
-        return ConsumeRefillItemsBehaviour.CanConsumeRefillItems(itemsNeeded);
+        return consumeRefillItemsBehaviour.CanConsumeRefillItems(itemsNeeded);
     } 
   
     public QueueForBuildingBehaviour GetQueueForBuildingBehaviour() => GetComponent<QueueForBuildingBehaviour>();
@@ -89,4 +94,6 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
         BarrackUnitPrefabs.Get().ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
 
     public GameObject GetGameObject() => gameObject;
+
+    public float GetProductionTime(Enum type) => 0; // instant
 }

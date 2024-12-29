@@ -746,7 +746,6 @@ GameObject:
   - component: {fileID: 3968333204928007154}
   - component: {fileID: 4046041821456263673}
   - component: {fileID: 5434366658329519237}
-  - component: {fileID: 4158773644889466681}
   m_Layer: 0
   m_Name: Real
   m_TagString: WheatFarm
@@ -823,26 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f26f0120023cf46928716bfe6968ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Worker: {fileID: 0}
---- !u!114 &4158773644889466681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7571275416962988289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd209a6b1f3e4c4c870c83e1201a137, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProduceResourcesOverTimeStandard: 0
-  ResourcesToProduce:
-  - ItemsToProduce:
-    - ItemType: 60
-      MaxBuffer: 5
-      ProducedPerProdCycle: 1
-    ItemsConsumedToProduce: []
+  BuildingBehaviour: {fileID: 0}
 --- !u!1 &8027973989642736674
 GameObject:
   m_ObjectHideFlags: 0

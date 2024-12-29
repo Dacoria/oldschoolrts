@@ -66,7 +66,7 @@ public static class BuildingPrefabs
         {  BuildingType.WHEATFARM,      new Vector3(2.2f, 0, -0.85f) },
         {  BuildingType.FORESTHUT,      new Vector3(0.5f, 0, 0) },
         {  BuildingType.SAWMILL,        new Vector3(0.5f, 0, -1f) },
-        {  BuildingType.BARRACKS,       new Vector3(1, 0, -1.2f) },
+        {  BuildingType.BARRACKS,       new Vector3(0.8f, 0, -0.4f) },
         {  BuildingType.WEAPONMAKER,    new Vector3(0.4f, 0, 0.9f) },
         {  BuildingType.LEATHERARMORY,  new Vector3(-1f, 0, 0) },
         {  BuildingType.THREADMAKER,    new Vector3(0, 0, -1.1f) },

@@ -9,7 +9,6 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
 {
     public List<SerfRequest> IncomingOrders;
     public List<ItemAmount> StockpileOfItemsRequired;
-    public List<BarracksUnitSetting> BarracksUnitSettings;
 
     private ConsumeRefillItemsBehaviour ConsumeRefillItemsBehaviour;
     public void Awake()
@@ -61,7 +60,7 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
 
     public int GetCount(Enum type) => 0;
 
-    public ProductionSetting GetCardDisplaySetting(Enum type) => BarracksUnitSettings.First(x => x.Type == (BarracksUnitType)type);
+    public ProductionSetting GetCardDisplaySetting(Enum type) => BarrackUnitPrefabs.Get().First(x => x.Type == (BarracksUnitType)type);
 
     public bool CanProces(Enum type) 
     {
@@ -74,7 +73,7 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
     public List<ItemAmount> GetItemsToRefill()
     {
         var result = new List<ItemAmount>();
-        foreach(var setting in BarracksUnitSettings)
+        foreach(var setting in BarrackUnitPrefabs.Get())
         {
             foreach (var itemConsumed in setting.ItemsConsumedToProduce)
             {
@@ -86,8 +85,8 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
 
     public bool AlwaysRefillItemsIgnoreBuffer() => true;
 
-    public List<ItemProduceSetting> GetItemProduceSettings() => 
-        BarracksUnitSettings.ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
+    public List<ItemProduceSetting> GetItemProduceSettings() =>
+        BarrackUnitPrefabs.Get().ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
 
     public GameObject GetGameObject() => gameObject;
 }

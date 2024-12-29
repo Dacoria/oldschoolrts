@@ -33,8 +33,11 @@
     public static string LOAD_PATH_GO_RSC_TO_CARRY = "ResourcesToCarry";
 
     public static string LOAD_PATH_SPRITE_BUILDINGS = "Images/BuildingImages";
-    public static string LOAD_PATH_SPRITE_UNITS = "Images/VillagerImages";
+    public static string LOAD_PATH_SPRITE_VILLAGERS = "Images/VillagerImages";
+    public static string LOAD_PATH_SPRITE_MILITARY = "Images/MilitaryImages";
     public static string LOAD_PATH_SPRITE_RESOURCES = "Images/ResourceImages";
+
+    
 
     public static string PATH_ROAD_NAV_MESH = "FinalPrefab/Road/RoadNavMeshSurfacePrefab";
 

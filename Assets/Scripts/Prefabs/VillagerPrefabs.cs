@@ -28,7 +28,7 @@ public static class VillagerPrefabs
                     var item = new VillagerUnitSetting
                     {
                         Type = villagerUnitType,
-                        ItemsConsumedToProduce = new List<ItemAmountBuffer> { new ItemAmountBuffer {Amount = 1, ItemType = ItemType.GOLDBAR, MaxBuffer = 5 } },
+                        ItemsConsumedToProduce = GetItemsConsumedToProduce(villagerUnitType),
                         Icon = villagerUnitSprite,
                         VillagerBehaviour = villagerPrefab.GetComponent<IVillagerUnit>()
                     };
@@ -46,5 +46,16 @@ public static class VillagerPrefabs
         }
 
         return result;
+    }
+
+    private static List<ItemAmountBuffer> GetItemsConsumedToProduce(VillagerUnitType type)
+    {
+        switch (type)
+        {
+            case VillagerUnitType.Builder:
+                return new List<ItemAmountBuffer> { new ItemAmountBuffer { Amount = 2, ItemType = ItemType.GOLDBAR, MaxBuffer = 5 } };
+            default:
+                return new List<ItemAmountBuffer> { new ItemAmountBuffer { Amount = 1, ItemType = ItemType.GOLDBAR, MaxBuffer = 5 } };
+        }
     }
 }

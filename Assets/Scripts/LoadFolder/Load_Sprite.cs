@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public static partial class Load
@@ -10,7 +8,8 @@ public static partial class Load
     {
         Constants.LOAD_PATH_SPRITE_BUILDINGS,
         Constants.LOAD_PATH_SPRITE_RESOURCES,
-        Constants.LOAD_PATH_SPRITE_UNITS
+        Constants.LOAD_PATH_SPRITE_VILLAGERS,
+        Constants.LOAD_PATH_SPRITE_MILITARY
     };
 
     private static Dictionary<string, Sprite> __spriteMap;

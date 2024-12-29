@@ -150,7 +150,7 @@ public static class MyExtensions
             case BuildingType.CLOTHARMORMAKER:
                 return building.BuildingPrefab.GetComponentInChildren<CardItemsProduceBehaviour>(true).ItemProductionSettings.ConvertAll<ProductionSetting>(x => x);
             case BuildingType.BARRACKS:
-                return building.BuildingPrefab.GetComponentInChildren<BarracksBehaviour>(true).BarracksUnitSettings.ConvertAll<ProductionSetting>(x => x);
+                return BarrackUnitPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
             case BuildingType.SCHOOL:
                 return VillagerPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
 

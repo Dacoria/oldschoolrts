@@ -8,7 +8,7 @@ public static class AE
     public static Action<SerfBehaviour> FreeSerf;
 
     // ORDER CHANGES
-    public static Action<SerfOrder> OrderStatusChanged;
+    public static Action<SerfOrder, Status> OrderStatusChanged;
     public static Action<BuilderRequest, BuildStatus> BuilderRequestStatusChanged;
 
     // ORDER REQUESTS

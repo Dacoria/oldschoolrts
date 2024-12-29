@@ -7,7 +7,7 @@ public class RefillBehaviour : BaseAEMonoCI
     public List<ItemAmount> StockpileOfItemsRequired;
 
     [ComponentInject] public IRefillItems RefillItems;
-
+    [ComponentInject] private IOrderDestination orderDestination;
     private new void Awake()
     {
         base.Awake();
@@ -37,7 +37,7 @@ public class RefillBehaviour : BaseAEMonoCI
         }
     }
 
-    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
         var myRequest = IncomingOrders.FirstOrDefault(serfOrder.Has);
         if (myRequest != null)
@@ -65,7 +65,7 @@ public class RefillBehaviour : BaseAEMonoCI
         {
             Purpose = Purpose.LOGISTICS,
             ItemType = itemType,
-            GameObject = this.gameObject,
+            OrderDestination = this.orderDestination,
             IsOriginator = true,
             Direction = Direction.PULL,
             BufferDepth = IncomingOrders.Count,

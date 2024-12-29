@@ -16,9 +16,11 @@ public class SerfRequest : IComparable<SerfRequest>
 
     public int BufferDepth = 0;
 
+    public IOrderDestination OrderDestination; // building behaviour
+    public GameObject GameObject => this.OrderDestination?.GetGO();
     public Vector3 Location => this.GameObject.EntranceExit();
 
-    public GameObject GameObject;
+
     public Purpose Purpose = Purpose.LOGISTICS;
     public ItemType ItemType;
 
@@ -57,7 +59,7 @@ public class SerfRequest : IComparable<SerfRequest>
         {
             Purpose = this.Purpose,
             ItemType = this.ItemType,
-            GameObject = this.GameObject,
+            OrderDestination = this.OrderDestination,
             IsOriginator = false,
             Direction = this.Direction == Direction.PULL ? Direction.PUSH : Direction.PULL,
             TimeCreated = this.TimeCreated,

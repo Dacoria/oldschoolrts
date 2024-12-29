@@ -60,10 +60,10 @@ public class RequestAndOrderInspector : EditorWindow
             GUILayout.Label($"Status: {serfOrder.Status}");
 
             GUILayout.Label("From:");
-            serfOrder.From.GameObject = EditorGUILayout.ObjectField(serfOrder.From.GameObject, typeof(GameObject), true) as GameObject;
+            //serfOrder.From.OrderDestination = EditorGUILayout.ObjectField(serfOrder.From.OrderDestination, typeof(IOrderDestination), true) as IOrderDestination;
 
             GUILayout.Label("To:");
-            serfOrder.To.GameObject = EditorGUILayout.ObjectField(serfOrder.To.GameObject, typeof(GameObject), true) as GameObject;
+            //serfOrder.To.OrderDestination = EditorGUILayout.ObjectField(serfOrder.To.OrderDestination, typeof(IOrderDestination), true) as IOrderDestination;
 
             if (GUILayout.Button($"serf: {serfOrder.Assignee}"))
             {

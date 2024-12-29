@@ -57,7 +57,7 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
         }
     }    
 
-    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
         if (serfOrder == _currentSerfOrder)
         {
@@ -121,7 +121,6 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
                 {
                     case Status.IN_PROGRESS_FROM:
                         {
-                            // indien niet kan (bv warehouse is leeg), dan daarna naar failed setten PER actie (in stockpilebehaviour in dit vb). Met delay.
                             StartCoroutine(CompletedFromRequest(_currentSerfOrder));
                             break;
                         }
@@ -183,20 +182,31 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     private IEnumerator CompletedFromRequest(SerfOrder currentSerfOrder)
     {
-        serfShowPackageHandling = gameObject.AddComponent<SerfShowPackageHandling>();
-        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder);
+        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder); // voorkomt dat gebouw andere orders afhandelt
         yield return Wait4Seconds.Get(WaitTimeInSecCompletingSerfFromRequest);
-        Destroy(serfShowPackageHandling);
-        _currentSerfOrder.Status = Status.IN_PROGRESS_TO;
+        if (currentSerfOrder.From.OrderDestination.CanProcessOrder(currentSerfOrder))
+        {
+            _currentSerfOrder.Status = Status.IN_PROGRESS_TO;
+        }
+        else
+        {
+            _currentSerfOrder.Status = Status.FAILED;
+        }
     }
 
     private IEnumerator CompletedToRequest(SerfOrder currentSerfOrder)
     {
-        serfShowPackageHandling = gameObject.AddComponent<SerfShowPackageHandling>();
-        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder);
+        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder); // voorkomt dat gebouw andere orders afhandelta
         yield return Wait4Seconds.Get(WaitTimeInSecCompletingSerfToRequest);
-        Destroy(serfShowPackageHandling);
-        _currentSerfOrder.Status = Status.SUCCESS;
+        if(currentSerfOrder.To.OrderDestination.CanProcessOrder(currentSerfOrder))
+        {
+            _currentSerfOrder.Status = Status.SUCCESS;
+        }
+        else
+        {
+            _currentSerfOrder.Status = Status.FAILED;
+        }
+        
     }
 
     private void UpdateAnimation()

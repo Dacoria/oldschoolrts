@@ -13,6 +13,8 @@ public class ProduceResourceOrderBehaviour : BaseAEMonoCI
     [ComponentInject(Required.OPTIONAL)]  public IProduceResourceOverTime ProduceOverTime;
 
     [ComponentInject] public IResourcesToProduce ResourcesToProduce;
+    [ComponentInject] private IOrderDestination orderDestination;
+
 
     void Start()
     {
@@ -70,7 +72,7 @@ public class ProduceResourceOrderBehaviour : BaseAEMonoCI
         CurrentOutstandingOrders = OutputOrders != null ? OutputOrders.Count : 0; 
     }
 
-    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
         if (OutputOrders.Contains(serfOrder.From))
         {
@@ -106,7 +108,7 @@ public class ProduceResourceOrderBehaviour : BaseAEMonoCI
         {
             var serfRequest = new SerfRequest
             {
-                GameObject = this.gameObject,
+                OrderDestination = this.orderDestination,
                 ItemType = itemProduced.ItemType,
                 Purpose = Purpose.LOGISTICS,
                 BufferDepth = OutputOrders.Count,

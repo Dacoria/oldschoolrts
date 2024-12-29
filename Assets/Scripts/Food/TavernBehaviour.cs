@@ -9,8 +9,8 @@ public class TavernBehaviour : BaseAEMonoCI
     public List<SerfRequest> IncomingOrders;
     public List<ItemAmount> StockpileOfItemsRequired;
 
-    [ComponentInject]
-    private TavernRefillingBehaviour TavernRefillingBehaviour;
+    [ComponentInject] private TavernRefillingBehaviour TavernRefillingBehaviour;
+    [ComponentInject] private IOrderDestination OrderDestination;
 
     void Start()
     {
@@ -86,7 +86,7 @@ public class TavernBehaviour : BaseAEMonoCI
         }
     }
 
-    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
         var myRequest = IncomingOrders.FirstOrDefault(serfOrder.Has);
         if (myRequest != null)
@@ -100,12 +100,11 @@ public class TavernBehaviour : BaseAEMonoCI
                     IncomingOrders.Remove(myRequest);
                     AddSerfRequestTillBuffer(myRequest.ItemType);
                     break;
-                case Status.FAILED:
-                    {
-                        IncomingOrders.Remove(myRequest);
-                        AddSerfRequestTillBuffer(myRequest.ItemType);
-                        break;
-                    }
+                case Status.FAILED:                    
+                    IncomingOrders.Remove(myRequest);
+                    AddSerfRequestTillBuffer(myRequest.ItemType);
+                    break;
+                    
             }
         }
     }
@@ -116,7 +115,7 @@ public class TavernBehaviour : BaseAEMonoCI
         {
             Purpose = Purpose.LOGISTICS,
             ItemType = itemType,
-            GameObject = this.gameObject,
+            OrderDestination = this.OrderDestination,
             IsOriginator = true,
             Direction = Direction.PULL,
             BufferDepth = IncomingOrders.Count,

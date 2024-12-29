@@ -2,10 +2,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class BuildingBehaviour : BaseAEMonoCI
+public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
 {
-    //private int completed = 0;
-
     [HideInInspector][ComponentInject(Required.OPTIONAL)] public GhostBuildingBehaviour GhostBuildingBehaviour;
 
     public Purpose Purpose = Purpose.BUILDING;
@@ -20,6 +18,9 @@ public class BuildingBehaviour : BaseAEMonoCI
 
     [HideInInspector] public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
 
+    public GameObject GetGO() => this.gameObject;
+    [ComponentInject(Required.OPTIONAL)] private IValidateOrder validateOrder;
+    
     private void EnableRealWithoutActivating()
     {
         var children = Real.GetComponentsInChildren<MonoBehaviour>();
@@ -119,7 +120,7 @@ public class BuildingBehaviour : BaseAEMonoCI
         newBuilderRequest.Status = statusForNewReq; // forceert change; maakt het makkelijker
     }
 
-    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
         if(GhostBuildingBehaviour == null)
         {
@@ -151,7 +152,7 @@ public class BuildingBehaviour : BaseAEMonoCI
                 {
                     Purpose = Purpose,
                     ItemType = requiredItem.ItemType,
-                    GameObject = GhostBuildingBehaviour.gameObject,
+                    OrderDestination = this,
                     Direction = Direction.PULL,
                     IsOriginator = true
                 };
@@ -248,5 +249,14 @@ public class BuildingBehaviour : BaseAEMonoCI
         }
 
         return true;
+    }
+
+    public bool CanProcessOrder(SerfOrder serfOrder)
+    {
+        if (validateOrder == null)
+        {
+            return true;
+        }
+        return validateOrder.CanProcessOrder(serfOrder);
     }
 }

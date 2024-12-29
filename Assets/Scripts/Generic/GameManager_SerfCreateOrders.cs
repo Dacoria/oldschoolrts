@@ -118,7 +118,7 @@ public partial class GameManager : BaseAEMonoCI
             if (order.From == null)
             {
                 // ter voorkoming dat 1 item in de stockpile 3x kan worden opgehaald
-                var countItemsAlreadyBeingPickedUp = CurrentSerfOrders.Count(x => x.From.GameObject == MainCastle && x.ItemType == serfRequest.ItemType);
+                var countItemsAlreadyBeingPickedUp = CurrentSerfOrders.Count(x => x.From.GameObject == MainCastle && x.ItemType == serfRequest.ItemType && x.Status == Status.IN_PROGRESS_FROM);
 
                 var stockpileWithStock = StockPilesManager.Instance.GetStockpiles().FirstOrDefault(x =>
                     x.CurrentItemAmount.Any(x => x.ItemType == serfRequest.ItemType && x.Amount - countItemsAlreadyBeingPickedUp > 0)
@@ -126,7 +126,7 @@ public partial class GameManager : BaseAEMonoCI
                 if (stockpileWithStock != null)
                 {
                     order.From = serfRequest.CloneOpposite();
-                    order.From.GameObject = stockpileWithStock.gameObject;
+                    order.From.OrderDestination = stockpileWithStock.GetComponentInParent<IOrderDestination>();
                 }
             }
         }
@@ -153,7 +153,7 @@ public partial class GameManager : BaseAEMonoCI
                 if (stockpile != null)
                 {
                     order.To = order.From.CloneOpposite();
-                    order.To.GameObject = MainCastle;
+                    order.To.OrderDestination = MainCastleOrderDestination;
                 }
             }
         }

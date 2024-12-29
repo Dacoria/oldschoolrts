@@ -4,19 +4,20 @@ using UnityEngine;
 
 public partial class GameManager : BaseAEMonoCI
 {
-    private List<SerfOrder> SerfOrdersBeingCompleted = new List<SerfOrder>();
+    private Dictionary<SerfOrder, SerfShowPackageHandling> SerfOrdersBeingCompleted = new Dictionary<SerfOrder, SerfShowPackageHandling>();
     protected override void OnStartCompletingSerfRequest(SerfOrder order)
     {
-        SerfOrdersBeingCompleted.Add(order);
+        var serfShowPackageHandling = order.Assignee.gameObject.AddComponent<SerfShowPackageHandling>();
+        SerfOrdersBeingCompleted.Add(order, serfShowPackageHandling);
     }
 
     public bool SerfOrderIsBeingCompletedForGo(GameObject go)
     {
-        if(SerfOrdersBeingCompleted.Any(x => x.Status == Status.IN_PROGRESS_FROM && x.From.GameObject == go))
+        if(SerfOrdersBeingCompleted.Any(x => x.Key.Status == Status.IN_PROGRESS_FROM && x.Key.From.GameObject == go))
         {
             return true;
         }
-        if (SerfOrdersBeingCompleted.Any(x => x.Status == Status.IN_PROGRESS_TO && x.To.GameObject == go))
+        if (SerfOrdersBeingCompleted.Any(x => x.Key.Status == Status.IN_PROGRESS_TO && x.Key.To.GameObject == go))
         {
             return true;
         }
@@ -25,6 +26,10 @@ public partial class GameManager : BaseAEMonoCI
 
     private void RemoveSerfOrderBeingCompleted(SerfOrder serfOrder)
     {
-        SerfOrdersBeingCompleted.Remove(serfOrder);
+        if(SerfOrdersBeingCompleted.TryGetValue(serfOrder, out var serfShowPackageHandling))
+        {
+            Destroy(SerfOrdersBeingCompleted[serfOrder]); // destroy go SerfShowPackageHandling
+            SerfOrdersBeingCompleted.Remove(serfOrder); // verwijder hele order
+        }        
     }
 }

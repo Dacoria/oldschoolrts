@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class GameManager : BaseAEMonoCI
 {
     public GameObject MainCastle;
+    private IOrderDestination MainCastleOrderDestination;
 
     public static GameManager Instance;    
 
@@ -14,6 +15,7 @@ public partial class GameManager : BaseAEMonoCI
     private new void Awake()
     {
         Instance = this;
+        MainCastleOrderDestination = MainCastle.GetComponent<IOrderDestination>();
         base.Awake();
         InitServes();
     }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarousselDisplay
 {
-    [HideInInspector]
-    public StockpileBehaviour CallingStockpile;
+    [HideInInspector] public StockpileBehaviour CallingStockpile;
 
     public StockpileResourceWrapperBehaviour StockpileResourceWrapperPrefab;
     public List<StockpileResourceWrapperBehaviour> StockpileResourceWrappers;
@@ -50,7 +49,7 @@ public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarous
     {        
         if (CallingStockpile != null)
         {
-            foreach (var itemSprite in ResourcePrefabs.Get())
+            foreach (var itemSprite in ResourcePrefabs.Get().Where(x => x.ItemType != ItemType.NONE))
             {
                 var itemType = CallingStockpile.CurrentItemAmount.Single(x => x.ItemType == itemSprite.ItemType);
                 var wrapper = StockpileResourceWrappers.Single(x => x.ItemType == itemSprite.ItemType);

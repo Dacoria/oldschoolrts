@@ -32,7 +32,7 @@ public partial class GameManager : BaseAEMonoCI
         StartCoroutine(CheckOrdersEverySec());
     }
     
-    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
         RemoveSerfOrderBeingCompleted(serfOrder); // blijkbaar een status afgerond; anders kom je hier niet
 
@@ -66,7 +66,7 @@ public partial class GameManager : BaseAEMonoCI
         {
             Purpose = origSerfOrder.Purpose,
             ItemType = origSerfOrder.ItemType,
-            GameObject = origSerfOrder.Current.GameObject,
+            OrderDestination = origSerfOrder.Current.OrderDestination,
             Direction = origSerfOrder.Current.Direction,
             IsOriginator = true
         };

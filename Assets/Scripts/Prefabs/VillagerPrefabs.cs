@@ -19,7 +19,7 @@ public static class VillagerPrefabs
     {
         var result = new List<VillagerUnitSetting>();
 
-        foreach (VillagerUnitType villagerUnitType in Enum.GetValues(typeof(VillagerUnitType)).Cast<VillagerUnitType>().OrderBy(x => x.ToString()))
+        foreach (VillagerUnitType villagerUnitType in Enum.GetValues(typeof(VillagerUnitType)).Cast<VillagerUnitType>().ToList())
         {
             if (Load.GoMap.TryGetValue($"{villagerUnitType.ToString()}Prefab", out GameObject villagerPrefab))
             {

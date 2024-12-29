@@ -2,10 +2,11 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class StockpileBehaviour : BaseAEMonoCI
+public class StockpileBehaviour : BaseAEMonoCI, IValidateOrder
 {
     public ItemAmountBuffer[] InitialItemAmount;
     [HideInInspector] public ItemAmountBuffer[] CurrentItemAmount;
+    [ComponentInject] private IOrderDestination orderDestination;
 
     private new void Awake()
     {
@@ -34,12 +35,22 @@ public class StockpileBehaviour : BaseAEMonoCI
         StockPilesManager.Instance.RegisterStockpile(this);
     }
 
-    protected override void OnOrderStatusChanged(SerfOrder serfOrder)
+    public bool CanProcessOrder(SerfOrder serfOrder)
     {
-        if (serfOrder.From != null && serfOrder.From.GameObject == gameObject && serfOrder.Status == Status.IN_PROGRESS_TO)
+        if (serfOrder.Status == Status.IN_PROGRESS_FROM)
+        {
+            var itemAmount = this.CurrentItemAmount.Single(x => x.ItemType == serfOrder.ItemType);
+            return itemAmount.Amount > 0;
+        }
+
+        return true;
+    }
+
+    protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
+    {
+        if (serfOrder.From != null && serfOrder.From.GameObject == orderDestination.GetGO() && serfOrder.Status == Status.IN_PROGRESS_TO)
         {
             // TODO beetje hacky maar het werkt
-
             var itemAmount = this.CurrentItemAmount.Single(x => x.ItemType == serfOrder.ItemType);
             if(itemAmount.Amount > 0)
             {
@@ -47,12 +58,11 @@ public class StockpileBehaviour : BaseAEMonoCI
             }
             else
             {
-                // via delay, zodat overige 'OnOrderStatusChanged' eerst afgehandeld kunnen worden
-                MonoHelper.Instance.Do_CR(0.05f, () => serfOrder.Status = Status.FAILED);                
+                throw new Exception("CanProcessOrder niet aangeroepen? (Stockpile)");              
             }
         }
 
-        if (serfOrder.To != null && serfOrder.To.GameObject == this.gameObject && serfOrder.Status == Status.SUCCESS)
+        if (serfOrder.To != null && serfOrder.To.GameObject == orderDestination.GetGO() && serfOrder.Status == Status.SUCCESS)
         {
 
             var itemAmount = this.CurrentItemAmount.Single(x => x.ItemType == serfOrder.ItemType);

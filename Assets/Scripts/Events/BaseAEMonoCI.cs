@@ -56,7 +56,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
     protected virtual void OnNoFoodToConsume(FoodConsumption consumption) { }
     protected virtual void OnNoWorkerAction(WorkManager manager) { }
     protected virtual void OnReachedFoodRefillingPoint(TavernBehaviour behaviour1, FoodConsumptionBehaviour behaviour) { }
-    protected virtual void OnOrderStatusChanged(SerfOrder order) { }
+    protected virtual void OnOrderStatusChanged(SerfOrder order, Status prevStatus) { }
     protected virtual void OnSerfRequest(SerfRequest request) { }
     protected virtual void OnStartCompletingSerfRequest(SerfOrder order) { }
     protected virtual void OnStartNewWorkerAction(WorkManager manager) { }

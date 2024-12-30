@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public class ProduceResourceOverTimeBehaviour : ProduceResourceAbstract, IProduceResourceOverTimeDurations
 {
     public List<ItemProduceSetting> ResourcesToProduce;
-    private HandleAutoProduceResourceOrderOverTimeBehaviour handleAutoProduceResourceOrderOverTimeBehaviour;
+    private HandleProduceResourceOrderOverTimeBehaviour handleProduceResourceOrderOverTimeBehaviour;
 
     public float ProduceTimeInSeconds;
     public float WaitAfterProduceTimeInSeconds;
@@ -11,14 +11,14 @@ public class ProduceResourceOverTimeBehaviour : ProduceResourceAbstract, IProduc
     public float TimeToProduceResourceInSeconds => ProduceTimeInSeconds;
     public float TimeToWaitAfterProducingInSeconds => WaitAfterProduceTimeInSeconds;
 
-    private new void Start()
+    private new void Awake()
     {
-        base.Start();
+        base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<System.Type> { typeof(HandleAutoProduceResourceOrderOverTimeBehaviour) });
+            inactives: new List<System.Type> { typeof(HandleProduceResourceOrderOverTimeBehaviour) });
 
-        handleAutoProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleAutoProduceResourceOrderOverTimeBehaviour>();
+        handleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
     }
 
-    public override List<ItemProduceSetting> GetResourcesToProduce() => ResourcesToProduce;
+    protected override List<ItemProduceSetting> GetConcreteResourcesToProduce() => ResourcesToProduce;
 }

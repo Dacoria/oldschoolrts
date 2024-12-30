@@ -802,15 +802,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7903052223865660440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f749cd8a3ed48d45819b90b076d55f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 10a5b5c5ec9c2234680ac9bf0936bfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ResourcesToProduce: []
-  MaterialResourceType: 0
+  ProduceResourceOrder: {fileID: 0}
+  MaterialResourceType: 4
+  MaxBuffer: 6
+  ProducedPerProdCycle: 1
   MaxRangeForResources: 2
-  ProduceTimeInSeconds: 10
+  ProduceTimeInSeconds: 5
   WaitAfterProduceTimeInSeconds: 2
-  HandleAutoProduceResourceOrderOverTimeBehaviour: {fileID: 0}
+  HandleProduceResourceOrderOverTimeBehaviour: {fileID: 0}
 --- !u!1 &8447659455025688775
 GameObject:
   m_ObjectHideFlags: 0

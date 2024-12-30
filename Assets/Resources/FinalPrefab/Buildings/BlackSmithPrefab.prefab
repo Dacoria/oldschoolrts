@@ -572,9 +572,6 @@ MonoBehaviour:
     - Amount: 1
       ItemType: 190
       MaxBuffer: 5
-    - Amount: 1
-      ItemType: 150
-      MaxBuffer: 5
     Type: 230
     MaxBuffer: 5
   - ItemsConsumedToProduce:
@@ -586,8 +583,9 @@ MonoBehaviour:
       MaxBuffer: 5
     Type: 240
     MaxBuffer: 5
-  TimeToProduceResourceInSeconds: 5
-  TimeToWaitAfterProducingInSeconds: 1.5
+  IsProducingResourcesRightNow: 0
+  ProduceTimeInSeconds: 5
+  WaitTimeAfterProducingInSeconds: 1.5
 --- !u!114 &7643416546333469368
 MonoBehaviour:
   m_ObjectHideFlags: 0

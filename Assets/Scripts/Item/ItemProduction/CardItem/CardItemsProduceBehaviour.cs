@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResourcesToProduce, IRefillItems, IProduceResourceOverTimeDurations
+public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResourcesToProduceSettings, IRefillItems, IProduceResourceOverTimeDurations
 {
     public List<ItemProductionSetting> ItemProductionSettings;
 
     private RefillBehaviour refillBehaviour;
-    private QueueForBuildingBehaviour queueForBuildingBehaviour;
     private ConsumeRefillItemsBehaviour consumeRefillItems;
     private HandleProduceResourceOrderOverTimeBehaviour handleProduceResourceOrderOverTimeBehaviour;
 
@@ -19,10 +18,9 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
         ItemsToProcess = ItemProductionSettings.Select(x => new ItemLimit{ItemType = x.Type}).ToList();
 
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(HandleAutoProduceResourceOrderOverTimeBehaviour), typeof(QueueForBuildingBehaviour) });
+            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(HandleProduceResourceOrderOverTimeBehaviour), typeof(QueueForBuildingBehaviour) });
 
         refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
-        queueForBuildingBehaviour = gameObject.AddComponent<QueueForBuildingBehaviour>();
         consumeRefillItems = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
         handleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();        
     }
@@ -58,20 +56,12 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
         var itemProcessed = ItemsToProcess.Single(x => x.ItemType == itemProduceSetting.ItemsToProduce.First().ItemType);
         itemProcessed.ItemsToProduce--;
     }
-
-
-
-
-
-
-    public QueueForBuildingBehaviour GetQueueForBuildingBehaviour() => queueForBuildingBehaviour;
-
     public List<ItemProduceSetting> GetItemProduceSettings() =>
         ItemProductionSettings.ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
-    public bool CanProduceResource() => GetItemToProduce() != null;
+    public bool CanProduceResource() => GetItemToProduceSettings() != null;
 
     // bepaalt welk item eerst --> Logica nu: meeste aantal eerst (daarna lijstvolgorde)
-    public ItemProduceSetting GetItemToProduce()
+    public ItemProduceSetting GetItemToProduceSettings()
     {
         var itemsThatCanBeProduced = ItemProductionSettings.Where(x => CanProduceResource(x) && !HasReachedProductionBuffer(x));
 
@@ -113,8 +103,6 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
 
     public bool AlwaysRefillItemsIgnoreBuffer() => false;
 
-    public List<ItemOutput> GetAvailableItemsToProduce() => GetItemProduceSettings().SelectMany(x => x.ItemsToProduce).ToList();
-
     public int GetCount(Enum type) => ItemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemsToProduce;
 
     public void AddItem(Enum type)
@@ -147,5 +135,12 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
     public float TimeToWaitAfterProducingInSeconds => WaitTimeAfterProducingInSeconds;
 
     public GameObject GetGameObject() => gameObject;
-    public float GetProductionTime(Enum type) => TimeToProduceResourceInSeconds;    
+    public float GetProductionTime(Enum type) => TimeToProduceResourceInSeconds;
+
+    public QueueForBuildingBehaviour GetQueueForBuildingBehaviour() => null;
+
+    public List<ItemProduceSetting> GetResourcesToProduceSettings()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -176,7 +176,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     {
         isDroppingResourceOff = true;
         yield return Wait4Seconds.Get(timeToDropOffResourceInSeconds);
-        ObjectToBringResourceBackTo.GetComponent<HandleProduceResourceOrderBehaviour>()?.ProduceItems();
+        produceResourceBehaviour.ProduceResource();
 
         isDroppingResourceOff = false;
         ResourceCarriedBack = null;

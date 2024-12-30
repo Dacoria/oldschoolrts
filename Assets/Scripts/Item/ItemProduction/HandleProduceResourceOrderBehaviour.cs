@@ -3,25 +3,25 @@ using System.Collections.Generic;
 public class HandleProduceResourceOrderBehaviour : BaseAEMonoCI
 {
     public List<SerfRequest> OutputOrders = new List<SerfRequest>();
-    [ComponentInject] public IResourcesToProduce ResourcesToProduce;
     [ComponentInject] private IOrderDestination orderDestination;
-
-    public void ProduceItems(ItemProduceSetting itemProduceSetting)
+    
+    public bool ProduceItemsWithConsumption(IResourcesToProduceSettings resourcesToProduce)
     {
-        foreach (var item in itemProduceSetting.ItemsToProduce)
+        var itemProduceSetting = resourcesToProduce.GetItemToProduceSettings();
+        var hasConsumedResources = resourcesToProduce.ConsumeRequiredResources(itemProduceSetting);
+        if(hasConsumedResources)
         {
-            ProduceItem(item);
+            ProduceItemsNoConsumption(itemProduceSetting.ItemsToProduce);
+            return true;
         }
+        return false;
     }
 
-    public void ProduceItems()
+    public void ProduceItemsNoConsumption(List<ItemOutput> ItemsToProduce)
     {
-        var itemProduceSetting = ResourcesToProduce.GetItemToProduce();
-        ResourcesToProduce.ConsumeRequiredResources(itemProduceSetting);              
-
-        foreach (var itemProduced in itemProduceSetting.ItemsToProduce)
+        foreach (var item in ItemsToProduce)
         {
-            ProduceItem(itemProduced);
+            ProduceItem(item);
         }
     }
 

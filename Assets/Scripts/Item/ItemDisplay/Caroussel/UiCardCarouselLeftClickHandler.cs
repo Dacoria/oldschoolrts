@@ -8,11 +8,11 @@ public class UiCardCarouselLeftClickHandler : MonoBehaviourCI, IPointerClickHand
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            CardUICarouselHandler.CarouselLeft_LeftClick();
+            //CardUICarouselHandler.CarouselLeft_LeftClick();
         }
         else if (eventData.button == PointerEventData.InputButton.Middle)
         {
-            CardUICarouselHandler.CarouselLeft_MiddleClick();
+            //CardUICarouselHandler.CarouselLeft_MiddleClick();
         }
     }
 }

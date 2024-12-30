@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ProduceMiningResourceBehaviour : ProduceResourceAbstract, ILocationOfResource, IProduceResourceOverTimeDurations
+public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocationOfResource, IProduceResourceOverTimeDurations
 {
     public MaterialResourceType MaterialResourceType;
     public int MaxBuffer = 6;
     public int ProducedPerProdCycle = 1;
 
-    public override List<ItemProduceSetting> GetResourcesToProduce()
+    protected override List<ItemProduceSetting> GetConcreteResourcesToProduce()
     {
         var itemToProduce = new ItemOutput
         {
@@ -30,19 +30,18 @@ public class ProduceMiningResourceBehaviour : ProduceResourceAbstract, ILocation
     public RangeType GetRangeTypeToFindResource() => RangeType.BoxColliderExpand;
     public int GetMaxRangeForResource() => MaxRangeForResources;
 
-    [HideInInspector] public HandleAutoProduceResourceOrderOverTimeBehaviour HandleAutoProduceResourceOrderOverTimeBehaviour;
+    [HideInInspector] public HandleProduceResourceOrderOverTimeBehaviour HandleProduceResourceOrderOverTimeBehaviour;
 
-    private new void Start()
+    new void Awake()
     {
-        base.Start();
+        base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<System.Type> { typeof(HandleAutoProduceResourceOrderOverTimeBehaviour) });
+            inactives: new List<System.Type> { typeof(HandleProduceResourceOrderOverTimeBehaviour) });
 
-        HandleAutoProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleAutoProduceResourceOrderOverTimeBehaviour>();
-        HandleAutoProduceResourceOrderOverTimeBehaviour.HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction += OnFinishedProducingAction;
+        HandleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
+        HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction += OnFinishedProducingAction;
     }
-    private void OnDestroy() => HandleAutoProduceResourceOrderOverTimeBehaviour.HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction -= OnFinishedProducingAction;
-
+    private void OnDestroy() => HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction -= OnFinishedProducingAction;
 
     private void OnFinishedProducingAction() => MineResource(consumeResource: true);
 

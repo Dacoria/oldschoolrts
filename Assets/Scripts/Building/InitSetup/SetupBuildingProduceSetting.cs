@@ -14,38 +14,29 @@ public static class SetupBuildingProduceSetting
         }
         return cacheItemProduce[type];
     }
-    
+
     private static List<ItemProduceSetting> GetItemProduceSettingsNoCache(BuildingType type)
-    {        
-        var buildingPrefab = BuildingPrefabs.Get().Single(x => x.BuildingType == type).BuildingPrefab;
+    {
+        var category = type.GetCategory();
 
-        var mine = buildingPrefab.GetComponentInChildren<ProduceResourceMiningBehaviour>(true);
-        if (mine != null)
+        switch (category)
         {
-            return GetSetupMineProduceSetting(type);
+            case BuildingCategory.Manual:
+                return GetSetupManualProduceSetting(type);
+            case BuildingCategory.Mine:
+                return GetSetupMineProduceSetting(type);
+            case BuildingCategory.OneProductOverTime:
+                return new List<ItemProduceSetting> { type.GetBuildingOverTimeSetup().ConvertToProduceSettings() };
+            case BuildingCategory.SelectProductsOverTime:
+                return ProdCardItemSettings.GetValueOrDefault(type, new List<BuildingInOutSetup>()).Select(x => x.ConvertToProduceSettings()).ToList();
+            case BuildingCategory.School:
+            case BuildingCategory.Unknown:
+            case BuildingCategory.Barracks:
+            case BuildingCategory.Population:
+                return new List<ItemProduceSetting>(); // geen item productie
+            default:
+                throw new Exception();
         }
-
-        var manual = buildingPrefab.GetComponentInChildren<ProduceResourceManualBehaviour>(true);
-        if (manual != null)
-        {
-            return GetSetupManualProduceSetting(type);
-        }
-
-        var overtime = buildingPrefab.GetComponentInChildren<ProduceResourceOverTimeBehaviour>(true);
-        if (overtime != null)
-        {
-            return new List<ItemProduceSetting> { type.GetBuildingOverTimeSetup().ConvertToProduceSettings() };
-        }
-
-        var card = buildingPrefab.GetComponentInChildren<CardItemsProduceBehaviour>(true);
-        if (card != null)
-        {
-            return ProdCardItemSettings.GetValueOrDefault(type, new List<BuildingInOutSetup>()).Select(x => x.ConvertToProduceSettings()).ToList();
-        }
-
-        //throw new Exception("Zou niet moeten");
-
-        return new List<ItemProduceSetting>();
     }
 
     private static List<ItemProduceSetting> GetSetupManualProduceSetting(BuildingType type)

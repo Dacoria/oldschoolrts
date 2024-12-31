@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
 {
+    private RefillBehaviour refillBehaviour;
     private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
     private QueueForBuildingBehaviour queueForBuildingBehaviour;
 
@@ -13,8 +14,9 @@ public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
     private void Awake()
     {
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<Type> { typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour) });
+            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour) });
 
+        refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
         consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
         queueForBuildingBehaviour = gameObject.AddComponent<QueueForBuildingBehaviour>();
     }

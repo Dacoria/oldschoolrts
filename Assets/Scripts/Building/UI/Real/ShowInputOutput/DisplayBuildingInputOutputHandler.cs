@@ -13,40 +13,36 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
     [ComponentInject(Required.OPTIONAL)] private RefillBehaviour refillBehaviour;
 
-    [ComponentInject(Required.OPTIONAL)] private ProduceResourceMiningBehaviour produceResourceMiningBehaviour;
-    [ComponentInject(Required.OPTIONAL)] private ProduceResourceOverTimeBehaviour produceResourceOverTimeBehaviour;
-    [ComponentInject(Required.OPTIONAL)] private ProduceResourceManualBehaviour produceResourceManualBehaviour;
-    [ComponentInject(Required.OPTIONAL)] private CardItemsProduceBehaviour cardItemsProduceBehaviour;
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
+    private BuildingCategory buildingCategory => buildingBehaviour.BuildingType.GetCategory();
 
     [ComponentInject(Required.OPTIONAL)] private IResourcesToProduceSettings resourcesToProduceSettings;
     [ComponentInject(Required.OPTIONAL)] private HandleProduceResourceOrderBehaviour produceOrderBehaviour;
 
     private bool ShowProdPerCycleInput() =>
-        produceResourceMiningBehaviour != null ||
-        produceResourceOverTimeBehaviour != null ||
-        produceResourceManualBehaviour != null;
+        buildingCategory == BuildingCategory.Mine ||
+        buildingCategory == BuildingCategory.OneProductOverTime ||
+        buildingCategory == BuildingCategory.Manual;
 
     private bool ShowInput() =>
-        produceResourceMiningBehaviour != null ||
-        produceResourceOverTimeBehaviour != null ||
-        produceResourceManualBehaviour != null ||
-        cardItemsProduceBehaviour != null;
+        buildingCategory == BuildingCategory.Mine ||
+        buildingCategory == BuildingCategory.OneProductOverTime ||
+        buildingCategory == BuildingCategory.Manual ||
+        buildingCategory == BuildingCategory.SelectProductsOverTime;
 
     private bool ShowOutput() =>
         produceOrderBehaviour != null && resourcesToProduceSettings != null &&(
-            produceResourceMiningBehaviour != null ||
-            produceResourceOverTimeBehaviour != null ||
-            produceResourceManualBehaviour != null
+            buildingCategory == BuildingCategory.Mine ||
+            buildingCategory == BuildingCategory.OneProductOverTime ||
+            buildingCategory == BuildingCategory.Manual
         );
 
     private bool ShowGears() =>
         produceOrderBehaviour != null && resourcesToProduceSettings != null && (
-            produceResourceMiningBehaviour != null ||
-            produceResourceOverTimeBehaviour != null
+            buildingCategory == BuildingCategory.Mine ||
+            buildingCategory == BuildingCategory.OneProductOverTime
         );
 
-
-    [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     public Vector3 GoSpawnOffset = new Vector3(0, 0, 0);
     public Vector3 GoSpawnScaleOffset = new Vector3(1, 1, 1);

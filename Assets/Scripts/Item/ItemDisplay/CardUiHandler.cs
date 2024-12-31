@@ -34,7 +34,7 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneIte
 
             uiCardGo.Type = enumType;
             uiCardGo.CardUiHandler = this;
-        }
+        }        
 
         CardsAreLoaded = true;
 

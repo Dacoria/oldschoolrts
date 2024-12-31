@@ -1,11 +1,11 @@
 ﻿public class BuildingInOutSetup
 {
     public BuildingInOutSetup(
-        ItemType @in = ItemType.NONE, int inAmount = 1, int inMaxBuffer = 5, 
-        ItemType @out = ItemType.NONE, int outAmount = 1, int outMaxBuffer = 5, 
-        ItemType in2 = ItemType.NONE, int inAmount2 = 1, int inMaxBuffer2 = 5, 
+        ItemType @in =  ItemType.NONE, int inAmount =   1, int inMaxBuffer =   5, 
+        ItemType @out = ItemType.NONE, int outAmount =  1, int outMaxBuffer =  5, 
+        ItemType in2 =  ItemType.NONE, int inAmount2 =  1, int inMaxBuffer2 =  5, 
         ItemType out2 = ItemType.NONE, int outAmount2 = 1, int outMaxBuffer2 = 5,
-        ItemType in3 = ItemType.NONE, int inAmount3 = 1, int inMaxBuffer3 = 5
+        ItemType in3 =  ItemType.NONE, int inAmount3 =  1, int inMaxBuffer3 =  5
     )
     {
         In = @in;            

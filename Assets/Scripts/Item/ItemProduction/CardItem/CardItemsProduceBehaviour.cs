@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResourcesToProduceSettings, IRefillItems, IProduceResourceOverTimeDurations
+public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResourcesToProduceSettings, IRefillItems
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     private RefillBehaviour refillBehaviour;
@@ -25,15 +25,11 @@ public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResour
         handleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
 
         handleProduceResourceOrderOverTimeBehaviour.StartedProducingAction += OnStartedProducingAction;
-        handleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction += OnFinishedProducingAction;
-        handleProduceResourceOrderOverTimeBehaviour.FinishedWaitingAfterProducingAction += OnFinishedWaitingAfterProducingAction;
     }
 
     private void OnDestroy()
     {
         handleProduceResourceOrderOverTimeBehaviour.StartedProducingAction -= OnStartedProducingAction;
-        handleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction -= OnFinishedProducingAction;
-        handleProduceResourceOrderOverTimeBehaviour.FinishedWaitingAfterProducingAction -= OnFinishedWaitingAfterProducingAction;
     }
 
     private void OnStartedProducingAction(List<ItemOutput> itemsProducing) 
@@ -42,9 +38,6 @@ public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResour
         itemProcessed.ItemsToProduce--;
     }
 
-    private void OnFinishedProducingAction(List<ItemOutput> itemsProducing) { }
-    private void OnFinishedWaitingAfterProducingAction() { }
-    
     public List<ItemProduceSetting> GetItemProduceSettings() =>
         ItemProductionSettings.ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
 
@@ -127,15 +120,12 @@ public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResour
         return consumeRefillItems.CanConsumeRefillItems(itemsToConsume);
     }
 
-    public float ProduceTimeInSeconds = 5;
-    public float WaitTimeAfterProducingInSeconds = 1.5f;
-    public float TimeToProduceResourceInSeconds => ProduceTimeInSeconds;
-    public float TimeToWaitAfterProducingInSeconds => WaitTimeAfterProducingInSeconds;
-
     public GameObject GetGameObject() => gameObject;
-    public float GetProductionTime(Enum type) => TimeToProduceResourceInSeconds;
+    public float GetProductionTime(Enum type)
+    {        
+        return buildingBehaviour.BuildingType.GetProductionDurationSettings().TimeToProduceResourceInSeconds; // momenteel geen verschil per type
+    }
 
-    public QueueForBuildingBehaviour GetQueueForBuildingBehaviour() => null;
     public List<ItemProduceSetting> GetResourcesToProduceSettings() => new List<ItemProduceSetting>(); // alleen voor display buiten kaarten
 
     public UIItemProcessing GetCurrentItemProcessed()

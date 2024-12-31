@@ -28,7 +28,6 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
     protected override int FramesTillSlowUpdate => 20;
     protected override void SlowUpdate()
     {
-        UpdateBuildingSelected();
         UpdateQueue();
     }
 
@@ -37,23 +36,9 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
     public void OnCancelQueueItemClick(UiQueueCardBehaviour uiQueueCardBehaviour)
     {
         var item = PlacedDisplayItemsOnQueue.Single(x => x.UiQueueCardBehaviour == uiQueueCardBehaviour);
-
         CallingQueueForBuildingBehaviour.RemoveItemFromQueue(item.QueueItem);
 
         // TODO Items/resources teruggeven? (nog eerst regelen dat resources worden gebruikt.... )
-    }      
-
-    private void UpdateBuildingSelected()
-    {
-        var cardUiHandler = transform.parent.parent.GetComponentInChildren<CardUiHandler>();
-        if(cardUiHandler?.CallingBuilding != null)
-        {
-            var queueBehaviour = cardUiHandler?.CallingBuilding.GetQueueForBuildingBehaviour();
-            if(queueBehaviour != null && queueBehaviour != CallingQueueForBuildingBehaviour)
-            {
-                CallingQueueForBuildingBehaviour = queueBehaviour;
-            }
-        }
     }
 
     private QueueForBuildingBehaviour LastKnownQueue;    

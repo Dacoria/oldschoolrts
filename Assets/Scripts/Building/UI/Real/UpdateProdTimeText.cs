@@ -20,7 +20,7 @@ public class UpdateProdTimeText : MonoBehaviourCI
     {        
         if (ProduceResourceBehaviour != null && ProduceResourceBehaviour.IsProducingResourcesRightNow)
         {
-            var producingTimeInSeconds = ProduceResourceBehaviour.Durations.TimeToProduceResourceInSeconds;
+            var producingTimeInSeconds = ProduceResourceBehaviour.ProductionTimeItemBeingProduced;
             var timeProducingInMs = producingTimeInSeconds - (DateTime.Now - ProduceResourceBehaviour.StartTimeProducing).TotalMilliseconds / 1000f;
             if (timeProducingInMs >= 0)
             {

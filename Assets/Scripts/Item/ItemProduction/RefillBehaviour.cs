@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class RefillBehaviour : BaseAEMonoCI
 {
@@ -90,6 +91,8 @@ public class RefillBehaviour : BaseAEMonoCI
 
         return maxBufferPerItemtype;
     }
+
+    public List<ItemProduceSetting> GetItemProduceSettings() => RefillItems.GetItemProduceSettings();
 
     public int GetItemCountToRefill(ItemType itemType, int countIncoming, int countStocked)
     {

@@ -1,14 +1,8 @@
 using System.Collections.Generic;
 
-public class ProduceResourceOverTimeBehaviour : ProduceResourceAbstract, IProduceResourceOverTimeDurations
+public class ProduceResourceOverTimeBehaviour : ProduceResourceAbstract
 {
     private HandleProduceResourceOrderOverTimeBehaviour handleProduceResourceOrderOverTimeBehaviour;
-
-    public float ProduceTimeInSeconds;
-    public float WaitAfterProduceTimeInSeconds;
-
-    public float TimeToProduceResourceInSeconds => ProduceTimeInSeconds;
-    public float TimeToWaitAfterProducingInSeconds => WaitAfterProduceTimeInSeconds;
 
     private new void Awake()
     {

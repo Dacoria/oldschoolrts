@@ -12,14 +12,19 @@ public class QueueForBuildingBehaviour : MonoBehaviourCI
 
     public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
 
-    public void AddItemOnQueue(Enum type)
+    public void AddItemsOnQueue(Enum type, int amount)
     {
-        var itemToPutOnQueue = new UIItemProcessing
-        {
-            Type = type,
-        };
+        var queuelimit = 14;
+        var amountToAdd = Math.Min(queuelimit - QueueItems.Count, amount);
 
-        QueueItems.Add(itemToPutOnQueue);
+        for (int i = 0; i < amountToAdd; i++)
+        {
+            var itemToPutOnQueue = new UIItemProcessing
+            {
+                Type = type,
+            };
+            QueueItems.Add(itemToPutOnQueue);
+        }
     }
 
     public void RemoveItemFromQueue(UIItemProcessing queueItem)

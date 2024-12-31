@@ -54,35 +54,22 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneIte
 
     public void AddAmount(Enum type, int amount)
     {
-        var queueBehaviour = CallingBuilding.GetQueueForBuildingBehaviour();
-
-        var queuelimit = 14; // TODO: Nette plek???? lijkt niet hier
-        var amountToAdd = queueBehaviour == null ? amount : Math.Min(queuelimit - queueBehaviour.QueueItems.Count, amount);
-
-        for (int i = 0; i < amountToAdd; i++)
-        {            
-            if (queueBehaviour != null)
-            {
-                queueBehaviour.AddItemOnQueue(type);
-            }
-            else
-            {
-                CallingBuilding.AddItem(type);
-            }                                  
+        var queueBehaviour = CallingBuilding.GetGameObject().GetComponent<QueueForBuildingBehaviour>();
+        if (queueBehaviour != null)
+        {
+            queueBehaviour.AddItemsOnQueue(type, amount);
+        }
+        else
+        {
+            CallingBuilding.AddItems(type, amount);            
         }
     }
 
     public void DecreaseAmount(Enum type, int amount)
     {
-        for (int i = 0;i < amount;i++)
-        {
-            CallingBuilding.DecreaseItem(type);
-        }        
+        CallingBuilding.DecreaseItems(type, amount);
     }
-    public int GetCount(Enum type)
-    {
-        return CallingBuilding != null ? CallingBuilding.GetCount(type) : 0;
-    }
+    public int GetCount(Enum type) => CallingBuilding != null ? CallingBuilding.GetCount(type) : 0;
 
     public void ClickOnCardLeftClick(UiCardBehaviour displayUiCardBehaviour)
     {

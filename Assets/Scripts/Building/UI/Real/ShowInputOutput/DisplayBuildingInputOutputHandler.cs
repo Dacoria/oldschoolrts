@@ -3,18 +3,50 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
-{    
+{
     public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
 
-    private GameObject ProcessingDisplayGo;
+    private GameObject processingDisplayGo;
 
-    [ComponentInject(Required.OPTIONAL)] private RefillBehaviour RefillBehaviour;
-    [ComponentInject(Required.OPTIONAL)] private ProduceResourceAbstract ProduceResourceBehaviourScript;
+    [ComponentInject(Required.OPTIONAL)] private RefillBehaviour refillBehaviour;
 
-    private QueueForBuildingBehaviour QueueForBuildingBehaviour;
+    [ComponentInject(Required.OPTIONAL)] private ProduceResourceMiningBehaviour produceResourceMiningBehaviour;
+    [ComponentInject(Required.OPTIONAL)] private ProduceResourceOverTimeBehaviour produceResourceOverTimeBehaviour;
+    [ComponentInject(Required.OPTIONAL)] private ProduceResourceManualBehaviour produceResourceManualBehaviour;
+    [ComponentInject(Required.OPTIONAL)] private CardItemsProduceBehaviour cardItemsProduceBehaviour;
 
+    [ComponentInject(Required.OPTIONAL)] private IResourcesToProduceSettings resourcesToProduceSettings;
+    [ComponentInject(Required.OPTIONAL)] private HandleProduceResourceOrderBehaviour produceOrderBehaviour;
+
+    private bool ShowProdPerCycleInput() =>
+        produceResourceMiningBehaviour != null ||
+        produceResourceOverTimeBehaviour != null ||
+        produceResourceManualBehaviour != null;
+
+    private bool ShowInput() =>
+        produceResourceMiningBehaviour != null ||
+        produceResourceOverTimeBehaviour != null ||
+        produceResourceManualBehaviour != null ||
+        cardItemsProduceBehaviour != null;
+
+    private bool ShowOutput() =>
+        produceOrderBehaviour != null && resourcesToProduceSettings != null &&(
+            produceResourceMiningBehaviour != null ||
+            produceResourceOverTimeBehaviour != null ||
+            produceResourceManualBehaviour != null
+        );
+
+    private bool ShowGears() =>
+        produceOrderBehaviour != null && resourcesToProduceSettings != null && (
+            produceResourceMiningBehaviour != null ||
+            produceResourceOverTimeBehaviour != null
+        );
+
+
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     public Vector3 GoSpawnOffset = new Vector3(0, 0, 0);
     public Vector3 GoSpawnScaleOffset = new Vector3(1, 1, 1);
@@ -23,31 +55,38 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     private GameObject OutputDisplayPrefabGo;
 
     private bool scriptIsLoaded;
-    
+
+    protected override void Awake()
+    {
+        // SKIP CI -> doe later
+    }
+
     IEnumerator Start()
     {
+        this.ComponentInject();
+
         // altijd wachten tot alles klaar is
         yield return Wait4Seconds.Get(1);
 
         this.ComponentInject(); // later om zeker te zijn dat de component er zijn (soms gegenereert uit ander script)
 
-        ProcessingDisplayGo = Instantiate(DisplayProcessingInputOutputPrefab.gameObject, transform);
-        ProcessingDisplayGo.transform.position = transform.position + GoSpawnOffset;
-        ProcessingDisplayGo.transform.localScale = ProcessingDisplayGo.transform.localScale.MultiplyVector(GoSpawnScaleOffset);
+        processingDisplayGo = Instantiate(DisplayProcessingInputOutputPrefab.gameObject, transform);
+        processingDisplayGo.transform.position = transform.position + GoSpawnOffset;
+        processingDisplayGo.transform.localScale = processingDisplayGo.transform.localScale.MultiplyVector(GoSpawnScaleOffset);
 
-        InputDisplayPrefabGo = ProcessingDisplayGo.transform.Find("InputPrefab").gameObject;
-        OutputDisplayPrefabGo = ProcessingDisplayGo.transform.Find("OutputPrefab").gameObject;
+        InputDisplayPrefabGo = processingDisplayGo.transform.Find("InputPrefab").gameObject;
+        OutputDisplayPrefabGo = processingDisplayGo.transform.Find("OutputPrefab").gameObject;
 
-        var gearsDisplayGo = ProcessingDisplayGo.transform.Find("GearPrefab").gameObject;
+        var gearsDisplayGo = processingDisplayGo.transform.Find("GearPrefab").gameObject;
 
-        if (RefillBehaviour != null)
+        if (ShowInput())
         {
             InitiateInputDisplayReqScript();
         }
-        if (ProduceResourceBehaviourScript != null)
+        if (ShowOutput())
         {
             InitiateOutputDisplayProdScript();
-            if(ProduceResourceBehaviourScript is ProduceResourceOverTimeBehaviour)
+            if(ShowGears())
             {
                 gearsDisplayGo.SetActive(true); // gears draaien als het prod script produceert
             }
@@ -75,24 +114,24 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     private void InitiateInputDisplayReqScript()
     {
         InputTextMeshItems = new List<TextMeshItem>();
-        for (int i = 0;i < RefillBehaviour.GetItemsToRefill().Count; i ++)
+        for (int i = 0;i < refillBehaviour.GetItemsToRefill().Count; i ++)
         {
-            var inputDisplayGo = Instantiate(InputDisplayPrefabGo, ProcessingDisplayGo.transform);
-            var extraYDistance = ((RefillBehaviour.GetItemsToRefill().Count - 1) * 0.6f) - (i * 0.6f);
+            var inputDisplayGo = Instantiate(InputDisplayPrefabGo, processingDisplayGo.transform);
+            var extraYDistance = ((refillBehaviour.GetItemsToRefill().Count - 1) * 0.6f) - (i * 0.6f);
             inputDisplayGo.transform.position = new Vector3(inputDisplayGo.transform.position.x, inputDisplayGo.transform.position.y + extraYDistance, inputDisplayGo.transform.position.z);
-            FixInputOutputDisplayForItemtype(InputTextMeshItems, RefillBehaviour.GetItemsToRefill()[i].ItemType, inputDisplayGo);
+            FixInputOutputDisplayForItemtype(InputTextMeshItems, refillBehaviour.GetItemsToRefill()[i].ItemType, inputDisplayGo);
         }        
     }  
 
     private void InitiateOutputDisplayProdScript()
     {
         OutputTextMeshItems = new List<TextMeshItem>();
-        for (int i = 0; i < ProduceResourceBehaviourScript.GetAvailableItemsToProduce().Count(); i++)
+        for (int i = 0; i < resourcesToProduceSettings.GetAvailableItemsToProduce().Count(); i++)
         {
-            var outputDisplayGo = Instantiate(OutputDisplayPrefabGo, ProcessingDisplayGo.transform);
-            var extraYDistance = ((ProduceResourceBehaviourScript.GetAvailableItemsToProduce().Count() - 1) * 0.6f) - (i * 0.6f);
+            var outputDisplayGo = Instantiate(OutputDisplayPrefabGo, processingDisplayGo.transform);
+            var extraYDistance = ((resourcesToProduceSettings.GetAvailableItemsToProduce().Count() - 1) * 0.6f) - (i * 0.6f);
             outputDisplayGo.transform.position = new Vector3(outputDisplayGo.transform.position.x, outputDisplayGo.transform.position.y + extraYDistance, outputDisplayGo.transform.position.z);
-            FixInputOutputDisplayForItemtype(OutputTextMeshItems, ProduceResourceBehaviourScript.GetAvailableItemsToProduce()[i].ItemType, outputDisplayGo);
+            FixInputOutputDisplayForItemtype(OutputTextMeshItems, resourcesToProduceSettings.GetAvailableItemsToProduce()[i].ItemType, outputDisplayGo);
         }               
     }
 
@@ -126,7 +165,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
     private void SlowUpdate()
     {
-        if (scriptIsLoaded)
+        if (scriptIsLoaded && processingDisplayGo.transform.childCount > 0 && processingDisplayGo.transform.GetChild(0).gameObject.activeSelf)
         {
             UpdateInputText();
             UpdateOutputText();
@@ -143,11 +182,11 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
     public void UpdateEnabledStatusOfDisplayObjects(bool isActive)
     {
-        if (ProcessingDisplayGo?.transform?.childCount != null)
+        if (processingDisplayGo?.transform?.childCount != null)
         {
-            for (var i = 0; i < ProcessingDisplayGo.transform.childCount; i++)
+            for (var i = 0; i < processingDisplayGo.transform.childCount; i++)
             {
-                var child = ProcessingDisplayGo.transform.GetChild(i);
+                var child = processingDisplayGo.transform.GetChild(i);
                 child.gameObject.SetActive(isActive);
             }
         }
@@ -155,39 +194,40 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
     private void UpdateOutputText()
     {
-        if (ProduceResourceBehaviourScript != null)
+        if (ShowOutput())
         {
-            var outputOrders = ProduceResourceBehaviourScript.ProduceResourceOrder.OutputOrders;
-            foreach (var itemToProduce in ProduceResourceBehaviourScript.GetAvailableItemsToProduce())
+            foreach (var itemToProduce in resourcesToProduceSettings.GetAvailableItemsToProduce())
             {
                 var textMesh = OutputTextMeshItems.Single(x => x.ItemType == itemToProduce.ItemType).TextMesh;
-
-                textMesh.text = outputOrders.Count(x => x.ItemType == itemToProduce.ItemType) + 
-                    "/" + 
-                    itemToProduce.MaxBuffer + 
-                    " (" + itemToProduce.ProducedPerProdCycle + "x)";
+                var orderCount = produceOrderBehaviour.OutputOrders.Count(x => x.ItemType == itemToProduce.ItemType);
+                textMesh.text = $"{orderCount}/{itemToProduce.MaxBuffer} ({itemToProduce.ProducedPerProdCycle}x)";
             }
         }        
     }
 
     private void UpdateInputText()
     {
-        if (RefillBehaviour != null)
+        if (refillBehaviour != null)
         {
-            foreach (var itemConsumed in RefillBehaviour.GetItemsToRefill())
+            foreach (var itemConsumed in refillBehaviour.GetItemsToRefill())
             {
                 var textMesh = InputTextMeshItems.Single(x => x.ItemType == itemConsumed.ItemType).TextMesh;
-                var itemInStockpile = RefillBehaviour.StockpileOfItemsRequired.Single(x => x.ItemType == itemConsumed.ItemType);
-                var maxBuffer = RefillBehaviour.GetItemCountToRefill(itemConsumed.ItemType, 0, 0);
+                var itemInStockpile = refillBehaviour.StockpileOfItemsRequired.Single(x => x.ItemType == itemConsumed.ItemType);
+                var maxBuffer = refillBehaviour.GetItemCountToRefill(itemConsumed.ItemType, 0, 0);
                 var hasMaxBuffer = true;
 
                 textMesh.text = itemInStockpile.Amount.ToString();
-                if(hasMaxBuffer)
-                    textMesh.text += 
-                    "/" +
-                    maxBuffer +
-                    " (" + itemConsumed.Amount + "x)";
-            }
+                if (hasMaxBuffer)
+                {
+                    textMesh.text += $"/{maxBuffer}";
+                    if (ShowProdPerCycleInput())
+                    {
+                        // alleen dit showen bij de '1 ding produceren per keer' gebouwen (dus niet barracks, wel waterwel etc)
+                        var consumeItemsFirstProduction = refillBehaviour.GetItemProduceSettings().First().ItemsConsumedToProduce; 
+                        textMesh.text += $" ({consumeItemsFirstProduction.First(x => x.ItemType == itemConsumed.ItemType).Amount}x)";
+                    }
+                }
+            }                   
         }   
     }
 

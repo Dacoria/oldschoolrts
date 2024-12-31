@@ -1,13 +1,11 @@
 using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
 {
-    [ComponentInject] public IProduceResourceOverTimeDurations Durations;
     [ComponentInject] private IResourcesToProduceSettings resourcesToProduceSettings;
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     public HandleProduceResourceOrderBehaviour ProduceResourceOrderBehaviour;
     public Action<List<ItemOutput>> StartedProducingAction; // evt aanhaken op deze events
@@ -17,6 +15,7 @@ public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
     public List<ItemOutput> ItemsBeingProduced;
     public bool IsProducingResourcesRightNow => ItemsBeingProduced != null;
     public DateTime StartTimeProducing;
+    public float ProductionTimeItemBeingProduced;
 
     private new void Awake()
     {
@@ -43,7 +42,8 @@ public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
         else
         {
             resourcesToProduceSettings.ConsumeRequiredResources(itemToProduceSettings);
-            StartCoroutine(ProduceResourceOverTime(itemToProduceSettings.ItemsToProduce, Durations.TimeToProduceResourceInSeconds, Durations.TimeToWaitAfterProducingInSeconds));
+            var buildTimes = buildingBehaviour.BuildingType.GetProductionDurationSettings(); // verschilt momenteel niet per item
+            StartCoroutine(ProduceResourceOverTime(itemToProduceSettings.ItemsToProduce, buildTimes.TimeToProduceResourceInSeconds, buildTimes.TimeToWaitAfterProducingInSeconds));
         }
     }
 
@@ -51,11 +51,13 @@ public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
     {
         StartTimeProducing = DateTime.Now;
         ItemsBeingProduced = itemsToProduce;
+        ProductionTimeItemBeingProduced = produceTimeInSec;
         StartedProducingAction?.Invoke(itemsToProduce);
         yield return Wait4Seconds.Get(produceTimeInSec);
                 
         ProduceResourceOrderBehaviour.ProduceItemsNoConsumption(itemsToProduce);
         ItemsBeingProduced = null;
+        ProductionTimeItemBeingProduced = 0f;
         FinishedProducingAction?.Invoke(itemsToProduce);
 
         yield return Wait4Seconds.Get(waitTimeInSec);

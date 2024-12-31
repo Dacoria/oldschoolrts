@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocationOfResource, IProduceResourceOverTimeDurations
-{
-    public float TimeToProduceResourceInSeconds => 10;
-    public float TimeToWaitAfterProducingInSeconds => 2;
+public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocationOfResource
+{ 
     public RangeType GetRangeTypeToFindResource() => RangeType.BoxColliderExpand;
     public int GetMaxRangeForResource() => 2;
 

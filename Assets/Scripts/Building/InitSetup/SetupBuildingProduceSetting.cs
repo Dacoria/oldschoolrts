@@ -91,11 +91,11 @@ public static class SetupBuildingProduceSetting
     private class BuildingInOutSetup
     {
         public BuildingInOutSetup(
-            ItemType @in = ItemType.NONE, int inAmount = 1, int inMaxBuffer = 5, 
-            ItemType @out = ItemType.NONE, int outAmount = 1, int outMaxBuffer = 5, 
-            ItemType in2 = ItemType.NONE, int inAmount2 = 1, int inMaxBuffer2 = 5, 
+            ItemType @in =  ItemType.NONE, int inAmount =   1, int inMaxBuffer =   5, 
+            ItemType @out = ItemType.NONE, int outAmount =  1, int outMaxBuffer =  5, 
+            ItemType in2 =  ItemType.NONE, int inAmount2 =  1, int inMaxBuffer2 =  5, 
             ItemType out2 = ItemType.NONE, int outAmount2 = 1, int outMaxBuffer2 = 5,
-            ItemType in3 = ItemType.NONE, int inAmount3 = 1, int inMaxBuffer3 = 5
+            ItemType in3 =  ItemType.NONE, int inAmount3 =  1, int inMaxBuffer3 =  5
         )
         {
             In = @in;            
@@ -182,18 +182,18 @@ public static class SetupBuildingProduceSetting
 
     private static Dictionary<BuildingType, BuildingInOutSetup> ProdOverTimeItemSettings = new Dictionary<BuildingType, BuildingInOutSetup>
     {
-        { BuildingType.BAKERY, new BuildingInOutSetup(@in: ItemType.FLOUR, @out: ItemType.BREAD) },
-        { BuildingType.BUTCHER, new BuildingInOutSetup(@in:ItemType.PIGMEAT, @out: ItemType.SAUSAGE) },
-        { BuildingType.CLOTHMAKER, new BuildingInOutSetup(@in:ItemType.THREAD, @out: ItemType.CLOTH) },
-        { BuildingType.GOLDSMELTER, new BuildingInOutSetup(@in:ItemType.GOLDORE, @out: ItemType.GOLDBAR) },
-        { BuildingType.IRONSMELTER, new BuildingInOutSetup(@in:ItemType.IRONORE, @out: ItemType.IRONBAR) },
-        { BuildingType.LEATHERMAKER, new BuildingInOutSetup(@in:ItemType.PIGHIDE, @out: ItemType.LEATHER) },
-        { BuildingType.MILL, new BuildingInOutSetup(@in:ItemType.WHEAT, @out: ItemType.FLOUR) },
-        { BuildingType.PIGFARM, new BuildingInOutSetup(@in:ItemType.WHEAT, @out: ItemType.PIGHIDE, out2: ItemType.PIGMEAT) },
-        { BuildingType.SAWMILL, new BuildingInOutSetup(@in:ItemType.LUMBER, @out: ItemType.LUMBER) },
-        { BuildingType.SHEEPFARM, new BuildingInOutSetup(@in:ItemType.WHEAT, in2: ItemType.WATER, @out: ItemType.WOOL) },
-        { BuildingType.THREADMAKER, new BuildingInOutSetup(@in:ItemType.WOOL, @out: ItemType.THREAD) },
-        { BuildingType.WATERWELL, new BuildingInOutSetup(@in:ItemType.NONE, @out: ItemType.WATER) },
+        { BuildingType.BAKERY, new BuildingInOutSetup(      @in: ItemType.FLOUR,                        @out: ItemType.BREAD,      outAmount: 2) },
+        { BuildingType.BUTCHER, new BuildingInOutSetup(     @in:ItemType.PIGMEAT,                       @out: ItemType.SAUSAGE,    outAmount: 3) },
+        { BuildingType.CLOTHMAKER, new BuildingInOutSetup(  @in:ItemType.THREAD,                        @out: ItemType.CLOTH) },
+        { BuildingType.GOLDSMELTER, new BuildingInOutSetup( @in:ItemType.GOLDORE,                       @out: ItemType.GOLDBAR,    outAmount: 2) },
+        { BuildingType.IRONSMELTER, new BuildingInOutSetup( @in:ItemType.IRONORE,                       @out: ItemType.IRONBAR) },
+        { BuildingType.LEATHERMAKER, new BuildingInOutSetup(@in:ItemType.PIGHIDE,                       @out: ItemType.LEATHER,    outAmount: 2) },
+        { BuildingType.MILL, new BuildingInOutSetup(        @in:ItemType.WHEAT,                         @out: ItemType.FLOUR) },
+        { BuildingType.PIGFARM, new BuildingInOutSetup(     @in:ItemType.WHEAT,   inAmount: 4,          @out: ItemType.PIGHIDE,    out2: ItemType.PIGMEAT) },
+        { BuildingType.SAWMILL, new BuildingInOutSetup(     @in:ItemType.LUMBER,                        @out: ItemType.PLANKS,     outAmount: 2) },
+        { BuildingType.SHEEPFARM, new BuildingInOutSetup(   @in:ItemType.WHEAT, inAmount: 2, in2: ItemType.WATER, inAmount2: 2,  @out: ItemType.WOOL) },
+        { BuildingType.THREADMAKER, new BuildingInOutSetup( @in:ItemType.WOOL,                          @out: ItemType.THREAD,     outAmount : 2) },
+        { BuildingType.WATERWELL, new BuildingInOutSetup(                                               @out: ItemType.WATER) },
     };
 
     private static Dictionary<BuildingType, List<BuildingInOutSetup>> ProdCardItemSettings = new Dictionary<BuildingType, List<BuildingInOutSetup>>
@@ -208,25 +208,25 @@ public static class SetupBuildingProduceSetting
         }},
         { BuildingType.CLOTHARMORMAKER, new List<BuildingInOutSetup>
         {
-            new BuildingInOutSetup(@in:ItemType.CLOTH,                                         @out: ItemType.CLOTHARMOR),
-            new BuildingInOutSetup(@in:ItemType.CLOTH,                                         @out: ItemType.CLOTHPANTS),
-            new BuildingInOutSetup(@in:ItemType.CLOTH,                                         @out: ItemType.CLOTHBOOTS),
-            new BuildingInOutSetup(@in:ItemType.CLOTH,                                         @out: ItemType.CLOTHHELMET),
+            new BuildingInOutSetup(@in:ItemType.CLOTH,   inAmount: 2,   in2: ItemType.THREAD,  @out: ItemType.CLOTHARMOR),
+            new BuildingInOutSetup(@in:ItemType.CLOTH,                  in2: ItemType.THREAD,  @out: ItemType.CLOTHPANTS),
+            new BuildingInOutSetup(@in:ItemType.CLOTH,                  in2: ItemType.THREAD,  @out: ItemType.CLOTHBOOTS),
+            new BuildingInOutSetup(@in:ItemType.CLOTH,                  in2: ItemType.THREAD,  @out: ItemType.CLOTHHELMET),
         }},
         { BuildingType.LEATHERARMORY, new List<BuildingInOutSetup>
         {
-            new BuildingInOutSetup(@in:ItemType.LEATHER,                                       @out: ItemType.LEATHERARMOR),
-            new BuildingInOutSetup(@in:ItemType.LEATHER,                                       @out: ItemType.LEATHERHELMET),
-            new BuildingInOutSetup(@in:ItemType.LEATHER,                                       @out: ItemType.LEATHERPANTS),
-            new BuildingInOutSetup(@in:ItemType.LEATHER,                                       @out: ItemType.LEATHERBOOTS),
+            new BuildingInOutSetup(@in:ItemType.LEATHER, inAmount: 2,   in2: ItemType.THREAD,  @out: ItemType.LEATHERARMOR),
+            new BuildingInOutSetup(@in:ItemType.LEATHER,                in2: ItemType.THREAD,  @out: ItemType.LEATHERHELMET),
+            new BuildingInOutSetup(@in:ItemType.LEATHER,                in2: ItemType.THREAD,  @out: ItemType.LEATHERPANTS),
+            new BuildingInOutSetup(@in:ItemType.LEATHER,                in2: ItemType.THREAD,  @out: ItemType.LEATHERBOOTS),
         }},
         { BuildingType.WEAPONMAKER, new List<BuildingInOutSetup>
         {
-            new BuildingInOutSetup(@in:ItemType.PLANKS,                                        @out: ItemType.WOODENBOW),
-            new BuildingInOutSetup(@in:ItemType.PLANKS,                                        @out: ItemType.WOODENAXE),
-            new BuildingInOutSetup(@in:ItemType.PLANKS,                                        @out: ItemType.WOODENLANCE),
-            new BuildingInOutSetup(@in:ItemType.PLANKS,                                        @out: ItemType.WOODENMAGESTAFF),
-            new BuildingInOutSetup(@in:ItemType.PLANKS,                                        @out: ItemType.WOODENSHIELD),
+            new BuildingInOutSetup(@in:ItemType.PLANKS, inAmount: 2,                           @out: ItemType.WOODENBOW),
+            new BuildingInOutSetup(@in:ItemType.PLANKS, inAmount: 2,                           @out: ItemType.WOODENAXE),
+            new BuildingInOutSetup(@in:ItemType.PLANKS, inAmount: 2,                           @out: ItemType.WOODENLANCE),
+            new BuildingInOutSetup(@in:ItemType.PLANKS, inAmount: 2,                           @out: ItemType.WOODENMAGESTAFF),
+            new BuildingInOutSetup(@in:ItemType.PLANKS, inAmount: 1,                           @out: ItemType.WOODENSHIELD),
         }},
     };
 }

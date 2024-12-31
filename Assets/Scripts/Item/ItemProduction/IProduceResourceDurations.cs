@@ -1,5 +1,4 @@
-﻿using Assets.CrossCutting;
-public interface IProduceResourceOverTimeDurations
+﻿public interface IProduceResourceDurations
 {
     public float TimeToProduceResourceInSeconds { get; }
     public float TimeToWaitAfterProducingInSeconds { get; }

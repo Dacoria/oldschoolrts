@@ -45,6 +45,11 @@ public abstract class ProduceResourceAbstract : MonoBehaviourCI, IResourcesToPro
 
     private bool HasReachedProductionBuffer(ItemProduceSetting itemProduceSetting)
     {     
+        if (ProduceResourceOrder == null)
+        {
+            return false;
+        }
+
         foreach (var itemToProduce in itemProduceSetting.ItemsToProduce)
         {            
             if (ProduceResourceOrder.OutputOrders.Count(x => x.ItemType == itemToProduce.ItemType) + itemToProduce.ProducedPerProdCycle > itemToProduce.MaxBuffer)

@@ -25,7 +25,7 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
         {
             ImagesRequiredItems = GetComponentsInChildren<ImageTextBehaviour>(true).ToList();
             var buildingType = selectedDisplayUiCard.CardUiHandler.BuildingType;
-            var produceSetting = MyExtensions.GetProductionSetting(buildingType, selectedDisplayUiCard.Type);
+            var produceSetting = buildingType.GetProductionSettings().First(x => x.GetType().ToString() == selectedDisplayUiCard.Type.ToString());
             UpdateImages(produceSetting);
         }
         else

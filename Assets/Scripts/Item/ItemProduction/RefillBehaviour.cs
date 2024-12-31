@@ -98,7 +98,7 @@ public class RefillBehaviour : BaseAEMonoCI
 
         if(alwaysRefillItems)
         {
-            return 5 - countIncoming + countStocked; // altijd 5 orders om items te brengen 
+            return 5 - countIncoming + countStocked; // altijd 5 orders om items te brengen -> STOCKPILE
         }
         
         return settings

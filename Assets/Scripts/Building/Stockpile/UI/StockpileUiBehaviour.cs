@@ -18,8 +18,7 @@ public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarous
         foreach (var item in ResourcePrefabs.Get().Where(x => x.ItemType != ItemType.NONE).OrderBy(x => x.ItemType))
         {
             var stockpileResourceWrapper = Instantiate(StockpileResourceWrapperPrefab, transform);
-            stockpileResourceWrapper.Image.sprite = item.Icon;          
-
+            stockpileResourceWrapper.Image.sprite = item.Icon;
             stockpileResourceWrapper.ItemType = item.ItemType;
             stockpileResourceWrapper.StockpileUiBehaviour = this;
             StockpileResourceWrappers.Add(stockpileResourceWrapper);
@@ -66,19 +65,5 @@ public class StockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarous
     public void SetActiveStatusCardGo(int indexOfCard, bool activeYN)
     {
         StockpileResourceWrappers[indexOfCard].gameObject.SetActive(activeYN);
-    }
-
-    public int GetIndexFirstEnabledCard()
-    {
-        for (int i = 0; i < StockpileResourceWrappers.Count; i++)
-        {
-            var card = StockpileResourceWrappers[i];
-            if (card.gameObject.activeSelf)
-            {
-                return i;
-            }
-        }
-
-        return -1;
     }
 }

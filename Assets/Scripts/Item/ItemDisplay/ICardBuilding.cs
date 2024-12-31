@@ -11,4 +11,5 @@ public interface ICardBuilding
     bool CanProces(Enum type);
     QueueForBuildingBehaviour GetQueueForBuildingBehaviour();
     GameObject GetGameObject();
+    UIItemProcessing GetCurrentItemProcessed();
 }

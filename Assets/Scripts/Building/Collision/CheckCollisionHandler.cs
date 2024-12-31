@@ -46,7 +46,7 @@ public class CheckCollisionHandler : BaseAEMonoCI
         if (miningResourceBehaviour != null)
         {
             var checkResourceCollisionForBuilding = gameObject.AddComponent<CheckResourceCollisionForBuilding>();
-            checkResourceCollisionForBuilding.MaterialResourceTypeToCheck = miningResourceBehaviour.MaterialResourceType;
+            checkResourceCollisionForBuilding.MaterialResourceTypeToCheck = buildingBehaviour.BuildingType.GetMaterialResourceType();
         }
     }
 

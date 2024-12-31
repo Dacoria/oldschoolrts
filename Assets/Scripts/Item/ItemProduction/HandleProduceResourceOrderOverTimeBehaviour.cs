@@ -1,7 +1,8 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Unity.VisualScripting;
 
 public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
 {
@@ -9,10 +10,12 @@ public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
     [ComponentInject] private IResourcesToProduceSettings resourcesToProduceSettings;
 
     public HandleProduceResourceOrderBehaviour ProduceResourceOrderBehaviour;
-    public Action FinishedProducingAction; // evt aanhaken op deze events
+    public Action<List<ItemOutput>> StartedProducingAction; // evt aanhaken op deze events
+    public Action<List<ItemOutput>> FinishedProducingAction; // evt aanhaken op deze events
     public Action FinishedWaitingAfterProducingAction; // evt aanhaken op deze events
 
-    public bool IsProducingResourcesRightNow;
+    public List<ItemOutput> ItemsBeingProduced;
+    public bool IsProducingResourcesRightNow => ItemsBeingProduced != null;
     public DateTime StartTimeProducing;
 
     private new void Awake()
@@ -44,15 +47,16 @@ public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
         }
     }
 
-    private IEnumerator ProduceResourceOverTime(List<ItemOutput> ItemsToProduce, float produceTimeInSec, float waitTimeInSec)
+    private IEnumerator ProduceResourceOverTime(List<ItemOutput> itemsToProduce, float produceTimeInSec, float waitTimeInSec)
     {
         StartTimeProducing = DateTime.Now;
-        IsProducingResourcesRightNow = true;
+        ItemsBeingProduced = itemsToProduce;
+        StartedProducingAction?.Invoke(itemsToProduce);
         yield return Wait4Seconds.Get(produceTimeInSec);
-        IsProducingResourcesRightNow = false;
-
-        FinishedProducingAction?.Invoke();
-        ProduceResourceOrderBehaviour.ProduceItemsNoConsumption(ItemsToProduce);
+                
+        ProduceResourceOrderBehaviour.ProduceItemsNoConsumption(itemsToProduce);
+        ItemsBeingProduced = null;
+        FinishedProducingAction?.Invoke(itemsToProduce);
 
         yield return Wait4Seconds.Get(waitTimeInSec);
         FinishedWaitingAfterProducingAction?.Invoke();

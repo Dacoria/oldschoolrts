@@ -6,25 +6,23 @@ public class ProduceResourceManualBehaviour : ProduceResourceAbstract
 {
     private HandleProduceResourceOrderBehaviour handleProduceResourceOrderBehaviour;
 
-    public ItemOutput ItemToProduce; // 1 item manueel te maken per keer; consumeert nooit iets
+    private ItemOutput itemToProduce;
 
     new void Awake()
     {
         base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<System.Type> {  typeof(HandleProduceResourceOrderBehaviour) });
+            inactives: new List<Type> {  typeof(HandleProduceResourceOrderBehaviour) });
 
         handleProduceResourceOrderBehaviour = gameObject.AddComponent<HandleProduceResourceOrderBehaviour>();
+        itemToProduce = buildingBehaviour.BuildingType.GetItemProduceSettings().First().ItemsToProduce.Single();
     }
 
     public void ProduceResource()
     {
-        handleProduceResourceOrderBehaviour.ProduceItemsNoConsumption(GetResourcesToProduceSettings().First().ItemsToProduce);
-    }
+        handleProduceResourceOrderBehaviour.ProduceItemsNoConsumption(new List<ItemOutput> { itemToProduce });
+    }    
 
-    protected override List<ItemProduceSetting> GetConcreteResourcesToProduce() =>
-        new List<ItemProduceSetting> { new ItemProduceSetting { ItemsToProduce = new List<ItemOutput> { ItemToProduce } } };
-
-    public int ProducedPerRun => ItemToProduce.ProducedPerProdCycle;
-    public int MaxBuffer => ItemToProduce.MaxBuffer;
+    public int ProducedPerRun => itemToProduce.ProducedPerProdCycle;
+    public int MaxBuffer => itemToProduce.MaxBuffer;
 }

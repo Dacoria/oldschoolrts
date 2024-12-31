@@ -14,13 +14,13 @@ public class MonoHelper : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;     
+        Instance = this;
     }
 
     private void Start()
     {
         // check of alle armortypes plaatjes hebben
-        foreach(ArmorType armorType in Enum.GetValues(typeof(ArmorType)))
+        foreach (ArmorType armorType in Enum.GetValues(typeof(ArmorType)))
         {
             var x = SpriteArmorTypes.Single(x => x.ArmorType == armorType);
         }
@@ -28,7 +28,7 @@ public class MonoHelper : MonoBehaviour
         foreach (AttackType attackType in Enum.GetValues(typeof(AttackType)))
         {
             SpriteDamageTypes.Single(x => x.AttackType == attackType);
-        }        
+        }
     }
 
     public Vector3 GetMousePositionV3(Vector3 mousePosition) => MainCamera.ScreenToWorldPoint(mousePosition);
@@ -64,7 +64,7 @@ public class MonoHelper : MonoBehaviour
     public Sprite GetSpriteForSkillType(SkillType skillType)
     {
         var skillSprit = SpriteSkillTypes.FirstOrDefault(x => x.SkillType == skillType);
-        if(skillSprit != null)
+        if (skillSprit != null)
         {
             return skillSprit.Sprite;
         }
@@ -109,5 +109,45 @@ public class MonoHelper : MonoBehaviour
     {
         yield return Wait4Seconds.Get(waitTimeInSeconds);
         callback?.Invoke();
-    }    
+    }
+
+    public T FindChildComponentInParents<T>(GameObject go, bool searchInactiveChilds = true)
+    {
+        var goToSearch = go;
+        for (var i = 0; i < 10; i++)
+        {
+            var result = goToSearch.GetComponentInChildren<T>(searchInactiveChilds);
+            if(result != null)
+            {
+                return result;
+            }
+
+            goToSearch = goToSearch.transform?.parent.gameObject;
+            if (goToSearch == null)
+            {
+                throw new Exception($"No child found in entire GO for type: {typeof(T)}");
+            }
+        }
+
+        throw new Exception("onwaarschijnlijk dat er zoveel parent-niveaus zijn --> hoe dan?");        
+    }
+
+    public GameObject GetHighestParent(GameObject gameObjectToStart)
+    {
+        var limitTries = 10;
+        var highestParentGo = gameObjectToStart;
+        for (var i = 1; i <= limitTries; i++)
+        {
+            if (highestParentGo.transform.parent != null)
+            {
+                highestParentGo = highestParentGo.transform.parent.gameObject;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return highestParentGo;
+    }
 }

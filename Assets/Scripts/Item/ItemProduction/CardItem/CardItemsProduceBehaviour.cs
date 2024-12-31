@@ -3,62 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResourcesToProduceSettings, IRefillItems, IProduceResourceOverTimeDurations
+public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResourcesToProduceSettings, IRefillItems, IProduceResourceOverTimeDurations
 {
-    public List<ItemProductionSetting> ItemProductionSettings;
-
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
     private RefillBehaviour refillBehaviour;
     private ConsumeRefillItemsBehaviour consumeRefillItems;
     private HandleProduceResourceOrderOverTimeBehaviour handleProduceResourceOrderOverTimeBehaviour;
 
+    private List<ItemProductionSetting> ItemProductionSettings => buildingBehaviour.BuildingType.GetItemProductionSettings();
     private List<ItemLimit> ItemsToProcess;
 
-    public void Awake()
+    new void Awake()
     {
-        ItemsToProcess = ItemProductionSettings.Select(x => new ItemLimit{ItemType = x.Type}).ToList();
-
+        base.Awake();
+        ItemsToProcess = ItemProductionSettings.Select(x => new ItemLimit { ItemType = x.Type }).ToList(); // initieel zetten; dan weet je welke items je kan maken
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(HandleProduceResourceOrderOverTimeBehaviour), typeof(QueueForBuildingBehaviour) });
+            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(HandleProduceResourceOrderOverTimeBehaviour) });
 
         refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
         consumeRefillItems = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
-        handleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();        
-    }
+        handleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
 
-    public bool IsProducingResourcesOverTime() => true;
-    public bool IsProducingResourcesRightNow;
-    public DateTime StartTimeProducing;
-
-    private void OnEnable()
-    {
+        handleProduceResourceOrderOverTimeBehaviour.StartedProducingAction += OnStartedProducingAction;
         handleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction += OnFinishedProducingAction;
         handleProduceResourceOrderOverTimeBehaviour.FinishedWaitingAfterProducingAction += OnFinishedWaitingAfterProducingAction;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
+        handleProduceResourceOrderOverTimeBehaviour.StartedProducingAction -= OnStartedProducingAction;
         handleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction -= OnFinishedProducingAction;
         handleProduceResourceOrderOverTimeBehaviour.FinishedWaitingAfterProducingAction -= OnFinishedWaitingAfterProducingAction;
-    }    
-
-    private void OnFinishedProducingAction()
-    {
-        //throw new NotImplementedException();
     }
 
-    private void OnFinishedWaitingAfterProducingAction()
+    private void OnStartedProducingAction(List<ItemOutput> itemsProducing) 
     {
-        //throw new NotImplementedException();
-    }
-
-    public void StartedProducing(ItemProduceSetting itemProduceSetting)
-    {
-        var itemProcessed = ItemsToProcess.Single(x => x.ItemType == itemProduceSetting.ItemsToProduce.First().ItemType);
+        var itemProcessed = ItemsToProcess.Single(x => x.ItemType == itemsProducing.First().ItemType);
         itemProcessed.ItemsToProduce--;
     }
+
+    private void OnFinishedProducingAction(List<ItemOutput> itemsProducing) { }
+    private void OnFinishedWaitingAfterProducingAction() { }
+    
     public List<ItemProduceSetting> GetItemProduceSettings() =>
         ItemProductionSettings.ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
-    public bool CanProduceResource() => GetItemToProduceSettings() != null;
+
+    private bool CanProduceResource(ItemProductionSetting itemProductionSetting)
+    {
+        if (HasReachedProductionBuffer(itemProductionSetting))
+        {
+            return false;
+        }
+        if (!consumeRefillItems.CanConsumeRefillItems(itemProductionSetting.ItemsConsumedToProduce))
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     // bepaalt welk item eerst --> Logica nu: meeste aantal eerst (daarna lijstvolgorde)
     public ItemProduceSetting GetItemToProduceSettings()
@@ -69,9 +71,10 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
             .Where(x => x.ItemsToProduce >= 1)
             .OrderByDescending(x => x.ItemsToProduce))
         {
-            if (itemsThatCanBeProduced.Any(x => x.Type == itemToProcess.ItemType))
+            var itemToProduce = itemsThatCanBeProduced.FirstOrDefault(x => x.Type == itemToProcess.ItemType);
+            if (itemToProduce != null)
             {
-                return itemsThatCanBeProduced.Single(x => x.Type == itemToProcess.ItemType).ConvertToSingleProduceItem();
+                return itemToProduce.ConvertToSingleProduceItem();
             }
         }
 
@@ -91,12 +94,7 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
         }
 
         return false;
-    }
-
-    private bool CanProduceResource(ItemProductionSetting itemProductionSetting)
-    {
-        return consumeRefillItems.CanConsumeRefillItems(itemProductionSetting.ItemsConsumedToProduce);
-    }
+    }    
 
     public bool ConsumeRequiredResources(ItemProduceSetting itemProduceSetting) =>
         consumeRefillItems.TryConsumeRefillItems(itemProduceSetting.ItemsConsumedToProduce.ConvertAll(x => (ItemAmount)x));
@@ -138,9 +136,19 @@ public class CardItemsProduceBehaviour : MonoBehaviour, ICardBuilding, IResource
     public float GetProductionTime(Enum type) => TimeToProduceResourceInSeconds;
 
     public QueueForBuildingBehaviour GetQueueForBuildingBehaviour() => null;
+    public List<ItemProduceSetting> GetResourcesToProduceSettings() => new List<ItemProduceSetting>(); // alleen voor display buiten kaarten
 
-    public List<ItemProduceSetting> GetResourcesToProduceSettings()
+    public UIItemProcessing GetCurrentItemProcessed()
     {
-        throw new NotImplementedException();
+        if(!handleProduceResourceOrderOverTimeBehaviour.IsProducingResourcesRightNow)
+        {
+            return null;
+        }
+        var itemtype = handleProduceResourceOrderOverTimeBehaviour.ItemsBeingProduced.First().ItemType;
+        return new UIItemProcessing
+        {
+             StartTimeBeingBuild = handleProduceResourceOrderOverTimeBehaviour.StartTimeProducing,
+             Type = itemtype
+        };
     }
 }

@@ -6,8 +6,9 @@ public class DisplayBuildingNameImgHandler : BaseAEMonoCI
     private SetTextOfBuilding text;
     private GameObject imageGo;
 
-    void Start()
+    new void OnEnable()
     {
+        base.OnEnable();
         text = GetComponentInChildren<SetTextOfBuilding>();
         imageGo = GetComponentsInChildren<MeshRenderer>()?.Where(x => x.gameObject.name.StartsWith("Image")).FirstOrDefault()?.gameObject;
 
@@ -25,7 +26,7 @@ public class DisplayBuildingNameImgHandler : BaseAEMonoCI
 
     public void UpdateEnabledStatusOfDisplayObjects(bool show)
     {
-        text.gameObject.SetActive(show);
+        text?.gameObject?.SetActive(show);
         imageGo?.SetActive(show);
     }
 }

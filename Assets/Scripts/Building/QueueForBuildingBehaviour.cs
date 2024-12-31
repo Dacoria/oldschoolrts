@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class QueueForBuildingBehaviour : MonoBehaviourCI
 {
     public float GetBuildTimeInSeconds() => GetCurrentItemProcessed() == null ? 0f : CallingBuilding.GetProductionTime(GetCurrentItemProcessed().Type);
-    public List<QueueItem> QueueItems = new List<QueueItem>();
+    public List<UIItemProcessing> QueueItems = new List<UIItemProcessing>();
 
     [ComponentInject] public ICardBuilding CallingBuilding;
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
@@ -14,7 +14,7 @@ public class QueueForBuildingBehaviour : MonoBehaviourCI
 
     public void AddItemOnQueue(Enum type)
     {
-        var itemToPutOnQueue = new QueueItem
+        var itemToPutOnQueue = new UIItemProcessing
         {
             Type = type,
         };
@@ -22,7 +22,7 @@ public class QueueForBuildingBehaviour : MonoBehaviourCI
         QueueItems.Add(itemToPutOnQueue);
     }
 
-    public void RemoveItemFromQueue(QueueItem queueItem)
+    public void RemoveItemFromQueue(UIItemProcessing queueItem)
     {
         QueueItems.Remove(queueItem);
     }
@@ -51,15 +51,15 @@ public class QueueForBuildingBehaviour : MonoBehaviourCI
         }
     }
 
-    public QueueItem GetCurrentItemProcessed() => QueueItems.FirstOrDefault(x => x.IsBeingBuild);
+    public UIItemProcessing GetCurrentItemProcessed() => QueueItems.FirstOrDefault(x => x.IsBeingBuild);
 
-    private bool CheckItemFinished(QueueItem item)
+    private bool CheckItemFinished(UIItemProcessing item)
     {
         var timeItemFinished = item.StartTimeBeingBuild.Value.AddSeconds(GetBuildTimeInSeconds());
         return timeItemFinished <= DateTime.Now;       
     }
 
-    private void HandleItemFinished(QueueItem item)
+    private void HandleItemFinished(UIItemProcessing item)
     {
         // doe actie
         CallingBuilding.AddItem(item.Type);

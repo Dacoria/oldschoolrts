@@ -13,7 +13,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     [ComponentInject(Required.OPTIONAL)] private RefillBehaviour RefillBehaviour;
     [ComponentInject(Required.OPTIONAL)] private ProduceResourceAbstract ProduceResourceBehaviourScript;
 
-    private BarracksBehaviour BarracksBehaviour;
     private QueueForBuildingBehaviour QueueForBuildingBehaviour;
 
 
@@ -31,8 +30,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
         yield return Wait4Seconds.Get(1);
 
         this.ComponentInject(); // later om zeker te zijn dat de component er zijn (soms gegenereert uit ander script)
-        BarracksBehaviour = GetComponent<BarracksBehaviour>(); // eenmalig
-        QueueForBuildingBehaviour = GetComponent<QueueForBuildingBehaviour>();
 
         ProcessingDisplayGo = Instantiate(DisplayProcessingInputOutputPrefab.gameObject, transform);
         ProcessingDisplayGo.transform.position = transform.position + GoSpawnOffset;
@@ -43,7 +40,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
         var gearsDisplayGo = ProcessingDisplayGo.transform.Find("GearPrefab").gameObject;
 
-        if (RefillBehaviour != null && BarracksBehaviour == null)
+        if (RefillBehaviour != null)
         {
             InitiateInputDisplayReqScript();
         }
@@ -90,7 +87,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     private void InitiateOutputDisplayProdScript()
     {
         OutputTextMeshItems = new List<TextMeshItem>();
-        var rscToProduce = ProduceResourceBehaviourScript.GetResourcesToProduceSettings();
         for (int i = 0; i < ProduceResourceBehaviourScript.GetAvailableItemsToProduce().Count(); i++)
         {
             var outputDisplayGo = Instantiate(OutputDisplayPrefabGo, ProcessingDisplayGo.transform);
@@ -176,14 +172,14 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 
     private void UpdateInputText()
     {
-        if (RefillBehaviour != null && BarracksBehaviour == null)
+        if (RefillBehaviour != null)
         {
             foreach (var itemConsumed in RefillBehaviour.GetItemsToRefill())
             {
                 var textMesh = InputTextMeshItems.Single(x => x.ItemType == itemConsumed.ItemType).TextMesh;
                 var itemInStockpile = RefillBehaviour.StockpileOfItemsRequired.Single(x => x.ItemType == itemConsumed.ItemType);
                 var maxBuffer = RefillBehaviour.GetItemCountToRefill(itemConsumed.ItemType, 0, 0);
-                var hasMaxBuffer = !RefillBehaviour.RefillItems.AlwaysRefillItemsIgnoreBuffer();
+                var hasMaxBuffer = true;
 
                 textMesh.text = itemInStockpile.Amount.ToString();
                 if(hasMaxBuffer)

@@ -38,18 +38,4 @@ public class UiTavernBehaviour : MonoBehaviourCI, ICardCarousselDisplay
     {
         TavernUiWrapperBehaviours[indexOfCard].gameObject.SetActive(activeYN);
     }
-
-    public int GetIndexFirstEnabledCard()
-    {
-        for (int i = 0; i < TavernUiWrapperBehaviours.Count; i++)
-        {
-            var card = TavernUiWrapperBehaviours[i];
-            if (card.gameObject.activeSelf)
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
 }

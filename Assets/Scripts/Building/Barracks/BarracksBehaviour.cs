@@ -96,4 +96,6 @@ public class BarracksBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
     public GameObject GetGameObject() => gameObject;
 
     public float GetProductionTime(Enum type) => 0; // instant
+
+    public UIItemProcessing GetCurrentItemProcessed() => null;
 }

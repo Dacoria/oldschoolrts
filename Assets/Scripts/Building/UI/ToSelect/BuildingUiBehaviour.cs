@@ -49,18 +49,4 @@ public class BuildingUiBehaviour : MonoBehaviourCI, ICardCarousselDisplay
     {
         BuildingUiWrapperBehaviours[indexOfCard].gameObject.SetActive(activeYN);
     }
-
-    public int GetIndexFirstEnabledCard()
-    {
-        for (int i = 0; i < BuildingUiWrapperBehaviours.Count; i++)
-        {
-            var card = BuildingUiWrapperBehaviours[i];
-            if (card.gameObject.activeSelf)
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
 }

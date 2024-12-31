@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class FlyCamera : MonoBehaviour
+public class FlyCamera : MonoBehaviourCI
 {
+    [ComponentInject] private Camera _camera;
+
     // gebruik = WASD, middelste muisknop indrukken voor rondkijken, en scrollen voor zoomen
     public float mainSpeed = 100; //regular speed
     public float shiftAdd = 5; //multiplied by how long shift is held.  Basically running
@@ -37,6 +39,15 @@ public class FlyCamera : MonoBehaviour
             lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.x, transform.eulerAngles.y + lastMouse.y, 0);
             transform.eulerAngles = lastMouse;
             lastMouse = Input.mousePosition;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            _camera.fieldOfView -= 0.1f;
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            _camera.fieldOfView += 0.1f; ;
         }
 
         //Keyboard commands

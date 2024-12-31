@@ -6,7 +6,6 @@ public class ShowRequiredResourcesForBuildingBehaviour : MonoBehaviourCI
 
     [ComponentInject] private BuildingUiWrapperBehaviour BuildingUiWrapperBehaviour;
 
-
     void Start()
     {        
         var buildingTypeSettings = BuildingPrefabs.Get().Single(x => x.BuildingType == BuildingUiWrapperBehaviour.BuildingType);
@@ -24,6 +23,5 @@ public class ShowRequiredResourcesForBuildingBehaviour : MonoBehaviourCI
                 reqItemCard.ItemType = reqItemToBuild.ItemType;
             }
         }
-
     }
 }

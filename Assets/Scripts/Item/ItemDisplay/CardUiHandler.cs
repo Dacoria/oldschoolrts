@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay
+public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneItemUI
 {   
     public UiCardBehaviour UiCardBehaviourPrefab;
     [HideInInspector] public List<UiCardBehaviour> UiCardBehaviours;
@@ -19,7 +19,7 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay
     {
         UiCardBehaviours = new List<UiCardBehaviour>();
 
-        var uitSettingsForCard = MyExtensions.GetProductionSettings(BuildingType);
+        var uitSettingsForCard = BuildingType.GetProductionSettings();
 
         foreach (var uiSetting in uitSettingsForCard)
         {
@@ -107,17 +107,6 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay
         UiCardBehaviours[indexOfCard].gameObject.SetActive(activeYN);
     }
 
-    public int GetIndexFirstEnabledCard()
-    {
-        for (int i = 0; i < UiCardBehaviours.Count; i++)
-        {
-            var card = UiCardBehaviours[i];
-            if (card.gameObject.activeSelf)
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
+    public UIItemProcessing GetCurrentItemProcessed() =>  CallingBuilding?.GetCurrentItemProcessed();
+    public float GetBuildTimeInSeconds(Enum type) => CallingBuilding.GetProductionTime(type);
 }

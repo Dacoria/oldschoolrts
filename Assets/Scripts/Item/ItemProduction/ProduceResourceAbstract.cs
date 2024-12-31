@@ -2,17 +2,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class ProduceResourceAbstract : MonoBehaviour, IResourcesToProduceSettings, IRefillItems
+public abstract class ProduceResourceAbstract : MonoBehaviourCI, IResourcesToProduceSettings, IRefillItems
 {
     private RefillBehaviour refillBehaviour;
     private ConsumeRefillItemsBehaviour consumeRefillItems;
     [HideInInspector] public HandleProduceResourceOrderBehaviour ProduceResourceOrder; // wordt in concrete classen aangemaakt; daarom in start pas initiaten
+    [ComponentInject] protected BuildingBehaviour buildingBehaviour;
 
-    protected abstract List<ItemProduceSetting> GetConcreteResourcesToProduce();
-    public List<ItemProduceSetting> GetResourcesToProduceSettings() => GetConcreteResourcesToProduce();
-
-    public void Awake()
+    public new void Awake()
     {
+        base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
             inactives: new List<System.Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour)});
 
@@ -24,11 +23,11 @@ public abstract class ProduceResourceAbstract : MonoBehaviour, IResourcesToProdu
     {
         ProduceResourceOrder = GetComponent<HandleProduceResourceOrderBehaviour>();
     }
+    public List<ItemProduceSetting> GetItemProduceSettings() => buildingBehaviour.BuildingType.GetItemProduceSettings();
 
-    public List<ItemProduceSetting> GetItemProduceSettings() => GetResourcesToProduceSettings();
+    public ItemProduceSetting GetItemToProduceSettings() => GetItemProduceSettings().FirstOrDefault(x => CanProduceResource(x));
+
     public bool CanProduceResource() => GetItemToProduceSettings() != null;
-
-    public ItemProduceSetting GetItemToProduceSettings() => GetResourcesToProduceSettings().FirstOrDefault(x => CanProduceResource(x));    
 
     protected virtual bool CanProduceResource(ItemProduceSetting itemProduceSetting)
     {
@@ -36,26 +35,19 @@ public abstract class ProduceResourceAbstract : MonoBehaviour, IResourcesToProdu
         {
             return false;
         }
-        if (consumeRefillItems != null)
+        if(!consumeRefillItems.CanConsumeRefillItems(itemProduceSetting.ItemsConsumedToProduce))
         {
-            return consumeRefillItems.CanConsumeRefillItems(itemProduceSetting.ItemsConsumedToProduce);
+            return false;
         }
+
         return true;
     }
 
-    private HandleProduceResourceOrderBehaviour produceBehaviour;
     private bool HasReachedProductionBuffer(ItemProduceSetting itemProduceSetting)
-    {
-        if(produceBehaviour == null)
-        {
-            produceBehaviour = GetComponent<HandleProduceResourceOrderBehaviour>();
-        }
-
+    {     
         foreach (var itemToProduce in itemProduceSetting.ItemsToProduce)
-        {
-            var outputOrders = produceBehaviour.OutputOrders;
-            var itemsOutstandingOrders = outputOrders.Where(x => x.ItemType == itemToProduce.ItemType);
-            if (itemsOutstandingOrders.Count() + itemToProduce.ProducedPerProdCycle > itemToProduce.MaxBuffer)
+        {            
+            if (ProduceResourceOrder.OutputOrders.Count(x => x.ItemType == itemToProduce.ItemType) + itemToProduce.ProducedPerProdCycle > itemToProduce.MaxBuffer)
             {
                 return true;
             }
@@ -66,14 +58,12 @@ public abstract class ProduceResourceAbstract : MonoBehaviour, IResourcesToProdu
 
     public bool ConsumeRequiredResources(ItemProduceSetting itemProduceSetting)
     {
-        if (consumeRefillItems != null)
-        {
-            return consumeRefillItems.TryConsumeRefillItems(itemProduceSetting.ItemsConsumedToProduce.ConvertAll(x => (ItemAmount)x));
-        }
-        return true;
+        return consumeRefillItems.TryConsumeRefillItems(itemProduceSetting.ItemsConsumedToProduce.ConvertAll(x => (ItemAmount)x));
     }
+
+    public List<ItemOutput> GetAvailableItemsToProduce() => buildingBehaviour.BuildingType.GetItemProduceSettings().SelectMany(x => x.ItemsToProduce).ToList();
 
     public bool AlwaysRefillItemsIgnoreBuffer() => false;
 
-    public List<ItemOutput> GetAvailableItemsToProduce() => GetResourcesToProduceSettings().SelectMany(x => x.ItemsToProduce).ToList();
+    public List<ItemProduceSetting> GetResourcesToProduceSettings() => buildingBehaviour.BuildingType.GetItemProduceSettings();
 }

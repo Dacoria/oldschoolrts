@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
-public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI
+public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
 {
     // GO om te showen/hiden
     public Text QueueTitle;
-    public UIQueueProgressBarScript UIQueueProgressBarScript;
+    public UIProgressBarScript UIQueueProgressBarScript;
 
     // settings
     public UiQueueCardBehaviour UIQueueCardPrefab;    
@@ -21,7 +22,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI
     public class UiQueueItem
     {
         public UiQueueCardBehaviour UiQueueCardBehaviour;
-        public QueueItem QueueItem;
+        public UIItemProcessing QueueItem;
     }
 
     protected override int FramesTillSlowUpdate => 20;
@@ -31,7 +32,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI
         UpdateQueue();
     }
 
-    public QueueItem GetCurrentItemProcessed() => CallingQueueForBuildingBehaviour?.QueueItems.FirstOrDefault(x => x.IsBeingBuild);
+    public UIItemProcessing GetCurrentItemProcessed() => CallingQueueForBuildingBehaviour?.QueueItems.FirstOrDefault(x => x.IsBeingBuild);
 
     public void OnCancelQueueItemClick(UiQueueCardBehaviour uiQueueCardBehaviour)
     {
@@ -100,10 +101,10 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI
         }
     }
 
-    private UiQueueCardBehaviour InstantiateQueueItem(QueueItem queueItem, BuildingType buildingType)
+    private UiQueueCardBehaviour InstantiateQueueItem(UIItemProcessing queueItem, BuildingType buildingType)
     {
         var queueCardGo = Instantiate(UIQueueCardPrefab, transform);
-        var uiCardSettings = MyExtensions.GetProductionSettings(buildingType);
+        var uiCardSettings = buildingType.GetProductionSettings();
 
         // TODO -> String compare ipv enums --> vanwege enum abstractie....
         var uiCardSetting = uiCardSettings.First(x => x.GetType().ToString() == queueItem.Type.ToString());
@@ -112,5 +113,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI
         queueCardGo.DisplayQueueUIHandler = this;
 
         return queueCardGo;
-    }   
+    }
+
+    public float GetBuildTimeInSeconds(Enum type) => CallingQueueForBuildingBehaviour.GetBuildTimeInSeconds();
 }

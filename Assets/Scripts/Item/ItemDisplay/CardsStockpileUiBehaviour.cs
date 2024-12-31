@@ -3,15 +3,17 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
+public class CardsStockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarousselDisplay
 {
     public ImageTextBehaviour ImageTextBehaviourPrefab;
-    private List<ImageTextBehaviour> imageTextBehaviours;
+    public CardUiHandler CardUIHandler;
 
-    private CardUiHandler barracksUIHandler;
+    private List<ImageTextBehaviour> imageTextBehaviours;    
 
     public Text Title;
     private bool cardsLoaded;
+
+    private RefillBehaviour RefillStockpile; // bij resetten van cards geset
 
     public bool CardsAreLoaded() => cardsLoaded;
 
@@ -20,26 +22,17 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
     public void SetActiveStatusCardGo(int indexOfCard, bool activeYN)
     {
         imageTextBehaviours[indexOfCard].gameObject.SetActive(activeYN);
-    }
+    }  
 
-    public int GetIndexFirstEnabledCard()
+    private new void Awake()
     {
-        for (int i = 0; i < imageTextBehaviours.Count; i++)
-        {
-            var card = imageTextBehaviours[i];
-            if (card.gameObject.activeSelf)
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    private void Awake()
-    {
+        base.Awake();
         imageTextBehaviours = new List<ImageTextBehaviour>();
-        barracksUIHandler = transform.parent.GetComponentInChildren<CardUiHandler>();
+    }
+
+    private void OnEnable()
+    {
+        ResetCards();
     }
 
     private void OnDisable()
@@ -47,20 +40,11 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
         ClearAllCards();
     }
 
-    private int updateCounter;
-
-    private void Update()
+    protected override int FramesTillSlowUpdate => 30;
+    protected override void SlowUpdate()
     {
-        if(updateCounter == 0)
-        {
-            UpdateValuesOfCard();
-        }
-        updateCounter++;
-        if(updateCounter > 30)
-        {
-            updateCounter = 0;
-        }
-    }    
+        UpdateValuesOfCard();
+    }
 
     private void ClearAllCards()
     {
@@ -74,22 +58,15 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
         cardsLoaded = false;
     }
 
-    private void OnEnable()
-    {
-        ResetCards();
-    }
-
-    private RefillBehaviour BarracksStockpile;
-
     private void ResetCards()
     {
         ClearAllCards();
 
         imageTextBehaviours = new List<ImageTextBehaviour>();
-        SetBarracksStockpile();
-        if (BarracksStockpile != null)
+        RefillStockpile = CardUIHandler.CallingBuilding?.GetGameObject().GetComponent<RefillBehaviour>();
+        if (RefillStockpile != null)
         {
-            foreach (var itemInStockpile in BarracksStockpile.StockpileOfItemsRequired)
+            foreach (var itemInStockpile in RefillStockpile.StockpileOfItemsRequired)
             {
                 var itemCountUiWrapper = Instantiate(ImageTextBehaviourPrefab, transform);
                 itemCountUiWrapper.Image.sprite = ResourcePrefabs.Get().Single(x => x.ItemType == itemInStockpile.ItemType).Icon;
@@ -102,25 +79,15 @@ public class BarracksStockpileUiBehaviour : MonoBehaviour, ICardCarousselDisplay
             cardsLoaded = true;
             Title.gameObject.SetActive(true);
         }
-    }
-
-    private void SetBarracksStockpile()
-    {
-        BarracksStockpile = null;
-        var barracks = barracksUIHandler?.CallingBuilding;
-        if(barracks != null)
-        {
-            BarracksStockpile = ((BarracksBehaviour)barracks).RefillBehaviour;
-        }
-    }
+    }    
 
     private void UpdateValuesOfCard()
     {
-        if (cardsLoaded && BarracksStockpile != null)
+        if (cardsLoaded && RefillStockpile != null)
         {
             foreach (var card in imageTextBehaviours)
             {
-                card.Text.text = BarracksStockpile.StockpileOfItemsRequired.Single(x => x.ItemType == card.ItemType).Amount.ToString();
+                card.Text.text = RefillStockpile.StockpileOfItemsRequired.Single(x => x.ItemType == card.ItemType).Amount.ToString();
             }
         }
     }

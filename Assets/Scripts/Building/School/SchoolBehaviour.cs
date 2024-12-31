@@ -73,5 +73,7 @@ public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
     public List<ItemProduceSetting> GetItemProduceSettings() =>
         VillagerPrefabs.Get().ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
 
-    public GameObject GetGameObject() => gameObject;    
+    public GameObject GetGameObject() => gameObject;
+
+    public UIItemProcessing GetCurrentItemProcessed() => queueForBuildingBehaviour.GetCurrentItemProcessed();
 }

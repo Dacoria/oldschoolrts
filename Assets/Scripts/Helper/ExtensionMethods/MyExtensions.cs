@@ -139,46 +139,7 @@ public static class MyExtensions
             new KeyCodeAction(KeyCode.P, KeyCodeActionType.ToggleBuildingNameImgDisplay)
     };
 
-    public static List<ProductionSetting> GetProductionSettings(BuildingType type)
-    {
-        var building = BuildingPrefabs.Get().Single(x => x.BuildingType == type);
-        switch (type)
-        {
-            case BuildingType.BLACKSMITH:
-            case BuildingType.WEAPONMAKER:
-            case BuildingType.LEATHERARMORY:
-            case BuildingType.CLOTHARMORMAKER:
-                return building.BuildingPrefab.GetComponentInChildren<CardItemsProduceBehaviour>(true).ItemProductionSettings.ConvertAll<ProductionSetting>(x => x);
-            case BuildingType.BARRACKS:
-                return BarrackUnitPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
-            case BuildingType.SCHOOL:
-                return VillagerPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
-
-            default:
-                throw new Exception("Cards for " + type.ToString() + " not specified");
-        }
-    }
-
-    public static ProductionSetting GetProductionSetting(BuildingType buildingType, Enum enumType)
-    {
-        var prodSettings = GetProductionSettings(buildingType);
-
-        switch (buildingType)
-        {
-            case BuildingType.BARRACKS:
-                return prodSettings.Single(x => (BarracksUnitType)x.GetType() == Enum.Parse<BarracksUnitType>(enumType.ToString()));
-            case BuildingType.SCHOOL:
-                return prodSettings.Single(x => (VillagerUnitType)x.GetType() == Enum.Parse<VillagerUnitType>(enumType.ToString()));
-            case BuildingType.BLACKSMITH:
-            case BuildingType.WEAPONMAKER:
-            case BuildingType.LEATHERARMORY:
-            case BuildingType.CLOTHARMORMAKER:
-                return prodSettings.Single(x => (ItemType)x.GetType() == Enum.Parse<ItemType>(enumType.ToString()));
-
-            default:
-                throw new Exception("Cards/prod settings for " + buildingType.ToString() + " not specified");
-        }
-    }
+    
 
     public static Vector2 GetRandomVector(int minRange, int maxRange)
     {

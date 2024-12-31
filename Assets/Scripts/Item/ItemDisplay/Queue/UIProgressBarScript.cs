@@ -2,16 +2,15 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UICardProgressBarScript : MonoBehaviourSlowUpdateFramesCI
+public class UIProgressBarScript : MonoBehaviourSlowUpdateFramesCI
 {
     public Image ProgressionBar;
     public Text ProgressText;
-
-
+    public IProcesOneItemUI procesOneItemUI;
 
     void Start()
     {
-
+        procesOneItemUI = MonoHelper.Instance.FindChildComponentInParents<IProcesOneItemUI>(gameObject);
     }
 
     protected override int FramesTillSlowUpdate => 20;
@@ -22,7 +21,7 @@ public class UICardProgressBarScript : MonoBehaviourSlowUpdateFramesCI
 
     private void UpdateDisplayQueueProgression()
     {
-        /*var itemBeingProcessed = DisplayQueueUIHandler.GetCurrentItemProcessed();
+        var itemBeingProcessed = procesOneItemUI.GetCurrentItemProcessed();
         if(itemBeingProcessed != null)
         {
             var progressPerc = GetProgressPercentageOfItemProcessed();
@@ -35,18 +34,18 @@ public class UICardProgressBarScript : MonoBehaviourSlowUpdateFramesCI
         {
             ProgressText.text = "";
             ProgressionBar.fillAmount = 0;
-        }     */   
+        }        
     }
 
     private float GetProgressPercentageOfItemProcessed()
     {
-        /*var item = DisplayQueueUIHandler.GetCurrentItemProcessed();
+        var item = procesOneItemUI.GetCurrentItemProcessed();
         if (item != null && item.IsBeingBuild)
         {
             var timeBetweenStartProcessAndNow = (DateTime.Now - item.StartTimeBeingBuild.Value).TotalSeconds;
-            var perc = (float)timeBetweenStartProcessAndNow / DisplayQueueUIHandler.CallingQueueForBuildingBehaviour.GetBuildTimeInSeconds();
+            var perc = (float)timeBetweenStartProcessAndNow / procesOneItemUI.GetBuildTimeInSeconds(procesOneItemUI.GetCurrentItemProcessed().Type);
             return Math.Min(perc, 1);
-        }*/
+        }
 
         return -1;
     }

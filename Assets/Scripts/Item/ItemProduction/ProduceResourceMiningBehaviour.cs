@@ -5,30 +5,10 @@ using System;
 
 public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocationOfResource, IProduceResourceOverTimeDurations
 {
-    public MaterialResourceType MaterialResourceType;
-    public int MaxBuffer = 6;
-    public int ProducedPerProdCycle = 1;
-
-    protected override List<ItemProduceSetting> GetConcreteResourcesToProduce()
-    {
-        var itemToProduce = new ItemOutput
-        {
-            MaxBuffer = MaxBuffer,
-            ProducedPerProdCycle = ProducedPerProdCycle,
-            ItemType = Enum.Parse<ItemType>(MaterialResourceType.ToString())
-        };
-        return new List<ItemProduceSetting> { new ItemProduceSetting { ItemsToProduce = new List<ItemOutput> { itemToProduce } } };
-    }
-
-
-    public int MaxRangeForResources = 2;
-    public float ProduceTimeInSeconds;
-    public float WaitAfterProduceTimeInSeconds;
-
-    public float TimeToProduceResourceInSeconds => ProduceTimeInSeconds;
-    public float TimeToWaitAfterProducingInSeconds => WaitAfterProduceTimeInSeconds;
+    public float TimeToProduceResourceInSeconds => 10;
+    public float TimeToWaitAfterProducingInSeconds => 2;
     public RangeType GetRangeTypeToFindResource() => RangeType.BoxColliderExpand;
-    public int GetMaxRangeForResource() => MaxRangeForResources;
+    public int GetMaxRangeForResource() => 2;
 
     [HideInInspector] public HandleProduceResourceOrderOverTimeBehaviour HandleProduceResourceOrderOverTimeBehaviour;
 
@@ -41,9 +21,10 @@ public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocation
         HandleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
         HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction += OnFinishedProducingAction;
     }
+
     private void OnDestroy() => HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction -= OnFinishedProducingAction;
 
-    private void OnFinishedProducingAction() => MineResource(consumeResource: true);
+    private void OnFinishedProducingAction(List<ItemOutput> list) => MineResource(consumeResource: true);
 
     protected override bool CanProduceResource(ItemProduceSetting itemProduceSetting) => base.CanProduceResource(itemProduceSetting) && MineResource(consumeResource: false);
 
@@ -54,6 +35,7 @@ public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocation
         {        
             if (consumeResource)
             {
+                // TODO WTF? FIX DIT
                var harvestScript = resourceToMine.GetComponent<HarvestableMaterialScript>();
 
                 harvestScript.StartRetrievingResource();
@@ -92,7 +74,7 @@ public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocation
         var mineResourcesBounds = (transform.parent.GetComponent<Collider>().bounds).Copy();
         mineResourcesBounds.Expand(GetMaxRangeForResource()); // voor nu: Scope van gebouw + 1 veld als mining area
 
-        var optionsToMineResourceScripts = GetOptionsToMine(MaterialResourceType, mineResourcesBounds);
+        var optionsToMineResourceScripts = GetOptionsToMine(buildingBehaviour.BuildingType.GetMaterialResourceType(), mineResourcesBounds);
         if (optionsToMineResourceScripts.Count > 0)
         {
             // voor nu: Pak altijd de resource met de meeste materialen

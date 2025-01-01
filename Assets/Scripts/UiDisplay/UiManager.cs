@@ -17,12 +17,15 @@ public class UiManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            DisableActiveBuilding();
+            SelectedBuildingPanel.SetActive(false);
+            SelectedBuildingPanelSkillTree.SetActive(false);
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            DisableActiveOutline();
-            DisableActiveDisplayRange();
-            DisableActiveDisplayBuildingInputOutputHandler();
-            DisableActiveDisplayBuildingNameImgHandler();
+            DisableActiveBuilding();
             var isClickingUi = EventSystem.current.IsPointerOverGameObject();
 
             if (!isClickingUi)
@@ -31,16 +34,15 @@ public class UiManager : MonoBehaviour
                 var hits = Physics.RaycastAll(ray);
                 ActOnRaycastHit(hits);
             }
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            DisableActiveOutline();
-            DisableActiveDisplayRange();
-            DisableActiveDisplayBuildingInputOutputHandler();
-            DisableActiveDisplayBuildingNameImgHandler();
-            SelectedBuildingPanel.SetActive(false);
-            SelectedBuildingPanelSkillTree.SetActive(false);
-        }
+        }        
+    }
+
+    private void DisableActiveBuilding()
+    {
+        DisableActiveOutline();
+        DisableActiveDisplayRange();
+        DisableActiveDisplayBuildingInputOutputHandler();
+        DisableActiveDisplayBuildingNameImgHandler();        
     }
 
     private void DisableActiveOutline()

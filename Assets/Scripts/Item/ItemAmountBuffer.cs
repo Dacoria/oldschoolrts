@@ -1,5 +1,4 @@
-﻿using Assets.CrossCutting;
-using System;
+﻿using System;
 
 
 [Serializable]

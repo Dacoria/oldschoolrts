@@ -5,10 +5,8 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
 {
     public ImageTextBehaviour Attack;
     public ImageTextBehaviour Defence;
-    public ImageTextBehaviour ArmorPen;
     public ImageTextBehaviour Health;
     public ImageTextBehaviour Range;
-    public ImageTextBehaviour Dodge;
     public ImageTextBehaviour Speed;
 
     [ComponentInject]
@@ -40,10 +38,8 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
     {
         Attack.Text.text = unitStats.Offence.BaseDamage.ToString() + "\n" + (unitStats.Offence.AttackHitRate).ToString() + "%";
         Defence.Text.text = unitStats.Defence.ArmorValue.ToString();
-        ArmorPen.Text.text = unitStats.Offence.BaseFlatArmorPenetration.ToString() + "\n" + (unitStats.Offence.BaseBonusArmorPenetrationPercentage * 100).ToString() + "%";
         Range.Text.text = unitStats.RangeToAttractEnemies.ToString() + "\n" + unitStats.RangeToAttack.ToString();
         Health.Text.text = unitStats.Health.ToString();
-        Dodge.Text.text = unitStats.Defence.Dodge.ToString() + "%";
         Speed.Text.text = unitStats.Speed.ToString();
 
         Attack.Image.sprite = MonoHelper.Instance.GetSpriteForAttackType(unitStats.Offence.AttackType);
@@ -51,11 +47,9 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
                                
         CreateOrUpdateTooltipCanvas(Attack, GetAttackText(unitStats.Offence.AttackType));
         CreateOrUpdateTooltipCanvas(Defence, GetArmorText(unitStats.Defence.ArmorType));
-        CreateOrUpdateTooltipCanvas(ArmorPen, "ArmorPen flat: Damage that ignores armor \n" +
-            "ArmorPen%: Perc of armor reduction" );
+
         CreateOrUpdateTooltipCanvas(Range, "AttractRange: Range to start walking towards enemy\nAttackRange: Range to start attacking");
         CreateOrUpdateTooltipCanvas(Health, "Total health of unit");
-        CreateOrUpdateTooltipCanvas(Dodge, "Dodge%: 35% base + Attackhit% - this value. Hitchance between 1-100%");
         CreateOrUpdateTooltipCanvas(Speed, "Speed of the unit");
     }
 
@@ -73,7 +67,6 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
     private string GetAttackText(AttackType attackType)
     {
         var attackText = $"Base damage: Damage of unit (before calculations)\n" +
-            $"Attackhit%: 35% base + this value - Dodge% -> hitchance between 1-100%\n" +
             $"Attacktype: {attackType.ToString().Capitalize()} -> Modifies the damage; depending on Armortype:";
 
         foreach (ArmorType armorType in Enum.GetValues(typeof(ArmorType)))
@@ -86,7 +79,7 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
 
     private string GetArmorText(ArmorType armorType)
     {
-        var armorText = "Armor: Reduced the damage (between 1-100) if no armor penetration\n" +
+        var armorText = "Armor: Reduced the damage (between 1-100)\n" +
             $"Armortype: {armorType.ToString().Capitalize()} -> Modifies the damage; depending on Attacktype:";
 
         foreach (AttackType attackType in Enum.GetValues(typeof(AttackType)))

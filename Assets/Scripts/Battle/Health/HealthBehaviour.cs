@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class HealthBehaviour : BaseAEMonoCI
 {
-    [HideInInspector]
-    public float InitialHeath = 100;
+    [HideInInspector] public float InitialHeath = 100;
 
     public float CurrentHealth = 100;
     public float DamageForNoFood = 1;

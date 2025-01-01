@@ -66,16 +66,13 @@ public static class BarrackUnitPrefabs
             Offence = new Assets.Army.Offence
             {
                 AttackHitRate = 1,
-                AttackType = Assets.Army.AttackType.MEDIUM,
-                BaseBonusArmorPenetrationPercentage = 10,
-                BaseDamage = 10,
-                BaseFlatArmorPenetration = 5
+                AttackType = Assets.Army.AttackType.HEAVY,
+                BaseDamage = 10
             },
             Defence = new Assets.Army.Defence
             {
                 ArmorType = Assets.Army.ArmorType.HEAVY,
                 ArmorValue = 10,
-                Dodge = 10
             },
             Health = 100,
             RangeToAttack = 2,
@@ -103,15 +100,12 @@ public static class BarrackUnitPrefabs
             {
                 AttackHitRate = 1,
                 AttackType = Assets.Army.AttackType.MAGIC,
-                BaseBonusArmorPenetrationPercentage = 10,
                 BaseDamage = 10,
-                BaseFlatArmorPenetration = 5
             },
             Defence = new Assets.Army.Defence
             {
                 ArmorType = Assets.Army.ArmorType.LIGHT,
                 ArmorValue = 10,
-                Dodge = 10
             },
             Health = 80,
             RangeToAttack = 10,
@@ -137,15 +131,12 @@ public static class BarrackUnitPrefabs
             {
                 AttackHitRate = 1,
                 AttackType = Assets.Army.AttackType.LIGHT,
-                BaseBonusArmorPenetrationPercentage = 10,
                 BaseDamage = 10,
-                BaseFlatArmorPenetration = 5
             },
             Defence = new Assets.Army.Defence
             {
-                ArmorType = Assets.Army.ArmorType.MEDIUM,
+                ArmorType = Assets.Army.ArmorType.LIGHT,
                 ArmorValue = 10,
-                Dodge = 10
             },
             Health = 70,
             RangeToAttack = 12,

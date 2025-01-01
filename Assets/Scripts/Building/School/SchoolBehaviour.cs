@@ -2,17 +2,20 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using Assets;
 
-public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
+public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
 {
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
+
     private RefillBehaviour refillBehaviour;
     private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
     private QueueForBuildingBehaviour queueForBuildingBehaviour;
 
-    public float BuildUnitDurationInSeconds;
-
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
             inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour) });
 
@@ -21,23 +24,42 @@ public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
         queueForBuildingBehaviour = gameObject.AddComponent<QueueForBuildingBehaviour>();
     }
 
-    public void AddItem(Enum type)
+    public void AddType(Enum type)
     {        
         var itemsForProduction = GetItemsToConsumeForProduction((VillagerUnitType)type);
         if (CanProces((VillagerUnitType)type) && consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction))
         {
-            Train((VillagerUnitType)type);
+            StartCoroutine(StartUnitCreationProcess((VillagerUnitType)type));            
         }        
     }
 
-    public void DecreaseItem(Enum type) { }
-    public float GetProductionTime(Enum type) => BuildUnitDurationInSeconds;
+    private UIItemProcessing currentItemProcessed;
+    public UIItemProcessing GetCurrentItemProcessed() => currentItemProcessed;
+
+    private IEnumerator StartUnitCreationProcess(VillagerUnitType type)
+    {
+        var produceDurations = buildingBehaviour.BuildingType.GetProductionDurationSettings();
+        currentItemProcessed = new UIItemProcessing { StartTimeBeingBuild = DateTime.Now, Type = type };
+        AE.StartedProducingAction?.Invoke(buildingBehaviour, null);
+        yield return Wait4Seconds.Get(produceDurations.TimeToProduceResourceInSeconds);
+
+        CreateUnit(type);
+        AE.FinishedProducingAction?.Invoke(buildingBehaviour, null);
+
+        yield return Wait4Seconds.Get(produceDurations.TimeToWaitAfterProducingInSeconds);
+
+        AE.FinishedWaitingAfterProducingAction?.Invoke(buildingBehaviour);
+        currentItemProcessed = null;
+    }
+
+    public void DecreaseType(Enum type) { }
+    public float GetProductionTime(Enum type) => buildingBehaviour.BuildingType.GetProductionDurationSettings().TimeToProduceResourceInSeconds; // 1 waarde voor alles
 
     public ProductionSetting GetCardDisplaySetting(Enum type) => VillagerPrefabs.Get().First(x => x.Type == (VillagerUnitType)type);
 
     public int GetCount(Enum type) => 0;
 
-    public void Train(VillagerUnitType type)
+    public void CreateUnit(VillagerUnitType type)
     {
         var villagerUnitSetting = VillagerPrefabs.Get().Single(x => x.Type == type);
         if (GameManager.CurrentPopulation < GameManager.PopulationLimit)
@@ -52,23 +74,20 @@ public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
         }
     }
 
-    private List<ItemAmountBuffer> GetItemsToConsumeForProduction(VillagerUnitType type)
-    {
-        return VillagerPrefabs.Get()
-            .Single(x => x.Type == type)
-            .ItemsConsumedToProduce;
-    }
+    private List<ItemAmountBuffer> GetItemsToConsumeForProduction(VillagerUnitType type) => 
+        VillagerPrefabs.Get()
+        .Single(x => x.Type == type)
+        .ItemsConsumedToProduce;
+    
 
     public bool CanProces(Enum type)
     {
         var itemsNeeded = GetItemsToConsumeForProduction((VillagerUnitType)type);
         var itemsToProduce = VillagerPrefabs.Get().Single(x => x.Type == (VillagerUnitType)type).ConvertToSingleProduceItem();
-        return HasPopulationRoom && consumeRefillItemsBehaviour.CanConsumeRefillItems(itemsNeeded);
+        return currentItemProcessed == null && HasPopulationRoom && consumeRefillItemsBehaviour.CanConsumeRefillItems(itemsNeeded);
     }
     
     private bool HasPopulationRoom => GameManager.CurrentPopulation < GameManager.PopulationLimit;
-
-    public QueueForBuildingBehaviour GetQueueForBuildingBehaviour() => queueForBuildingBehaviour;
 
     public bool AlwaysRefillItemsIgnoreBuffer() => false;
 
@@ -76,6 +95,4 @@ public class SchoolBehaviour : MonoBehaviour, ICardBuilding, IRefillItems
         VillagerPrefabs.Get().ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
 
     public GameObject GetGameObject() => gameObject;
-
-    public UIItemProcessing GetCurrentItemProcessed() => queueForBuildingBehaviour.GetCurrentItemProcessed();
 }

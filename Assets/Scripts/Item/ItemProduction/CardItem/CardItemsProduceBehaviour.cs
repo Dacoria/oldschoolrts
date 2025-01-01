@@ -23,14 +23,8 @@ public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResour
         refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
         consumeRefillItems = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
         handleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
-
-        handleProduceResourceOrderOverTimeBehaviour.StartedProducingAction += OnStartedProducingAction;
     }
 
-    private void OnDestroy()
-    {
-        handleProduceResourceOrderOverTimeBehaviour.StartedProducingAction -= OnStartedProducingAction;
-    }
 
     private void OnStartedProducingAction(List<ItemOutput> itemsProducing) 
     {
@@ -96,12 +90,12 @@ public class CardItemsProduceBehaviour : MonoBehaviourCI, ICardBuilding, IResour
 
     public int GetCount(Enum type) => ItemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemsToProduce;
 
-    public void AddItem(Enum type)
+    public void AddType(Enum type)
     {
         GetItem((ItemType)type).ItemsToProduce++;
     }
 
-    public void DecreaseItem(Enum type)
+    public void DecreaseType(Enum type)
     {
         var item = GetItem((ItemType)type);
         item.ItemsToProduce = Math.Max(item.ItemsToProduce - 1, 0);

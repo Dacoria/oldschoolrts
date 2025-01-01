@@ -257,8 +257,10 @@ public class UiManager : MonoBehaviour
         if(uiToActivate is CardUiHandler)
         {
             var cardHandler = (CardUiHandler)uiToActivate;
-            if(cardHandler?.CallingBuilding?.GetGameObject()?.GetComponent<QueueForBuildingBehaviour>() != null)
+            var queue = cardHandler?.CallingBuilding?.GetGameObject()?.GetComponent<QueueForBuildingBehaviour>();
+            if (queue != null)
             {
+                QueueUiGo.GetComponentInChildren<UiQueueHandler>(true).CallingQueueForBuildingBehaviour = queue;
                 QueueUiGo.SetActive(true);
                 return;
             }

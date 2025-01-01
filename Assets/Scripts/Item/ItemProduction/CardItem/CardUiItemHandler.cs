@@ -14,7 +14,7 @@ public class CardUiItemHandler : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            CallingBuilding.AddItem(ItemType);
+            CallingBuilding.AddType(ItemType);
         }
     }
 
@@ -22,7 +22,7 @@ public class CardUiItemHandler : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            CallingBuilding.DecreaseItem(ItemType);
+            CallingBuilding.DecreaseType(ItemType);
         }
     }
 

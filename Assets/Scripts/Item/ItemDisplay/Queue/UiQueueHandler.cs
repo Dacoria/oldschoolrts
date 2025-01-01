@@ -11,7 +11,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
     public UIProgressBarScript UIQueueProgressBarScript;
 
     // settings
-    public UiQueueCardBehaviour UIQueueCardPrefab;    
+    public UiQueueCardBehaviour UIQueueCardPrefab;
 
     // setten van queue -> dit zorgt dat de queue ververst voor het gebouw
     [HideInInspector] public QueueForBuildingBehaviour CallingQueueForBuildingBehaviour;
@@ -22,16 +22,16 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
     public class UiQueueItem
     {
         public UiQueueCardBehaviour UiQueueCardBehaviour;
-        public UIItemProcessing QueueItem;
+        public QueueItem QueueItem;
     }
 
-    protected override int FramesTillSlowUpdate => 20;
+    protected override int FramesTillSlowUpdate => 10;
     protected override void SlowUpdate()
     {
         UpdateQueue();
     }
 
-    public UIItemProcessing GetCurrentItemProcessed() => CallingQueueForBuildingBehaviour?.QueueItems.FirstOrDefault(x => x.IsBeingBuild);
+    public UIItemProcessing GetCurrentItemProcessed() => CallingQueueForBuildingBehaviour.CallingBuilding.GetCurrentItemProcessed();
 
     public void OnCancelQueueItemClick(UiQueueCardBehaviour uiQueueCardBehaviour)
     {
@@ -41,12 +41,13 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
         // TODO Items/resources teruggeven? (nog eerst regelen dat resources worden gebruikt.... )
     }
 
-    private QueueForBuildingBehaviour LastKnownQueue;    
+    private QueueForBuildingBehaviour LastKnownQueue;
 
     private void UpdateQueue()
     {
-        QueueTitle.gameObject.SetActive(CallingQueueForBuildingBehaviour?.QueueItems.Count > 0);
-        UIQueueProgressBarScript.gameObject.SetActive(CallingQueueForBuildingBehaviour?.QueueItems.Count > 0);
+        var queueIsActive = CallingQueueForBuildingBehaviour?.QueueItems.Count > 0;
+        QueueTitle.gameObject.SetActive(queueIsActive);
+        UIQueueProgressBarScript.gameObject.SetActive(queueIsActive);
 
         if (CallingQueueForBuildingBehaviour != null && 
             (
@@ -72,21 +73,22 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
     private void VisualizeCurrentQueue()
     {
         var buildingType = CallingQueueForBuildingBehaviour.GetBuildingType();
+        
         foreach (var queueItem in CallingQueueForBuildingBehaviour.QueueItems)
         {
             var displayUIQueueCard = InstantiateQueueItem(queueItem, buildingType);
-
-
             var displayQueueItem = new UiQueueItem
             {
                 QueueItem = queueItem,
                 UiQueueCardBehaviour = displayUIQueueCard
             };
+            var removeCancelOptionUnit = !PlacedDisplayItemsOnQueue.Any() && GetCurrentItemProcessed() != null;  // 1e is niet te cancelen als die al gebouwd wordt
+            displayUIQueueCard.CancelButtonGO.SetActive(!removeCancelOptionUnit); 
             PlacedDisplayItemsOnQueue.Add(displayQueueItem);
         }
     }
 
-    private UiQueueCardBehaviour InstantiateQueueItem(UIItemProcessing queueItem, BuildingType buildingType)
+    private UiQueueCardBehaviour InstantiateQueueItem(QueueItem queueItem, BuildingType buildingType)
     {
         var queueCardGo = Instantiate(UIQueueCardPrefab, transform);
         var uiCardSettings = buildingType.GetProductionSettings();

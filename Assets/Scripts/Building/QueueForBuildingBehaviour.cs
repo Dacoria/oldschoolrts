@@ -2,15 +2,23 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-public class QueueForBuildingBehaviour : MonoBehaviourCI
+public class QueueForBuildingBehaviour : BaseAEMonoCI
 {
     public float GetBuildTimeInSeconds() => GetCurrentItemProcessed() == null ? 0f : CallingBuilding.GetProductionTime(GetCurrentItemProcessed().Type);
-    public List<UIItemProcessing> QueueItems = new List<UIItemProcessing>();
+    public List<QueueItem> QueueItems = new List<QueueItem>();
 
     [ComponentInject] public ICardBuilding CallingBuilding;
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
+
+    protected override void OnFinishedWaitingAfterProducingAction(BuildingBehaviour building)
+    {
+        if(building == buildingBehaviour)
+        {
+            QueueItems.Remove(QueueItems.First());
+        }
+    }
 
     public void AddItemsOnQueue(Enum type, int amount)
     {
@@ -19,15 +27,11 @@ public class QueueForBuildingBehaviour : MonoBehaviourCI
 
         for (int i = 0; i < amountToAdd; i++)
         {
-            var itemToPutOnQueue = new UIItemProcessing
-            {
-                Type = type,
-            };
-            QueueItems.Add(itemToPutOnQueue);
+            QueueItems.Add(new QueueItem { Type = type });
         }
     }
 
-    public void RemoveItemFromQueue(UIItemProcessing queueItem)
+    public void RemoveItemFromQueue(QueueItem queueItem)
     {
         QueueItems.Remove(queueItem);
     }
@@ -37,39 +41,17 @@ public class QueueForBuildingBehaviour : MonoBehaviourCI
         if (QueueItems.Count > 0)
         {
             var itemProcessed = GetCurrentItemProcessed();
-            if (itemProcessed != null)
+            if (itemProcessed == null)
             {
-                var isFinished = CheckItemFinished(itemProcessed);
-                if (isFinished)
+                var itemToCreate = QueueItems.First();
+                if (CallingBuilding.CanProces(itemToCreate.Type))
                 {
-                    HandleItemFinished(itemProcessed);
-                }
-            }
-            else
-            {
-                var itemToStartWith = QueueItems.First();
-                if (CallingBuilding.CanProces(itemToStartWith.Type))
-                {
-                    itemToStartWith.StartTimeBeingBuild = DateTime.Now;
+                    CallingBuilding.AddType(itemToCreate.Type);
+                    // QueueItems.Remove(itemToCreate);
                 }
             }
         }
     }
 
-    public UIItemProcessing GetCurrentItemProcessed() => QueueItems.FirstOrDefault(x => x.IsBeingBuild);
-
-    private bool CheckItemFinished(UIItemProcessing item)
-    {
-        var timeItemFinished = item.StartTimeBeingBuild.Value.AddSeconds(GetBuildTimeInSeconds());
-        return timeItemFinished <= DateTime.Now;       
-    }
-
-    private void HandleItemFinished(UIItemProcessing item)
-    {
-        // doe actie
-        CallingBuilding.AddItem(item.Type);
-
-        // verwijder item van queue
-        QueueItems.Remove(item);
-    }
+    public UIItemProcessing GetCurrentItemProcessed() => CallingBuilding.GetCurrentItemProcessed();    
 }

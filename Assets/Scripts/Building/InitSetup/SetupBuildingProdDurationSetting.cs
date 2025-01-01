@@ -4,9 +4,9 @@ using System.Linq;
 
 public static class SetupBuildingProdDurationSetting
 {
-    private static Dictionary<BuildingType, ProduceResourceDurations> cacheItemProduce = new Dictionary<BuildingType, ProduceResourceDurations>();
+    private static Dictionary<BuildingType, ProduceDurations> cacheItemProduce = new Dictionary<BuildingType, ProduceDurations>();
 
-    public static ProduceResourceDurations GetProductionDurationSettings(this BuildingType type)
+    public static ProduceDurations GetProductionDurationSettings(this BuildingType type)
     {
         if (!cacheItemProduce.ContainsKey(type))
         {
@@ -15,14 +15,14 @@ public static class SetupBuildingProdDurationSetting
         return cacheItemProduce[type];
     }
 
-    private static ProduceResourceDurations GetProductionDurationSettingsNoCache(BuildingType type)
+    private static ProduceDurations GetProductionDurationSettingsNoCache(BuildingType type)
     {
         var buildingPrefab = BuildingPrefabs.Get().Single(x => x.BuildingType == type).BuildingPrefab;
 
         var mine = buildingPrefab.GetComponentInChildren<ProduceResourceMiningBehaviour>(true);
         if (mine != null)
         {
-            return new ProduceResourceDurations
+            return new ProduceDurations
             {
                 TimeToProduceResourceInSeconds = 20,
                 TimeToWaitAfterProducingInSeconds = 3
@@ -32,7 +32,7 @@ public static class SetupBuildingProdDurationSetting
         var manual = buildingPrefab.GetComponentInChildren<ProduceResourceManualBehaviour>(true);
         if (manual != null)
         {
-            return new ProduceResourceDurations
+            return new ProduceDurations
             {
                 TimeToProduceResourceInSeconds = 0, // manual - gaat via poppetje
                 TimeToWaitAfterProducingInSeconds = 2
@@ -44,14 +44,14 @@ public static class SetupBuildingProdDurationSetting
         {
             if(type == BuildingType.SHEEPFARM || type == BuildingType.PIGFARM)
             {
-                return new ProduceResourceDurations
+                return new ProduceDurations
                 {
                     TimeToProduceResourceInSeconds = 60,
                     TimeToWaitAfterProducingInSeconds = 5
                 };
             }
 
-            return new ProduceResourceDurations
+            return new ProduceDurations
             {
                 TimeToProduceResourceInSeconds = 30,
                 TimeToWaitAfterProducingInSeconds = 5
@@ -61,14 +61,14 @@ public static class SetupBuildingProdDurationSetting
         var card = buildingPrefab.GetComponentInChildren<CardItemsProduceBehaviour>(true);
         if (card != null)
         {
-            return new ProduceResourceDurations
+            return new ProduceDurations
             {
                 TimeToProduceResourceInSeconds = 40,
                 TimeToWaitAfterProducingInSeconds = 5
             };
         }
 
-        return new ProduceResourceDurations
+        return new ProduceDurations
         {
             TimeToProduceResourceInSeconds = 15,
             TimeToWaitAfterProducingInSeconds = 2

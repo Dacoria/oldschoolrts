@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class ProduceResourceAbstract : MonoBehaviourCI, IResourcesToProduceSettings, IRefillItems
+public abstract class ProduceResourceAbstract : BaseAEMonoCI, IResourcesToProduceSettings, IRefillItems
 {
     private RefillBehaviour refillBehaviour;
     private ConsumeRefillItemsBehaviour consumeRefillItems;

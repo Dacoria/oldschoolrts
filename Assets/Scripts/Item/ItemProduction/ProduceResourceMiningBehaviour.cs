@@ -17,12 +17,15 @@ public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocation
             inactives: new List<System.Type> { typeof(HandleProduceResourceOrderOverTimeBehaviour) });
 
         HandleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
-        HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction += OnFinishedProducingAction;
     }
 
-    private void OnDestroy() => HandleProduceResourceOrderOverTimeBehaviour.FinishedProducingAction -= OnFinishedProducingAction;
-
-    private void OnFinishedProducingAction(List<ItemOutput> list) => MineResource(consumeResource: true);
+    protected override void OnFinishedProducingAction(BuildingBehaviour building, List<ItemOutput> items)
+    {
+        if(building == buildingBehaviour)
+        {
+            MineResource(consumeResource: true);
+        }        
+    }
 
     protected override bool CanProduceResource(ItemProduceSetting itemProduceSetting) => base.CanProduceResource(itemProduceSetting) && MineResource(consumeResource: false);
 

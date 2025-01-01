@@ -1,4 +1,4 @@
-public class ProduceResourceDurations
+public class ProduceDurations
 {
     public float TimeToProduceResourceInSeconds;
     public float TimeToWaitAfterProducingInSeconds;

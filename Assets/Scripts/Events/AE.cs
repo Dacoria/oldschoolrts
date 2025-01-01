@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class AE
@@ -38,4 +39,9 @@ public static class AE
 
     // BUILDING NEEDS WORKER
     public static Action<WorkerBuildingBehaviour> BuildingNeedsWorker;
+
+    // PRODUCE EVENTS
+    public static Action<BuildingBehaviour, List<ItemOutput>> StartedProducingAction; // evt aanhaken op deze events
+    public static Action<BuildingBehaviour, List<ItemOutput>> FinishedProducingAction; // evt aanhaken op deze events
+    public static Action<BuildingBehaviour> FinishedWaitingAfterProducingAction; // evt aanhaken op deze events
 }

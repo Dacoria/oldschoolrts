@@ -7,10 +7,7 @@ public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
     [ComponentInject] private IResourcesToProduceSettings resourcesToProduceSettings;
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
-    public HandleProduceResourceOrderBehaviour ProduceResourceOrderBehaviour;
-    public Action<List<ItemOutput>> StartedProducingAction; // evt aanhaken op deze events
-    public Action<List<ItemOutput>> FinishedProducingAction; // evt aanhaken op deze events
-    public Action FinishedWaitingAfterProducingAction; // evt aanhaken op deze events
+    public HandleProduceResourceOrderBehaviour ProduceResourceOrderBehaviour;    
 
     public List<ItemOutput> ItemsBeingProduced;
     public bool IsProducingResourcesRightNow => ItemsBeingProduced != null;
@@ -52,16 +49,16 @@ public class HandleProduceResourceOrderOverTimeBehaviour : MonoBehaviourCI
         StartTimeProducing = DateTime.Now;
         ItemsBeingProduced = itemsToProduce;
         ProductionTimeItemBeingProduced = produceTimeInSec;
-        StartedProducingAction?.Invoke(itemsToProduce);
+        AE.StartedProducingAction?.Invoke(buildingBehaviour, itemsToProduce);
         yield return Wait4Seconds.Get(produceTimeInSec);
                 
         ProduceResourceOrderBehaviour.ProduceItemsNoConsumption(itemsToProduce);
         ItemsBeingProduced = null;
         ProductionTimeItemBeingProduced = 0f;
-        FinishedProducingAction?.Invoke(itemsToProduce);
+        AE.FinishedProducingAction?.Invoke(buildingBehaviour, itemsToProduce);
 
         yield return Wait4Seconds.Get(waitTimeInSec);
-        FinishedWaitingAfterProducingAction?.Invoke();
+        AE.FinishedWaitingAfterProducingAction?.Invoke(buildingBehaviour);
 
         StartCoroutine(TryToProduceResourceOverXSeconds());
     }

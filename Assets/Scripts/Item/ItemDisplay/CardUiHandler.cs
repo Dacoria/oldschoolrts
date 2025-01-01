@@ -61,13 +61,13 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneIte
         }
         else
         {
-            CallingBuilding.AddItems(type, amount);            
+            CallingBuilding.AddTypes(type, amount);            
         }
     }
 
     public void DecreaseAmount(Enum type, int amount)
     {
-        CallingBuilding.DecreaseItems(type, amount);
+        CallingBuilding.DecreaseTypes(type, amount);
     }
     public int GetCount(Enum type) => CallingBuilding != null ? CallingBuilding.GetCount(type) : 0;
 

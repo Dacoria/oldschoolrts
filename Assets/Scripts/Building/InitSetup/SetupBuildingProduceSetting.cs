@@ -47,7 +47,7 @@ public static class SetupBuildingProduceSetting
             ProducedPerProdCycle = 1,
             ItemType = type.GetMaterialResourceType().GetItemType()
         };
-        return new List<ItemProduceSetting> { new ItemProduceSetting { ItemsToProduce = new List<ItemOutput> { itemToProduce } } };
+        return new List<ItemProduceSetting> { new ItemProduceSetting { ItemsToProduce = new List<ItemOutput> { itemToProduce }, ItemsConsumedToProduce = new List<ItemAmountBuffer>() } };
     }
 
     private static List<ItemProduceSetting> GetSetupMineProduceSetting(BuildingType type)
@@ -58,7 +58,7 @@ public static class SetupBuildingProduceSetting
             ProducedPerProdCycle = 1,
             ItemType = type.GetMaterialResourceType().GetItemType()
         };
-        return new List<ItemProduceSetting> { new ItemProduceSetting { ItemsToProduce = new List<ItemOutput> { itemToProduce } } };
+        return new List<ItemProduceSetting> { new ItemProduceSetting { ItemsToProduce = new List<ItemOutput> { itemToProduce }, ItemsConsumedToProduce = new List<ItemAmountBuffer>() } };
     }
 
     public static MaterialResourceType GetMaterialResourceType(this BuildingType type)

@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class MoveObjectToSurface : MonoBehaviourCI
 {
-    public float DistanceSpawnedBelowSurface;
-
     private float MovementSpeed;
     private float TimeInSeconds;
 
@@ -11,6 +9,9 @@ public class MoveObjectToSurface : MonoBehaviourCI
     private Vector3 EndPosition;
 
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
+    [ComponentInject] private BoxCollider boxCollider;
+
+    public float distanceSpawnedBelowSurface => -boxCollider.size.y;
 
     public void Start()
     {
@@ -29,7 +30,7 @@ public class MoveObjectToSurface : MonoBehaviourCI
         }
 
         var orig = this.transform.position;
-        this.transform.position = new Vector3(this.transform.position.x, DistanceSpawnedBelowSurface, this.transform.position.z);
+        this.transform.position = new Vector3(this.transform.position.x, distanceSpawnedBelowSurface, this.transform.position.z);
         this.EndPosition = orig;  //new Vector3(this.transform.position.x, 0.11f, this.transform.position.z); 
 
         MovementSpeed = (this.EndPosition.y - this.transform.position.y) / TimeInSeconds;        

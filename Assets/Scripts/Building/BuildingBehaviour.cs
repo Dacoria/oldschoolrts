@@ -11,7 +11,7 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
     public GameObject Real;
     public bool DEBUG_RealImmediately;
 
-    [HideInInspector] public BuildingType BuildingType;// wordt geset door builder bij bouwen
+    public BuildingType BuildingType;// wordt geset door builder bij bouwen
     public List<ItemAmountBuffer> RequiredItems => BuildingType.GetBuildCosts();
 
     [HideInInspector] public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 

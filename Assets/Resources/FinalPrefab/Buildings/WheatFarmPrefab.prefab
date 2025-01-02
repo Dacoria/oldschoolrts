@@ -675,16 +675,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 7571275416962988289}
   DEBUG_RealImmediately: 1
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 1
-    ItemType: 30
-    MaxBuffer: 0
-  - Amount: 1
-    ItemType: 10
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &6206011429936734667
 Rigidbody:
@@ -746,6 +737,7 @@ GameObject:
   - component: {fileID: 3968333204928007154}
   - component: {fileID: 4046041821456263673}
   - component: {fileID: 5434366658329519237}
+  - component: {fileID: 4281603873324878680}
   m_Layer: 0
   m_Name: Real
   m_TagString: WheatFarm
@@ -795,7 +787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4
 --- !u!114 &4046041821456263673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,6 +814,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingBehaviour: {fileID: 0}
+--- !u!114 &4281603873324878680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7571275416962988289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155192e5e03dd3f4389667e9c120bff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProduceResourceOrder: {fileID: 0}
 --- !u!1 &8027973989642736674
 GameObject:
   m_ObjectHideFlags: 0

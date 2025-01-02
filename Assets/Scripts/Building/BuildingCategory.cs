@@ -5,13 +5,15 @@ public enum BuildingCategory
 {
     Unknown,
     Manual,
+    Magic,
     Mine,
     OneProductOverTime,
     SelectProductsOverTime,
     School,
     Barracks,
     Population,
-    Stockpile
+    Stockpile,
+    Tavern
 }
 
 public static class BuildingCategoryHelper
@@ -31,6 +33,9 @@ public static class BuildingCategoryHelper
     {
         if (type == BuildingType.NONE)
             return BuildingCategory.Unknown;
+
+        if (type == BuildingType.WIZARDHOUSE)
+            return BuildingCategory.Magic;
 
         var buildingPrefab = BuildingPrefabs.Get().FirstOrDefault(x => x.BuildingType == type).BuildingPrefab;
 
@@ -57,6 +62,10 @@ public static class BuildingCategoryHelper
 
         if (buildingPrefab.GetComponentInChildren<StockpileBehaviour>(true) != null)
             return BuildingCategory.Stockpile;
+
+        if (buildingPrefab.GetComponentInChildren<TavernBehaviour>(true) != null)
+            return BuildingCategory.Tavern;
+
 
         throw new System.Exception();
     }

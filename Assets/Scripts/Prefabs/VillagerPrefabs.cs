@@ -5,14 +5,14 @@ using UnityEngine;
 
 public static class VillagerPrefabs
 {
-    private static List<VillagerUnitSetting> _costs;
+    private static List<VillagerUnitSetting> cache;
     public static List<VillagerUnitSetting> Get()
     {
-        if (_costs == null)
+        if (cache == null)
         {
-            _costs = GenerateVillagerUnitSetting();
+            cache = GenerateVillagerUnitSetting();
         }
-        return _costs;
+        return cache;
     }
 
     private static List<VillagerUnitSetting> GenerateVillagerUnitSetting()

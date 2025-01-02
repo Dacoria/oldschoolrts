@@ -40,10 +40,10 @@ public class UIProgressBarScript : MonoBehaviourSlowUpdateFramesCI
     private float GetProgressPercentageOfItemProcessed()
     {
         var item = procesOneItemUI.GetCurrentItemProcessed();
-        if (item != null && item.IsBeingBuild)
+        if (item != null)
         {
-            var timeBetweenStartProcessAndNow = (DateTime.Now - item.StartTimeBeingBuild.Value).TotalSeconds;
-            var perc = (float)timeBetweenStartProcessAndNow / procesOneItemUI.GetBuildTimeInSeconds(procesOneItemUI.GetCurrentItemProcessed().Type);
+            var timeBetweenStartProcessAndNow = (DateTime.Now - item.StartTimeBeingBuild).TotalSeconds;
+            var perc = (float)timeBetweenStartProcessAndNow / procesOneItemUI.GetBuildTimeInSeconds();
             return Math.Min(perc, 1);
         }
 

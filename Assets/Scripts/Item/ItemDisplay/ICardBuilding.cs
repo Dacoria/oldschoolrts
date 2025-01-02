@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public interface ICardBuilding
 {
-    int GetCount(Enum type);
     void AddType(Enum type);
-    void DecreaseType(Enum type);
-    float GetProductionTime(Enum type);
-    ProductionSetting GetCardDisplaySetting(Enum type);
+    int GetCount(Enum type) { return 0; } // alleen zonder queue interessant. TODO Lostrekken
+    void DecreaseType(Enum type) { } // alleen zonder queue interessant. TODO Lostrekken
+    
     bool CanProces(Enum type);
     GameObject GetGameObject();
-    UIItemProcessing GetCurrentItemProcessed();
+    BuildingType GetBuildingType();
+    TypeProcessing GetCurrentTypeProcessed();
 
+    ProductionSetting GetCardDisplaySetting(Enum type) => GetBuildingType().GetProductionSettings().Single(x => x.GetType() == type);
+    float GetProductionTime() => GetBuildingType().GetProductionDurationSettings().TimeToProduceResourceInSeconds;
 
     void AddTypes(Enum type, int amount)
     {

@@ -7,10 +7,7 @@ public partial class GameManager : BaseAEMonoCI
     public GameObject MainCastle;
     private IOrderDestination MainCastleOrderDestination;
 
-    public static GameManager Instance;    
-
-    public static int PopulationLimit = 8;
-    public static int CurrentPopulation = 0;
+    public static GameManager Instance;
 
     private new void Awake()
     {

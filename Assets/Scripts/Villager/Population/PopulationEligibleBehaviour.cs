@@ -4,11 +4,11 @@ public class PopulationEligibleBehaviour : MonoBehaviour
 {
     void Start()
     {
-        GameManager.CurrentPopulation++;
+        PopulationManager.CurrentPopulation++;
     }
 
     public void OnDestroy()
     {
-        GameManager.CurrentPopulation--;
+        PopulationManager.CurrentPopulation--;
     }
 }

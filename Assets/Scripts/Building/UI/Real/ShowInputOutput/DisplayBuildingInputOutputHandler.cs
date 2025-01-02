@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
 {
@@ -16,7 +15,6 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     private BuildingCategory buildingCategory => buildingBehaviour.BuildingType.GetCategory();
 
-    [ComponentInject(Required.OPTIONAL)] private IResourcesToProduceSettings resourcesToProduceSettings;
     [ComponentInject(Required.OPTIONAL)] private HandleProduceResourceOrderBehaviour produceOrderBehaviour;
 
     private bool ShowProdPerCycleInput() =>
@@ -31,14 +29,14 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
         buildingCategory == BuildingCategory.SelectProductsOverTime;
 
     private bool ShowOutput() =>
-        produceOrderBehaviour != null && resourcesToProduceSettings != null &&(
+        produceOrderBehaviour != null && (
             buildingCategory == BuildingCategory.Mine ||
             buildingCategory == BuildingCategory.OneProductOverTime ||
             buildingCategory == BuildingCategory.Manual
         );
 
     private bool ShowGears() =>
-        produceOrderBehaviour != null && resourcesToProduceSettings != null && (
+        produceOrderBehaviour != null && (
             buildingCategory == BuildingCategory.Mine ||
             buildingCategory == BuildingCategory.OneProductOverTime
         );
@@ -122,12 +120,13 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     private void InitiateOutputDisplayProdScript()
     {
         OutputTextMeshItems = new List<TextMeshItem>();
-        for (int i = 0; i < resourcesToProduceSettings.GetAvailableItemsToProduce().Count(); i++)
+        var itemsToProduce = buildingBehaviour.BuildingType.GetItemProduceSettings().First();
+        for (int i = 0; i < itemsToProduce.ItemsToProduce.Count(); i++)
         {
             var outputDisplayGo = Instantiate(OutputDisplayPrefabGo, processingDisplayGo.transform);
-            var extraYDistance = ((resourcesToProduceSettings.GetAvailableItemsToProduce().Count() - 1) * 0.6f) - (i * 0.6f);
+            var extraYDistance = ((itemsToProduce.ItemsToProduce.Count() - 1) * 0.6f) - (i * 0.6f);
             outputDisplayGo.transform.position = new Vector3(outputDisplayGo.transform.position.x, outputDisplayGo.transform.position.y + extraYDistance, outputDisplayGo.transform.position.z);
-            FixInputOutputDisplayForItemtype(OutputTextMeshItems, resourcesToProduceSettings.GetAvailableItemsToProduce()[i].ItemType, outputDisplayGo);
+            FixInputOutputDisplayForItemtype(OutputTextMeshItems, itemsToProduce.ItemsToProduce[i].ItemType, outputDisplayGo);
         }               
     }
 
@@ -192,7 +191,8 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     {
         if (ShowOutput())
         {
-            foreach (var itemToProduce in resourcesToProduceSettings.GetAvailableItemsToProduce())
+            var itemsToProduce = buildingBehaviour.BuildingType.GetItemProduceSettings().First();
+            foreach (var itemToProduce in itemsToProduce.ItemsToProduce)
             {
                 var textMesh = OutputTextMeshItems.Single(x => x.ItemType == itemToProduce.ItemType).TextMesh;
                 var orderCount = produceOrderBehaviour.OutputOrders.Count(x => x.ItemType == itemToProduce.ItemType);
@@ -219,7 +219,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
                     if (ShowProdPerCycleInput())
                     {
                         // alleen dit showen bij de '1 ding produceren per keer' gebouwen (dus niet barracks, wel waterwel etc)
-                        var consumeItemsFirstProduction = refillBehaviour.GetItemProduceSettings().First().ItemsConsumedToProduce; 
+                        var consumeItemsFirstProduction = buildingBehaviour.BuildingType.GetItemProduceSettings().First().ItemsConsumedToProduce; 
                         textMesh.text += $" ({consumeItemsFirstProduction.First(x => x.ItemType == itemConsumed.ItemType).Amount}x)";
                     }
                 }

@@ -1,31 +1,23 @@
+using System;
 using System.Collections.Generic;
 
 public class HandleProduceResourceOrderBehaviour : BaseAEMonoCI
 {
     public List<SerfRequest> OutputOrders = new List<SerfRequest>();
     [ComponentInject] private IOrderDestination orderDestination;
-    
-    public bool ProduceItemsWithConsumption(IResourcesToProduceSettings resourcesToProduce)
+
+    private new void Awake()
     {
-        var itemProduceSetting = resourcesToProduce.GetItemToProduceSettings();
-        var hasConsumedResources = resourcesToProduce.ConsumeRequiredResources(itemProduceSetting);
-        if(hasConsumedResources)
-        {
-            ProduceItemsNoConsumption(itemProduceSetting.ItemsToProduce);
-            return true;
-        }
-        return false;
+        base.Awake();
+        
+        // check zodat je altijd goed zit met events (en dit niet direct aftrapt)
+        gameObject.AddComponent<ValidComponents>().DoCheck(
+            actives: new List<Type> { typeof(ProduceCRBehaviour) });
     }
 
-    public void ProduceItemsNoConsumption(List<ItemOutput> ItemsToProduce)
-    {
-        foreach (var item in ItemsToProduce)
-        {
-            ProduceItem(item);
-        }
-    }
+    public void ProduceItems(List<ItemOutput> ItemsToProduce) => ItemsToProduce.ForEach(item => ProduceItem(item));
 
-    private void ProduceItem(ItemOutput itemProduced)
+    public void ProduceItem(ItemOutput itemProduced)
     {
         for (int i = 0; i < itemProduced.ProducedPerProdCycle; i++)
         {

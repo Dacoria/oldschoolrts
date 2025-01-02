@@ -5,5 +5,5 @@ using System;
 public class ItemLimit
 {
     public ItemType ItemType;
-    public int ItemsToProduce;
+    public int ItemAmountToProduce;
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BarracksBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
+public class BarracksBehaviour : MonoBehaviourCI, ICardBuilding
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     public List<SerfRequest> IncomingOrders;
@@ -15,53 +15,38 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
     private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
     [HideInInspector] public RefillBehaviour RefillBehaviour;
     public QueueForBuildingBehaviour queueForBuildingBehaviour;
+    private ProduceCRBehaviour produceCRBehaviour;
 
     public new void Awake()
     {
         base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour) });
+            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour), typeof(ProduceCRBehaviour) });
 
         RefillBehaviour = gameObject.AddComponent<RefillBehaviour>();
         consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
         queueForBuildingBehaviour = gameObject.AddComponent<QueueForBuildingBehaviour>();
+        produceCRBehaviour = gameObject.AddComponent<ProduceCRBehaviour>();
     }
 
     public void AddType(Enum type)
     {
-        var unit = (BarracksUnitSetting)GetCardDisplaySetting(type);
-        var itemsForProduction = GetCardDisplaySetting(type).ItemsConsumedToProduce.ConvertAll(x => (ItemAmount)x).ToList();
-
-        if (CanProces((BarracksUnitType)type) && consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction))
+        var barracksUnitType = (BarracksUnitType)type;
+        var itemsForProduction = buildingBehaviour.BuildingType.GetProductionSettings().Single(x => x.GetType() == type).ItemsConsumedToProduce;
+        if (CanProces(barracksUnitType))
         {
-            StartCoroutine(StartUnitCreationProcess((BarracksUnitType)type));
+            produceCRBehaviour.ProduceOverTime(new ProduceSetup(barracksUnitType,
+                produceAction: () => CreateUnit(barracksUnitType)));
+        }
+        else
+        {
+            throw new Exception("Zou al gecheckt moeten zijn"); //queue
         }
     }
 
-    private UIItemProcessing currentItemProcessed;
-    public UIItemProcessing GetCurrentItemProcessed() => currentItemProcessed;
-
-    private IEnumerator StartUnitCreationProcess(BarracksUnitType type)
+    private void CreateUnit(BarracksUnitType type)
     {
-        var produceDurations = buildingBehaviour.BuildingType.GetProductionDurationSettings();
-        currentItemProcessed = new UIItemProcessing { StartTimeBeingBuild = DateTime.Now, Type = type };
-        AE.StartedProducingAction?.Invoke(buildingBehaviour, null);
-        yield return Wait4Seconds.Get(produceDurations.TimeToProduceResourceInSeconds);
-
-        CreateUnit(type);
-        AE.FinishedProducingAction?.Invoke(buildingBehaviour, null);
-
-        yield return Wait4Seconds.Get(produceDurations.TimeToWaitAfterProducingInSeconds);
-
-        AE.FinishedWaitingAfterProducingAction?.Invoke(buildingBehaviour);
-        currentItemProcessed = null;        
-    }
-
-    public void CreateUnit(Enum type)
-    {
-        var unit = (BarracksUnitSetting)GetCardDisplaySetting(type);
-        var itemsNeeded = GetCardDisplaySetting(type).ItemsConsumedToProduce.ConvertAll(x => (ItemAmount)x).ToList();
-
+        var unit = BarrackUnitPrefabs.Get().Single(x => x.Type == type);
         var unitGo = Instantiate(unit.ResourcePrefab);
         unitGo.GetComponent<OwnedByPlayerBehaviour>().Player = Player.PLAYER1;
         unitGo.transform.position = this.transform.gameObject.EntranceExit();
@@ -93,24 +78,21 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardBuilding, IRefillItems
         }
     }
 
-    public void DecreaseType(Enum type) {}
-
-    public int GetCount(Enum type) => 0;
-
-    public ProductionSetting GetCardDisplaySetting(Enum type) => BarrackUnitPrefabs.Get().Single(x => x.Type == (BarracksUnitType)type);
-
     public bool CanProces(Enum type) 
     {
-        var itemsNeeded = GetCardDisplaySetting(type).ItemsConsumedToProduce;
-        return currentItemProcessed == null && consumeRefillItemsBehaviour.CanConsumeRefillItems(itemsNeeded);
+        if (!produceCRBehaviour.IsReadyForNextProduction)
+        {
+            return false;
+        }
+
+        var itemsNeeded = buildingBehaviour.BuildingType.GetProductionSettings().First(x => x.GetType() == type).ItemsConsumedToProduce;
+        if (!consumeRefillItemsBehaviour.CanConsumeRefillItems(itemsNeeded))
+            return false;        
+
+        return true;
     }
 
-    public bool AlwaysRefillItemsIgnoreBuffer() => true;
-
-    public List<ItemProduceSetting> GetItemProduceSettings() =>
-        BarrackUnitPrefabs.Get().ConvertAll(x => (ProductionSetting)x).ConvertToSingleProduceItem();
-
     public GameObject GetGameObject() => gameObject;
-
-    public float GetProductionTime(Enum type) => buildingBehaviour.BuildingType.GetProductionDurationSettings().TimeToProduceResourceInSeconds; // 1 waarde voor alles
+    public TypeProcessing GetCurrentTypeProcessed() => produceCRBehaviour.CurrentTypesProcessed.First();
+    public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
 }

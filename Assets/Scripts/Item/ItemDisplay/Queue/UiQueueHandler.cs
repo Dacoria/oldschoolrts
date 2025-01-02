@@ -31,7 +31,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
         UpdateQueue();
     }
 
-    public UIItemProcessing GetCurrentItemProcessed() => CallingQueueForBuildingBehaviour.CallingBuilding.GetCurrentItemProcessed();
+    public TypeProcessing GetCurrentItemProcessed() => CallingQueueForBuildingBehaviour.CallingBuilding.GetCurrentTypeProcessed();
 
     public void OnCancelQueueItemClick(UiQueueCardBehaviour uiQueueCardBehaviour)
     {
@@ -102,5 +102,5 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
         return queueCardGo;
     }
 
-    public float GetBuildTimeInSeconds(Enum type) => CallingQueueForBuildingBehaviour.GetBuildTimeInSeconds();
+    public float GetBuildTimeInSeconds() => CallingQueueForBuildingBehaviour.GetBuildTimeInSeconds();
 }

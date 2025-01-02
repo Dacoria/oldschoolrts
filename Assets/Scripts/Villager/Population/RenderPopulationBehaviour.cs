@@ -9,9 +9,9 @@ public class RenderPopulationBehaviour : MonoBehaviourCI
 
     void Update()
     {
-        Text.text = $"{GameManager.CurrentPopulation}/{GameManager.PopulationLimit}";
+        Text.text = $"{PopulationManager.CurrentPopulation}/{PopulationManager.PopulationLimit}";
 
-        if (GameManager.CurrentPopulation == GameManager.PopulationLimit)
+        if (PopulationManager.CurrentPopulation == PopulationManager.PopulationLimit)
         {
             this.image.color = Color.red;
         }

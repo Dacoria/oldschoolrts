@@ -208,5 +208,15 @@ public static class MyExtensions
             return string.Concat(input[0].ToString().ToUpper(), input.ToLower().Substring(1, input.Length - 1));
         }        
     }
+
+    public static int DecreaseOneNoNegative(this int i)
+    {
+        if(i > 0)
+        {
+            return i - 1;
+        }
+        return i;
+        
+    }
 }
 

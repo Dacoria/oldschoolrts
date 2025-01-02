@@ -54,7 +54,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
     protected virtual void OnBuilderRequestStatusChanged(BuilderRequest request, BuildStatus status) { }
     protected virtual void OnBuilderRequest(BuilderRequest request) { }
     protected virtual void OnBuildingNeedsWorker(WorkerBuildingBehaviour behaviour) { }
-    protected virtual void OnFinishedProducingAction(BuildingBehaviour building, List<ItemOutput> items) { }
+    protected virtual void OnFinishedProducingAction(BuildingBehaviour building, List<Enum> typesProduced) { }
     protected virtual void OnFinishedWaitingAfterProducingAction(BuildingBehaviour building) { }
     protected virtual void OnFoodStatusHasChanged(FoodConsumption consumption, FoodConsumptionStatus status) { }
     protected virtual void OnFreeBuilder(BuilderBehaviour behaviour) { }
@@ -68,7 +68,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
     protected virtual void OnOrderStatusChanged(SerfOrder order, Status prevStatus) { }
     protected virtual void OnSerfRequest(SerfRequest request) { }
     protected virtual void OnStartCompletingSerfRequest(SerfOrder order) { }
-    protected virtual void OnStartedProducingAction(BuildingBehaviour building, List<ItemOutput> items) { }
+    protected virtual void OnStartedProducingAction(BuildingBehaviour building, List<Enum> typesToProduce) { }
     protected virtual void OnStartNewWorkerAction(WorkManager manager) { }
 
     // GEEN ABSTRACTE CLASSES!

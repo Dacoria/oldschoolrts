@@ -6,11 +6,11 @@ public class IncreaseMaxPopulationBehaviour : MonoBehaviour
 
     private void Start()
     {
-        GameManager.PopulationLimit += IncreasePopCount;
+        PopulationManager.PopulationLimit += IncreasePopCount;
     }
 
     private void OnDestroy()
     {
-        GameManager.PopulationLimit -= IncreasePopCount;
+        PopulationManager.PopulationLimit -= IncreasePopCount;
     }
 }

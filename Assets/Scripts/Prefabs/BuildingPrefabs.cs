@@ -5,14 +5,14 @@ using System.Linq;
 
 public static class BuildingPrefabs
 {
-    private static List<BuildingPrefabItem> _prefabs;
+    private static List<BuildingPrefabItem> cache;
     public static List<BuildingPrefabItem> Get() 
     {        
-        if (_prefabs == null)
+        if (cache == null)
         {
-            _prefabs = GenerateBuildingPrefabItems();
+            cache = GenerateBuildingPrefabItems();
         }
-        return _prefabs;        
+        return cache;        
     }
 
     private static List<BuildingPrefabItem> GenerateBuildingPrefabItems()

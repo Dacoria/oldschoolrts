@@ -7,8 +7,8 @@ public class RefillBehaviour : BaseAEMonoCI
     public List<SerfRequest> IncomingOrders;
     public List<ItemAmount> StockpileOfItemsRequired;
 
-    [ComponentInject] public IRefillItems RefillItems;
     [ComponentInject] private IOrderDestination orderDestination;
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     private new void Awake()
     {
@@ -78,7 +78,7 @@ public class RefillBehaviour : BaseAEMonoCI
 
     public List<ItemAmount> GetItemsToRefill()
     {
-        var settings = RefillItems.GetItemProduceSettings();
+        var settings = buildingBehaviour.BuildingType.GetItemProduceSettings();
         var maxBufferPerItemtype = settings
             .SelectMany(x => x.ItemsConsumedToProduce)
             .GroupBy(x => x.ItemType)
@@ -92,14 +92,12 @@ public class RefillBehaviour : BaseAEMonoCI
         return maxBufferPerItemtype;
     }
 
-    public List<ItemProduceSetting> GetItemProduceSettings() => RefillItems.GetItemProduceSettings();
-
     public int GetItemCountToRefill(ItemType itemType, int countIncoming, int countStocked)
     {
-        var alwaysRefillItems = RefillItems.AlwaysRefillItemsIgnoreBuffer();
-        var settings = RefillItems.GetItemProduceSettings();
+        var ignoreMaxItemBuffer = buildingBehaviour.BuildingType.IgnoreMaxItemBuffer();
+        var settings = buildingBehaviour.BuildingType.GetItemProduceSettings();
 
-        if(alwaysRefillItems)
+        if (ignoreMaxItemBuffer)
         {
             return 5 - countIncoming + countStocked; // altijd 5 orders om items te brengen -> STOCKPILE
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 
 public class UpdateProdTimeText : MonoBehaviourCI
@@ -6,11 +7,11 @@ public class UpdateProdTimeText : MonoBehaviourCI
     public TextMeshPro TimeRemainingText;
 
     [ComponentInject(Required.OPTIONAL)] // optioneel; heb je niks, toon dan niks
-    private HandleProduceResourceOrderOverTimeBehaviour ProduceResourceBehaviour;
+    private ProduceCRBehaviour ProduceBehaviour;
 
     void Start()
     {
-        if (ProduceResourceBehaviour != null)
+        if (ProduceBehaviour != null)
         {
             TimeRemainingText.transform.gameObject.SetActive(true); // Workaround --> direct enablen zorgt ervoor dat de text blokken wordt...... bug Unity
         }        
@@ -18,10 +19,10 @@ public class UpdateProdTimeText : MonoBehaviourCI
 
     void Update()
     {        
-        if (ProduceResourceBehaviour != null && ProduceResourceBehaviour.IsProducingResourcesRightNow)
+        if (ProduceBehaviour != null && ProduceBehaviour.IsProducingResourcesRightNow)
         {
-            var producingTimeInSeconds = ProduceResourceBehaviour.ProductionTimeItemBeingProduced;
-            var timeProducingInMs = producingTimeInSeconds - (DateTime.Now - ProduceResourceBehaviour.StartTimeProducing).TotalMilliseconds / 1000f;
+            var producingTimeInSeconds = ProduceBehaviour.ProduceDurations.TimeToProduceResourceInSeconds;
+            var timeProducingInMs = producingTimeInSeconds - (DateTime.Now - ProduceBehaviour.CurrentTypesProcessed.First().StartTimeBeingBuild).TotalMilliseconds / 1000f;
             if (timeProducingInMs >= 0)
             {
                 TimeRemainingText.SetText(timeProducingInMs.ToString("F1") + " sec");

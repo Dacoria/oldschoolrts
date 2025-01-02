@@ -5,14 +5,14 @@ using UnityEngine;
 
 public static class ResourcePrefabs
 {
-    private static List<ResourcePrefabItem> _prefabs;
+    private static List<ResourcePrefabItem> cache;
     public static List<ResourcePrefabItem> Get()
     {
-        if (_prefabs == null)
+        if (cache == null)
         {
-            _prefabs = GenerateResourcePrefabItems();
+            cache = GenerateResourcePrefabItems();
         }
-        return _prefabs;        
+        return cache;        
     }
 
     private static List<ResourcePrefabItem> GenerateResourcePrefabItems()

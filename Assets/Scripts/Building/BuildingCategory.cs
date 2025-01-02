@@ -48,7 +48,7 @@ public static class BuildingCategoryHelper
         if (buildingPrefab.GetComponentInChildren<ProduceResourceOverTimeBehaviour>(true) != null)
             return BuildingCategory.OneProductOverTime;
 
-        if (buildingPrefab.GetComponentInChildren<CardItemsProduceBehaviour>(true) != null)
+        if (buildingPrefab.GetComponentInChildren<ProduceResourceCardBehaviour>(true) != null)
             return BuildingCategory.SelectProductsOverTime;
 
         if (buildingPrefab.GetComponentInChildren<BarracksBehaviour>(true) != null)

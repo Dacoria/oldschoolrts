@@ -15,6 +15,15 @@ public static class SetupBuildingProduceSetting
         return cache[type];
     }
 
+    public static bool IgnoreMaxItemBuffer(this BuildingType type)
+    {
+        if(type == BuildingType.BARRACKS)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private static List<ItemProduceSetting> GetItemProduceSettingsNoCache(BuildingType type)
     {
         var category = type.GetCategory();

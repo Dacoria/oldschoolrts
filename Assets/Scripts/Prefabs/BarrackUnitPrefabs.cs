@@ -5,14 +5,14 @@ using UnityEngine;
 
 public static class BarrackUnitPrefabs
 {
-    private static List<BarracksUnitSetting> _prefabs;
+    private static List<BarracksUnitSetting> cache;
     public static List<BarracksUnitSetting> Get() 
     {        
-        if (_prefabs == null)
+        if (cache == null)
         {
-            _prefabs = GenerateBarracksUnitPrefabs();
+            cache = GenerateBarracksUnitPrefabs();
         }
-        return _prefabs;        
+        return cache;        
     }
 
     private static List<BarracksUnitSetting> GenerateBarracksUnitPrefabs()
@@ -66,7 +66,7 @@ public static class BarrackUnitPrefabs
             Offence = new Assets.Army.Offence
             {
                 AttackHitRate = 1,
-                AttackType = Assets.Army.AttackType.HEAVY,
+                AttackType = Assets.Army.AttackType.MELEE,
                 BaseDamage = 10
             },
             Defence = new Assets.Army.Defence
@@ -130,7 +130,7 @@ public static class BarrackUnitPrefabs
             Offence = new Assets.Army.Offence
             {
                 AttackHitRate = 1,
-                AttackType = Assets.Army.AttackType.LIGHT,
+                AttackType = Assets.Army.AttackType.PIERCING,
                 BaseDamage = 10,
             },
             Defence = new Assets.Army.Defence

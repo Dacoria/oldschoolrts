@@ -527,7 +527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4.5
 --- !u!114 &1462680175948114171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,55 +536,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5285981977623616560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88f90f6855567884aa2a7913bef26e40, type: 3}
+  m_Script: {fileID: 11500000, guid: 9301c8e2a8ddf594eb262a951340a434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemProductionSettings:
-  - ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 190
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 150
-      MaxBuffer: 5
-    Type: 200
-    MaxBuffer: 5
-  - ItemsConsumedToProduce:
-    - Amount: 2
-      ItemType: 190
-      MaxBuffer: 8
-    - Amount: 1
-      ItemType: 150
-      MaxBuffer: 5
-    Type: 210
-    MaxBuffer: 5
-  - ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 190
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 150
-      MaxBuffer: 5
-    Type: 220
-    MaxBuffer: 5
-  - ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 190
-      MaxBuffer: 5
-    Type: 230
-    MaxBuffer: 5
-  - ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 190
-      MaxBuffer: 5
-    - Amount: 1
-      ItemType: 150
-      MaxBuffer: 5
-    Type: 240
-    MaxBuffer: 5
-  IsProducingResourcesRightNow: 0
-  ProduceTimeInSeconds: 5
-  WaitTimeAfterProducingInSeconds: 1.5
 --- !u!114 &7643416546333469368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,16 +636,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 5285981977623616560}
   DEBUG_RealImmediately: 1
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 1
-    ItemType: 30
-    MaxBuffer: 0
-  - Amount: 1
-    ItemType: 10
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &7531136172988955910
 Rigidbody:

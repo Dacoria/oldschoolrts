@@ -4,19 +4,19 @@ public class OnlyShowWhileProducing : MonoBehaviour
 {
     public GameObject GoToShowDuringProducing;
 
-    [ComponentInject] private HandleProduceResourceOrderOverTimeBehaviour ProduceResourceBehaviour;   
+    [ComponentInject] private ProduceCRBehaviour ProduceBehaviour;   
 
     private void Start()
     {
         this.ComponentInject(); //ProduceResourceOrderBehaviour wordt later aangemaakt -> daarom in de start
-        GoToShowDuringProducing.SetActive(ProduceResourceBehaviour.IsProducingResourcesRightNow);
+        GoToShowDuringProducing.SetActive(ProduceBehaviour.IsProducingResourcesRightNow);
     }
 
     private bool previousIsProducing;
 
     void Update()
     {
-        var isProducing = ProduceResourceBehaviour.IsProducingResourcesRightNow;
+        var isProducing = ProduceBehaviour.IsProducingResourcesRightNow;
         if(isProducing != previousIsProducing)
         {
             GoToShowDuringProducing.SetActive(isProducing);

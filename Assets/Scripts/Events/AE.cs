@@ -41,7 +41,7 @@ public static class AE
     public static Action<WorkerBuildingBehaviour> BuildingNeedsWorker;
 
     // PRODUCE EVENTS
-    public static Action<BuildingBehaviour, List<ItemOutput>> StartedProducingAction; // evt aanhaken op deze events
-    public static Action<BuildingBehaviour, List<ItemOutput>> FinishedProducingAction; // evt aanhaken op deze events
+    public static Action<BuildingBehaviour, List<Enum>> StartedProducingAction; // evt aanhaken op deze events
+    public static Action<BuildingBehaviour, List<Enum>> FinishedProducingAction; // evt aanhaken op deze events
     public static Action<BuildingBehaviour> FinishedWaitingAfterProducingAction; // evt aanhaken op deze events
 }

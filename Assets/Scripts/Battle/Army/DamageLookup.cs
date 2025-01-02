@@ -9,7 +9,7 @@ namespace Assets.Army
             new Dictionary<AttackType, Dictionary<ArmorType, float>>
             {
                 {
-                    AttackType.LIGHT, new Dictionary<ArmorType, float>
+                    AttackType.PIERCING, new Dictionary<ArmorType, float>
                     {
                         {ArmorType.UNARMORED, 1.00f},
                         {ArmorType.LIGHT, 0.75f},
@@ -17,7 +17,7 @@ namespace Assets.Army
                     }
                 },
                 {
-                    AttackType.HEAVY, new Dictionary<ArmorType, float>
+                    AttackType.MELEE, new Dictionary<ArmorType, float>
                     {
                         {ArmorType.UNARMORED, 1.00f},
                         {ArmorType.LIGHT, 0.75f},

@@ -2,7 +2,7 @@
 
 public interface IProcesOneItemUI
 {
-    UIItemProcessing GetCurrentItemProcessed();
-    float GetBuildTimeInSeconds(Enum type);
+    TypeProcessing GetCurrentItemProcessed();
+    float GetBuildTimeInSeconds();
     bool ItemIsBeingProcessed => GetCurrentItemProcessed() != null;
 }

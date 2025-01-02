@@ -94,6 +94,6 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneIte
         UiCardBehaviours[indexOfCard].gameObject.SetActive(activeYN);
     }
 
-    public UIItemProcessing GetCurrentItemProcessed() =>  CallingBuilding?.GetCurrentItemProcessed();
-    public float GetBuildTimeInSeconds(Enum type) => CallingBuilding.GetProductionTime(type);
+    public TypeProcessing GetCurrentItemProcessed() =>  CallingBuilding?.GetCurrentTypeProcessed();
+    public float GetBuildTimeInSeconds() => CallingBuilding.GetProductionTime();
 }

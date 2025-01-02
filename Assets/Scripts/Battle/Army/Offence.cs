@@ -13,8 +13,8 @@ namespace Assets.Army
 
     public enum AttackType
     {
-        LIGHT,
-        HEAVY,
+        PIERCING,
+        MELEE,
         MAGIC,
     }
 }

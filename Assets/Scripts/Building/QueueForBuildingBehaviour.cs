@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class QueueForBuildingBehaviour : BaseAEMonoCI
 {
-    public float GetBuildTimeInSeconds() => GetCurrentItemProcessed() == null ? 0f : CallingBuilding.GetProductionTime(GetCurrentItemProcessed().Type);
+    public float GetBuildTimeInSeconds() => GetCurrentItemProcessed() == null ?
+        0f :
+        CallingBuilding.GetBuildingType().GetProductionDurationSettings().TimeToProduceResourceInSeconds;
     public List<QueueItem> QueueItems = new List<QueueItem>();
 
     [ComponentInject] public ICardBuilding CallingBuilding;
@@ -53,5 +55,5 @@ public class QueueForBuildingBehaviour : BaseAEMonoCI
         }
     }
 
-    public UIItemProcessing GetCurrentItemProcessed() => CallingBuilding.GetCurrentItemProcessed();    
+    public TypeProcessing GetCurrentItemProcessed() => CallingBuilding.GetCurrentTypeProcessed();    
 }

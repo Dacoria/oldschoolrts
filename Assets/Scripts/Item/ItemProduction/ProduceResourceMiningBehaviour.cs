@@ -2,32 +2,68 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Collections;
 
-public class ProduceResourceMiningBehaviour : ProduceResourceAbstract, ILocationOfResource
-{ 
+public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResource, IResourceProduction
+{
     public RangeType GetRangeTypeToFindResource() => RangeType.BoxColliderExpand;
     public int GetMaxRangeForResource() => 2;
 
-    [HideInInspector] public HandleProduceResourceOrderOverTimeBehaviour HandleProduceResourceOrderOverTimeBehaviour;
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
+    private RefillBehaviour refillBehaviour;
+    private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
+    private ProduceCRBehaviour produceCRBehaviour;
+    private HandleProduceResourceOrderBehaviour handleProduceResourceOrderBehaviour;
 
-    new void Awake()
+    private new void Awake()
     {
         base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<System.Type> { typeof(HandleProduceResourceOrderOverTimeBehaviour) });
+            inactives: new List<System.Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(ProduceCRBehaviour), typeof(HandleProduceResourceOrderBehaviour) });
 
-        HandleProduceResourceOrderOverTimeBehaviour = gameObject.AddComponent<HandleProduceResourceOrderOverTimeBehaviour>();
+        refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
+        consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
+        produceCRBehaviour = gameObject.AddComponent<ProduceCRBehaviour>();
+        handleProduceResourceOrderBehaviour = gameObject.AddComponent<HandleProduceResourceOrderBehaviour>();
     }
 
-    protected override void OnFinishedProducingAction(BuildingBehaviour building, List<ItemOutput> items)
+    private void Start()
     {
-        if(building == buildingBehaviour)
-        {
-            MineResource(consumeResource: true);
-        }        
+        StartCoroutine(TryToProduceOverXSeconds());
     }
 
-    protected override bool CanProduceResource(ItemProduceSetting itemProduceSetting) => base.CanProduceResource(itemProduceSetting) && MineResource(consumeResource: false);
+    private IEnumerator TryToProduceOverXSeconds()
+    {
+        var itemToProduceSettings = this.GetItemToProduceSettings(buildingBehaviour);
+        if (itemToProduceSettings == null)
+        {
+            yield return Wait4Seconds.Get(0.1f); // kan nog niet produceren, doe check opnieuw na x secondes
+            StartCoroutine(TryToProduceOverXSeconds());
+        }
+        else
+        {
+            produceCRBehaviour.ProduceOverTime(new ProduceSetup(itemToProduceSettings.ItemsToProduce,
+                produceAction: () => {
+                    handleProduceResourceOrderBehaviour.ProduceItems(itemToProduceSettings.ItemsToProduce);
+                    MineResource(consumeResource: true);
+                },
+                waitAfterProduceAction: () => StartCoroutine(TryToProduceOverXSeconds())));
+        }
+    }
+
+    public bool CanProduce(ItemProduceSetting itemProduceSetting)
+    {
+        if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting.ItemsToProduce, handleProduceResourceOrderBehaviour))
+            return false;
+
+        if(!MineResource(consumeResource: false))
+            return false;
+
+        if (!produceCRBehaviour.IsReadyForNextProduction)
+            return false;
+
+        return true;
+    }
 
     private bool MineResource(bool consumeResource)
     {

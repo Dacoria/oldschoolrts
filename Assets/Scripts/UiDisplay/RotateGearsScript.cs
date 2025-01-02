@@ -11,13 +11,13 @@ public class RotateGearsScript : MonoBehaviourCI
     public bool RotateGears;
     private Renderer[] RenderersChildren;
 
-    [ComponentInject] private HandleProduceResourceOrderOverTimeBehaviour ProduceResourceBehaviour;
+    [ComponentInject] private ProduceCRBehaviour ProduceBehaviour;
 
     private void Start()
     {
         RenderersChildren = GetComponentsInChildren<Renderer>();
         UpdateRenderers();
-        if(ProduceResourceBehaviour == null)
+        if(ProduceBehaviour == null)
         {
             throw new System.Exception("Gears animatie vereist ProduceResourceBehaviour/QueueForBuildingBehaviour in parent!");
         }
@@ -47,8 +47,8 @@ public class RotateGearsScript : MonoBehaviourCI
 
     void Update()
     {
-        if(ProduceResourceBehaviour != null)
-            RotateGears = ProduceResourceBehaviour.IsProducingResourcesRightNow;        
+        if(ProduceBehaviour != null)
+            RotateGears = ProduceBehaviour.IsProducingResourcesRightNow;        
 
         if (RotateGears)
         {        

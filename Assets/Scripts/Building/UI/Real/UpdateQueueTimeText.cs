@@ -13,7 +13,7 @@ public class UpdateQueueTimeText : MonoBehaviourCI
         if (QueueForBuildingBehaviour != null && QueueForBuildingBehaviour.GetCurrentItemProcessed() != null)
         {
             var totalBuildTimeInSeconds = QueueForBuildingBehaviour.GetBuildTimeInSeconds();
-            var timeProducingInMs =  (DateTime.Now - QueueForBuildingBehaviour.GetCurrentItemProcessed().StartTimeBeingBuild.Value).TotalMilliseconds / 1000f;
+            var timeProducingInMs =  (DateTime.Now - QueueForBuildingBehaviour.GetCurrentItemProcessed().StartTimeBeingBuild).TotalMilliseconds / 1000f;
             var percShown = Math.Min(Math.Round(timeProducingInMs / totalBuildTimeInSeconds * 100), 99) + "%";
             TimeRemainingText.SetText(percShown);
         }

@@ -25,7 +25,7 @@ public static class SetupBuildingProdDurationSetting
                 return new ProduceDurations
                 {
                     TimeToProduceResourceInSeconds = 0, // manual - gaat via poppetje
-                    TimeToWaitAfterProducingInSeconds = 2
+                    TimeToWaitAfterProducingInSeconds = 0 // manual - gaat via poppetje
                 };
             case BuildingCategory.Mine:
                 return new ProduceDurations

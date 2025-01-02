@@ -71,7 +71,7 @@ public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResour
         {        
             if (consumeResource)
             {
-                // TODO WTF? FIX DIT
+                // elke plek heeft een script -> vandaar elke keer component ophalen
                var harvestScript = resourceToMine.GetComponent<HarvestableMaterialScript>();
 
                 harvestScript.StartRetrievingResource();

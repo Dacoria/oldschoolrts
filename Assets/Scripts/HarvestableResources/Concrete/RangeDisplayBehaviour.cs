@@ -10,8 +10,7 @@ public class RangeDisplayBehaviour : MonoBehaviour
     public RangeType RangeType;
     public int MaxRangeForResource = 20;
 
-    [ComponentInject]
-    private BoxCollider boxCollider;
+    [ComponentInject] private BoxCollider boxCollider;
 
     private void Awake()
     {
@@ -49,11 +48,11 @@ public class RangeDisplayBehaviour : MonoBehaviour
 
         var values = new List<Vector2>
         {
-            trans.TransformPoint(new Vector2(min.x - MaxRangeForResource, min.z - MaxRangeForResource)),
-            trans.TransformPoint(new Vector2(min.x - MaxRangeForResource, max.z + MaxRangeForResource)),
-            trans.TransformPoint(new Vector2(max.x + MaxRangeForResource, max.z + MaxRangeForResource)),
-            trans.TransformPoint(new Vector2(max.x + MaxRangeForResource, min.z - MaxRangeForResource)),
-            trans.TransformPoint(new Vector2(min.x - MaxRangeForResource, min.z - MaxRangeForResource))
+            new Vector2(min.x - MaxRangeForResource, min.z - MaxRangeForResource),
+            new Vector2(min.x - MaxRangeForResource, max.z + MaxRangeForResource),
+            new Vector2(max.x + MaxRangeForResource, max.z + MaxRangeForResource),
+            new Vector2(max.x + MaxRangeForResource, min.z - MaxRangeForResource),
+            new Vector2(min.x - MaxRangeForResource, min.z - MaxRangeForResource)
         };
 
         for (int i = 0; i < values.Count; i++)

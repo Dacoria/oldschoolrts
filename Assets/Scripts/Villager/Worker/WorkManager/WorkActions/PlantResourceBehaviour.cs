@@ -90,10 +90,8 @@ public class PlantResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction
     private IEnumerator CreateNewResource()
     {
         isCreatingNewResource = true;
-        NavMeshAgent.angularSpeed = 0;
         yield return Wait4Seconds.Get(timeToCreateNewResourceInSeconds);
         isCreatingNewResource = false;
-        NavMeshAgent.angularSpeed = 120; // terug naar default
 
         NewRscToPlantGo.SetActive(true); // bv een boom -> maakt zichtbaar
         NewRscToPlantGo = null; // wordt evt later gekoppeld als resource om te harvesten --> nu resetten

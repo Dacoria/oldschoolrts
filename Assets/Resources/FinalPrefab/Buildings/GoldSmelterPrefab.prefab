@@ -333,19 +333,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 4038684643531097339}
   DEBUG_RealImmediately: 1
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 3
-    ItemType: 30
-    MaxBuffer: 0
-  - Amount: 2
-    ItemType: 10
-    MaxBuffer: 0
-  - Amount: 1
-    ItemType: 190
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &1861155022066787789
 Rigidbody:
@@ -1008,7 +996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4.5
 --- !u!114 &5554802943301031612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,17 +1008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc7b888d814c8d4eb0a4799daaecdf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ResourcesToProduce:
-  - ItemsToProduce:
-    - ItemType: 170
-      MaxBuffer: 8
-      ProducedPerProdCycle: 2
-    ItemsConsumedToProduce:
-    - Amount: 1
-      ItemType: 160
-      MaxBuffer: 5
-  ProduceTimeInSeconds: 5
-  WaitAfterProduceTimeInSeconds: 2
+  ProduceResourceOrder: {fileID: 0}
 --- !u!1 &4080518113481920013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,7 +1241,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 0bab2307c624e17458200205700de9b2, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3443573816359396271, guid: 5f09f20d2f06bac49b3a65823760f77c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f09f20d2f06bac49b3a65823760f77c, type: 3}

@@ -6,15 +6,16 @@ public class VillagerManager : BaseAEMonoCI
 {
     public static VillagerManager Instance;
 
-    private List<IVillagerUnit> VillagerUnits;
+    private List<IVillagerUnit> villagerUnits;
 
-    private List<SerfBehaviour> Serfs = new List<SerfBehaviour>();
-    private List<BuilderBehaviour> Builders = new List<BuilderBehaviour>();
-    private List<WorkManager> Workers = new List<WorkManager>();
+    private List<SerfBehaviour> serfs = new List<SerfBehaviour>();
+    private List<BuilderBehaviour> suilders = new List<BuilderBehaviour>();
+    private List<WorkManager> workers = new List<WorkManager>();
 
-    public List<SerfBehaviour> GetSerfs() => Serfs;
-    public List<BuilderBehaviour> GetBuilders() => Builders;
-    public List<WorkManager> GetWorkers() => Workers;
+    public List<SerfBehaviour> GetSerfs() => serfs;
+    public List<BuilderBehaviour> GetBuilders() => suilders;
+    public List<WorkManager> GetWorkers() => workers;
+    public List<IVillagerUnit> GetVillagers() => villagerUnits;
 
     private new void Awake()
     {
@@ -23,28 +24,31 @@ public class VillagerManager : BaseAEMonoCI
         RefreshVillagerUnits();
     }
 
-    protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit) => RefreshVillagerUnits();
+    protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit)
+    {
+        RefreshVillagerUnits();
+    }
 
     private void RefreshVillagerUnits()
     {
-        VillagerUnits = FindObjectsOfType<MonoBehaviour>(true).OfType<IVillagerUnit>().ToList();
+        villagerUnits = FindObjectsOfType<MonoBehaviour>(true).OfType<IVillagerUnit>().ToList();
 
-        Serfs.Clear();
-        Builders.Clear();
-        Workers.Clear();
+        serfs.Clear();
+        suilders.Clear();
+        workers.Clear();
 
-        foreach (var villagerUnit in VillagerUnits)
+        foreach (var villagerUnit in villagerUnits)
         {
             var type = villagerUnit.GetVillagerUnitType();
             
             if(type == VillagerUnitType.Serf)
-                Serfs.Add((SerfBehaviour)villagerUnit);
+                serfs.Add((SerfBehaviour)villagerUnit);
 
             else if(type == VillagerUnitType.Builder)
-                Builders.Add((BuilderBehaviour)villagerUnit);
+                suilders.Add((BuilderBehaviour)villagerUnit);
 
             else if(villagerUnit.IsVillagerWorker())
-                Workers.Add((WorkManager)villagerUnit);
+                workers.Add((WorkManager)villagerUnit);
 
             else
                 throw new System.Exception($"VillagerManager -> VillagerUnitType '{villagerUnit.GetVillagerUnitType()}' is niet ondersteund");

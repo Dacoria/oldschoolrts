@@ -1,11 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class PopulationManager : BaseAEMonoCI
 {
-    public static int PopulationLimit = 10;
+    public static int PopulationLimit = 7;
     public static int CurrentPopulation = 0;
     public static int PopulationBeingCreated = 0;
 
@@ -18,18 +19,16 @@ public class PopulationManager : BaseAEMonoCI
 
     protected override void OnStartedProducingAction(BuildingBehaviour building, List<Enum> typesToProduce)
     {
-        if(Enum.TryParse<VillagerUnitType>(typesToProduce.First().ToString(), out var villager))
-        {
+        if(Enum.TryParse<VillagerUnitType>(typesToProduce.First().ToString(), out var villagerType))
+        {            
             PopulationBeingCreated++;
         }
     }
 
-    protected override void OnFinishedProducingAction(BuildingBehaviour building, List<Enum> typesToProduce)
+    protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit)
     {
-        if (Enum.TryParse<VillagerUnitType>(typesToProduce.First().ToString(), out var villager))
-        {
-            PopulationBeingCreated--;
-        }
+        PopulationBeingCreated = Math.Max(0, PopulationBeingCreated - 1);
+        CurrentPopulation++;
     }
 
     public static bool HasPopulationRoom => CurrentPopulation + PopulationBeingCreated < PopulationLimit;

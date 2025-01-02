@@ -7,7 +7,6 @@ public class NewVillagerComponentsManager : BaseAEMonoCI
         var type = newVillagerUnit.GetVillagerUnitType();
 
         //Shared
-        go.AddComponent<PopulationEligibleBehaviour>();
         go.AddComponent<FoodConsumptionBehaviour>();
         go.AddComponent<HealthBehaviour>();
         go.AddComponent<NavMeshStuckFixer>();
@@ -48,10 +47,6 @@ public class NewVillagerComponentsManager : BaseAEMonoCI
     protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit)
     {
         var go = newVillagerUnit.GetGO();
-        if (go.GetComponent<PopulationEligibleBehaviour>() == null)
-        {
-            throw new System.Exception($"Geen standaard behaviours gevonden op nieuwe unit --> Check awake van villager '{go.name}', type '{newVillagerUnit.GetVillagerUnitType()}'");
-        }
 
         if(newVillagerUnit.IsVillagerWorker() && go.GetComponent<ResourceCarryingBehaviour>() == null)
         {

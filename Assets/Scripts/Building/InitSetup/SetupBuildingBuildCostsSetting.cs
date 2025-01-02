@@ -23,7 +23,8 @@ public static class SetupBuildingBuildCostsSetting
 
     private static BuildingCostsSetup GetBuildingCostsSetup(this BuildingType buildingType)
     {
-        var defaultCosts = new BuildingCostsSetup(@in: ItemType.PLANKS, inAmount: 3, in2: ItemType.STONE, inAmount2: 2);
+        //var defaultCosts = new BuildingCostsSetup(@in: ItemType.PLANKS, inAmount: 3, in2: ItemType.STONE, inAmount2: 2);
+        var defaultCosts = new BuildingCostsSetup(@in: ItemType.STONE, inAmount: 1); // ROAD = NONE
         return BuildCostsSettings.GetValueOrDefault(buildingType, defaultCosts);
     }
 

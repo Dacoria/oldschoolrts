@@ -1,38 +1,29 @@
 using System;
 using System.Collections.Generic;
 
-public class HandleProduceResourceOrderBehaviour : BaseAEMonoCI
+public class HandleProduceResourceOrderBehaviour : BaseAEMonoCI, IProduce
 {
     public List<SerfRequest> OutputOrders = new List<SerfRequest>();
     [ComponentInject] private IOrderDestination orderDestination;
 
-    private new void Awake()
+    public void Produce(List<Enum> types)
     {
-        base.Awake();
-        
-        // check zodat je altijd goed zit met events (en dit niet direct aftrapt)
-        gameObject.AddComponent<ValidComponents>().DoCheck(
-            actives: new List<Type> { typeof(ProduceCRBehaviour) });
+        types.ForEach(type => ProduceItem((ItemType)type));
     }
 
-    public void ProduceItems(List<ItemOutput> ItemsToProduce) => ItemsToProduce.ForEach(item => ProduceItem(item));
-
-    public void ProduceItem(ItemOutput itemProduced)
+    private void ProduceItem(ItemType itemType)
     {
-        for (int i = 0; i < itemProduced.ProducedPerProdCycle; i++)
+        var serfRequest = new SerfRequest
         {
-            var serfRequest = new SerfRequest
-            {
-                OrderDestination = this.orderDestination,
-                ItemType = itemProduced.ItemType,
-                Purpose = Purpose.LOGISTICS,
-                BufferDepth = OutputOrders.Count,
-                Direction = Direction.PUSH,
-                IsOriginator = true,
-            };
-            AE.SerfRequest?.Invoke(serfRequest);
-            OutputOrders.Add(serfRequest);
-        }
+            OrderDestination = this.orderDestination,
+            ItemType = itemType,
+            Purpose = Purpose.LOGISTICS,
+            BufferDepth = OutputOrders.Count,
+            Direction = Direction.PUSH,
+            IsOriginator = true,
+        };
+        AE.SerfRequest?.Invoke(serfRequest);
+        OutputOrders.Add(serfRequest);        
     }
 
     protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
@@ -44,5 +35,5 @@ public class HandleProduceResourceOrderBehaviour : BaseAEMonoCI
                 OutputOrders.Remove(serfOrder.From);
             }
         }
-    }    
+    }
 }

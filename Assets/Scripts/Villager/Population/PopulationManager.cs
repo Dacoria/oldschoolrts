@@ -18,7 +18,7 @@ public class PopulationManager : BaseAEMonoCI
 
     protected override void OnStartedProducingAction(BuildingBehaviour building, List<Enum> typesToProduce)
     {
-        if(Enum.IsDefined(typeof(VillagerUnitType), typesToProduce.First()))
+        if(Enum.TryParse<VillagerUnitType>(typesToProduce.First().ToString(), out var villager))
         {
             PopulationBeingCreated++;
         }
@@ -26,7 +26,7 @@ public class PopulationManager : BaseAEMonoCI
 
     protected override void OnFinishedProducingAction(BuildingBehaviour building, List<Enum> typesToProduce)
     {
-        if (Enum.IsDefined(typeof(VillagerUnitType), typesToProduce.First()))
+        if (Enum.TryParse<VillagerUnitType>(typesToProduce.First().ToString(), out var villager))
         {
             PopulationBeingCreated--;
         }

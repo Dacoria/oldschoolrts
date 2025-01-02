@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding
+public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding, IProduce
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
@@ -30,8 +30,8 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding
         var itemsForProduction = GetItemsToConsumeForProduction(villagerType);
         if (CanProces((VillagerUnitType)type))
         {
-            produceCRBehaviour.ProduceOverTime(new ProduceSetup(villagerType,
-                produceAction: () => CreateUnit(villagerType)));
+            consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction);
+            produceCRBehaviour.ProduceOverTime(new ProduceSetup(villagerType, this));
         }
         else
         {
@@ -39,17 +39,20 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding
         }
     }
 
-    public void CreateUnit(VillagerUnitType type)
+    public void Produce(List<Enum> types)
     {
-        var villagerUnitSetting = VillagerPrefabs.Get().Single(x => x.Type == type);
-        var villagerVillagerBehaviour = villagerUnitSetting.VillagerBehaviour;            
-
-        if (villagerVillagerBehaviour.IsVillagerWorker())
+        foreach (var type in types)
         {
-            ((WorkManager)villagerVillagerBehaviour).VillagerUnitType = villagerUnitSetting.Type;
-        }
+            var villagerUnitSetting = VillagerPrefabs.Get().Single(x => x.Type == (VillagerUnitType)type);
+            var villagerVillagerBehaviour = villagerUnitSetting.VillagerBehaviour;
 
-        var villagerGo = Instantiate(villagerUnitSetting.VillagerBehaviour.GetGO(), gameObject.EntranceExit(), Quaternion.identity);
+            if (villagerVillagerBehaviour.IsVillagerWorker())
+            {
+                ((WorkManager)villagerVillagerBehaviour).VillagerUnitType = villagerUnitSetting.Type;
+            }
+
+            var villagerGo = Instantiate(villagerUnitSetting.VillagerBehaviour.GetGO(), gameObject.EntranceExit(), Quaternion.identity);
+        }
     }
 
     private List<ItemAmountBuffer> GetItemsToConsumeForProduction(VillagerUnitType type) => 
@@ -61,7 +64,7 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding
         if (!PopulationManager.HasPopulationRoom)
             return false;
 
-        if(!produceCRBehaviour.IsReadyForNextProduction)
+        if(!produceCRBehaviour.IsReadyForNextProduction())
             return false;
 
         var itemsNeeded = GetItemsToConsumeForProduction((VillagerUnitType)type);
@@ -72,6 +75,6 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding
     }
 
     public GameObject GetGameObject() => gameObject;
-    public TypeProcessing GetCurrentTypeProcessed() => produceCRBehaviour.CurrentTypesProcessed.First();
-    public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
+    public TypeProcessing GetCurrentTypeProcessed() => produceCRBehaviour?.CurrentTypesProcessed?.FirstOrDefault();
+    public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;    
 }

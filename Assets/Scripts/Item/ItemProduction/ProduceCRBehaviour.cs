@@ -6,7 +6,7 @@ public class ProduceCRBehaviour : MonoBehaviourCI
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     public bool IsProducingResourcesRightNow => CurrentTypesProcessed != null && ProduceDurations != null;
-    public bool IsReadyForNextProduction => ProduceDurations != null;
+    public bool IsReadyForNextProduction() => ProduceDurations == null;
 
     public List<TypeProcessing> CurrentTypesProcessed { get; private set; }
     public ProduceDurations ProduceDurations { get; private set; }
@@ -26,13 +26,15 @@ public class ProduceCRBehaviour : MonoBehaviourCI
 
         yield return Wait4Seconds.Get(durations.TimeToProduceResourceInSeconds);
 
-        produceSetup.ProduceAction();        
+        produceSetup.ProduceAction.Produce(produceSetup.ProduceTypes); // voor daadwerkelijke productie van iets (via I forceren)
+        produceSetup.ProduceCallback?.Invoke();         // voor callback voor een actie na produceren; bv bij een mine -> rsc eraf halen)
         CurrentTypesProcessed = null;
-        AE.FinishedProducingAction?.Invoke(buildingBehaviour, typesToProduce);
+        AE.FinishedProducingAction?.Invoke(buildingBehaviour, typesToProduce); // voor bijhouden globale events; bv populatie-verhoging is klaar
 
         yield return Wait4Seconds.Get(durations.TimeToWaitAfterProducingInSeconds);
 
         ProduceDurations = null;
+        produceSetup.WaitAfterProduceCallback?.Invoke();
         AE.FinishedWaitingAfterProducingAction?.Invoke(buildingBehaviour);
     }
 }

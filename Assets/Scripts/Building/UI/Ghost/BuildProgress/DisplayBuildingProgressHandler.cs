@@ -23,6 +23,11 @@ public class DisplayBuildingProgressHandler : BaseAEMonoCI
         {
             throw new Exception("altijd BuildingBehaviour vereist voor GenerateBuildingProgressDisplayResources");
         }
+
+        if(DisplayBuildingProgressGo == null)
+        {
+            Destroy(this);
+        }
     }
 
     private int frameCounter;

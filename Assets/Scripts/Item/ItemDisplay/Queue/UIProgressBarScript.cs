@@ -13,6 +13,12 @@ public class UIProgressBarScript : MonoBehaviourSlowUpdateFramesCI
         procesOneItemUI = MonoHelper.Instance.FindChildComponentInParents<IProcesOneItemUI>(gameObject);
     }
 
+    private void OnEnable()
+    {
+        ProgressText.text = "";
+        ProgressionBar.fillAmount = 0;
+    }
+
     protected override int FramesTillSlowUpdate => 20;
     protected override void SlowUpdate()
     {
@@ -24,22 +30,16 @@ public class UIProgressBarScript : MonoBehaviourSlowUpdateFramesCI
         var itemBeingProcessed = procesOneItemUI.GetCurrentItemProcessed();
         if(itemBeingProcessed != null)
         {
-            var progressPerc = GetProgressPercentageOfItemProcessed();
+            var progressPerc = GetProgressPercentageOfItemProcessed(itemBeingProcessed);
             var fullPerc = Mathf.Round(progressPerc * 100);
 
             ProgressText.text = fullPerc.ToString() + "%";
             ProgressionBar.fillAmount = progressPerc;
-        }
-        else
-        {
-            ProgressText.text = "";
-            ProgressionBar.fillAmount = 0;
-        }        
+        }              
     }
 
-    private float GetProgressPercentageOfItemProcessed()
+    private float GetProgressPercentageOfItemProcessed(TypeProcessing item)
     {
-        var item = procesOneItemUI.GetCurrentItemProcessed();
         if (item != null)
         {
             var timeBetweenStartProcessAndNow = (DateTime.Now - item.StartTimeBeingBuild).TotalSeconds;

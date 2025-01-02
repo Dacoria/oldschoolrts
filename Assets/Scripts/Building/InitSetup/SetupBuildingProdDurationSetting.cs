@@ -60,8 +60,8 @@ public static class SetupBuildingProdDurationSetting
             case BuildingCategory.Population:
                 return new ProduceDurations
                 {
-                    TimeToProduceResourceInSeconds = 0,
-                    TimeToWaitAfterProducingInSeconds = 0
+                    TimeToProduceResourceInSeconds = 25,
+                    TimeToWaitAfterProducingInSeconds = 3
                 };
             default:
                 throw new Exception();

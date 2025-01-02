@@ -13,7 +13,7 @@ public interface ICardBuilding
     BuildingType GetBuildingType();
     TypeProcessing GetCurrentTypeProcessed();
 
-    ProductionSetting GetCardDisplaySetting(Enum type) => GetBuildingType().GetProductionSettings().Single(x => x.GetType() == type);
+    ProductionSetting GetCardDisplaySetting(Enum type) => GetBuildingType().GetProductionSettings().Single(x => (BarracksUnitType)x.GetType() == (BarracksUnitType)type);
     float GetProductionTime() => GetBuildingType().GetProductionDurationSettings().TimeToProduceResourceInSeconds;
 
     void AddTypes(Enum type, int amount)

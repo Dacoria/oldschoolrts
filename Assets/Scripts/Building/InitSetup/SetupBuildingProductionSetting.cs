@@ -6,21 +6,17 @@ public static class SetupBuildingProductionSetting
 {
     public static List<ProductionSetting> GetProductionSettings(this BuildingType type)
     {
-        var building = BuildingPrefabs.Get().Single(x => x.BuildingType == type);
-        switch (type)
+        var category = type.GetCategory();
+        switch (category)
         {
-            case BuildingType.BLACKSMITH:
-            case BuildingType.WEAPONMAKER:
-            case BuildingType.LEATHERARMORY:
-            case BuildingType.CLOTHARMORMAKER:
+            case BuildingCategory.SelectProductsOverTime:
                 return type.GetItemProductionSettings().ConvertAll<ProductionSetting>(x => x);
-            case BuildingType.BARRACKS:
-                return BarrackUnitPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
-            case BuildingType.SCHOOL:
+            case BuildingCategory.School:
                 return VillagerPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
-
+            case BuildingCategory.Barracks:
+                return BarrackUnitPrefabs.Get().ConvertAll<ProductionSetting>(x => x);
             default:
-                throw new Exception($"BuildingType for type.ToString() not specified");
+                throw new Exception();
         }
     }
 
@@ -39,8 +35,8 @@ public static class SetupBuildingProductionSetting
         return new ItemProductionSetting
         {
             ItemsConsumedToProduce = produceSetting.ItemsConsumedToProduce,
-            MaxBuffer = produceSetting.ItemsToProduce.Single().MaxBuffer,
-            Type = produceSetting.ItemsToProduce.Single().ItemType
+            MaxBuffer = produceSetting.ItemsToProduce.Single().MaxBuffer, // TODO; kan meerdere items hebben (bv pig)
+            Type = produceSetting.ItemsToProduce.Single().ItemType // TODO; kan meerdere items hebben (bv pig)
         };       
-    }   
+    }
 }

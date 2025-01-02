@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResource, IResourceProduction
+public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResource
 {
     public RangeType GetRangeTypeToFindResource() => RangeType.BoxColliderExpand;
     public int GetMaxRangeForResource() => 2;
@@ -34,7 +34,7 @@ public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResour
 
     private IEnumerator TryToProduceOverXSeconds()
     {
-        var itemToProduceSettings = this.GetItemToProduceSettings(buildingBehaviour);
+        var itemToProduceSettings = buildingBehaviour.BuildingType.GetItemProduceSettings().FirstOrDefault(x => CanProduce(x));
         if (itemToProduceSettings == null)
         {
             yield return Wait4Seconds.Get(0.1f); // kan nog niet produceren, doe check opnieuw na x secondes
@@ -42,12 +42,11 @@ public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResour
         }
         else
         {
-            produceCRBehaviour.ProduceOverTime(new ProduceSetup(itemToProduceSettings.ItemsToProduce,
-                produceAction: () => {
-                    handleProduceResourceOrderBehaviour.ProduceItems(itemToProduceSettings.ItemsToProduce);
-                    MineResource(consumeResource: true);
-                },
-                waitAfterProduceAction: () => StartCoroutine(TryToProduceOverXSeconds())));
+            produceCRBehaviour.ProduceOverTime(new ProduceSetup(
+                itemToProduceSettings.ItemsToProduce,
+                handleProduceResourceOrderBehaviour,
+                produceCallback: () => MineResource(consumeResource: true),
+                waitAfterProduceCallback: () => StartCoroutine(TryToProduceOverXSeconds())));
         }
     }
 
@@ -59,7 +58,7 @@ public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResour
         if(!MineResource(consumeResource: false))
             return false;
 
-        if (!produceCRBehaviour.IsReadyForNextProduction)
+        if (!produceCRBehaviour.IsReadyForNextProduction())
             return false;
 
         return true;

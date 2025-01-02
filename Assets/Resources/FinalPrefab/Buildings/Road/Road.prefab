@@ -53,13 +53,7 @@ MonoBehaviour:
   Purpose: 0
   Real: {fileID: 3599541607727559818}
   DEBUG_RealImmediately: 0
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 1
-    ItemType: 10
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &2144359756
 Rigidbody:

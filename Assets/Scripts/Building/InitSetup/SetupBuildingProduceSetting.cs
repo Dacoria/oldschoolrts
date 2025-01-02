@@ -24,6 +24,24 @@ public static class SetupBuildingProduceSetting
         return false;
     }
 
+    public static List<ItemAmountBuffer> GetItemsConsumedToProduceAll(this BuildingType type)
+    {
+        var buildingProducingType = type.GetBuildingProducingType();
+
+        switch (buildingProducingType)
+        {
+            case BuildingProducingType.Nothing:
+                return new List<ItemAmountBuffer>();
+            case BuildingProducingType.Items:
+                return type.GetItemProduceSettings().SelectMany(x => x.ItemsConsumedToProduce).ToList();
+            case BuildingProducingType.Villagers:
+            case BuildingProducingType.BattleUnits:
+                return type.GetProductionSettings().SelectMany(x => x.ItemsConsumedToProduce).ToList();
+            default:
+                throw new Exception();
+        }
+    }
+
     private static List<ItemProduceSetting> GetItemProduceSettingsNoCache(BuildingType type)
     {
         var category = type.GetCategory();
@@ -38,11 +56,11 @@ public static class SetupBuildingProduceSetting
                 return new List<ItemProduceSetting> { type.GetBuildingOverTimeSetup().ConvertToProduceSettings() };
             case BuildingCategory.SelectProductsOverTime:
                 return ProdCardItemSettings.GetValueOrDefault(type, new List<BuildingInOutSetup>()).Select(x => x.ConvertToProduceSettings()).ToList();
-            case BuildingCategory.School:
-            case BuildingCategory.Unknown:
-            case BuildingCategory.Barracks:
-            case BuildingCategory.Population:
-                return new List<ItemProduceSetting>(); // geen item productie
+            //case BuildingCategory.School:
+            //case BuildingCategory.Unknown:
+            //case BuildingCategory.Barracks:
+            //case BuildingCategory.Population:
+            //    return new List<ItemProduceSetting>(); // geen item productie
             default:
                 throw new Exception();
         }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, IResourceProduction
+public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     private RefillBehaviour refillBehaviour;
@@ -36,7 +36,7 @@ public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, IResourceProduc
         if (!consumeRefillItemsBehaviour.CanConsumeRefillItems(itemProduceSetting.ItemsConsumedToProduce))
             return false;
 
-        if (!produceCRBehaviour.IsReadyForNextProduction)
+        if (!produceCRBehaviour.IsReadyForNextProduction())
             return false;
 
         return true;
@@ -44,7 +44,7 @@ public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, IResourceProduc
 
     private IEnumerator TryToProduceOverXSeconds()
     {
-        var itemToProduceSettings = this.GetItemToProduceSettings(buildingBehaviour);
+        var itemToProduceSettings = buildingBehaviour.BuildingType.GetItemProduceSettings().FirstOrDefault(x => CanProduce(x));
         if (itemToProduceSettings == null)
         {
             yield return Wait4Seconds.Get(0.1f); // kan nog niet produceren, doe check opnieuw na x secondes
@@ -54,9 +54,9 @@ public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, IResourceProduc
         {
             consumeRefillItemsBehaviour.TryConsumeRefillItems(itemToProduceSettings.ItemsConsumedToProduce);
             produceCRBehaviour.ProduceOverTime(new ProduceSetup(
-                itemToProduceSettings.ItemsToProduce,
-                produceAction: () => handleProduceResourceOrderBehaviour.ProduceItems(itemToProduceSettings.ItemsToProduce),
-                waitAfterProduceAction: () => StartCoroutine(TryToProduceOverXSeconds())));
+                itemToProduceSettings.ItemsToProduce, 
+                handleProduceResourceOrderBehaviour,
+                waitAfterProduceCallback: () => StartCoroutine(TryToProduceOverXSeconds())));
         }
     }
 }

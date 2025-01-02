@@ -16,9 +16,35 @@ public enum BuildingCategory
     Tavern
 }
 
+public enum BuildingProducingType
+{
+    Nothing,
+    Items,
+    Villagers,
+    BattleUnits,
+}
+
 public static class BuildingCategoryHelper
 {
     private static Dictionary<BuildingType, BuildingCategory> cache = new Dictionary<BuildingType, BuildingCategory>();
+
+    public static BuildingProducingType GetBuildingProducingType(this BuildingType type)
+    {
+        switch (type.GetCategory())
+        {
+            case BuildingCategory.Manual:
+            case BuildingCategory.Mine:
+            case BuildingCategory.OneProductOverTime:
+            case BuildingCategory.SelectProductsOverTime:
+                return BuildingProducingType.Items;
+            case BuildingCategory.School:
+                return BuildingProducingType.Villagers;
+            case BuildingCategory.Barracks:
+                return BuildingProducingType.BattleUnits;
+            default:
+                return BuildingProducingType.Nothing;
+        }
+    }
 
     public static BuildingCategory GetCategory(this BuildingType type)
     {

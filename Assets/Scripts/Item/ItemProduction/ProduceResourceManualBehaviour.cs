@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ProduceResourceManualBehaviour : MonoBehaviourCI, IResourceProduction
+public class ProduceResourceManualBehaviour : MonoBehaviourCI
 {
     private ItemOutput itemToProduce => buildingBehaviour.BuildingType.GetItemProduceSettings().First().ItemsToProduce.First();
 
@@ -26,8 +26,7 @@ public class ProduceResourceManualBehaviour : MonoBehaviourCI, IResourceProducti
 
     public void ProduceResource()
     {
-        produceCRBehaviour.ProduceOverTime(new ProduceSetup(itemToProduce,
-            produceAction: () => handleProduceResourceOrderBehaviour.ProduceItem(itemToProduce)));
+        produceCRBehaviour.ProduceOverTime(new ProduceSetup(itemToProduce, handleProduceResourceOrderBehaviour));
         // geen waitlogica; onnodig complex (hoop ik)
     }
 
@@ -36,7 +35,7 @@ public class ProduceResourceManualBehaviour : MonoBehaviourCI, IResourceProducti
         if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting.ItemsToProduce, handleProduceResourceOrderBehaviour))
             return false;
 
-        if (!produceCRBehaviour.IsReadyForNextProduction)
+        if (!produceCRBehaviour.IsReadyForNextProduction())
             return false;
 
         return true;

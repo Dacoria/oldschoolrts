@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardBuilding, IResourceProduction
+public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardBuilding
 {
-    private List<ItemLimit> ItemsToProcess;
+    private List<ItemLimit> itemsToProcess;
 
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     private RefillBehaviour refillBehaviour;
@@ -24,6 +24,8 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardBuilding, IRes
         consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
         produceCRBehaviour = gameObject.AddComponent<ProduceCRBehaviour>();
         handleProduceResourceOrderBehaviour = gameObject.AddComponent<HandleProduceResourceOrderBehaviour>();
+
+        itemsToProcess = buildingBehaviour.BuildingType.GetItemProductionSettings().Select(x => new ItemLimit { ItemType = x.Type }).ToList();
     }
 
     private void Start()
@@ -35,15 +37,15 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardBuilding, IRes
     public GameObject GetGameObject() => gameObject;
     public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
 
-    public bool CanProduce(ItemProduceSetting itemProduceSetting)
+    public bool CanProduce(ItemProductionSetting itemProduceSetting)
     {
-        if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting.ItemsToProduce, handleProduceResourceOrderBehaviour))
+        if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting, handleProduceResourceOrderBehaviour))
             return false;
 
         if (!consumeRefillItemsBehaviour.CanConsumeRefillItems(itemProduceSetting.ItemsConsumedToProduce))
             return false;
 
-        if (!produceCRBehaviour.IsReadyForNextProduction)
+        if (!produceCRBehaviour.IsReadyForNextProduction())
             return false;
 
         return true;
@@ -51,7 +53,7 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardBuilding, IRes
 
     private IEnumerator TryToProduceOverXSeconds()
     {
-        var itemToProduceSettings = this.GetItemToProduceSettings(buildingBehaviour);
+        var itemToProduceSettings = GetItemToProduceSettings();
         if (itemToProduceSettings == null)
         {
             yield return Wait4Seconds.Get(0.1f); // kan nog niet produceren, doe check opnieuw na x secondes
@@ -59,31 +61,72 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardBuilding, IRes
         }
         else
         {
+            var itemToProduce = (ItemType)itemToProduceSettings.GetType();
             consumeRefillItemsBehaviour.TryConsumeRefillItems(itemToProduceSettings.ItemsConsumedToProduce);
-
-            var itemToProduce = itemToProduceSettings.ItemsToProduce.First();
             produceCRBehaviour.ProduceOverTime(new ProduceSetup(
-                itemToProduceSettings.ItemsToProduce,
-                produceAction: () => {
-                    handleProduceResourceOrderBehaviour.ProduceItem(itemToProduce);
-                    ItemsToProcess.Single(x => x.ItemType == itemToProduce.ItemType).ItemAmountToProduce.DecreaseOneNoNegative();
+                itemToProduce,
+                handleProduceResourceOrderBehaviour,
+                produceCallback: () => {
+                    DecreaseType(itemToProduce);
+                    lastItemProduced = itemToProduce;
                 },
-                waitAfterProduceAction: () => StartCoroutine(TryToProduceOverXSeconds())));
+                waitAfterProduceCallback: () => StartCoroutine(TryToProduceOverXSeconds())));
         }
-    }    
+    }
 
-    public int GetCount(Enum type) => ItemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemAmountToProduce;
+    private ItemType? lastItemProduced;
+    private ItemProductionSetting GetItemToProduceSettings()
+    {
+        var allItemProductionSettings = buildingBehaviour.BuildingType.GetItemProductionSettings();
+
+        if (!lastItemProduced.HasValue)
+        {
+            // geen eerdere waarde? pak hoogste qua aantal
+            foreach (var itemToProcess in itemsToProcess.Where(x => x.ItemAmountToProduce >= 1).OrderByDescending(x => x.ItemAmountToProduce))
+            {
+                var itemProductionSetting = allItemProductionSettings.Single(x => x.Type == itemToProcess.ItemType);
+                if (CanProduce(itemProductionSetting))
+                {
+                    return itemProductionSetting;
+                }
+            }
+        }
+        else
+        {
+            // wel eerder een waarde? ga 1 enumeratie verder
+            var currEnum = lastItemProduced.Value.Next();
+            while (currEnum != lastItemProduced.Value)
+            {
+                var itemProductionSetting = allItemProductionSettings.FirstOrDefault(x => x.Type == currEnum);
+                if (itemProductionSetting != null)
+                { 
+                    if (itemsToProcess.Single(x => x.ItemType == currEnum).ItemAmountToProduce >= 1 && CanProduce(itemProductionSetting))
+                    {
+                        return itemProductionSetting;
+                    }
+                }
+                
+                currEnum = currEnum.Next();
+            }
+        }        
+
+        return null;
+    }
+
+    public int GetCount(Enum type) => itemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemAmountToProduce;
 
     public void AddType(Enum type)
     {
-        ItemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemAmountToProduce++;
+        itemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemAmountToProduce++;
     }
 
     public void DecreaseType(Enum type)
     {
-        ItemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemAmountToProduce.DecreaseOneNoNegative();
+        var itemToProcess = itemsToProcess.Single(x => x.ItemType == (ItemType)type);
+        if (itemToProcess.ItemAmountToProduce > 0)
+            itemToProcess.ItemAmountToProduce --;
     }
 
-    public bool CanProces(Enum type) => 
-        CanProduce(buildingBehaviour.BuildingType.GetItemProduceSettings().Single(x => x.ItemsToProduce.Any(y => y.ItemType == (ItemType)type)));
+    public bool CanProces(Enum type) =>
+        CanProduce(buildingBehaviour.BuildingType.GetItemProductionSettings().Single(x => x.Type == (ItemType)type));
 }

@@ -42,6 +42,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
     }
 
     private QueueForBuildingBehaviour LastKnownQueue;
+    private TypeProcessing LastTypeProcessed;
 
     private void UpdateQueue()
     {
@@ -51,13 +52,15 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
 
         if (CallingQueueForBuildingBehaviour != null && 
             (
-                LastKnownQueue != CallingQueueForBuildingBehaviour || 
+                LastKnownQueue != CallingQueueForBuildingBehaviour ||
+                (LastTypeProcessed != GetCurrentItemProcessed() && LastTypeProcessed == null) || 
                 PlacedDisplayItemsOnQueue.Count != CallingQueueForBuildingBehaviour.QueueItems.Count)            
             )
         {
             DestroyItemsOnQueue();
             VisualizeCurrentQueue();
             LastKnownQueue = CallingQueueForBuildingBehaviour;
+            LastTypeProcessed = GetCurrentItemProcessed();
         }
     }
 

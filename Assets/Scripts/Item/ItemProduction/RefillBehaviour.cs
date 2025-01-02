@@ -78,9 +78,9 @@ public class RefillBehaviour : BaseAEMonoCI
 
     public List<ItemAmount> GetItemsToRefill()
     {
-        var settings = buildingBehaviour.BuildingType.GetItemProduceSettings();
-        var maxBufferPerItemtype = settings
-            .SelectMany(x => x.ItemsConsumedToProduce)
+        var itemsConsumedToProduceAll = buildingBehaviour.BuildingType.GetItemsConsumedToProduceAll();
+        var maxBufferPerItemtype = 
+            itemsConsumedToProduceAll
             .GroupBy(x => x.ItemType)
             .Select(x => new ItemAmount
             {
@@ -95,15 +95,14 @@ public class RefillBehaviour : BaseAEMonoCI
     public int GetItemCountToRefill(ItemType itemType, int countIncoming, int countStocked)
     {
         var ignoreMaxItemBuffer = buildingBehaviour.BuildingType.IgnoreMaxItemBuffer();
-        var settings = buildingBehaviour.BuildingType.GetItemProduceSettings();
+        var itemsConsumedToProduceAll = buildingBehaviour.BuildingType.GetItemsConsumedToProduceAll();
 
         if (ignoreMaxItemBuffer)
         {
             return 5 - countIncoming + countStocked; // altijd 5 orders om items te brengen -> STOCKPILE
         }
         
-        return settings
-            .SelectMany(x => x.ItemsConsumedToProduce)
+        return itemsConsumedToProduceAll
             .Where(x => x.ItemType == itemType)
             .OrderByDescending(x => x.MaxBuffer)
             .First()

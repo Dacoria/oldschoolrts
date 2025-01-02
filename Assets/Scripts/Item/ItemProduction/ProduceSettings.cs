@@ -3,28 +3,45 @@ using System.Collections.Generic;
 
 public class ProduceSetup
 {
-    public ProduceSetup(ItemOutput produceType, Action produceAction, Action waitAfterProduceAction = null)
+    public ProduceSetup(ItemOutput produceType, IProduce produceAction, Action produceCallback = null, Action waitAfterProduceCallback = null)
     {
-        ProduceTypes = new List<Enum> { produceType.ItemType };
+        ProduceTypes = new List<Enum> ();
+        for (int i = 0; i < produceType.ProducedPerProdCycle; i ++)
+        {
+            ProduceTypes.Add(produceType.ItemType);
+        }
+
         ProduceAction = produceAction;
-        WaitAfterProduceAction = waitAfterProduceAction;
+        ProduceCallback = produceCallback;
+        WaitAfterProduceCallback = waitAfterProduceCallback;
     }
 
-    public ProduceSetup(List<ItemOutput> produceTypes, Action produceAction, Action waitAfterProduceAction = null)
+    public ProduceSetup(List<ItemOutput> produceTypes, IProduce produceAction, Action produceCallback = null, Action waitAfterProduceCallback = null)
     {
-        ProduceTypes = produceTypes.ConvertAll<Enum>(x => x.ItemType);
+        ProduceTypes = new List<Enum>();
+        foreach (var produceType in produceTypes)
+        {
+            for (int i = 0; i < produceType.ProducedPerProdCycle; i++)
+            {
+                ProduceTypes.Add(produceType.ItemType);
+            }
+        }
+
         ProduceAction = produceAction;
-        WaitAfterProduceAction = waitAfterProduceAction;
+        ProduceCallback = produceCallback;
+        WaitAfterProduceCallback = waitAfterProduceCallback;
     }
 
-    public ProduceSetup(Enum produceType, Action produceAction, Action waitAfterProduceAction = null)
+    public ProduceSetup(Enum produceType, IProduce produceAction, Action produceCallback = null, Action waitAfterProduceCallback = null)
     {
         ProduceTypes = new List<Enum> { produceType };
         ProduceAction = produceAction;
-        WaitAfterProduceAction = waitAfterProduceAction;
+        ProduceCallback = produceCallback;
+        WaitAfterProduceCallback = waitAfterProduceCallback;
     }
 
     public List<Enum> ProduceTypes;
-    public Action ProduceAction;
-    public Action WaitAfterProduceAction;
+    public IProduce ProduceAction;
+    public Action ProduceCallback;
+    public Action WaitAfterProduceCallback;
 }

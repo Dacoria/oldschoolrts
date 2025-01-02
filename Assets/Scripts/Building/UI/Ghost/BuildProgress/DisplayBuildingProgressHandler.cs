@@ -119,11 +119,11 @@ public class DisplayBuildingProgressHandler : BaseAEMonoCI
     private void InitiateItemsDisplay()
     {
         InputTextMeshItems = new List<TextMeshItem>();
-        for (var i = 0; i < BuildingBehaviourScript.RequiredItems.Length; i ++)
+        for (var i = 0; i < BuildingBehaviourScript.RequiredItems.Count; i ++)
         {
             var inputDisplayGo = Instantiate(InputDisplayGoPrefab, DisplayBuildingProgressGo.transform);
 
-            var extraYDistance = ((BuildingBehaviourScript.RequiredItems.Length - 1) * 0.6f) - (i * 0.6f);
+            var extraYDistance = ((BuildingBehaviourScript.RequiredItems.Count - 1) * 0.6f) - (i * 0.6f);
             inputDisplayGo.transform.position = new Vector3(inputDisplayGo.transform.position.x, inputDisplayGo.transform.position.y + extraYDistance, inputDisplayGo.transform.position.z);
 
             FixDisplayForItemtype(InputTextMeshItems, BuildingBehaviourScript.RequiredItems[i].ItemType, inputDisplayGo);
@@ -137,9 +137,7 @@ public class DisplayBuildingProgressHandler : BaseAEMonoCI
             var textMesh = InputTextMeshItems.Single(x => x.ItemType == itemsRequiredForBuilding.ItemType).TextMesh;
             var itemOfTypeAlreadyDelivered = BuildingBehaviourScript.GetItemCountDeliveredForBuilding(itemsRequiredForBuilding.ItemType);
 
-            textMesh.text = itemOfTypeAlreadyDelivered +
-                "/" +
-                itemsRequiredForBuilding.Amount;
+            textMesh.text = $"{itemOfTypeAlreadyDelivered}/{itemsRequiredForBuilding.Amount}";
         }
     }    
 

@@ -10,14 +10,14 @@ public class MoveObjectToSurface : MonoBehaviourCI
     private bool EndPositionReached = false;
     private Vector3 EndPosition;
 
-    [ComponentInject] private BuildingBehaviour BuildingBehaviour;
+    [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     public void Start()
     {
-        if (BuildingBehaviour != null)
+        if (buildingBehaviour != null)
         {
-            TimeInSeconds = BuildingBehaviour.TimeToBuildRealInSeconds;
-            if (BuildingBehaviour.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
+            TimeInSeconds = buildingBehaviour.BuildingType.GetBuildDurationSettings().TimeToBuildRealInSeconds;
+            if (buildingBehaviour.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
             {
                 enabled = false;
                 return; // gebouw is al af --> dit script is overbodig
@@ -37,7 +37,7 @@ public class MoveObjectToSurface : MonoBehaviourCI
   
     void Update()
     {
-        if(BuildingBehaviour != null && BuildingBehaviour.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
+        if(buildingBehaviour != null && buildingBehaviour.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
         {
             Destroy(this);
         }

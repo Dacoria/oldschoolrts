@@ -7,21 +7,17 @@ public class ShowRequiredResourcesForBuildingBehaviour : MonoBehaviourCI
     [ComponentInject] private BuildingUiWrapperBehaviour BuildingUiWrapperBehaviour;
 
     void Start()
-    {        
-        var buildingTypeSettings = BuildingPrefabs.Get().Single(x => x.BuildingType == BuildingUiWrapperBehaviour.BuildingType);
-        var itemsToBuildBuilding = buildingTypeSettings.BuildingPrefab.GetComponent<BuildingBehaviour>();
-        if(itemsToBuildBuilding != null)
+    {
+        var buildCosts = BuildingUiWrapperBehaviour.BuildingType.GetBuildCosts();        
+        foreach(var reqItemToBuild in buildCosts)
         {
-            foreach(var reqItemToBuild in itemsToBuildBuilding.RequiredItems)
-            {
-                var reqItemCard = Instantiate(ReqResourcesPrefab, transform);
-                reqItemCard.Text.text = reqItemToBuild.Amount.ToString();
+            var reqItemCard = Instantiate(ReqResourcesPrefab, transform);
+            reqItemCard.Text.text = reqItemToBuild.Amount.ToString();
 
-                var itemSetting = ResourcePrefabs.Get().Single(x => x.ItemType == reqItemToBuild.ItemType);
-                reqItemCard.Image.sprite = itemSetting.Icon;
+            var itemSetting = ResourcePrefabs.Get().Single(x => x.ItemType == reqItemToBuild.ItemType);
+            reqItemCard.Image.sprite = itemSetting.Icon;
 
-                reqItemCard.ItemType = reqItemToBuild.ItemType;
-            }
-        }
+            reqItemCard.ItemType = reqItemToBuild.ItemType;
+        }        
     }
 }

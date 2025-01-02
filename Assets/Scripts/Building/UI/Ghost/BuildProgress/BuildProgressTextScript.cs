@@ -40,8 +40,8 @@ public class BuildProgressTextScript : MonoBehaviourCI
     {
         // BS: meerere bouwers? doen we nu niks mee
         var durationBuildingInMs = BuildingBehaviour.CurrentBuildStatus == BuildStatus.PREPARING ?
-            BuildingBehaviour.TimeToPrepareBuildingInSeconds * 1000 : 
-            BuildingBehaviour.TimeToBuildRealInSeconds * 1000;
+            BuildingBehaviour.BuildingType.GetBuildDurationSettings().TimeToPrepareBuildingInSeconds * 1000 :
+            BuildingBehaviour.BuildingType.GetBuildDurationSettings().TimeToBuildRealInSeconds * 1000;
 
         var timeSpendBuildingInMs = (DateTime.Now - BuildingBehaviour.StartTimeBuildingTheBuilding).TotalMilliseconds;
         var percBuild = (timeSpendBuildingInMs / (durationBuildingInMs)) * 100;

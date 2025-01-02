@@ -111,14 +111,14 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
                     {
                         var buildingBehaviourOfBuilding = _currentBuilderRequest.GameObject.GetComponent<BuildingBehaviour>();
                         if (buildingBehaviourOfBuilding == null) { throw new System.Exception("Altijd een BuildingBehaviour verwacht bij preparen gebouw"); }
-                        StartCoroutine(PrepareTheGround(buildingBehaviourOfBuilding.TimeToPrepareBuildingInSeconds));
+                        StartCoroutine(PrepareTheGround(buildingBehaviourOfBuilding.BuildingType.GetBuildDurationSettings().TimeToPrepareBuildingInSeconds));
                         _currentBuilderRequest.Status = BuildStatus.PREPARING;
                     }
                     if (_currentBuilderRequest.Status == BuildStatus.NEEDS_BUILDING)
                     {
                         var buildingBehaviourOfBuilding = _currentBuilderRequest.GameObject.GetComponent<BuildingBehaviour>();
                         if(buildingBehaviourOfBuilding == null) { throw new System.Exception("Altijd een BuildingBehaviour verwacht bij afronden gebouw"); }
-                        StartCoroutine(FinishTheBuilding(buildingBehaviourOfBuilding.TimeToBuildRealInSeconds));
+                        StartCoroutine(FinishTheBuilding(buildingBehaviourOfBuilding.BuildingType.GetBuildDurationSettings().TimeToBuildRealInSeconds));
                         _currentBuilderRequest.Status = BuildStatus.BUILDING;
                     }
                 }

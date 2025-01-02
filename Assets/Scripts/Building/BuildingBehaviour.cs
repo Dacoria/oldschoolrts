@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,12 +10,9 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
     public Purpose Purpose = Purpose.BUILDING;
     public GameObject Real;
     public bool DEBUG_RealImmediately;
-    public float TimeToBuildRealInSeconds = 5; //kan overschreven worden per prefab
-    public float TimeToPrepareBuildingInSeconds = 3; //kan overschreven worden per prefab
 
     [HideInInspector] public BuildingType BuildingType;// wordt geset door builder bij bouwen
-
-    public ItemAmountBuffer[] RequiredItems;
+    public List<ItemAmountBuffer> RequiredItems => BuildingType.GetBuildCosts();
 
     [HideInInspector] public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
 
@@ -23,8 +21,6 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
     
     private void EnableRealWithoutActivating()
     {
-        
-
         var children = Real.GetComponentsInChildren<MonoBehaviour>();
         foreach (var monoBehaviour in children) monoBehaviour.enabled = false;
 
@@ -68,7 +64,7 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
             }
             else if (builderRequest.Status == BuildStatus.COMPLETED_PREPARING)
             {
-                if(RequiredItems.Length == 0)
+                if(RequiredItems.Count == 0)
                 {
                     ActivateReal();
                 }

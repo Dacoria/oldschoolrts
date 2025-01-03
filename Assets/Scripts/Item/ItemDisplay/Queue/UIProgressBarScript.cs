@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class UIProgressBarScript : MonoBehaviourSlowUpdateFramesCI
 {
     public Image ProgressionBar;
-    public Text ProgressText;
     public IProcesOneItemUI procesOneItemUI;
 
     void Start()
@@ -15,7 +14,6 @@ public class UIProgressBarScript : MonoBehaviourSlowUpdateFramesCI
 
     private void OnEnable()
     {
-        ProgressText.text = "";
         ProgressionBar.fillAmount = 0;
     }
 
@@ -33,7 +31,6 @@ public class UIProgressBarScript : MonoBehaviourSlowUpdateFramesCI
             var progressPerc = GetProgressPercentageOfItemProcessed(itemBeingProcessed);
             var fullPerc = Mathf.Round(progressPerc * 100);
 
-            ProgressText.text = fullPerc.ToString() + "%";
             ProgressionBar.fillAmount = progressPerc;
         }              
     }

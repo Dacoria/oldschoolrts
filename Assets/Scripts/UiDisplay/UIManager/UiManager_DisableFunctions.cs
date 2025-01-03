@@ -29,10 +29,7 @@ public partial class UiManager : MonoBehaviour
     public void DisableEntireCanvas()
     {
         SetAllCanvasItemsToInactive(SelectedBuildingPanel);
-        SetAllCanvasItemsToInactive(SelectedBuildingPanelSkillTree);
-
         SelectedBuildingPanel.SetActive(false);
-        SelectedBuildingPanelSkillTree.SetActive(false);
     }
 
     private void SetAllCanvasItemsToInactive(GameObject selectedBuildingPanel)

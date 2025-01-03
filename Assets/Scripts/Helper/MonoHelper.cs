@@ -35,7 +35,6 @@ public class MonoHelper : MonoBehaviour
 
     public List<SpriteArmorType> SpriteArmorTypes;
     public List<SpriteAttackType> SpriteDamageTypes;
-    public List<SpriteSkillType> SpriteSkillTypes;
 
 
     [Serializable]
@@ -52,25 +51,9 @@ public class MonoHelper : MonoBehaviour
         public Sprite Sprite;
     }
 
-    [Serializable]
-    public class SpriteSkillType
-    {
-        public SkillType SkillType;
-        public Sprite Sprite;
-    }
-
     public Sprite GetSpriteForArmorType(ArmorType armorType) => SpriteArmorTypes.Single(x => x.ArmorType == armorType).Sprite;
     public Sprite GetSpriteForAttackType(AttackType attackType) => SpriteDamageTypes.Single(x => x.AttackType == attackType).Sprite;
-    public Sprite GetSpriteForSkillType(SkillType skillType)
-    {
-        var skillSprit = SpriteSkillTypes.FirstOrDefault(x => x.SkillType == skillType);
-        if (skillSprit != null)
-        {
-            return skillSprit.Sprite;
-        }
 
-        return SpriteSkillTypes.Single(x => x.SkillType == SkillType.None).Sprite;
-    }
 
     public GameObject LeftArrowCarousselUiPrefab;
     public GameObject RightArrowCarousselUiPrefab;

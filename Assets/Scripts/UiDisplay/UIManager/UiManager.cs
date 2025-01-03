@@ -6,12 +6,11 @@ public partial class UiManager : MonoBehaviour
     public Camera Camera;
 
     public GameObject SelectedBuildingPanel;
-    public GameObject SelectedBuildingPanelSkillTree;
     public GameObject QueueUiGo;
     public MonoBehaviour BuildingOverviewUI;
 
-    public RangeDisplayBehaviour ActiveRangeDisplayBehaviour;
-    public DisplayBuildingInputOutputHandler ActiveDisplayBuildingInputOutputHandler;
+    [HideInInspector] public RangeDisplayBehaviour ActiveRangeDisplayBehaviour;
+    [HideInInspector] public DisplayBuildingInputOutputHandler ActiveDisplayBuildingInputOutputHandler;
 
     void Update()
     {
@@ -19,7 +18,6 @@ public partial class UiManager : MonoBehaviour
         {
             DisableActiveBuilding();
             SelectedBuildingPanel.SetActive(false);
-            SelectedBuildingPanelSkillTree.SetActive(false);
         }
         if (Input.GetMouseButtonDown(0))
         {

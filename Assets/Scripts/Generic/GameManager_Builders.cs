@@ -55,6 +55,8 @@ public partial class GameManager : BaseAEMonoCI
             !building.gameObject.IsFarmField() &&
             building.transform?.parent != BuildingParentGo.transform)
         {
+            // TODO - WIP -> Zorgt ervoor dat er geen requests meer aankomen in gebouw (gebeurt wel op root niveau); geen idee hoe nog
+
             //building.transform.parent = BuildingParentGo.transform;
         }
     }

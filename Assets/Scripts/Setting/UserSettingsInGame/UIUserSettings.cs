@@ -17,4 +17,18 @@ public class UIUserSettings : MonoBehaviour
         FoodConsumptionSettings.ToggleUseFoodConsumption_Active = !FoodConsumptionSettings.ToggleUseFoodConsumption_Active;
         BuildBuildingsByUser.Instance.ClearSelectedGameObjectToBuild();// leegmaken selectie bij UI Click --> TODO: Automatisch maken!
     }
+
+    // CHECKBOX UI
+    public void ToggleInstaFreeUnits()
+    {
+        BattleManager.ToggleInstaFreeUnits_Active = !BattleManager.ToggleInstaFreeUnits_Active;
+        BuildBuildingsByUser.Instance.ClearSelectedGameObjectToBuild();// leegmaken selectie bij UI Click --> TODO: Automatisch maken!
+    }
+
+    // CHECKBOX UI
+    public void ToggleInstaFreeVillagers()
+    {
+        VillagerManager.ToggleInstaFreeVillagers_Active = !VillagerManager.ToggleInstaFreeVillagers_Active;
+        BuildBuildingsByUser.Instance.ClearSelectedGameObjectToBuild();// leegmaken selectie bij UI Click --> TODO: Automatisch maken!
+    }
 }

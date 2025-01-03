@@ -15,7 +15,13 @@ public class ProduceCRBehaviour : MonoBehaviourCI
     {
         var durations = buildingBehaviour.BuildingType.GetProductionDurationSettings();
         StartCoroutine(CR_ProduceOverTime(produceSetup, durations));
-    }   
+    }
+
+    public void ProduceInstant(ProduceSetup produceSetup)
+    {
+        var durations = new ProduceDurations();
+        StartCoroutine(CR_ProduceOverTime(produceSetup, durations));
+    }
 
     private IEnumerator CR_ProduceOverTime(ProduceSetup produceSetup, ProduceDurations durations)
     {

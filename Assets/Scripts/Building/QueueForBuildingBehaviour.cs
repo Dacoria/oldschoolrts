@@ -18,7 +18,7 @@ public class QueueForBuildingBehaviour : BaseAEMonoCI
     {
         if(building == buildingBehaviour)
         {
-            QueueItems.Remove(QueueItems.First());
+            QueueItems.Remove(QueueItems.FirstOrDefault());
         }
     }
 
@@ -49,7 +49,6 @@ public class QueueForBuildingBehaviour : BaseAEMonoCI
                 if (CallingBuilding.CanProces(itemToCreate.Type))
                 {
                     CallingBuilding.AddType(itemToCreate.Type);
-                    // QueueItems.Remove(itemToCreate);
                 }
             }
         }

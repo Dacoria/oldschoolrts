@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using Assets;
 using Unity.Mathematics;
 using UnityEngine;
@@ -14,9 +16,9 @@ public static class MyExtensions
         switch (purpose)
         {
             case Purpose.ROAD:
-                return 1 << 0;
+                return 1 << Constants.LAYER_DEFAULT;
             default:
-                return 1 << 3;
+                return 1 << Constants.LAYER_TERRAIN;
         }
     }
 
@@ -187,6 +189,18 @@ public static class MyExtensions
         var closestBehaviour = behaviours.OrderBy(x => (x.transform.position - objLocation).sqrMagnitude).First();
         behaviours.Remove(closestBehaviour);
         return closestBehaviour;
+    }
+
+    public static T DeepClone<T>(this T obj)
+    {
+        using (var ms = new MemoryStream())
+        {
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(ms, obj);
+            ms.Position = 0;
+
+            return (T)formatter.Deserialize(ms);
+        }
     }
 
     public static void SetDirectChildrenActive(this GameObject go) => SetDirectChildrenSetActive(go, isActive: true);

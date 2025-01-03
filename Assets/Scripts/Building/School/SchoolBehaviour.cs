@@ -27,15 +27,22 @@ public class SchoolBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProduc
     public void AddType(Enum type)
     {
         var villagerType = (VillagerUnitType)type;
-        var itemsForProduction = GetItemsToConsumeForProduction(villagerType);
-        if (CanProces((VillagerUnitType)type))
+        if (VillagerManager.ToggleInstaFreeVillagers_Active)
         {
-            consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction);
-            produceCRBehaviour.ProduceOverTime(new ProduceSetup(villagerType, this));
+            produceCRBehaviour.ProduceInstant(new ProduceSetup(villagerType, this));
         }
         else
         {
-            throw new Exception("Zou al gecheckt moeten zijn"); //queue
+            var itemsForProduction = GetItemsToConsumeForProduction(villagerType);
+            if (CanProces((VillagerUnitType)type))
+            {
+                consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction);
+                produceCRBehaviour.ProduceOverTime(new ProduceSetup(villagerType, this));
+            }
+            else
+            {
+                throw new Exception("Zou al gecheckt moeten zijn"); //queue
+            }
         }
     }
 

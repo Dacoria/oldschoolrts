@@ -56,14 +56,17 @@ public class CardSelectProdUiHandler : MonoBehaviour, ICardCarousselDisplay, IPr
     public void AddAmount(Enum type, int amount)
     {
         var queueBehaviour = CallingBuilding.GetGameObject().GetComponent<QueueForBuildingBehaviour>();
-        if (queueBehaviour != null)
-        {
+        if (BattleManager.ToggleInstaFreeUnits_Active && CallingBuilding.GetBuildingType() == BuildingType.BARRACKS)
+            CallingBuilding.AddTypes(type, amount);
+
+        else if(VillagerManager.ToggleInstaFreeVillagers_Active && CallingBuilding.GetBuildingType() == BuildingType.SCHOOL)
+            CallingBuilding.AddTypes(type, amount);
+
+        else if (queueBehaviour != null)        
             queueBehaviour.AddItemsOnQueue(type, amount);
-        }
+        
         else
-        {
-            CallingBuilding.AddTypes(type, amount);            
-        }
+            CallingBuilding.AddTypes(type, amount);
     }
 
     public void DecreaseAmount(Enum type, int amount)

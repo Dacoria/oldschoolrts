@@ -1,6 +1,7 @@
 ﻿public static class Constants
 {
     //layers (collision + nav mesh)
+    public static int LAYER_DEFAULT = 0;
     public static int LAYER_TERRAIN = 3;
     public static int LAYER_UI = 5;
     public static int LAYER_RTS_UNIT = 6;

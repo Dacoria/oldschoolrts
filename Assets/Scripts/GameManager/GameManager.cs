@@ -14,7 +14,6 @@ public partial class GameManager : BaseAEMonoCI
     {
         Instance = this;
         MainCastleOrderDestination = MainCastle.GetComponent<IOrderDestination>();
-        BuildingParentGo = GameObject.Find("Buildings");
         base.Awake();
         InitServes();
     }       

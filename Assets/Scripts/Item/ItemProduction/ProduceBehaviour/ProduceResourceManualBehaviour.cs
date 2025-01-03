@@ -27,8 +27,7 @@ public class ProduceResourceManualBehaviour : MonoBehaviourCI, ICardOneProdBuild
 
     public void ProduceResource()
     {
-        produceCRBehaviour.ProduceOverTime(new ProduceSetup(itemToProduce, handleProduceResourceOrderBehaviour));
-        // geen waitlogica; onnodig complex (hoop ik)
+        produceCRBehaviour.ProduceInstant(new ProduceSetup(itemToProduce, handleProduceResourceOrderBehaviour));
     }
 
     // gebruiken in manuele gebouwen? voor nu niet

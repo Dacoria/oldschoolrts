@@ -6,6 +6,8 @@ public class VillagerManager : BaseAEMonoCI
 {
     public static VillagerManager Instance;
 
+    public static bool ToggleInstaFreeVillagers_Active = false;
+
     private List<IVillagerUnit> villagerUnits;
 
     private List<SerfBehaviour> serfs = new List<SerfBehaviour>();

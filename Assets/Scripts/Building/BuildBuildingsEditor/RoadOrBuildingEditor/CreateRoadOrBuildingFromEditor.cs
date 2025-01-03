@@ -257,8 +257,6 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
         }
         else
         {
-            go.transform.SetParent(GameObject.Find("Buildings").transform);
-
             buildingBehaviour.BuildingType = EditorSettings.SelectedBuildingType.Value;
 
             var showResources = real.AddComponent<DisplayBuildingInputOutputHandler>();

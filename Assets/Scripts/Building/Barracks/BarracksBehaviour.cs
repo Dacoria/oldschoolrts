@@ -32,15 +32,22 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
     public void AddType(Enum type)
     {
         var barracksUnitType = (BarracksUnitType)type;
-        var itemsForProduction = buildingBehaviour.BuildingType.GetProductionSettings().Single(x => (BarracksUnitType)x.GetType() == (BarracksUnitType)type).ItemsConsumedToProduce;
-        if (CanProces(barracksUnitType))
+        if (BattleManager.ToggleInstaFreeUnits_Active)
         {
-            consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction);
-            produceCRBehaviour.ProduceOverTime(new ProduceSetup(barracksUnitType, this));                
+            produceCRBehaviour.ProduceInstant(new ProduceSetup(barracksUnitType, this));
         }
         else
         {
-            throw new Exception("Zou al gecheckt moeten zijn"); //queue
+            var itemsForProduction = buildingBehaviour.BuildingType.GetProductionSettings().Single(x => (BarracksUnitType)x.GetType() == (BarracksUnitType)type).ItemsConsumedToProduce;
+            if (CanProces(barracksUnitType))
+            {
+                consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction);
+                produceCRBehaviour.ProduceOverTime(new ProduceSetup(barracksUnitType, this));
+            }
+            else
+            {
+                throw new Exception("Zou al gecheckt moeten zijn"); //queue
+            }
         }
     }
 

@@ -29,7 +29,7 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
 
     private void Update()
     {
-        var colliders = Physics.OverlapSphere(this.transform.position, EnemyAttractRadius, LayerMaskManager.RtsUnitMask);
+        var colliders = Physics.OverlapSphere(this.transform.position, EnemyAttractRadius, 1 << Constants.LAYER_RTS_UNIT);
         
         Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.StoppedAtDestination());
         Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, false);

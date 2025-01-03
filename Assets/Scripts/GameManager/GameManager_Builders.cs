@@ -48,16 +48,4 @@ public partial class GameManager : BaseAEMonoCI
 
         return false;
     }
-
-    protected override void OnNewBuilding(BuildingBehaviour building)
-    {
-        if (!building.gameObject.IsRoad() &&
-            !building.gameObject.IsFarmField() &&
-            building.transform?.parent != BuildingParentGo.transform)
-        {
-            // TODO - WIP -> Zorgt ervoor dat er geen requests meer aankomen in gebouw (gebeurt wel op root niveau); geen idee hoe nog
-
-            //building.transform.parent = BuildingParentGo.transform;
-        }
-    }
 }

@@ -17,17 +17,20 @@ public class VillagerManager : BaseAEMonoCI
     public List<WorkManager> GetWorkers() => workers;
     public List<IVillagerUnit> GetVillagers() => villagerUnits;
 
+    private GameObject VillagersParentGo;
+
     private new void Awake()
     {
         base.Awake();
         Instance = this;
+        VillagersParentGo = GameObject.Find("Villagers");
         RefreshVillagerUnits();
     }
 
     protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit)
     {
         RefreshVillagerUnits();
-    }
+    }    
 
     private void RefreshVillagerUnits()
     {
@@ -39,6 +42,8 @@ public class VillagerManager : BaseAEMonoCI
 
         foreach (var villagerUnit in villagerUnits)
         {
+            ((MonoBehaviour)villagerUnit).transform.parent = VillagersParentGo.transform;
+
             var type = villagerUnit.GetVillagerUnitType();
             
             if(type == VillagerUnitType.Serf)

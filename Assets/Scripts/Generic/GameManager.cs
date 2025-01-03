@@ -5,7 +5,8 @@ using UnityEngine;
 public partial class GameManager : BaseAEMonoCI
 {
     public GameObject MainCastle;
-    private IOrderDestination MainCastleOrderDestination;
+    private GameObject BuildingParentGo;
+    private IOrderDestination MainCastleOrderDestination;    
 
     public static GameManager Instance;
 
@@ -13,14 +14,8 @@ public partial class GameManager : BaseAEMonoCI
     {
         Instance = this;
         MainCastleOrderDestination = MainCastle.GetComponent<IOrderDestination>();
+        BuildingParentGo = GameObject.Find("Buildings");
         base.Awake();
         InitServes();
-    }
-
-    private T PopClosest<T>(List<T> behaviours, Vector3 objLocation) where T : MonoBehaviour
-    {
-        var closestBehaviour = behaviours.OrderBy(x => (x.transform.position - objLocation).sqrMagnitude).First();
-        behaviours.Remove(closestBehaviour);
-        return closestBehaviour;
-    }
+    }       
 }

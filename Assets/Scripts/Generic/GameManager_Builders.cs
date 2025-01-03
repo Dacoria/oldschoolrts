@@ -12,7 +12,7 @@ public partial class GameManager : BaseAEMonoCI
     {
         if (freeBuilders.Count > 0)
         {
-            var builder = PopClosest(freeBuilders, builderRequest.Location);
+            var builder = freeBuilders.PopClosest(builderRequest.Location);
             builder.AssignBuilderRequest(builderRequest);
         }
         else
@@ -47,5 +47,15 @@ public partial class GameManager : BaseAEMonoCI
         }
 
         return false;
-    }    
+    }
+
+    protected override void OnNewBuilding(BuildingBehaviour building)
+    {
+        if (!building.gameObject.IsRoad() &&
+            !building.gameObject.IsFarmField() &&
+            building.transform?.parent != BuildingParentGo.transform)
+        {
+            //building.transform.parent = BuildingParentGo.transform;
+        }
+    }
 }

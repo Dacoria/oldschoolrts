@@ -18,7 +18,12 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
 
     public GameObject GetGO() {try { return this.gameObject; } catch (Exception e) {return null; }} // voor stoppen unity.... TODO
     [ComponentInject(Required.OPTIONAL)] private IValidateOrder validateOrder;
-    
+
+    private void Start()
+    {
+        AE.NewBuilding?.Invoke(this);
+    }
+
     private void EnableRealWithoutActivating()
     {
         var children = Real.GetComponentsInChildren<MonoBehaviour>();
@@ -36,7 +41,7 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
         Destroy(GhostBuildingBehaviour.gameObject.GetComponentInChildren<RangeDisplayBehaviour>());
         Destroy(gameObject.GetComponent<CheckCollisionHandler>());
 
-        Real.SetActive(true); // staat al aan; zekerheidje
+        Real.SetActive(true);
 
         var children = Real.GetComponentsInChildren<MonoBehaviour>();
         foreach (var monoBehaviour in children) monoBehaviour.enabled = true;
@@ -47,7 +52,7 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
             var rangedDisplay = Instantiate(MonoHelper.Instance.RangedDisplayPrefab, ((MonoBehaviour)locOfResource).transform);
             rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
             rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();
-        }
+        }        
     }
 
     [HideInInspector] public BuildStatus CurrentBuildStatus;

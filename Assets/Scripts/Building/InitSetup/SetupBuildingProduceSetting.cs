@@ -194,5 +194,5 @@ public static class SetupBuildingProduceSetting
             new BuildingInOutSetup(@in:ItemType.PLANKS, inAmount: 2,                           @out: ItemType.WOODENMAGESTAFF),
             new BuildingInOutSetup(@in:ItemType.PLANKS, inAmount: 1,                           @out: ItemType.WOODENSHIELD),
         }},
-    };
+    }; 
 }

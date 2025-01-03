@@ -34,14 +34,15 @@ public static class AE
     public static Action<WorkManager> NoWorkerAction;
     public static Action<WorkManager> StartNewWorkerAction;
 
-    // VILLAGER CREATED
+    // VILLAGERS
     public static Action<IVillagerUnit> NewVillagerUnit;
 
-    // BUILDING NEEDS WORKER
+    // BUILDINGS
+    public static Action<BuildingBehaviour> NewBuilding;
     public static Action<WorkerBuildingBehaviour> BuildingNeedsWorker;
 
     // PRODUCE EVENTS
     public static Action<BuildingBehaviour, List<Enum>> StartedProducingAction; // evt aanhaken op deze events
     public static Action<BuildingBehaviour, List<Enum>> FinishedProducingAction; // evt aanhaken op deze events
-    public static Action<BuildingBehaviour> FinishedWaitingAfterProducingAction; // evt aanhaken op deze events
+    public static Action<BuildingBehaviour> FinishedWaitingAfterProducingAction; // evt aanhaken op deze events    
 }

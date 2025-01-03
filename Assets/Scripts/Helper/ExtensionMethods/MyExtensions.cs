@@ -120,14 +120,14 @@ public static class MyExtensions
 
     private static bool RootNameGoStartsWith(GameObject go, string startsWithText)
     {
-        Transform root = null;
+        var currGo = go;
         do
         {
-            root = go.transform.parent != null ? go.transform.parent : go.transform;
+            currGo = currGo.transform.parent != null ? currGo.transform.parent.gameObject : currGo;
 
-        } while (root.parent != null);
+        } while (currGo.transform.parent != null);
 
-        return root.gameObject.name.StartsWith(startsWithText);
+        return currGo.name.StartsWith(startsWithText);
     }
 
     public static List<KeyCodeAction> KeyCodeActionList =
@@ -137,9 +137,7 @@ public static class MyExtensions
             new KeyCodeAction(KeyCode.I, KeyCodeActionType.ToggleBuildingProgressDisplay),
             new KeyCodeAction(KeyCode.O, KeyCodeActionType.ToggleEntranceExitDisplay),
             new KeyCodeAction(KeyCode.P, KeyCodeActionType.ToggleBuildingNameImgDisplay)
-    };
-
-    
+    };    
 
     public static Vector2 GetRandomVector(int minRange, int maxRange)
     {
@@ -153,40 +151,7 @@ public static class MyExtensions
         var z = Mathf.RoundToInt(randomZ * positiveNegativeZ);
 
         return new Vector2(x, z);
-    }
-
-    public static List<ItemProduceSetting> ConvertToSingleProduceItem(this List<ProductionSetting> ProductionSettings)
-    {
-        var result = new List<ItemProduceSetting>();
-        foreach (var produceSetting in ProductionSettings)
-        {
-            var itemResult = produceSetting.ConvertToSingleProduceItem();
-            result.Add(itemResult);
-        }
-
-        return result;
-    }
-    
-    public static Vector2 ConvertToVector2(this Vector3 vector3) => new Vector2(vector3.x, vector3.z);    
-
-    public static ItemProduceSetting ConvertToSingleProduceItem(this ProductionSetting productionSetting)
-    {
-        var itemResult = new ItemProduceSetting
-        {
-            ItemsConsumedToProduce = productionSetting.ItemsConsumedToProduce,
-            ItemsToProduce = new List<ItemOutput>
-            {
-                new ItemOutput
-                {
-                    ItemType = (ItemType)productionSetting.GetType(),
-                    MaxBuffer = 5,
-                    ProducedPerProdCycle = 1
-                }
-            }
-        };
-
-        return itemResult;
-    }
+    }       
 
     public static string Capitalize(this string input, bool everyWord = true, string delimiter = "_")
     {
@@ -217,5 +182,11 @@ public static class MyExtensions
         int j = Array.IndexOf<T>(Arr, src) + 1;
         return (Arr.Length == j) ? Arr[0] : Arr[j];
     }
-}
 
+    public static T PopClosest<T>(this List<T> behaviours, Vector3 objLocation) where T : MonoBehaviour
+    {
+        var closestBehaviour = behaviours.OrderBy(x => (x.transform.position - objLocation).sqrMagnitude).First();
+        behaviours.Remove(closestBehaviour);
+        return closestBehaviour;
+    }
+}

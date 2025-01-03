@@ -38,7 +38,7 @@ public class BuildingUiBehaviour : MonoBehaviourCI, ICardCarousselDisplay
     {
         var buildingItem = BuildingPrefabs.Get().Single(x => x.BuildingType == buildingType);
         BuildBuildingsByUser.BuildGeneric(buildingItem.BuildingPrefab);
-        UiManager.ActivateUI(null);
+        UiManager.DisableEntireCanvas();
     }
 
     public int GetCount() => BuildingUiWrapperBehaviours.Count;

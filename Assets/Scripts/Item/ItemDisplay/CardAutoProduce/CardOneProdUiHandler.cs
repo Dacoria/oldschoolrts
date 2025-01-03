@@ -31,8 +31,14 @@ public class CardOneProdUiHandler : MonoBehaviour, ICardCarousselDisplay, IProce
             }            
         }
 
-        var produceTypeImageGo = Instantiate(Load.GoMap["ProduceItemRightArrow"], transform);
-        UiCardBehaviours.Add(produceTypeImageGo.GetComponent<UiCardBehaviour>());
+        var rightArrowGo = Instantiate(Load.GoMap["ProduceItemRightArrow"], transform);
+        var cardUIRightArrow = rightArrowGo.GetComponent<UiCardBehaviour>();
+        //if(buildingType.GetCategory() == BuildingCategory.Manual)
+        //    cardUIRightArrow.CountText.text = "";
+        //else
+        //    cardUIRightArrow.CountText.text = $"{buildingType.GetProductionDurationSettings().TimeToProduceResourceInSeconds}";
+
+        UiCardBehaviours.Add(cardUIRightArrow);
 
         foreach (var itemToProduce in produceSettings.ItemsToProduce)
         {

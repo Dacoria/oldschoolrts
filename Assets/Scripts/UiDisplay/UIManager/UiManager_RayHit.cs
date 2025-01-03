@@ -9,6 +9,7 @@ public partial class UiManager : MonoBehaviour
 
         if (buildingBehaviourHit != null)
         {
+            EnableUIActiveBuilding(buildingBehaviourHit.gameObject);
             EnableOutline(buildingBehaviourHit.gameObject);
             ActiveRangedDisplay(buildingBehaviourHit.gameObject);
             ActivateUI(uiToActivate);
@@ -32,8 +33,7 @@ public partial class UiManager : MonoBehaviour
             {
                 continue;
             }
-
-            EnableUIActiveBuilding(buildingBehaviourHit.gameObject);
+            
             var category = buildingBehaviourHit.BuildingType.GetCategory();
             switch (category)
             {

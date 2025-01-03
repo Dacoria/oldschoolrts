@@ -36,7 +36,7 @@ public partial class UiManager : MonoBehaviour
         }
     }
 
-    private void DisableEntireCanvas()
+    public void DisableEntireCanvas()
     {
         SetAllCanvasItemsToInactive(SelectedBuildingPanel);
         SetAllCanvasItemsToInactive(SelectedBuildingPanelSkillTree);

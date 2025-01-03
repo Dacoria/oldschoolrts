@@ -112,7 +112,7 @@ public partial class GameManager : BaseAEMonoCI
 
         while (order != null && freeSerfs.Count > 0)
         {
-            order.Assignee = PopClosest(freeSerfs, order.Location);
+            order.Assignee = freeSerfs.PopClosest(order.Location);
             order.Assignee.Assign(order);
             CurrentSerfOrders.Add(order);
 

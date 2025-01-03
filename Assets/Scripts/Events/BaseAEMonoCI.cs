@@ -17,6 +17,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnFreeSerf")) AE.FreeSerf += OnFreeSerf;
         if (IsOverwritten("OnKeyCodeAction")) AE.KeyCodeAction += OnKeyCodeAction;
         if (IsOverwritten("OnLeftClickOnGo")) AE.LeftClickOnGo += OnLeftClickOnGo;
+        if (IsOverwritten("OnNewBuilding")) AE.NewBuilding += OnNewBuilding;
         if (IsOverwritten("OnNewVillagerUnit")) AE.NewVillagerUnit += OnNewVillagerUnit;
         if (IsOverwritten("OnNoFoodToConsume")) AE.NoFoodToConsume += OnNoFoodToConsume;
         if (IsOverwritten("OnNoWorkerAction")) AE.NoWorkerAction += OnNoWorkerAction;
@@ -40,6 +41,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnFreeSerf")) AE.FreeSerf -= OnFreeSerf;
         if (IsOverwritten("OnKeyCodeAction")) AE.KeyCodeAction -= OnKeyCodeAction;
         if (IsOverwritten("OnLeftClickOnGo")) AE.LeftClickOnGo -= OnLeftClickOnGo;
+        if (IsOverwritten("OnNewBuilding")) AE.NewBuilding -= OnNewBuilding;
         if (IsOverwritten("OnNewVillagerUnit")) AE.NewVillagerUnit -= OnNewVillagerUnit;
         if (IsOverwritten("OnNoFoodToConsume")) AE.NoFoodToConsume -= OnNoFoodToConsume;
         if (IsOverwritten("OnNoWorkerAction")) AE.NoWorkerAction -= OnNoWorkerAction;
@@ -49,7 +51,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnStartCompletingSerfRequest")) AE.StartCompletingSerfRequest -= OnStartCompletingSerfRequest;
         if (IsOverwritten("OnStartedProducingAction")) AE.StartedProducingAction -= OnStartedProducingAction;
         if (IsOverwritten("OnStartNewWorkerAction")) AE.StartNewWorkerAction -= OnStartNewWorkerAction;
-    }
+    }    
 
     protected virtual void OnBuilderRequestStatusChanged(BuilderRequest request, BuildStatus status) { }
     protected virtual void OnBuilderRequest(BuilderRequest request) { }
@@ -57,14 +59,15 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
     protected virtual void OnFinishedProducingAction(BuildingBehaviour building, List<Enum> typesProduced) { }
     protected virtual void OnFinishedWaitingAfterProducingAction(BuildingBehaviour building) { }
     protected virtual void OnFoodStatusHasChanged(FoodConsumption consumption, FoodConsumptionStatus status) { }
-    protected virtual void OnFreeBuilder(BuilderBehaviour behaviour) { }
-    protected virtual void OnFreeSerf(SerfBehaviour behaviour) { }
+    protected virtual void OnFreeBuilder(BuilderBehaviour builder) { }
+    protected virtual void OnFreeSerf(SerfBehaviour serf) { }
     protected virtual void OnKeyCodeAction(KeyCodeAction action) { }
     protected virtual void OnLeftClickOnGo(GameObject go) { }
+    protected virtual void OnNewBuilding(BuildingBehaviour building) { }
     protected virtual void OnNewVillagerUnit(IVillagerUnit newVillagerUnit) { }
     protected virtual void OnNoFoodToConsume(FoodConsumption consumption) { }
     protected virtual void OnNoWorkerAction(WorkManager manager) { }
-    protected virtual void OnReachedFoodRefillingPoint(TavernBehaviour behaviour1, FoodConsumptionBehaviour behaviour) { }
+    protected virtual void OnReachedFoodRefillingPoint(TavernBehaviour behaviour1, FoodConsumptionBehaviour foodConsumption) { }
     protected virtual void OnOrderStatusChanged(SerfOrder order, Status prevStatus) { }
     protected virtual void OnSerfRequest(SerfRequest request) { }
     protected virtual void OnStartCompletingSerfRequest(SerfOrder order) { }

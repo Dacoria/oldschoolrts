@@ -349,7 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b64e638bd226a3244a5af6233da6edb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildTimeInSeconds: 5
 --- !u!114 &1717455414736617341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4
 --- !u!114 &7455773216898634447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -809,16 +807,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 5320273431127952782}
   DEBUG_RealImmediately: 1
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 2
-    ItemType: 30
-    MaxBuffer: 0
-  - Amount: 3
-    ItemType: 10
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &8568050033885828420
 Rigidbody:
@@ -866,8 +855,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.99, y: 6, z: 7.99}
-  m_Center: {x: 0, y: 3, z: 0.5}
+  m_Size: {x: 4.99, y: 7, z: 7.99}
+  m_Center: {x: 0, y: 3.5, z: 0.5}
 --- !u!1001 &69731493239325485
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -238,7 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4
 --- !u!114 &3084091941927600158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,17 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc7b888d814c8d4eb0a4799daaecdf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ResourcesToProduce:
-  - ItemsToProduce:
-    - ItemType: 120
-      MaxBuffer: 5
-      ProducedPerProdCycle: 1
-    ItemsConsumedToProduce:
-    - Amount: 2
-      ItemType: 110
-      MaxBuffer: 8
-  ProduceTimeInSeconds: 5
-  WaitAfterProduceTimeInSeconds: 2
 --- !u!1 &6661760122668879981
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,16 +784,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 5180204085867975937}
   DEBUG_RealImmediately: 1
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 1
-    ItemType: 30
-    MaxBuffer: 0
-  - Amount: 1
-    ItemType: 10
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &8705867410758782411
 Rigidbody:
@@ -853,8 +832,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.99, y: 2.7, z: 1.99}
-  m_Center: {x: 0, y: 1.35, z: -0.5}
+  m_Size: {x: 2.99, y: 4.1, z: 1.99}
+  m_Center: {x: 0, y: 2.05, z: -0.5}
 --- !u!1001 &4239694570497702066
 PrefabInstance:
   m_ObjectHideFlags: 0

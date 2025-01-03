@@ -490,16 +490,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 7551445428627530176}
   DEBUG_RealImmediately: 1
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 2
-    ItemType: 30
-    MaxBuffer: 0
-  - Amount: 1
-    ItemType: 10
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &5265960802083520758
 Rigidbody:
@@ -547,8 +538,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.99, y: 3.5, z: 1.99}
-  m_Center: {x: 0, y: 1.5, z: 0.5}
+  m_Size: {x: 2.99, y: 3.1, z: 1.99}
+  m_Center: {x: 0, y: 1.55, z: 0.5}
 --- !u!1 &7057998302903976468
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4.5
 --- !u!114 &2573762861945342890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,14 +795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a5b5c5ec9c2234680ac9bf0936bfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProduceResourceOrder: {fileID: 0}
-  MaterialResourceType: 5
-  MaxBuffer: 6
-  ProducedPerProdCycle: 1
-  MaxRangeForResources: 2
-  ProduceTimeInSeconds: 5
-  WaitAfterProduceTimeInSeconds: 2
-  HandleProduceResourceOrderOverTimeBehaviour: {fileID: 0}
 --- !u!1 &8096709343796163871
 GameObject:
   m_ObjectHideFlags: 0

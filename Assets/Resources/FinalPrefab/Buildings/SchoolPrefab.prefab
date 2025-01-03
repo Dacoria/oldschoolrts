@@ -320,16 +320,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 3530022084684763792}
   DEBUG_RealImmediately: 1
-  TimeToBuildRealInSeconds: 5
-  TimeToPrepareBuildingInSeconds: 3
   BuildingType: 0
-  RequiredItems:
-  - Amount: 5
-    ItemType: 30
-    MaxBuffer: 0
-  - Amount: 5
-    ItemType: 10
-    MaxBuffer: 0
   CurrentBuildStatus: 0
 --- !u!54 &1235469035461538726
 Rigidbody:
@@ -377,8 +368,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.99, y: 3, z: 1.99}
-  m_Center: {x: 0, y: 1.5, z: -0.5}
+  m_Size: {x: 4.99, y: 2.8, z: 1.99}
+  m_Center: {x: 0, y: 1.4, z: -0.5}
 --- !u!1 &2912841349473650255
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c996f5383c49b44842220fb26da6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildUnitDurationInSeconds: 0
 --- !u!114 &4857670290289761904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0fca66fc953340b337813bde9daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceSpawnedBelowSurface: -4.5
 --- !u!1 &4561669127361232036
 GameObject:
   m_ObjectHideFlags: 0

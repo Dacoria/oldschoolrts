@@ -17,6 +17,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnFreeSerf")) AE.FreeSerf += OnFreeSerf;
         if (IsOverwritten("OnKeyCodeAction")) AE.KeyCodeAction += OnKeyCodeAction;
         if (IsOverwritten("OnLeftClickOnGo")) AE.LeftClickOnGo += OnLeftClickOnGo;
+        if (IsOverwritten("OnNewBattleUnit")) AE.NewBattleUnit += OnNewBattleUnit;
         if (IsOverwritten("OnNewBuilding")) AE.NewBuilding += OnNewBuilding;
         if (IsOverwritten("OnNewVillagerUnit")) AE.NewVillagerUnit += OnNewVillagerUnit;
         if (IsOverwritten("OnNoFoodToConsume")) AE.NoFoodToConsume += OnNoFoodToConsume;
@@ -41,6 +42,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
         if (IsOverwritten("OnFreeSerf")) AE.FreeSerf -= OnFreeSerf;
         if (IsOverwritten("OnKeyCodeAction")) AE.KeyCodeAction -= OnKeyCodeAction;
         if (IsOverwritten("OnLeftClickOnGo")) AE.LeftClickOnGo -= OnLeftClickOnGo;
+        if (IsOverwritten("OnNewBattleUnit")) AE.NewBattleUnit -= OnNewBattleUnit;
         if (IsOverwritten("OnNewBuilding")) AE.NewBuilding -= OnNewBuilding;
         if (IsOverwritten("OnNewVillagerUnit")) AE.NewVillagerUnit -= OnNewVillagerUnit;
         if (IsOverwritten("OnNoFoodToConsume")) AE.NoFoodToConsume -= OnNoFoodToConsume;
@@ -63,6 +65,7 @@ public abstract class BaseAEMonoCI : MonoBehaviourCI
     protected virtual void OnFreeSerf(SerfBehaviour serf) { }
     protected virtual void OnKeyCodeAction(KeyCodeAction action) { }
     protected virtual void OnLeftClickOnGo(GameObject go) { }
+    protected virtual void OnNewBattleUnit(ArmyUnitBehaviour armyUnit) { }
     protected virtual void OnNewBuilding(BuildingBehaviour building) { }
     protected virtual void OnNewVillagerUnit(IVillagerUnit newVillagerUnit) { }
     protected virtual void OnNoFoodToConsume(FoodConsumption consumption) { }

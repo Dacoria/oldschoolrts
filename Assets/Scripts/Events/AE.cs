@@ -37,6 +37,9 @@ public static class AE
     // VILLAGERS
     public static Action<IVillagerUnit> NewVillagerUnit;
 
+    // BATTLE UNITS
+    public static Action<ArmyUnitBehaviour> NewBattleUnit;
+
     // BUILDINGS
     public static Action<BuildingBehaviour> NewBuilding;
     public static Action<WorkerBuildingBehaviour> BuildingNeedsWorker;

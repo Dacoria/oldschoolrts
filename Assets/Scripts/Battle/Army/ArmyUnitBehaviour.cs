@@ -1,17 +1,16 @@
 using Assets.Army;
-using Assets.CrossCutting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ArmyUnitBehaviour : MonoBehaviourCI
 {
-    public float EnemyAttractRadius = 10;
-    public float Reach = 1.5f;
-    [ComponentInject] public NavMeshAgent NavMeshAgent;
-    [ComponentInject] private Animator Animator;
+    public float EnemyAttractRadius; // wordt geset voor aanmaken
+    public float Reach; // wordt geset voor aanmaken
+    public Offence Offence; // wordt geset voor aanmaken
+    public Defence Defence; // wordt geset voor aanmaken
 
-    public Offence Offence;
-    public Defence Defence;
+    [ComponentInject] public NavMeshAgent NavMeshAgent;
+    [ComponentInject] private Animator Animator;    
 
     private GameObject Target;
 
@@ -25,6 +24,7 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
     private void Start()
     {
         NavMeshAgent.stoppingDistance = Reach;
+        AE.NewBattleUnit?.Invoke(this);
     }
 
     private void Update()

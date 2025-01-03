@@ -179,11 +179,7 @@ public class DisplayBuildingInputOutputHandler : BaseAEMonoCI
     {
         if (processingDisplayGo?.transform?.childCount != null)
         {
-            for (var i = 0; i < processingDisplayGo.transform.childCount; i++)
-            {
-                var child = processingDisplayGo.transform.GetChild(i);
-                child.gameObject.SetActive(isActive);
-            }
+            processingDisplayGo.SetDirectChildrenSetActive(isActive);
         }
     }
 

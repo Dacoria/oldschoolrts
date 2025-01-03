@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GhostBuildingBehaviour : MonoBehaviour
 {
-    public Purpose Purpose = Purpose.BUILDING;
+    public Purpose Purpose = Purpose.BUILDING;    
 
     // Begint uit! Wordt door ander script aangezet als de template mode naar ghost mode overgaat
     private void Start()

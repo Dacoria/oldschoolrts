@@ -188,4 +188,15 @@ public static class MyExtensions
         behaviours.Remove(closestBehaviour);
         return closestBehaviour;
     }
+
+    public static void SetDirectChildrenActive(this GameObject go) => SetDirectChildrenSetActive(go, isActive: true);
+    public static void SetDirectChildrenInactive(this GameObject go) => SetDirectChildrenSetActive(go, isActive: false);
+    public static void SetDirectChildrenSetActive(this GameObject go, bool isActive)
+    {
+        for (var i = 0; i < go.transform.childCount; i++)
+        {
+            var child = go.transform.GetChild(i);
+            child.gameObject.SetActive(isActive);
+        }
+    }
 }

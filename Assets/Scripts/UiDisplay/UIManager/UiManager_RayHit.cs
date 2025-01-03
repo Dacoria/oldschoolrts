@@ -35,7 +35,19 @@ public partial class UiManager : MonoBehaviour
             {
                 continue;
             }
+
+            // Gebouw gevonden!
             
+            // Building wordt gebouwd
+            var ghost = buildingBehaviourHit.GetComponentInChildren<GhostBuildingBehaviour>();
+            if (ghost != null && buildingBehaviourHit.CurrentBuildStatus != BuildStatus.NONE)
+            {
+                var ui = SelectedBuildingPanel.GetComponentsInChildren<CardsBuildingBeingBuildUiBehaviour>(true).First();
+                ui.CallingGhostBuildingBehaviour = ghost;
+                return (buildingBehaviourHit, ui);
+            }
+
+            // Building is klaar
             var category = buildingBehaviourHit.BuildingType.GetCategory();
             switch (category)
             {
@@ -45,7 +57,6 @@ public partial class UiManager : MonoBehaviour
                     var ui0 = SelectedBuildingPanel.GetComponentsInChildren<CardOneProdUiHandler>(true).First();
                     ui0.CallingBuilding = buildingBehaviourHit.GetComponentInChildren<ICardOneProdBuilding>(); // niet inactieve ophalen
                     if(ui0.CallingBuilding != null)
-
                         return (buildingBehaviourHit, ui0);
                     else
                         return (null, null);

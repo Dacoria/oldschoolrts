@@ -10,21 +10,21 @@ public class UiCardBehaviour : MonoBehaviour, IUiCardAddNewItemsClick, IUiCardLe
     public Enum Type;
 
     [HideInInspector]
-    public CardUiHandler CardUiHandler;
+    public CardSelectProdUiHandler CardUiHandler;
 
     public void AddAmount(int amount)
     {
-        CardUiHandler.AddAmount(this.Type, amount);
+        CardUiHandler?.AddAmount(this.Type, amount);
     }
 
     public void DecreaseAmount(int amount)
     {
-        CardUiHandler.DecreaseAmount(this.Type, amount);       
+        CardUiHandler?.DecreaseAmount(this.Type, amount);       
     }
 
     public void ClickOnCardLeftClick()
     {
-        CardUiHandler.ClickOnCardLeftClick(this);
+        CardUiHandler?.ClickOnCardLeftClick(this);
     }  
 
     private void Update()
@@ -33,6 +33,5 @@ public class UiCardBehaviour : MonoBehaviour, IUiCardAddNewItemsClick, IUiCardLe
         {
             CountText.text = CardUiHandler.GetCount(this.Type).ToString();
         }
-
     }
 }

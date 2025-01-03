@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResource
+public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResource, ICardOneProdBuilding
 {
     public RangeType GetRangeTypeToFindResource() => RangeType.BoxColliderExpand;
     public int GetMaxRangeForResource() => 2;
@@ -120,4 +120,7 @@ public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResour
 
         return null;
     }
+
+    public GameObject GetGameObject() => gameObject;
+    public List<TypeProcessing> GetCurrentTypesProcessed() => produceCRBehaviour.CurrentTypesProcessed;
 }

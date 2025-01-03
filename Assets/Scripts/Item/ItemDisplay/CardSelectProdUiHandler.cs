@@ -2,24 +2,23 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneItemUI
+public class CardSelectProdUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneItemUI, IUiCallingBuilding
 {   
     public UiCardBehaviour UiCardBehaviourPrefab;
     [HideInInspector] public List<UiCardBehaviour> UiCardBehaviours;
 
-    public BuildingType BuildingType; // het type building waar de kaarten voor worden gehaald
+    public BuildingCategory BuildingCategory; // het type building waar de kaarten voor worden gehaald
 
     [HideInInspector] public bool CardsAreLoaded;
 
     public bool ShowRequiredItemsUnderCard = true;
 
-    [HideInInspector] public ICardBuilding CallingBuilding;    
+    [HideInInspector] public ICardSelectProdBuilding CallingBuilding;    
 
-    void Start()
+    void OnEnable()
     {
         UiCardBehaviours = new List<UiCardBehaviour>();
-
-        var uitSettingsForCard = BuildingType.GetProductionSettings();
+        var uitSettingsForCard = CallingBuilding.GetBuildingType().GetProductionSettings();
 
         foreach (var uiSetting in uitSettingsForCard)
         {
@@ -44,12 +43,14 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneIte
         }
     }
 
-    public void OnEnable()
+    private void OnDisable()
     {
-        if (UiCardBehaviours.Count > 0)
+        foreach (var uiCard in UiCardBehaviours)
         {
-            ShowStatsOfUnitCard(UiCardBehaviours[0]);
+            Destroy(uiCard.gameObject);
         }
+        UiCardBehaviours.Clear();
+        CardsAreLoaded = false;
     }
 
     public void AddAmount(Enum type, int amount)
@@ -96,4 +97,5 @@ public class CardUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneIte
 
     public TypeProcessing GetCurrentItemProcessed() =>  CallingBuilding?.GetCurrentTypeProcessed();
     public float GetBuildTimeInSeconds() => CallingBuilding.GetProductionTime();
+    public GameObject GetGameObject() => CallingBuilding?.GetGameObject();
 }

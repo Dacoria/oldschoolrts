@@ -21,15 +21,15 @@ namespace Assets.Army
                     {
                         {ArmorType.UNARMORED, 1.00f},
                         {ArmorType.LIGHT, 0.75f},
-                        {ArmorType.HEAVY, 1.00f},
+                        {ArmorType.HEAVY, 0.75f},
                     }
                 },                
                 {
                     AttackType.MAGIC, new Dictionary<ArmorType, float>
                     {
-                        {ArmorType.UNARMORED, 1.00f},
-                        {ArmorType.LIGHT, 1.0f},
-                        {ArmorType.HEAVY, 0.5f},
+                        {ArmorType.UNARMORED, 0.75f},
+                        {ArmorType.LIGHT, 0.5f},
+                        {ArmorType.HEAVY, 1.0f},
                     }
                 }                
             };

@@ -3,10 +3,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardsStockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarousselDisplay
+public class CardsStockpileInUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardCarousselDisplay
 {
     public ImageTextBehaviour ImageTextBehaviourPrefab;
-    public CardUiHandler CardUIHandler;
+    private IUiCallingBuilding callingBuilding;
 
     private List<ImageTextBehaviour> imageTextBehaviours;    
 
@@ -27,6 +27,9 @@ public class CardsStockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardC
     private new void Awake()
     {
         base.Awake();
+        callingBuilding = transform.parent.GetComponentInChildren<IUiCallingBuilding>(true);
+        if (callingBuilding == null )
+            callingBuilding = transform.parent.transform.parent.GetComponentInChildren<IUiCallingBuilding>(true);
         imageTextBehaviours = new List<ImageTextBehaviour>();
     }
 
@@ -63,7 +66,7 @@ public class CardsStockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardC
         ClearAllCards();
 
         imageTextBehaviours = new List<ImageTextBehaviour>();
-        RefillStockpile = CardUIHandler.CallingBuilding?.GetGameObject().GetComponent<RefillBehaviour>();
+        RefillStockpile = callingBuilding.GetGameObject()?.GetComponent<RefillBehaviour>();
         if (RefillStockpile != null)
         {
             foreach (var itemInStockpile in RefillStockpile.StockpileOfItemsRequired)
@@ -79,6 +82,9 @@ public class CardsStockpileUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICardC
             cardsLoaded = true;
             Title.gameObject.SetActive(true);
         }
+
+        if(imageTextBehaviours.Count == 0)
+            Title.gameObject.SetActive(false);
     }    
 
     private void UpdateValuesOfCard()

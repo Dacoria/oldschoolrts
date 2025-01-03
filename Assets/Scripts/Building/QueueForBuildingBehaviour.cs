@@ -9,7 +9,7 @@ public class QueueForBuildingBehaviour : BaseAEMonoCI
         CallingBuilding.GetBuildingType().GetProductionDurationSettings().TimeToProduceResourceInSeconds;
     public List<QueueItem> QueueItems = new List<QueueItem>();
 
-    [ComponentInject] public ICardBuilding CallingBuilding;
+    [ComponentInject] public ICardSelectProdBuilding CallingBuilding;
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;

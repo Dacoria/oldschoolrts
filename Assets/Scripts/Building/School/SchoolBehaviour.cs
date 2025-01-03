@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SchoolBehaviour : MonoBehaviourCI, ICardBuilding, IProduce
+public class SchoolBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProduce
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public interface ICardBuilding
+public interface ICardSelectProdBuilding
 {
     void AddType(Enum type);
     int GetCount(Enum type) { return 0; } // alleen zonder queue interessant. TODO Lostrekken

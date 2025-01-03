@@ -21,10 +21,10 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
     {
         // selectedDisplayCard altijd de req items tonen
         var isSelectedDisplayCard = transform.GetComponentInParent<SelectedDisplayCardScript>() != null;
-        if (isSelectedDisplayCard || selectedDisplayUiCard.CardUiHandler.ShowRequiredItemsUnderCard)
+        if (isSelectedDisplayCard || (selectedDisplayUiCard?.CardUiHandler != null && selectedDisplayUiCard.CardUiHandler.ShowRequiredItemsUnderCard))
         {
             ImagesRequiredItems = GetComponentsInChildren<ImageTextBehaviour>(true).ToList();
-            var buildingType = selectedDisplayUiCard.CardUiHandler.BuildingType;
+            var buildingType = selectedDisplayUiCard.CardUiHandler.CallingBuilding.GetBuildingType();
             var produceSetting = buildingType.GetProductionSettings().First(x => x.GetType().ToString() == selectedDisplayUiCard.Type.ToString());
             UpdateImages(produceSetting);
         }
@@ -40,7 +40,6 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
         {
             imageScript.gameObject.SetActive(false);
         }
-
 
         for(int i = 0; i < productionSetting.ItemsConsumedToProduce.Count; i++)
         {
@@ -70,7 +69,7 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
             }
             if (!imageFound)
             {
-                throw new Exception("Item benodigd display kan max " + ImagesRequiredItems.Count + " items tonen, item " + prodSettingForItemTypeRequired.ItemType + " vereist er meer, dat past niet");
+                throw new Exception($"Item benodigd display kan max {ImagesRequiredItems.Count} items tonen, item {prodSettingForItemTypeRequired.ItemType} vereist er meer, dat past niet");
             }
         }
     }

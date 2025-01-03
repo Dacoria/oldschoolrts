@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class ProduceResourceManualBehaviour : MonoBehaviourCI
+public class ProduceResourceManualBehaviour : MonoBehaviourCI, ICardOneProdBuilding
 {
     private ItemOutput itemToProduce => buildingBehaviour.BuildingType.GetItemProduceSettings().First().ItemsToProduce.First();
 
@@ -43,4 +44,6 @@ public class ProduceResourceManualBehaviour : MonoBehaviourCI
 
     public int ProducedPerRun => itemToProduce.ProducedPerProdCycle;
     public int MaxBuffer => itemToProduce.MaxBuffer;
+    public GameObject GetGameObject() => gameObject;
+    public List<TypeProcessing> GetCurrentTypesProcessed() => produceCRBehaviour.CurrentTypesProcessed;
 }

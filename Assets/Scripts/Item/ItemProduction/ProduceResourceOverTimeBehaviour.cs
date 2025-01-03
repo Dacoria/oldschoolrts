@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI
+public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, ICardOneProdBuilding
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     private RefillBehaviour refillBehaviour;
@@ -59,4 +60,7 @@ public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI
                 waitAfterProduceCallback: () => StartCoroutine(TryToProduceOverXSeconds())));
         }
     }
+
+    public GameObject GetGameObject() => gameObject;
+    public List<TypeProcessing> GetCurrentTypesProcessed() => produceCRBehaviour.CurrentTypesProcessed;
 }

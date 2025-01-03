@@ -8,7 +8,7 @@ public class CardUiItemHandler : MonoBehaviour
     public ItemType ItemType;
     public Text CountText;
 
-    public ICardBuilding CallingBuilding;
+    public ICardSelectProdBuilding CallingBuilding;
 
     public void AddItemType(int amount)
     {

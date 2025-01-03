@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardBuilding
+public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardSelectProdBuilding
 {
     private List<ItemLimit> itemsToProcess;
 

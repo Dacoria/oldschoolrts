@@ -31,6 +31,7 @@ public class ProduceResourceManualBehaviour : MonoBehaviourCI, ICardOneProdBuild
         // geen waitlogica; onnodig complex (hoop ik)
     }
 
+    // gebruiken in manuele gebouwen? voor nu niet
     public bool CanProduce(ItemProduceSetting itemProduceSetting)
     {
         if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting.ItemsToProduce, handleProduceResourceOrderBehaviour))

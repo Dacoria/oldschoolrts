@@ -50,7 +50,7 @@ public class ProduceResourceMiningBehaviour : MonoBehaviourCI, ILocationOfResour
         }
     }
 
-    public bool CanProduce(ItemProduceSetting itemProduceSetting)
+    private bool CanProduce(ItemProduceSetting itemProduceSetting)
     {
         if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting.ItemsToProduce, handleProduceResourceOrderBehaviour))
             return false;

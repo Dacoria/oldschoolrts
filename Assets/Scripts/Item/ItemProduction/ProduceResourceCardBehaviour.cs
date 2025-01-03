@@ -31,13 +31,9 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardSelectProdBuil
     private void Start()
     {
         StartCoroutine(TryToProduceOverXSeconds());
-    }
+    }    
 
-    public TypeProcessing GetCurrentTypeProcessed() => produceCRBehaviour.CurrentTypesProcessed?.FirstOrDefault();
-    public GameObject GetGameObject() => gameObject;
-    public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
-
-    public bool CanProduce(ItemProductionSetting itemProduceSetting)
+    private bool CanProduce(ItemProductionSetting itemProduceSetting)
     {
         if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting, handleProduceResourceOrderBehaviour))
             return false;
@@ -114,7 +110,6 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardSelectProdBuil
     }
 
     public int GetCount(Enum type) => itemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemAmountToProduce;
-
     public void AddType(Enum type)
     {
         itemsToProcess.Single(x => x.ItemType == (ItemType)type).ItemAmountToProduce++;
@@ -129,4 +124,8 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardSelectProdBuil
 
     public bool CanProces(Enum type) =>
         CanProduce(buildingBehaviour.BuildingType.GetItemProductionSettings().Single(x => x.Type == (ItemType)type));
+
+    public TypeProcessing GetCurrentTypeProcessed() => produceCRBehaviour.CurrentTypesProcessed?.FirstOrDefault();
+    public GameObject GetGameObject() => gameObject;
+    public BuildingType GetBuildingType() => buildingBehaviour.BuildingType;
 }

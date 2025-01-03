@@ -29,7 +29,7 @@ public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, ICardOneProdBui
         StartCoroutine(TryToProduceOverXSeconds());
     }
 
-    public bool CanProduce(ItemProduceSetting itemProduceSetting)
+    private bool CanProduce(ItemProduceSetting itemProduceSetting)
     {
         if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting.ItemsToProduce, handleProduceResourceOrderBehaviour))
             return false;

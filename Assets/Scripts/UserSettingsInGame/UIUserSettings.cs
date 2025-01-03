@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class UIUserSettings : MonoBehaviour
 {
+    public static bool ShowExternalUIElementsActiveBuilding = false; // voor nu: alleen via code aan te passen; niet UI
+
     // CHECKBOX UI
     public void ToggleInstaBuild()
     {

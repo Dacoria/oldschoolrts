@@ -9,7 +9,9 @@ public partial class UiManager : MonoBehaviour
 
         if (buildingBehaviourHit != null)
         {
-            EnableUIActiveBuilding(buildingBehaviourHit.gameObject);
+            if (UIUserSettings.ShowExternalUIElementsActiveBuilding)            
+                EnableExternalUIElementsActiveBuilding(buildingBehaviourHit.gameObject);
+            
             EnableOutline(buildingBehaviourHit.gameObject);
             ActiveRangedDisplay(buildingBehaviourHit.gameObject);
             ActivateUI(uiToActivate);

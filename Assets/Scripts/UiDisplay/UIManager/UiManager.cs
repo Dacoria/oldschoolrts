@@ -12,7 +12,6 @@ public partial class UiManager : MonoBehaviour
 
     public RangeDisplayBehaviour ActiveRangeDisplayBehaviour;
     public DisplayBuildingInputOutputHandler ActiveDisplayBuildingInputOutputHandler;
-    public DisplayBuildingNameImgHandler ActiveDisplayBuildingNameImgHandler;
 
     void Update()
     {

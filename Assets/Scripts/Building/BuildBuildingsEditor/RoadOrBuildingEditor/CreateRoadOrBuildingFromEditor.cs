@@ -265,8 +265,6 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
             showResources.DisplayProcessingInputOutputPrefab = DisplayProcessingInputOutputPrefab;
             showResources.GoSpawnOffset = GetBuildingPrefabItem(EditorSettings.SelectedBuildingType.Value).DisplayOffset;
 
-            real.AddComponent<DisplayBuildingNameImgHandler>();
-
             var locOfResource = real.GetComponent<ILocationOfResource>();
             if (locOfResource != null)
             {

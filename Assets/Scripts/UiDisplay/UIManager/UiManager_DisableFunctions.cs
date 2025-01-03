@@ -7,7 +7,6 @@ public partial class UiManager : MonoBehaviour
         DisableActiveOutline();
         DisableActiveDisplayRange();
         DisableActiveDisplayBuildingInputOutputHandler();
-        DisableActiveDisplayBuildingNameImgHandler();
     }    
 
     private void DisableActiveDisplayRange()
@@ -24,15 +23,6 @@ public partial class UiManager : MonoBehaviour
         {
             ActiveDisplayBuildingInputOutputHandler.UpdateEnabledStatusOfDisplayObjects(KeyCodeStatusSettings.ToggleInputOutputDisplay_Active);
             ActiveDisplayBuildingInputOutputHandler = null;
-        }
-    }
-
-    private void DisableActiveDisplayBuildingNameImgHandler()
-    {
-        if (ActiveDisplayBuildingNameImgHandler != null)
-        {
-            ActiveDisplayBuildingNameImgHandler.UpdateEnabledStatusOfDisplayObjects(KeyCodeStatusSettings.ToggleBuildingNameImgDisplay_Active);
-            ActiveDisplayBuildingNameImgHandler = null;
         }
     }
 

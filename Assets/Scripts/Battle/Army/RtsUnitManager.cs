@@ -1,9 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RtsUnitManager : MonoBehaviour
 {
+    public static RtsUnitManager Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+
     private Vector3 StartClick;
     private Vector3 EndClick;
     private Vector3 StartMousePosition;
@@ -34,20 +42,43 @@ public class RtsUnitManager : MonoBehaviour
 
     private void Start()
     {
-        TemporarySelectionSquad = GameObject.Instantiate(SelectionSquadPrefab);
+        TemporarySelectionSquad = Instantiate(SelectionSquadPrefab);
     }
 
     private void Update()
     {
-        int terrainMask = 1 << 3; // 3e layer
-        int unitMask = 1 << 6;
-        int wallMask = 1 << 7;
+        int terrainMask = 1 << Constants.LAYER_TERRAIN;
+        int unitMask = 1 << Constants.LAYER_RTS_UNIT;
+        int wallMask = 1 << Constants.LAYER_WALL_LAYER;
         int terrainAndWallMask = terrainMask | wallMask;
-        RaycastHit hit;
+
+        SelectUnitsWithMouseSeletion(terrainMask, unitMask);
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity, terrainAndWallMask))
+            {
+                //Debug.Log("Going to Pos: " + hit.point);
+                CurrentSelected.SetDestination(hit.point);
+            }
+        }
+
+        if (InputExtensions.GetNumberDown(out int number))
+        {
+            if (Input.GetKey(KeyCode.LeftAlt))
+                TrySetNewFixedSquad(number);
+
+            if (Squads.ContainsKey(number.ToString()))
+                FixedSquad = Squads.GetValueOrDefault(number.ToString(), null);
+        }
+    }
+
+    private void SelectUnitsWithMouseSeletion(int terrainMask, int unitMask)
+    {
         if (Input.GetMouseButtonDown(0))
         {
             FixedSquad = null;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity,
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity,
                 terrainMask))
             {
                 StartClick = hit.point;
@@ -66,15 +97,13 @@ public class RtsUnitManager : MonoBehaviour
 
             SelectionBox.gameObject.transform.position = middle;
             SelectionBox.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(dif.x, dif.y);
-
         }
 
         if (Input.GetMouseButtonUp(0))
-        {
+        { 
             TemporarySelectionSquad.Clear();
 
-            
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity,
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity,
                 terrainMask))
             {
                 EndClick = hit.point;
@@ -92,31 +121,22 @@ public class RtsUnitManager : MonoBehaviour
                 }
             }
         }
+    }
 
-        if (Input.GetMouseButtonUp(1))
+    private void TrySetNewFixedSquad(int number)
+    {
+        if (TemporarySelectionSquad == null || !TemporarySelectionSquad.Units.Any())
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity,
-                    terrainAndWallMask))
-            {
-                //Debug.Log("Going to Pos: " + hit.point);
-                CurrentSelected.SetDestination(hit.point);
-            }
+            return;
         }
 
-        if (InputExtensions.GetNumberDown(out int number))
+        if (Squads.ContainsKey(number.ToString()))
         {
-            if (Input.GetKey("z"))
-            {
-                if (!Squads.ContainsKey(number.ToString()))
-                {
-                    Debug.Log("do the awesome");
-                    Squads[number.ToString()] = TemporarySelectionSquad;
-                    TemporarySelectionSquad = GameObject.Instantiate(SelectionSquadPrefab);
-                }
-            }
-
-            FixedSquad = Squads[number.ToString()];
+            Destroy(Squads[number.ToString()]);
         }
 
+        Debug.Log("do the awesome");
+        Squads[number.ToString()] = TemporarySelectionSquad;
+        TemporarySelectionSquad = Instantiate(SelectionSquadPrefab);
     }
 }

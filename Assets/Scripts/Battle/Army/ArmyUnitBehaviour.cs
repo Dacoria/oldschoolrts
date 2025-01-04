@@ -25,6 +25,7 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
     {
         NavMeshAgent.stoppingDistance = Reach;
         AE.NewBattleUnit?.Invoke(this);
+        gameObject.AddComponent<DisplayUnitIsSelected>();
     }
 
     private void Update()

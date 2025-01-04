@@ -31,7 +31,7 @@ public class RtsUnitManager : MonoBehaviour
 
     private void Start()
     {
-        squadsParentGo = GameObject.Find("Squads");
+        squadsParentGo = GameObject.Find(Constants.GO_SCENE_SQUADS);
         TemporarySelectionSquad = Instantiate(SelectionSquadPrefab, squadsParentGo.transform);
     }
 

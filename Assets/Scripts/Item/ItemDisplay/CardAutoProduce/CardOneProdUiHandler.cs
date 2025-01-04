@@ -31,7 +31,7 @@ public class CardOneProdUiHandler : MonoBehaviour, ICardCarousselDisplay, IProce
             }            
         }
 
-        var rightArrowGo = Instantiate(Load.GoMapUI["ProduceItemRightArrow"], transform);
+        var rightArrowGo = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_PRODUCE_ITEM_RIGHT_ARROW], transform);
         var cardUIRightArrow = rightArrowGo.GetComponent<UiCardBehaviour>();
         //if(buildingType.GetCategory() == BuildingCategory.Manual)
         //    cardUIRightArrow.CountText.text = "";

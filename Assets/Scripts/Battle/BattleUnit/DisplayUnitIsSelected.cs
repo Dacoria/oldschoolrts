@@ -8,7 +8,7 @@ public class DisplayUnitIsSelected : MonoBehaviourSlowUpdateFramesCI
     private new void Awake()
     {
         base.Awake();
-        unitSelectionSphere = Instantiate(Load.GoMapUI["UnitSelectionSphere"], transform);
+        unitSelectionSphere = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_UNIT_SELECTION_DISPLAY], transform);
     }
 
     protected override int FramesTillSlowUpdate => 20;

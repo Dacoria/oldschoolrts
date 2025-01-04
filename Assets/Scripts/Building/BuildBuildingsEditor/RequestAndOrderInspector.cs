@@ -18,7 +18,7 @@ public class RequestAndOrderInspector : EditorWindow
 
     private void OnGUI()
     {
-        var go = GameObject.Find("Grass");
+        var go = GameObject.Find(Constants.GO_SCENE_MAIN);
         if (go != null && Application.isPlaying)
         {
             var gameManager = go.GetComponent<GameManager>();

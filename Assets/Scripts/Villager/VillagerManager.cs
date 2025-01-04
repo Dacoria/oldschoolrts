@@ -25,7 +25,7 @@ public class VillagerManager : BaseAEMonoCI
     {
         base.Awake();
         Instance = this;
-        VillagersParentGo = GameObject.Find("Villagers");
+        VillagersParentGo = GameObject.Find(Constants.GO_SCENE_VILLAGERS);
         RefreshVillagerUnits();
     }
 

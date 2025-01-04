@@ -26,16 +26,16 @@ public static class ResourcePrefabs
                 {
                     Icon = itemSprite,
                     ItemType = itemType,
-                    ResourcePrefab = Load.GoMapRscToCarry["CubeUnknownBeingCarried"]
+                    ResourcePrefab = Load.GoMapRscToCarry[Constants.GO_PREFAB_RSC_TO_CARRY_CUBE_UNKNOWN]
                 };
-/*
+                /*
                 if (resourceCarriedGoName.TryGetValue(itemType, out var name))
                 {
                     prefabBuilding.ResourcePrefab = Load.GoMap[name];
                 }
                 else
                 {
-                    prefabBuilding.ResourcePrefab = Load.GoMap["CubeUnknownBeingCarried"];
+                    prefabBuilding.ResourcePrefab = Load.GoMap[Constants.GO_PREFAB_RSC_TO_CARRY_CUBE_UNKNOWN];
                 }*/
 
                 result.Add(prefabBuilding);

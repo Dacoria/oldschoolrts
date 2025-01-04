@@ -11,7 +11,7 @@ public class BattleManager : BaseAEMonoCI
     {
         base.Awake();
         Instance = this;
-        ArmyUnitParentGo = GameObject.Find("BattleUnits");
+        ArmyUnitParentGo = GameObject.Find(Constants.GO_SCENE_BATTLE_UNITS);
     }
 
     protected override void OnNewBattleUnit(ArmyUnitBehaviour armyUnit)

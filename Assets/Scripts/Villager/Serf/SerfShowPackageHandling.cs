@@ -11,7 +11,7 @@ public class SerfShowPackageHandling : MonoBehaviourCI
     private new void Awake()
     {
         base.Awake();
-        if (Load.GoMapUI.TryGetValue("SerfProcessingDisplayGo", out GameObject processingDisplayPrefab))
+        if (Load.GoMapUI.TryGetValue(Constants.GO_PREFAB_UI_SERF_PROCESSING_DISPLAY, out GameObject processingDisplayPrefab))
         {
             ProcessingPackageGO = Instantiate(processingDisplayPrefab, transform);
             navMeshAgent.enabled = false;

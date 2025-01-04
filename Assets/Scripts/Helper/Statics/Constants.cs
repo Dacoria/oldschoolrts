@@ -51,7 +51,7 @@
     public static string GO_SCENE_BATTLE_UNITS = "BattleUnits";
     public static string GO_SCENE_SQUADS = "Squads";
 
-    // GO Objects to find in Scene
+    // Objects to find in Prefabs
     //UI
     public static string GO_PREFAB_UI_GO_TO_TAVERN_DISPLAY = "GoToTavernBubble";
     public static string GO_PREFAB_UI_PRODUCE_ITEM_RIGHT_ARROW = "ProduceItemRightArrow";

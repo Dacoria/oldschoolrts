@@ -27,7 +27,7 @@ public class PopulationManager : BaseAEMonoCI
 
     protected override void OnNewVillagerUnit(IVillagerUnit newVillagerUnit)
     {
-        PopulationBeingCreated = Math.Max(0, PopulationBeingCreated - 1);
+        PopulationBeingCreated = Math.Max(0, PopulationBeingCreated - 1); // Reden 0 -> ook bij init spel deze event; dan is nog niks bezig
         CurrentPopulation++;
     }
 

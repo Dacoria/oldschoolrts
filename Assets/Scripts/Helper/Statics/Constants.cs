@@ -38,12 +38,7 @@
     public static string LOAD_PATH_SPRITE_MILITARY = "Images/MilitaryImages";
     public static string LOAD_PATH_SPRITE_RESOURCES = "Images/ResourceImages";
 
-    
-
     public static string PATH_ROAD_NAV_MESH = "FinalPrefab/Road/RoadNavMeshSurfacePrefab";
-
-    // RscLoadName
-    public static string RSC_NAME_GO_SERF_PROCESSING = "SerfProcessingDisplayGo";
 
     // Area Mask
     public static string AREA_MASK_EVERYTHING = "Everything";

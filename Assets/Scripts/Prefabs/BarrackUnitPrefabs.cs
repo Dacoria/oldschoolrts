@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Assets;
 using UnityEngine;
 
 public static class BarrackUnitPrefabs
@@ -29,9 +28,9 @@ public static class BarrackUnitPrefabs
 
     private static BarracksUnitSetting GetStartSettings(BarracksUnitType type)
     {
-        if (Load.GoMap.TryGetValue($"{type.ToString()}Prefab", out GameObject prefab))
+        if (Load.GoMapUnits.TryGetValue($"{type.ToString()}Prefab", out GameObject prefab))
         {
-            if (Load.SpriteMap.TryGetValue($"{type.ToString()}Image", out Sprite sprite))
+            if (Load.SpriteMapMilitary.TryGetValue($"{type.ToString()}Image", out Sprite sprite))
             {
                 return new BarracksUnitSetting
                 {
@@ -63,15 +62,15 @@ public static class BarrackUnitPrefabs
             };
         result.UnitStats = new UnitStatsSetting
         {
-            Offence = new Assets.Army.Offence
+            Offence = new Offence
             {
                 AttackHitRate = 1,
-                AttackType = Assets.Army.AttackType.MELEE,
+                AttackType = AttackType.MELEE,
                 BaseDamage = 10
             },
-            Defence = new Assets.Army.Defence
+            Defence = new Defence
             {
-                ArmorType = Assets.Army.ArmorType.HEAVY,
+                ArmorType = ArmorType.HEAVY,
                 ArmorValue = 10,
             },
             Health = 100,
@@ -96,15 +95,15 @@ public static class BarrackUnitPrefabs
             };
         result.UnitStats = new UnitStatsSetting
         {
-            Offence = new Assets.Army.Offence
+            Offence = new Offence
             {
                 AttackHitRate = 1,
-                AttackType = Assets.Army.AttackType.MAGIC,
+                AttackType = AttackType.MAGIC,
                 BaseDamage = 10,
             },
-            Defence = new Assets.Army.Defence
+            Defence = new Defence
             {
-                ArmorType = Assets.Army.ArmorType.LIGHT,
+                ArmorType = ArmorType.LIGHT,
                 ArmorValue = 10,
             },
             Health = 80,
@@ -127,15 +126,15 @@ public static class BarrackUnitPrefabs
             };
         result.UnitStats = new UnitStatsSetting
         {
-            Offence = new Assets.Army.Offence
+            Offence = new Offence
             {
                 AttackHitRate = 1,
-                AttackType = Assets.Army.AttackType.PIERCING,
+                AttackType = AttackType.PIERCING,
                 BaseDamage = 10,
             },
-            Defence = new Assets.Army.Defence
+            Defence = new Defence
             {
-                ArmorType = Assets.Army.ArmorType.LIGHT,
+                ArmorType = ArmorType.LIGHT,
                 ArmorValue = 10,
             },
             Health = 70,

@@ -108,7 +108,7 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
 
     private void InitiateGoToTavernBubble()
     {
-        GoToTavernBubble = Instantiate(Load.GoMap["GoToTavernBubble"], this.transform, false);
+        GoToTavernBubble = Instantiate(Load.GoMapUI["GoToTavernBubble"], this.transform, false);
         GoToTavernBubble.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         GoToTavernBubble.transform.localPosition = new Vector3(0, 2.4f, 0); // net voor de borst -> voor nu hardcoded, allemaal cubes
     }

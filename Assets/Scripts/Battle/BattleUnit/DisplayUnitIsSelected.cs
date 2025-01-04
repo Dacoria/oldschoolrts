@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ public class DisplayUnitIsSelected : MonoBehaviourSlowUpdateFramesCI
     private new void Awake()
     {
         base.Awake();
-        unitSelectionSphere = Instantiate(Load.GoMap["UnitSelectionSphere"], transform);
+        unitSelectionSphere = Instantiate(Load.GoMapUI["UnitSelectionSphere"], transform);
     }
 
     protected override int FramesTillSlowUpdate => 20;

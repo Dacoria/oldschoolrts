@@ -26,9 +26,9 @@ public static class BuildingPrefabs
                 continue;
             }
 
-            if (Load.GoMap.TryGetValue($"{buildingType.ToString()}Prefab", out GameObject buildingPrefab))
+            if (Load.GoMapBuildings.TryGetValue($"{buildingType.ToString()}Prefab", out GameObject buildingPrefab))
             {
-                if (Load.SpriteMap.TryGetValue($"{buildingType.ToString()}Image", out Sprite buildingSprite))
+                if (Load.SpriteMapBuildings.TryGetValue($"{buildingType.ToString()}Image", out Sprite buildingSprite))
                 {
                     var prefabBuilding = new BuildingPrefabItem
                     {

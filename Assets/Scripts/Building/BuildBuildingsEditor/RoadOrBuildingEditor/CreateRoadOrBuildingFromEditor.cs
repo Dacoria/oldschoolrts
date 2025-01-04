@@ -16,7 +16,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     private GameObject FirstBuildingOrRoadSelected;
     private GameObject SecondRoadSelected;
 
-    private GameObject GetRoadPrefab() => Load.GoMap["Road"];
+    private GameObject GetRoadPrefab() => Load.GoMapBuildings["Road"];
 
     // editor --> bij opnieuw compileren wordt dit altijd aangeroepen -> cleanup
     private void OnEnable()
@@ -266,7 +266,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
             var locOfResource = real.GetComponent<ILocationOfResource>();
             if (locOfResource != null)
             {
-                var rangedDisplayGo = Instantiate(Load.GoMap["RangeDisplay"], ((MonoBehaviour)locOfResource).transform);
+                var rangedDisplayGo = Instantiate(Load.GoMapUI["RangeDisplay"], ((MonoBehaviour)locOfResource).transform);
                 var rangedDisplay = rangedDisplayGo.GetComponent<RangeDisplayBehaviour>();
                 rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
                 rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();

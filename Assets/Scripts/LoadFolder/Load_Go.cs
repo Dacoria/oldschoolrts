@@ -1,37 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public static partial class Load
 {
-    private static List<string> goList = new List<string>
-    {
-        Constants.LOAD_PATH_GO_UI_PREFAB,
-        Constants.LOAD_PATH_GO_BUILDINGS,
-        Constants.LOAD_PATH_GO_RSC_TO_CARRY,
-        Constants.LOAD_PATH_GO_UNITS
-    };
+    private static Dictionary<string, GameObject> _goMapUnits;
+    public static Dictionary<string, GameObject> GoMapUnits => LoadHelper.GetOrCreateCache(_goMapUnits, Constants.LOAD_PATH_GO_UNITS);
 
-    private static Dictionary<string, GameObject> __goMap;
-    public static Dictionary<string, GameObject> GoMap
-    {
-        get
-        {
-            if (__goMap == null || !Application.isPlaying)
-            {
-                __goMap = CreateGoDict(goList);                
-            }
+    private static Dictionary<string, GameObject> _goMapUI;
+    public static Dictionary<string, GameObject> GoMapUI => LoadHelper.GetOrCreateCache(_goMapUI, Constants.LOAD_PATH_GO_UI_PREFAB);
 
-            return __goMap;
-        }
-    }
+    private static Dictionary<string, GameObject> _goMapRscToCarry;
+    public static Dictionary<string, GameObject> GoMapRscToCarry => LoadHelper.GetOrCreateCache(_goMapRscToCarry, Constants.LOAD_PATH_GO_RSC_TO_CARRY);
 
-    public static Dictionary<string, GameObject> CreateGoDict(List<string> rscPathList)
-    {
-        var prefabs = LoadHelper.CreatePrefabsFromRscList<GameObject>(rscPathList);
-        var prefabDict = prefabs.ToDictionary(x => x.name, y => y);
-        return LoadHelper.ConvertDictToCaseIgnoreKey(prefabDict);
-    }
+    private static Dictionary<string, GameObject> _goMapBuildings;
+    public static Dictionary<string, GameObject> GoMapBuildings => LoadHelper.GetOrCreateCache(_goMapBuildings, Constants.LOAD_PATH_GO_BUILDINGS);
 }

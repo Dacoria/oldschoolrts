@@ -21,9 +21,9 @@ public static class VillagerPrefabs
 
         foreach (VillagerUnitType villagerUnitType in Enum.GetValues(typeof(VillagerUnitType)).Cast<VillagerUnitType>().ToList())
         {
-            if (Load.GoMap.TryGetValue($"{villagerUnitType.ToString()}Prefab", out GameObject villagerPrefab))
+            if (Load.GoMapUnits.TryGetValue($"{villagerUnitType.ToString()}Prefab", out GameObject villagerPrefab))
             {
-                if (Load.SpriteMap.TryGetValue($"{villagerUnitType.ToString()}Image", out Sprite villagerUnitSprite))
+                if (Load.SpriteMapVillagers.TryGetValue($"{villagerUnitType.ToString()}Image", out Sprite villagerUnitSprite))
                 {
                     var item = new VillagerUnitSetting
                     {

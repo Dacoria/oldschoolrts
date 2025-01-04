@@ -1,33 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public static partial class Load
 {
-    private static List<string> spriteRscList = new List<string>
-    {
-        Constants.LOAD_PATH_SPRITE_BUILDINGS,
-        Constants.LOAD_PATH_SPRITE_RESOURCES,
-        Constants.LOAD_PATH_SPRITE_VILLAGERS,
-        Constants.LOAD_PATH_SPRITE_MILITARY
-    };
+    private static Dictionary<string, Sprite> _spriteMapRsc;
+    public static Dictionary<string, Sprite> SpriteMapRsc => LoadHelper.GetOrCreateCache(_spriteMapRsc, Constants.LOAD_PATH_SPRITE_RESOURCES);
 
-    private static Dictionary<string, Sprite> __spriteMap;
-    public static Dictionary<string, Sprite> SpriteMap
-    {
-        get
-        {
-            if (__spriteMap == null || !Application.isPlaying)            
-                __spriteMap = CreateSpriteDict(spriteRscList);            
+    private static Dictionary<string, Sprite> _spriteMapBuildings;
+    public static Dictionary<string, Sprite> SpriteMapBuildings => LoadHelper.GetOrCreateCache(_spriteMapBuildings, Constants.LOAD_PATH_SPRITE_BUILDINGS);
 
-            return __spriteMap;
-        }
-    }
+    private static Dictionary<string, Sprite> _spriteMapVillagers;
+    public static Dictionary<string, Sprite> SpriteMapVillagers => LoadHelper.GetOrCreateCache(_spriteMapVillagers, Constants.LOAD_PATH_SPRITE_VILLAGERS);
 
-    public static Dictionary<string, Sprite> CreateSpriteDict(List<string> rscPathList)
-    {
-        var prefabs = LoadHelper.CreatePrefabsFromRscList<Sprite>(rscPathList);
-        var prefabDict = prefabs.ToDictionary(x => x.name, y => y);
-        return LoadHelper.ConvertDictToCaseIgnoreKey(prefabDict);
-    }
+    private static Dictionary<string, Sprite> _spriteMapMilitary;
+    public static Dictionary<string, Sprite> SpriteMapMilitary => LoadHelper.GetOrCreateCache(_spriteMapMilitary, Constants.LOAD_PATH_SPRITE_MILITARY);    
 }

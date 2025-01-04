@@ -20,13 +20,13 @@ public static class ResourcePrefabs
         var result = new List<ResourcePrefabItem>();
         foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)).Cast<ItemType>().OrderBy(x => x.ToString()))
         {
-            if (Load.SpriteMap.TryGetValue($"{itemType.ToString()}Image", out Sprite itemSprite))
+            if (Load.SpriteMapRsc.TryGetValue($"{itemType.ToString()}Image", out Sprite itemSprite))
             {
                 var prefabBuilding = new ResourcePrefabItem
                 {
                     Icon = itemSprite,
                     ItemType = itemType,
-                    ResourcePrefab = Load.GoMap["CubeUnknownBeingCarried"]
+                    ResourcePrefab = Load.GoMapRscToCarry["CubeUnknownBeingCarried"]
                 };
 /*
                 if (resourceCarriedGoName.TryGetValue(itemType, out var name))

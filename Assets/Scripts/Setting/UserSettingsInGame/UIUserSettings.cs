@@ -8,9 +8,8 @@ public class UIUserSettings : MonoBehaviour
     public static List<KeyCodeAction> KeyCodeActionList =
     new List<KeyCodeAction>
     {
-            new KeyCodeAction(KeyCode.U, KeyCodeActionType.ToggleInputOutputDisplay),
-            new KeyCodeAction(KeyCode.I, KeyCodeActionType.ToggleBuildingProgressDisplay),
-            new KeyCodeAction(KeyCode.O, KeyCodeActionType.ToggleEntranceExitDisplay),
+            new KeyCodeAction(KeyCode.O, KeyCodeActionType.ToggleInputOutputDisplay),
+            new KeyCodeAction(KeyCode.P, KeyCodeActionType.ToggleEntranceExitDisplay),
     };
 
     // CHECKBOX UI

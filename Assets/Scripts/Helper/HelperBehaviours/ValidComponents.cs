@@ -12,7 +12,7 @@ public class ValidComponents : MonoBehaviour
             {
                 if (gameObject.GetComponent(type) == null)
                 {
-                    throw new Exception($"Component '{type}' NIET active on go '{gameObject.name}' -> not allowed");
+                    throw new Exception($"Component '{type}' NOT active on go '{gameObject.name}' -> not allowed");
                 }
             }
         }
@@ -22,7 +22,7 @@ public class ValidComponents : MonoBehaviour
             {
                 if (gameObject.GetComponent(type) != null)
                 {
-                    throw new Exception($"Component '{type}' WEL active on go '{gameObject.name}' -> not allowed");
+                    throw new Exception($"Component '{type}' IS active on go '{gameObject.name}' -> not allowed");
                 }
             }
         }

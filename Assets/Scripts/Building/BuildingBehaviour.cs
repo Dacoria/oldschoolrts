@@ -186,12 +186,6 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
         {
             moveToSurfaceScript.enabled = true;
         }
-
-        var buildProgressTextScript = Real.GetComponent<BuildProgressTextScript>();
-        if (buildProgressTextScript != null)
-        {
-            buildProgressTextScript.enabled = true;
-        }
     }
 
     private void ActivateBuildersRequest()

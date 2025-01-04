@@ -1,51 +1,31 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 public static class InputExtensions
 {
-    public static bool GetNumberDown(out int number)
-    {
-        number = -1;
+    private static Dictionary<KeyCode, int> keyCodeDict = new Dictionary<KeyCode, int> {
+        {KeyCode.Alpha0, 0},
+        {KeyCode.Alpha1, 1},
+        {KeyCode.Alpha2, 2},
+        {KeyCode.Alpha3, 3},
+        {KeyCode.Alpha4, 4},
+        {KeyCode.Alpha5, 5},
+        {KeyCode.Alpha6, 6},
+        {KeyCode.Alpha7, 7},
+        {KeyCode.Alpha8, 8},
+        {KeyCode.Alpha9, 9},
+    };
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+    public static bool TryGetNumberDown(out int number)
+    {
+        foreach(var keyCode in keyCodeDict.Keys)
         {
-            number = 1;
+            if(Input.GetKeyDown(keyCode))
+            {
+                return keyCodeDict.TryGetValue(keyCode, out number);
+            }    
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            number = 2;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            number = 3;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            number = 4;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            number = 5;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            number = 6;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            number = 7;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            number = 8;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            number = 9;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            number = 0;
-        }
-        return number >= 0;
+
+        number = -1;
+        return false;
     }
 }
-

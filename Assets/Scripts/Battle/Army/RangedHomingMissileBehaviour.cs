@@ -12,7 +12,7 @@ public class RangedHomingMissileBehaviour : MonoBehaviour
     {
         if (Target == null)
         {
-            GameObject.Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
         else
         {
@@ -30,7 +30,7 @@ public class RangedHomingMissileBehaviour : MonoBehaviour
             {
                 Instantiate(GoOnDestroyOptionalPrefab, collider.transform.position, Quaternion.identity);
             }
-            GameObject.Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 

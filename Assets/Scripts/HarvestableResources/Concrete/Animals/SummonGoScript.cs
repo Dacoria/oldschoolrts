@@ -55,7 +55,7 @@ public class SummonGoScript : MonoBehaviour
         // 20x random positie proberen, anders 0-vector teruggeven
         for (var i = 0; i < 40; i++)
         {
-            var randomVector2 = MyExtensions.GetRandomVector(MinRangeToSummon, MaxRangeToSummon);
+            var randomVector2 = VectorExtensions.Random(MinRangeToSummon, MaxRangeToSummon);
             var newLoc = transform.position + new Vector3(randomVector2.x, 0, randomVector2.y);
 
             var distance = Vector3.Distance(newLoc, transform.position);

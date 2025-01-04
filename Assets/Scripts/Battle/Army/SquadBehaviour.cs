@@ -38,7 +38,9 @@ public class SquadBehaviour : MonoBehaviour
         if (width == 0)
         {
             return index / height;
-        } if (height == 0)
+        } 
+        
+        if (height == 0)
         {
             return index % width;
         }

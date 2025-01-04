@@ -11,7 +11,6 @@ public class RtsUnitManager : MonoBehaviour
         Instance = this;
     }
 
-
     private Vector3 StartClick;
     private Vector3 EndClick;
     private Vector3 StartMousePosition;
@@ -22,27 +21,18 @@ public class RtsUnitManager : MonoBehaviour
     public SquadBehaviour TemporarySelectionSquad;
     public SquadBehaviour FixedSquad;
 
-    public SquadBehaviour CurrentSelected
-    {
-        get
-        {
-            if (FixedSquad == null)
-            {
-                return TemporarySelectionSquad;
-            }
-            else
-            {
-                return FixedSquad;
-            }
-        }
-    }
-    public Dictionary<string, SquadBehaviour> Squads = new Dictionary<string, SquadBehaviour>();
+    public SquadBehaviour CurrentSelected => FixedSquad != null ? FixedSquad : TemporarySelectionSquad;
+    
+    public Dictionary<string, SquadBehaviour> FixedSquadsSelection = new Dictionary<string, SquadBehaviour>();
 
     private List<GameObject> units = new List<GameObject>();
 
+    private GameObject squadsParentGo;
+
     private void Start()
     {
-        TemporarySelectionSquad = Instantiate(SelectionSquadPrefab);
+        squadsParentGo = GameObject.Find("Squads");
+        TemporarySelectionSquad = Instantiate(SelectionSquadPrefab, squadsParentGo.transform);
     }
 
     private void Update()
@@ -52,7 +42,7 @@ public class RtsUnitManager : MonoBehaviour
         int wallMask = 1 << Constants.LAYER_WALL_LAYER;
         int terrainAndWallMask = terrainMask | wallMask;
 
-        SelectUnitsWithMouseSeletion(terrainMask, unitMask);
+        SelectUnitsWithMouseSelection(terrainMask, unitMask);
 
         if (Input.GetMouseButtonUp(1))
         {
@@ -63,17 +53,17 @@ public class RtsUnitManager : MonoBehaviour
             }
         }
 
-        if (InputExtensions.GetNumberDown(out int number))
+        if (InputExtensions.TryGetNumberDown(out int number))
         {
             if (Input.GetKey(KeyCode.LeftAlt))
                 TrySetNewFixedSquad(number);
 
-            if (Squads.ContainsKey(number.ToString()))
-                FixedSquad = Squads.GetValueOrDefault(number.ToString(), null);
+            if (FixedSquadsSelection.ContainsKey(number.ToString()))
+                FixedSquad = FixedSquadsSelection.GetValueOrDefault(number.ToString(), null);
         }
     }
 
-    private void SelectUnitsWithMouseSeletion(int terrainMask, int unitMask)
+    private void SelectUnitsWithMouseSelection(int terrainMask, int unitMask)
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -117,7 +107,6 @@ public class RtsUnitManager : MonoBehaviour
                 foreach (var collision in collisions)
                 {
                     TemporarySelectionSquad.AddUnit(collision.gameObject);
-                    Debug.Log(collision.name);
                 }
             }
         }
@@ -130,13 +119,12 @@ public class RtsUnitManager : MonoBehaviour
             return;
         }
 
-        if (Squads.ContainsKey(number.ToString()))
+        if (FixedSquadsSelection.ContainsKey(number.ToString()))
         {
-            Destroy(Squads[number.ToString()]);
+            Destroy(FixedSquadsSelection[number.ToString()]);
         }
 
-        Debug.Log("do the awesome");
-        Squads[number.ToString()] = TemporarySelectionSquad;
-        TemporarySelectionSquad = Instantiate(SelectionSquadPrefab);
+        FixedSquadsSelection[number.ToString()] = TemporarySelectionSquad;
+        TemporarySelectionSquad = Instantiate(SelectionSquadPrefab, squadsParentGo.transform);
     }
 }

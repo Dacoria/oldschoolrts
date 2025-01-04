@@ -1,8 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIUserSettings : MonoBehaviour
 {
     public static bool ShowExternalUIElementsActiveBuilding = false; // voor nu: alleen via code aan te passen; niet UI
+
+    public static List<KeyCodeAction> KeyCodeActionList =
+    new List<KeyCodeAction>
+    {
+            new KeyCodeAction(KeyCode.U, KeyCodeActionType.ToggleInputOutputDisplay),
+            new KeyCodeAction(KeyCode.I, KeyCodeActionType.ToggleBuildingProgressDisplay),
+            new KeyCodeAction(KeyCode.O, KeyCodeActionType.ToggleEntranceExitDisplay),
+    };
 
     // CHECKBOX UI
     public void ToggleInstaBuild()

@@ -2,7 +2,7 @@ using Assets.Army;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ArmyUnitBehaviour : MonoBehaviourCI
+public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
 {
     public float EnemyAttractRadius; // wordt geset voor aanmaken
     public float Reach; // wordt geset voor aanmaken
@@ -16,6 +16,7 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
 
     public bool IsRanged => RangedHomingMissilePrefab != null;
 
+
     public RangedHomingMissileBehaviour RangedHomingMissilePrefab;
     public Transform RangedHomingMissileSpawnPosition;
 
@@ -28,13 +29,17 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
         gameObject.AddComponent<DisplayUnitIsSelected>();
     }
 
-    private void Update()
-    {
+
+    private GameObject prevTarget;
+    protected override int FramesTillSlowUpdate => 5;
+    protected override void SlowUpdate()
+    {       
         var colliders = Physics.OverlapSphere(this.transform.position, EnemyAttractRadius, 1 << Constants.LAYER_RTS_UNIT);
         
         Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.StoppedAtDestination());
         Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, false);
 
+        Target = null;
         foreach (var collider in colliders)
         {
             var otherOwnedByPlayerBehaviour = collider.gameObject.GetComponent<OwnedByPlayerBehaviour>();
@@ -45,12 +50,31 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
 
                 if (NavMeshAgent.StoppedAtDestination())
                 {
+                    FaceTarget(); // navmesh kan gestopt zijn terwijl je nog gedraait bent of van achteren wordt geraakkt
                     Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, true);
+                }
+
+                if (Target == prevTarget)
+                {
+                    // zelfde unit blijven aanvalllen tot deze niet meer collide
+                    break;
                 }
             }
         }
+
+        prevTarget = Target;
     }
 
+    private void FaceTarget()
+    {
+        var turnTowardNavSteeringTarget = NavMeshAgent.steeringTarget;
+
+        Vector3 direction = (turnTowardNavSteeringTarget - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+    }
+
+    // Animation event!
     public void AttackHits()
     {
         if (Target != null)
@@ -68,8 +92,8 @@ public class ArmyUnitBehaviour : MonoBehaviourCI
 
     private void SpawnRangedHomingMissle()
     {
-        var rangedHomingMissile = Instantiate(RangedHomingMissilePrefab, RangedHomingMissileSpawnPosition.position, Quaternion.identity) as RangedHomingMissileBehaviour;
+        var rangedHomingMissile = Instantiate(RangedHomingMissilePrefab, RangedHomingMissileSpawnPosition.position, Quaternion.identity);
         rangedHomingMissile.SetTarget(Target);
         rangedHomingMissile.Offence = this.Offence;
-    }    
+    }
 }

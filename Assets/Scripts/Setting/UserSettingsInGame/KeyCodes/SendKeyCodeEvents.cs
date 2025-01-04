@@ -9,7 +9,7 @@ public class SendKeyCodeEvents : MonoBehaviour
 
     private void Start()
     {
-        RegistedKeyCodesList = MyExtensions.KeyCodeActionList.ToList();
+        RegistedKeyCodesList = UIUserSettings.KeyCodeActionList.ToList();
     }
 
     void Update()

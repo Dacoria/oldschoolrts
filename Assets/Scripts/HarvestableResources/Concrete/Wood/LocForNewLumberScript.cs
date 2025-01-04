@@ -14,7 +14,7 @@ public class LocForNewLumberScript : MonoBehaviour, ILocForNewResource, ILocatio
         // 20x random positie proberen, anders 0 - vector teruggeven
         for (var i = 0; i < 60; i++)
         {
-            var randomVector2 = MyExtensions.GetRandomVector(MinRangeForTrees, MaxRangeForTrees);
+            var randomVector2 = VectorExtensions.Random(MinRangeForTrees, MaxRangeForTrees);
 
             var newLoc = transform.position + new Vector3(randomVector2.x, 0, randomVector2.y);
             var distance = Vector3.Distance(newLoc, transform.position);

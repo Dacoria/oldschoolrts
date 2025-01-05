@@ -10,12 +10,15 @@ public class SquadBehaviour : MonoBehaviour
     public List<GameObject> GetUnits() => UnitsDict.Keys.ToList();       
 
     [HideInInspector] public SquadMovementBehaviour Movement;
+    
+    public CompassDirection CurrentDirection;
 
     public int UnitWidth;
 
     private void Start()
     {
         Movement = gameObject.AddComponent<SquadMovementBehaviour>();
+        CurrentDirection = RtsUnitSelectionManager.Instance.DefaultDirection;
         if(UnitWidth <= 0)
         {
             UnitWidth = 1;

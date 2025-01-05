@@ -34,6 +34,8 @@ public class RtsUnitSelectionManager : MonoBehaviour
 
     private GameObject squadsParentGo;
 
+    public CompassDirection DefaultDirection;
+
     private void Start()
     {
         squadsParentGo = GameObject.Find(Constants.GO_SCENE_SQUADS);
@@ -61,7 +63,6 @@ public class RtsUnitSelectionManager : MonoBehaviour
         {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity, terrainAndWallMask))
             {
-                //Debug.Log("Going to Pos: " + hit.point);
                 CurrentSelected.Movement.SetDestination(hit.point);
             }
         }
@@ -143,12 +144,13 @@ public class RtsUnitSelectionManager : MonoBehaviour
 
     private void HandleArmyPanelUI()
     {
+        // building selectie actief? Dan geen squad dingen doen
         if (UISelectedBuilding.activeSelf)
         {
             FixedSquad = null;
             TemporarySelectionSquad.Clear();
         }
-
+        
         var isClickingUi = EventSystem.current.IsPointerOverGameObject();
         if (isClickingUi)
         {

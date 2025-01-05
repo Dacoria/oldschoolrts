@@ -1,4 +1,5 @@
 using Assets.Army;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +22,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     public Transform RangedHomingMissileSpawnPosition;
 
     [ComponentInject] private OwnedByPlayerBehaviour OwnedByPlayerBehaviour;
+    private CompassDirection activeDirection;
 
     private void Start()
     {
@@ -42,6 +44,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
         Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, false);
 
         Target = null;
+        var isAttacking = false;
         foreach (var collider in colliders)
         {
             var otherOwnedByPlayerBehaviour = collider.gameObject.GetComponent<OwnedByPlayerBehaviour>();
@@ -52,6 +55,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
 
                 if (NavMeshAgent.StoppedAtDestination())
                 {
+                    isAttacking = true;
                     FaceTarget(); // navmesh kan gestopt zijn terwijl je nog gedraait bent of van achteren wordt geraakkt
                     Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, true);
                 }
@@ -64,6 +68,15 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
             }
         }
 
+        if(RtsUnitSelectionManager.Instance.CurrentSelected.GetUnits().Any(x => x == gameObject))
+        {
+            activeDirection = RtsUnitSelectionManager.Instance.CurrentSelected.CurrentDirection;
+        }
+        if(!isAttacking && NavMeshAgent.StoppedAtDestination())
+        {
+            FaceActiveDirection();
+        }
+
         prevTarget = Target;
     }
 
@@ -73,6 +86,13 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
 
         Vector3 direction = (turnTowardNavSteeringTarget - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+    }
+
+    private void FaceActiveDirection()
+    {
+        var lDirection = new Vector3(Mathf.Sin(Mathf.Deg2Rad * activeDirection.GetAngle()), 0, Mathf.Cos(Mathf.Deg2Rad * activeDirection.GetAngle()));
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(lDirection.x, 0, lDirection.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
     }
 

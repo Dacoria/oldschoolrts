@@ -9,6 +9,8 @@ public class UISquadCardBehaviour : MonoBehaviour, IUiCardAddItemClick, IUiCardD
     public Image UnitImage;
     public Text CurrentCount;
 
+    public Image DirectionArrow;
+
     private SquadBehaviour CallingSquad => RtsUnitSelectionManager.Instance.CurrentSelected;
     
     void Update()
@@ -17,6 +19,8 @@ public class UISquadCardBehaviour : MonoBehaviour, IUiCardAddItemClick, IUiCardD
         if (CallingSquad != null)
         {
             CurrentCount.text = CallingSquad.UnitWidth.ToString();
+            var newRotation = 360 - CallingSquad.CurrentDirection.GetAngle();
+            DirectionArrow.transform.rotation = Quaternion.Euler(DirectionArrow.transform.rotation.x, DirectionArrow.transform.rotation.y, newRotation); 
         }
     }
 
@@ -37,5 +41,23 @@ public class UISquadCardBehaviour : MonoBehaviour, IUiCardAddItemClick, IUiCardD
         {
             CallingSquad.UnitWidth = newAmount;
         }
+    }
+
+    // button
+    public void TurnDirectionRight()
+    {
+        CallingSquad.CurrentDirection = CallingSquad.CurrentDirection.TurnRight();
+    }
+
+    // button
+    public void TurnDirectionLeft()
+    {
+        CallingSquad.CurrentDirection = CallingSquad.CurrentDirection.TurnLeft();
+    }
+
+    // button
+    public void SetDefaultDirection()
+    {
+        RtsUnitSelectionManager.Instance.DefaultDirection = CallingSquad.CurrentDirection;
     }
 }

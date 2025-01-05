@@ -12,7 +12,7 @@ public class SquadMovementBehaviour : MonoBehaviourCI
     public void SetDestination(Vector3 mainDestination)
     {
         assignedUnits = new HashSet<GameObject>();
-        var positions = GenPositions(mainDestination, squadBehaviour.UnitsDict.Count, Mathf.Max(squadBehaviour.UnitWidth, 1), offsetDistanceBetweenUnits);
+        var positions = GenPositions(mainDestination, squadBehaviour.UnitsDict.Count, Mathf.Max(squadBehaviour.UnitWidth, 1), offsetDistanceBetweenUnits, squadBehaviour.CurrentDirection);
 
         foreach (var position in positions)
         {
@@ -25,7 +25,7 @@ public class SquadMovementBehaviour : MonoBehaviourCI
         gameObject.AddComponent<SquadShowDestinationBehaviour>().ShowPositions(positions);
     }
 
-    public List<Vector3> GenPositions(Vector3 destination, int positionCountToGenerate, int positionsPerRow, float offsetDistance)
+    public List<Vector3> GenPositions(Vector3 destination, int positionCountToGenerate, int positionsPerRow, float offsetDistance, CompassDirection dir)
     {
         var result = new List<Vector3>();
 
@@ -34,7 +34,8 @@ public class SquadMovementBehaviour : MonoBehaviourCI
 
         for (int i = 1; i <= positionCountToGenerate; i++)
         {
-            result.Add(destination + new Vector3(rowDiff * offsetDistance, 0, colDiff - offsetDistance));
+            var offset = new Vector3(rowDiff * offsetDistance, 0, -colDiff * offsetDistance);
+            result.Add(AddOffsetToDestination(destination, offset, dir));
 
             if (i % positionsPerRow == 0)
             {
@@ -48,5 +49,11 @@ public class SquadMovementBehaviour : MonoBehaviourCI
         }
 
         return result;
+    }
+
+    private Vector3 AddOffsetToDestination(Vector3 destination, Vector3 offset, CompassDirection dir)
+    {
+        var offsetWithDir = Quaternion.Euler(0, dir.GetAngle(), 0) * offset;
+        return destination + offsetWithDir;
     }
 }

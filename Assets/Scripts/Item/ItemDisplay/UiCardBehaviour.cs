@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class UiCardBehaviour : MonoBehaviour, IUiCardAddNewItemsClick, IUiCardLeftClick
+public class UiCardBehaviour : MonoBehaviour, IUiCardAddItemClick, IUiCardDecreaseItemClick, IUiCardLeftClick
 {
     public Image Image;
     public Text CountText;

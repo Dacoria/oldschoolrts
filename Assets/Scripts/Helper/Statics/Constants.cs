@@ -57,6 +57,7 @@
     public static string GO_PREFAB_UI_PRODUCE_ITEM_RIGHT_ARROW = "ProduceItemRightArrow";
     public static string GO_PREFAB_UI_RANGE_DISPLAY = "RangeDisplay";
     public static string GO_PREFAB_UI_SERF_PROCESSING_DISPLAY = "SerfProcessingDisplayGo";
+    public static string GO_PREFAB_UI_UNIT_DESTINATION_DISPLAY = "UnitDestinationSphere";
     public static string GO_PREFAB_UI_UNIT_SELECTION_DISPLAY = "UnitSelectionSphere";
 
     // RscToCarry

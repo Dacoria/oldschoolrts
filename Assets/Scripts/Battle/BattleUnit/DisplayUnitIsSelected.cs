@@ -15,6 +15,6 @@ public class DisplayUnitIsSelected : MonoBehaviourSlowUpdateFramesCI
 
     protected override void SlowUpdate()
     {
-        unitSelectionSphere.SetActive(RtsUnitManager.Instance.CurrentSelected.Units.Any(x => x == gameObject));
+        unitSelectionSphere.SetActive(RtsUnitSelectionManager.Instance.CurrentSelected.GetUnits().Any(x => x == gameObject));
     }
 }

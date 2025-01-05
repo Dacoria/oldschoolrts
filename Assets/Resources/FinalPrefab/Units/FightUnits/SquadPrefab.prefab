@@ -44,6 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f85e3f90a58f91439b81c9eddbcfbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Units: []
-  Width: 0
-  Height: 3
+  Movement: {fileID: 0}
+  UnitWidth: 6

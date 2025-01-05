@@ -1,64 +1,39 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class SquadBehaviour : MonoBehaviour
 {
-    public List<GameObject> Units;
-    public int Width = 5;
-    public int Height = 2;
-    
+    // voor perf; store navmesh
+    public Dictionary<GameObject, NavMeshAgent> UnitsDict { get; private set; } = new Dictionary<GameObject, NavMeshAgent>();
+    public List<GameObject> GetUnits() => UnitsDict.Keys.ToList();       
+
+    [HideInInspector] public SquadMovementBehaviour Movement;
+
+    public int UnitWidth;
+
+    private void Start()
+    {
+        Movement = gameObject.AddComponent<SquadMovementBehaviour>();
+        if(UnitWidth <= 0)
+        {
+            UnitWidth = 1;
+        }        
+    }
 
     public void Clear()
     {
-        Units.Clear();
+        UnitsDict.Clear();
     }
 
     public void AddUnit(GameObject unit)
     {
-        Units.Add(unit);
-    }
+        UnitsDict.Add(unit, unit.GetComponent<NavMeshAgent>());
 
-    public void SetDestination(Vector3 destination)
-    {
-        for (int i = 0; i < Units.Count; i++)
+        if (UnitWidth <= 6 && GetUnits().Count <= 6)
         {
-            int row = GetRow(i,Height, Width);
-            int column = GetColumn(i, Height, Width);
-            var unit = Units[i];
-            var offset = Vector3.one * 2;
-            offset.x *= row;
-            offset.z *= column;
-            unit.GetComponent<NavMeshAgent>().destination = destination + offset;
+            UnitWidth = GetUnits().Count;
         }
-    }
-
-    private int GetRow(int index, int height, int width)
-    {
-        if (width == 0)
-        {
-            return index / height;
-        } 
-        
-        if (height == 0)
-        {
-            return index % width;
-        }
-
-        return 0;
-    }
-
-    private int GetColumn(int index, int height, int width)
-    {
-        if (width == 0)
-        {
-            return index % height;
-        }
-        if (height == 0)
-        {
-            return index / width;
-        }
-
-        return 0;
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class UiManager : MonoBehaviour
 {
-    private void ActOnRaycastHit(RaycastHit[] hits)
+    private bool ActOnRaycastHit(RaycastHit[] hits)
     {
         (BuildingBehaviour buildingBehaviourHit, MonoBehaviour uiToActivate) = GetBuildingHitByRay(hits);
 
@@ -15,14 +15,17 @@ public partial class UiManager : MonoBehaviour
             EnableOutline(buildingBehaviourHit.gameObject);
             ActiveRangedDisplay(buildingBehaviourHit.gameObject);
             ActivateUI(uiToActivate);
+            return true;
         }
         else
-        {
+        {            
             DisableEntireCanvas();
             foreach (var hit in hits)
             {
                 AE.LeftClickOnGo?.Invoke(hit.transform.gameObject); // nu gebruikt voor tooltips
             }
+
+            return false;
         }
     }
 

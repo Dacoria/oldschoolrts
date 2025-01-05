@@ -1,19 +1,19 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UiCardDecreaseNewItemsClickHandler : MonoBehaviour, IPointerClickHandler
+public class UiCardDecreaseNewItemsClickHandler : MonoBehaviourCI, IPointerClickHandler
 {
-    public UiCardBehaviour UiCardBehaviour;
+    [ComponentInject] private IUiCardDecreaseItemClick UiCardDecreaseItemClick;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            UiCardBehaviour.DecreaseAmount(1);
+            UiCardDecreaseItemClick.DecreaseAmount(1);
         }
         else if (eventData.button == PointerEventData.InputButton.Middle)
         {
-            UiCardBehaviour.DecreaseAmount(5);
+            UiCardDecreaseItemClick.DecreaseAmount(5);
         }
     }
 }

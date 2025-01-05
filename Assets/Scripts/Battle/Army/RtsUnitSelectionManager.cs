@@ -1,19 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RtsUnitManager : MonoBehaviour
+public class RtsUnitSelectionManager : MonoBehaviour
 {
-    public static RtsUnitManager Instance;
+    public static RtsUnitSelectionManager Instance;
+    public GameObject UISelectedArmyPanel;
+    public GameObject UISelectedBuilding;
+
     private void Awake()
     {
         Instance = this;
     }
 
-    private Vector3 StartClick;
-    private Vector3 EndClick;
-    private Vector3 StartMousePosition;
+    private Vector3 StartClickLeft;
+    private Vector3 EndClickLeft;
+    private Vector3 StartMousePositionLeft;
 
     public Image SelectionBox;
     public SquadBehaviour SelectionSquadPrefab;
@@ -37,6 +42,14 @@ public class RtsUnitManager : MonoBehaviour
 
     private void Update()
     {
+        HandleArmyPanelUI();
+
+        var isClickingUi = EventSystem.current.IsPointerOverGameObject();
+        if (isClickingUi)
+        {
+            return;
+        }
+
         int terrainMask = 1 << Constants.LAYER_TERRAIN;
         int unitMask = 1 << Constants.LAYER_RTS_UNIT;
         int wallMask = 1 << Constants.LAYER_WALL_LAYER;
@@ -49,7 +62,7 @@ public class RtsUnitManager : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity, terrainAndWallMask))
             {
                 //Debug.Log("Going to Pos: " + hit.point);
-                CurrentSelected.SetDestination(hit.point);
+                CurrentSelected.Movement.SetDestination(hit.point);
             }
         }
 
@@ -61,7 +74,7 @@ public class RtsUnitManager : MonoBehaviour
             if (FixedSquadsSelection.ContainsKey(number.ToString()))
                 FixedSquad = FixedSquadsSelection.GetValueOrDefault(number.ToString(), null);
         }
-    }
+    }   
 
     private void SelectUnitsWithMouseSelection(int terrainMask, int unitMask)
     {
@@ -71,10 +84,10 @@ public class RtsUnitManager : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity,
                 terrainMask))
             {
-                StartClick = hit.point;
+                StartClickLeft = hit.point;
             }
 
-            StartMousePosition = Input.mousePosition;
+            StartMousePositionLeft = Input.mousePosition;
         }
 
         SelectionBox.enabled = false;
@@ -82,8 +95,8 @@ public class RtsUnitManager : MonoBehaviour
         {
             SelectionBox.enabled = true;
             var currentMousePosition = Input.mousePosition;
-            var middle = (StartMousePosition + currentMousePosition) / 2;
-            var dif = (StartMousePosition - currentMousePosition).Absolute();
+            var middle = (StartMousePositionLeft + currentMousePosition) / 2;
+            var dif = (StartMousePositionLeft - currentMousePosition).Absolute();
 
             SelectionBox.gameObject.transform.position = middle;
             SelectionBox.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(dif.x, dif.y);
@@ -96,9 +109,9 @@ public class RtsUnitManager : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity,
                 terrainMask))
             {
-                EndClick = hit.point;
-                var middle = (EndClick + StartClick) / 2;
-                var halfdif = ((EndClick - StartClick) / 2).Absolute();
+                EndClickLeft = hit.point;
+                var middle = (EndClickLeft + StartClickLeft) / 2;
+                var halfdif = ((EndClickLeft - StartClickLeft) / 2).Absolute();
 
                 halfdif.y = 9999;
 
@@ -114,7 +127,7 @@ public class RtsUnitManager : MonoBehaviour
 
     private void TrySetNewFixedSquad(int number)
     {
-        if (TemporarySelectionSquad == null || !TemporarySelectionSquad.Units.Any())
+        if (TemporarySelectionSquad == null || !TemporarySelectionSquad.GetUnits().Any())
         {
             return;
         }
@@ -126,5 +139,21 @@ public class RtsUnitManager : MonoBehaviour
 
         FixedSquadsSelection[number.ToString()] = TemporarySelectionSquad;
         TemporarySelectionSquad = Instantiate(SelectionSquadPrefab, squadsParentGo.transform);
+    }
+
+    private void HandleArmyPanelUI()
+    {
+        if (UISelectedBuilding.activeSelf)
+        {
+            FixedSquad = null;
+            TemporarySelectionSquad.Clear();
+        }
+
+        var isClickingUi = EventSystem.current.IsPointerOverGameObject();
+        if (isClickingUi)
+        {
+            return;
+        }
+        UISelectedArmyPanel.SetActive(CurrentSelected.GetUnits().Count > 0);
     }
 }

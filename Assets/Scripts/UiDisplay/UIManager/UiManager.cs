@@ -14,6 +14,8 @@ public partial class UiManager : MonoBehaviour
 
     void Update()
     {
+        var isClickingUi = EventSystem.current.IsPointerOverGameObject();
+
         if (Input.GetMouseButtonDown(1))
         {
             DisableActiveBuilding();
@@ -22,14 +24,13 @@ public partial class UiManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             DisableActiveBuilding();
-            var isClickingUi = EventSystem.current.IsPointerOverGameObject();
 
             if (!isClickingUi)
             {
                 Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
                 var hits = Physics.RaycastAll(ray);
-                ActOnRaycastHit(hits);
+                var buildingHit = ActOnRaycastHit(hits);
             }
-        }
+        }        
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine.EventSystems;
 
 public class UiCardAddNewItemsClickHandler : MonoBehaviourCI, IPointerClickHandler
 {
-    [ComponentInject] private IUiCardAddNewItemsClick UiCardAddNewItemsClick;
+    [ComponentInject] private IUiCardAddItemClick UiCardAddNewItemsClick;
 
     // BUTTON
     public void OnPointerClick(PointerEventData eventData)

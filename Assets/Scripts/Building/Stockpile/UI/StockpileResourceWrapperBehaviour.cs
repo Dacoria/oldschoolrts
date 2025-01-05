@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StockpileResourceWrapperBehaviour : MonoBehaviour, IUiCardAddNewItemsClick
+public class StockpileResourceWrapperBehaviour : MonoBehaviour, IUiCardAddItemClick
 {
     public ItemType ItemType;
     public Image Image;

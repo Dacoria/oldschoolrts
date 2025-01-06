@@ -11,9 +11,9 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     public Defence Defence; // wordt geset voor aanmaken
 
     [ComponentInject] public NavMeshAgent NavMeshAgent;
-    [ComponentInject] private Animator Animator;    
+    [ComponentInject] private Animator animator;    
 
-    private GameObject Target;
+    private GameObject target;
 
     public bool IsRanged => RangedHomingMissilePrefab != null;
 
@@ -21,7 +21,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     public RangedHomingMissileBehaviour RangedHomingMissilePrefab;
     public Transform RangedHomingMissileSpawnPosition;
 
-    [ComponentInject] private OwnedByPlayerBehaviour OwnedByPlayerBehaviour;
+    [ComponentInject] private OwnedByPlayerBehaviour ownedByPlayerBehaviour;
     private CompassDirection activeDirection;
 
     private void Start()
@@ -40,27 +40,27 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     {       
         var colliders = Physics.OverlapSphere(this.transform.position, EnemyAttractRadius, 1 << Constants.LAYER_RTS_UNIT);
         
-        Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.StoppedAtDestination());
-        Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, false);
+        animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.StoppedAtDestination());
+        animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, false);
 
-        Target = null;
+        target = null;
         var isAttacking = false;
         foreach (var collider in colliders)
         {
             var otherOwnedByPlayerBehaviour = collider.gameObject.GetComponent<OwnedByPlayerBehaviour>();
-            if (otherOwnedByPlayerBehaviour.Player != OwnedByPlayerBehaviour.Player)
+            if (otherOwnedByPlayerBehaviour.Player != ownedByPlayerBehaviour.Player)
             {
-                Target = otherOwnedByPlayerBehaviour.gameObject;
+                target = otherOwnedByPlayerBehaviour.gameObject;
                 NavMeshAgent.destination = otherOwnedByPlayerBehaviour.transform.position;
 
                 if (NavMeshAgent.StoppedAtDestination())
                 {
                     isAttacking = true;
                     FaceTarget(); // navmesh kan gestopt zijn terwijl je nog gedraait bent of van achteren wordt geraakkt
-                    Animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, true);
+                    animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, true);
                 }
 
-                if (Target == prevTarget)
+                if (target == prevTarget)
                 {
                     // zelfde unit blijven aanvalllen tot deze niet meer collide
                     break;
@@ -77,7 +77,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
             FaceActiveDirection();
         }
 
-        prevTarget = Target;
+        prevTarget = target;
     }
 
     private void FaceTarget()
@@ -99,7 +99,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     // Animation event!
     public void AttackHits()
     {
-        if (Target != null)
+        if (target != null)
         {
             if (IsRanged)
             {
@@ -107,7 +107,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
             }
             else
             {
-                HandleAttack.Handle(this.Offence, Target.gameObject);
+                HandleAttack.Handle(this.Offence, target.gameObject);
             }
         }
     }
@@ -115,7 +115,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     private void SpawnRangedHomingMissle()
     {
         var rangedHomingMissile = Instantiate(RangedHomingMissilePrefab, RangedHomingMissileSpawnPosition.position, Quaternion.identity);
-        rangedHomingMissile.SetTarget(Target);
+        rangedHomingMissile.SetTarget(target);
         rangedHomingMissile.Offence = this.Offence;
     }
 }

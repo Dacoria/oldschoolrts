@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public partial class GameManager : BaseAEMonoCI
 {
     public GameObject MainCastle;
-    private GameObject BuildingParentGo;
-    private IOrderDestination MainCastleOrderDestination;    
+    private GameObject buildingParentGo;
+    private IOrderDestination mainCastleOrderDestination;    
 
     public static GameManager Instance;
 
     private new void Awake()
     {
         Instance = this;
-        MainCastleOrderDestination = MainCastle.GetComponent<IOrderDestination>();
+        mainCastleOrderDestination = MainCastle.GetComponent<IOrderDestination>();
         base.Awake();
         InitServes();
     }       

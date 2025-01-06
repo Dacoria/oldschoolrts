@@ -4,36 +4,33 @@ using UnityEngine;
 
 public class TooltipSystem : MonoBehaviour
 {
-    public static TooltipSystem instance;
+    public static TooltipSystem Instance;
     public Tooltip Tooltip;
 
-    [SerializeField]
-    private float waitTimeToShow = 0.5f;
-    [SerializeField]
-    private float fadeInTime = 0.5f;
-    [SerializeField]
-    private float fadeOutTime = 0.5f;
+    [SerializeField] private float waitTimeToShow = 0.5f;
+    [SerializeField] private float fadeInTime = 0.5f;
+    [SerializeField] private float fadeOutTime = 0.5f;
 
     public void Awake()
     {
-        instance = this;
+        Instance = this;
     }    
 
-    private Color ColorBackground;
-    private Color ColorHeader;
-    private Color ColorContent;
+    private Color colorBackground;
+    private Color colorHeader;
+    private Color colorContent;
 
     void Start()
     {
         Tooltip.gameObject.SetActive(true);
-        ColorBackground = Tooltip.BackGround.color;
-        ColorHeader = Tooltip.HeaderField.color;
-        ColorContent = Tooltip.ContentField.color;
+        colorBackground = Tooltip.BackGround.color;
+        colorHeader = Tooltip.HeaderField.color;
+        colorContent = Tooltip.ContentField.color;
 
         // start invisible
-        Tooltip.BackGround.color = new Color(ColorBackground.r, ColorBackground.g, ColorBackground.b, 0);
-        Tooltip.HeaderField.color = new Color(ColorHeader.r, ColorHeader.g, ColorHeader.b, 0);
-        Tooltip.ContentField.color = new Color(ColorContent.r, ColorContent.g, ColorContent.b, 0);
+        Tooltip.BackGround.color = new Color(colorBackground.r, colorBackground.g, colorBackground.b, 0);
+        Tooltip.HeaderField.color = new Color(colorHeader.r, colorHeader.g, colorHeader.b, 0);
+        Tooltip.ContentField.color = new Color(colorContent.r, colorContent.g, colorContent.b, 0);
     }      
 
     private DateTime showTimeTooltip;
@@ -42,16 +39,16 @@ public class TooltipSystem : MonoBehaviour
     {
         ActiveTooltipGo = activeTooltipGo;
         StopAllCoroutines();
-        instance.Tooltip.SetText(content, header);
+        Instance.Tooltip.SetText(content, header);
         showTimeTooltip = DateTime.Now;        
 
         if (waitBeforeShowing)
         {
-            instance.StartCoroutine(instance.ShowAfterXSeconds());
+            Instance.StartCoroutine(Instance.ShowAfterXSeconds());
         }
         else
         {
-            instance.StartCoroutine(instance.FadeIn());
+            Instance.StartCoroutine(Instance.FadeIn());
         }
     }
 
@@ -62,7 +59,7 @@ public class TooltipSystem : MonoBehaviour
         // voorkomt dat 2 updates tegelijkertijd bezig zijn (wat kan via een event + rayhit)
         if(activeTooltipGo == ActiveTooltipGo)
         {
-            instance.Tooltip.SetText(content, header);
+            Instance.Tooltip.SetText(content, header);
             return true;
         }
         return false;
@@ -71,7 +68,7 @@ public class TooltipSystem : MonoBehaviour
     public IEnumerator ShowAfterXSeconds()
     {
         yield return Wait4Seconds.Get(waitTimeToShow);
-        instance.StartCoroutine(instance.FadeIn());
+        Instance.StartCoroutine(Instance.FadeIn());
     }
 
     public void Hide(bool ignoreWaitBuffer = false)
@@ -80,7 +77,7 @@ public class TooltipSystem : MonoBehaviour
         if (ignoreWaitBuffer || (DateTime.Now - showTimeTooltip).TotalMilliseconds > 50)
         {
             StopAllCoroutines();
-            instance.StartCoroutine(instance.FadeOut());
+            Instance.StartCoroutine(Instance.FadeOut());
         }
     }
 
@@ -88,9 +85,9 @@ public class TooltipSystem : MonoBehaviour
     {
         for (float a = (Tooltip.BackGround.color.a * fadeOutTime); a >= 0; a -= Time.deltaTime)
         {
-            Tooltip.BackGround.color = new Color(ColorBackground.r, ColorBackground.g, ColorBackground.b, a / fadeOutTime);
-            Tooltip.HeaderField.color = new Color(ColorHeader.r, ColorHeader.g, ColorHeader.b, a / fadeOutTime);
-            Tooltip.ContentField.color = new Color(ColorContent.r, ColorContent.g, ColorContent.b, a / fadeOutTime);
+            Tooltip.BackGround.color = new Color(colorBackground.r, colorBackground.g, colorBackground.b, a / fadeOutTime);
+            Tooltip.HeaderField.color = new Color(colorHeader.r, colorHeader.g, colorHeader.b, a / fadeOutTime);
+            Tooltip.ContentField.color = new Color(colorContent.r, colorContent.g, colorContent.b, a / fadeOutTime);
 
             yield return null;
         }
@@ -102,9 +99,9 @@ public class TooltipSystem : MonoBehaviour
 
         for (float a = 0; a <= fadeInTime; a += Time.deltaTime)
         {
-            Tooltip.BackGround.color = new Color(ColorBackground.r, ColorBackground.g, ColorBackground.b, Math.Min(1, initialA + (a / fadeInTime)));
-            Tooltip.HeaderField.color = new Color(ColorHeader.r, ColorHeader.g, ColorHeader.b, Math.Min(1, initialA + (a / fadeInTime)));
-            Tooltip.ContentField.color = new Color(ColorContent.r, ColorContent.g, ColorContent.b, Math.Min(1, initialA + (a / fadeInTime)));
+            Tooltip.BackGround.color = new Color(colorBackground.r, colorBackground.g, colorBackground.b, Math.Min(1, initialA + (a / fadeInTime)));
+            Tooltip.HeaderField.color = new Color(colorHeader.r, colorHeader.g, colorHeader.b, Math.Min(1, initialA + (a / fadeInTime)));
+            Tooltip.ContentField.color = new Color(colorContent.r, colorContent.g, colorContent.b, Math.Min(1, initialA + (a / fadeInTime)));
             yield return null;
         }
     }

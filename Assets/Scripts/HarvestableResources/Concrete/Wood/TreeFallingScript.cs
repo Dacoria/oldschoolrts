@@ -4,7 +4,7 @@ using UnityEngine;
 public class TreeFallingScript : MonoBehaviour
 {
     private bool isFalling;
-    private GameObject TreeStanding;
+    private GameObject treeStanding;
     public float FallingSpeed = 60f;
 
     private void Awake()
@@ -14,7 +14,7 @@ public class TreeFallingScript : MonoBehaviour
             var child = transform.GetChild(i).gameObject;
             if(child.name == "Tree")
             {
-                TreeStanding = child;
+                treeStanding = child;
             }           
         }
    }
@@ -43,7 +43,7 @@ public class TreeFallingScript : MonoBehaviour
 
     private void TreeHasFallen()
     {
-        if(TreeStanding != null)
+        if(treeStanding != null)
         {
             StartCoroutine(DestroyTreeAfterXSeconds(1));
         }
@@ -52,9 +52,9 @@ public class TreeFallingScript : MonoBehaviour
     private IEnumerator DestroyTreeAfterXSeconds(int secondToWait)
     {
         yield return Wait4Seconds.Get(secondToWait);
-        if (TreeStanding != null)
+        if (treeStanding != null)
         {
-            Destroy(TreeStanding.transform.parent.gameObject);
+            Destroy(treeStanding.transform.parent.gameObject);
         }
     }
 }

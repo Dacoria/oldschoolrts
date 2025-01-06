@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,9 +15,9 @@ public class RtsUnitSelectionManager : MonoBehaviour
         Instance = this;
     }
 
-    private Vector3 StartClickLeft;
-    private Vector3 EndClickLeft;
-    private Vector3 StartMousePositionLeft;
+    private Vector3 startClickLeft;
+    private Vector3 endClickLeft;
+    private Vector3 startMousePositionLeft;
 
     public Image SelectionBox;
     public SquadBehaviour SelectionSquadPrefab;
@@ -85,10 +84,10 @@ public class RtsUnitSelectionManager : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity,
                 terrainMask))
             {
-                StartClickLeft = hit.point;
+                startClickLeft = hit.point;
             }
 
-            StartMousePositionLeft = Input.mousePosition;
+            startMousePositionLeft = Input.mousePosition;
         }
 
         SelectionBox.enabled = false;
@@ -96,8 +95,8 @@ public class RtsUnitSelectionManager : MonoBehaviour
         {
             SelectionBox.enabled = true;
             var currentMousePosition = Input.mousePosition;
-            var middle = (StartMousePositionLeft + currentMousePosition) / 2;
-            var dif = (StartMousePositionLeft - currentMousePosition).Absolute();
+            var middle = (startMousePositionLeft + currentMousePosition) / 2;
+            var dif = (startMousePositionLeft - currentMousePosition).Absolute();
 
             SelectionBox.gameObject.transform.position = middle;
             SelectionBox.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(dif.x, dif.y);
@@ -110,9 +109,9 @@ public class RtsUnitSelectionManager : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity,
                 terrainMask))
             {
-                EndClickLeft = hit.point;
-                var middle = (EndClickLeft + StartClickLeft) / 2;
-                var halfdif = ((EndClickLeft - StartClickLeft) / 2).Absolute();
+                endClickLeft = hit.point;
+                var middle = (endClickLeft + startClickLeft) / 2;
+                var halfdif = ((endClickLeft - startClickLeft) / 2).Absolute();
 
                 halfdif.y = 9999;
 

@@ -4,9 +4,9 @@ using System.Linq;
 public partial class GameManager : BaseAEMonoCI
 { 
     private static List<BuilderBehaviour> freeBuilders = new List<BuilderBehaviour>();
-    private static SortedSet<BuilderRequest> BuilderRequests = new SortedSet<BuilderRequest>();
+    private static SortedSet<BuilderRequest> builderRequests = new SortedSet<BuilderRequest>();
 
-    public SortedSet<BuilderRequest> GetBuilderRequests() => BuilderRequests;
+    public SortedSet<BuilderRequest> GetBuilderRequests() => builderRequests;
 
     protected override void OnBuilderRequest(BuilderRequest builderRequest)
     {
@@ -17,13 +17,13 @@ public partial class GameManager : BaseAEMonoCI
         }
         else
         {
-            BuilderRequests.Add(builderRequest);
+            builderRequests.Add(builderRequest);
         }
     }
 
     protected override void OnFreeBuilder(BuilderBehaviour builder)
     {
-        var request = BuilderRequests.Pop();
+        var request = builderRequests.Pop();
         if (request != null)
         {
             builder.AssignBuilderRequest(request);

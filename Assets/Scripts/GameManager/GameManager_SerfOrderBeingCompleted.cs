@@ -4,20 +4,20 @@ using UnityEngine;
 
 public partial class GameManager : BaseAEMonoCI
 {
-    private Dictionary<SerfOrder, SerfShowPackageHandling> SerfOrdersBeingCompleted = new Dictionary<SerfOrder, SerfShowPackageHandling>();
+    private Dictionary<SerfOrder, SerfShowPackageHandling> serfOrdersBeingCompleted = new Dictionary<SerfOrder, SerfShowPackageHandling>();
     protected override void OnStartCompletingSerfRequest(SerfOrder order)
     {
         var serfShowPackageHandling = order.Assignee.gameObject.AddComponent<SerfShowPackageHandling>();
-        SerfOrdersBeingCompleted.Add(order, serfShowPackageHandling);
+        serfOrdersBeingCompleted.Add(order, serfShowPackageHandling);
     }
 
     public bool SerfOrderIsBeingCompletedForGo(GameObject go)
     {
-        if(SerfOrdersBeingCompleted.Any(x => x.Key.Status == Status.IN_PROGRESS_FROM && x.Key.From.GameObject == go))
+        if(serfOrdersBeingCompleted.Any(x => x.Key.Status == Status.IN_PROGRESS_FROM && x.Key.From.GameObject == go))
         {
             return true;
         }
-        if (SerfOrdersBeingCompleted.Any(x => x.Key.Status == Status.IN_PROGRESS_TO && x.Key.To.GameObject == go))
+        if (serfOrdersBeingCompleted.Any(x => x.Key.Status == Status.IN_PROGRESS_TO && x.Key.To.GameObject == go))
         {
             return true;
         }
@@ -26,10 +26,10 @@ public partial class GameManager : BaseAEMonoCI
 
     private void RemoveSerfOrderBeingCompleted(SerfOrder serfOrder)
     {
-        if(SerfOrdersBeingCompleted.TryGetValue(serfOrder, out var serfShowPackageHandling))
+        if(serfOrdersBeingCompleted.TryGetValue(serfOrder, out var serfShowPackageHandling))
         {
-            Destroy(SerfOrdersBeingCompleted[serfOrder]); // destroy go SerfShowPackageHandling
-            SerfOrdersBeingCompleted.Remove(serfOrder); // verwijder hele order
+            Destroy(serfOrdersBeingCompleted[serfOrder]); // destroy go SerfShowPackageHandling
+            serfOrdersBeingCompleted.Remove(serfOrder); // verwijder hele order
         }        
     }
 }

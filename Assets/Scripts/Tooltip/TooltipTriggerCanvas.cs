@@ -37,14 +37,14 @@ public class TooltipTriggerCanvas : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private void StopTooltip()
     {
-        TooltipSystem.instance.Hide(ignoreWaitBuffer: true);
+        TooltipSystem.Instance.Hide(ignoreWaitBuffer: true);
         activeTooltip = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         positionMouseOnStartTooltip = Input.mousePosition;
-        TooltipSystem.instance.Show(Content, Header);
+        TooltipSystem.Instance.Show(Content, Header);
         activeTooltip = true;
     }
 

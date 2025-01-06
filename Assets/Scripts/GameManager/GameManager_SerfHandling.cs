@@ -5,14 +5,14 @@ using System.Linq;
 
 public partial class GameManager : BaseAEMonoCI
 {
-    private static SortedSet<SerfRequest> SerfRequests = new SortedSet<SerfRequest>();
-    private SortedSet<SerfOrder> CurrentSerfOrders = new SortedSet<SerfOrder>();
+    private static SortedSet<SerfRequest> serfRequests = new SortedSet<SerfRequest>();
+    private SortedSet<SerfOrder> currentSerfOrders = new SortedSet<SerfOrder>();
     private static List<SerfBehaviour> freeSerfs = new List<SerfBehaviour>();
 
     public SortedSet<SerfOrder> CompletedOrdersIncFailed = new SortedSet<SerfOrder>();   
 
-    public SortedSet<SerfRequest> GetSerfRequests() => SerfRequests;
-    public SortedSet<SerfOrder> GetCurrentSerfOrders() => CurrentSerfOrders;
+    public SortedSet<SerfRequest> GetSerfRequests() => serfRequests;
+    public SortedSet<SerfOrder> GetCurrentSerfOrders() => currentSerfOrders;
 
     private void InitServes()
     {
@@ -39,7 +39,7 @@ public partial class GameManager : BaseAEMonoCI
         switch (serfOrder.Status)
         {
             case Status.SUCCESS:
-                if (!CurrentSerfOrders.Remove(serfOrder))
+                if (!currentSerfOrders.Remove(serfOrder))
                 {
                     // Vermoedelijke oorzaak -> tijdens een OnOrderStatusChanged wordt de status geupdate naar een nieuwe --> oplossing: mini delay voor nieuwe update
                     throw new Exception("Kon serforder niet verwijderen. Dit is 'DE' bug, die we gezien hadden met debuggen.");
@@ -47,7 +47,7 @@ public partial class GameManager : BaseAEMonoCI
                 CompletedOrdersIncFailed.Add(serfOrder);
                 break;
             case Status.FAILED:
-                if (!CurrentSerfOrders.Remove(serfOrder))
+                if (!currentSerfOrders.Remove(serfOrder))
                 {
                     // Vermoedelijke oorzaak -> tijdens een OnOrderStatusChanged wordt de status geupdate naar een nieuwe --> oplossing: mini delay voor nieuwe update
                     throw new Exception(
@@ -97,7 +97,7 @@ public partial class GameManager : BaseAEMonoCI
             var combined = TryCombineWithExistingOrder(serfRequest);
             if (!combined)
             {
-                SerfRequests.Add(serfRequest);
+                serfRequests.Add(serfRequest);
             }
         }
 
@@ -114,7 +114,7 @@ public partial class GameManager : BaseAEMonoCI
         {
             order.Assignee = freeSerfs.PopClosest(order.Location);
             order.Assignee.Assign(order);
-            CurrentSerfOrders.Add(order);
+            currentSerfOrders.Add(order);
 
             order = TryCreateNewOrder();
         }

@@ -9,7 +9,7 @@ public partial class GameManager : BaseAEMonoCI
     public NavMeshAgent Agent; // voor path check
 
     private NavMeshSurface _roadNavMeshSurfaceComponent;
-    private NavMeshSurface RoadNavMeshSurfaceComponent
+    private NavMeshSurface roadNavMeshSurfaceComponent
     {
         get {
             if (_roadNavMeshSurfaceComponent == null)
@@ -25,7 +25,7 @@ public partial class GameManager : BaseAEMonoCI
     {
         transform.gameObject.tag = Constants.TAG_ROAD;
         transform.SetParent(RoadNavMeshSurface.transform);
-        RoadNavMeshSurfaceComponent.BuildNavMesh();
+        roadNavMeshSurfaceComponent.BuildNavMesh();
         ManagePossibleNewSerfOrders();
     }
 

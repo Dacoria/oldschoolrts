@@ -26,7 +26,7 @@ public class TooltipUIHandler : BaseAEMonoCI
         {
             var header = CallingTooltipBahaviour.GetHeaderText();
             var content = CallingTooltipBahaviour.GetContentText();
-            TooltipSystem.instance.Show(content, header, waitBeforeShowing: false, activeTooltipGo: gameObject);
+            TooltipSystem.Instance.Show(content, header, waitBeforeShowing: false, activeTooltipGo: gameObject);
 
             toolTipIsActive = true;
 
@@ -52,7 +52,7 @@ public class TooltipUIHandler : BaseAEMonoCI
         {
             Destroy(OutlineComponent);
         }
-        TooltipSystem.instance.Hide();
+        TooltipSystem.Instance.Hide();
         toolTipIsActive = false;
         TimeTooltipRemoved = DateTime.Now;
     }
@@ -88,7 +88,7 @@ public class TooltipUIHandler : BaseAEMonoCI
     {
         var header = CallingTooltipBahaviour.GetHeaderText();
         var content = CallingTooltipBahaviour.GetContentText();
-        var updateTextSuccesfull = TooltipSystem.instance.UpdateText(gameObject, content, header);
+        var updateTextSuccesfull = TooltipSystem.Instance.UpdateText(gameObject, content, header);
 
         if(!updateTextSuccesfull)
         {

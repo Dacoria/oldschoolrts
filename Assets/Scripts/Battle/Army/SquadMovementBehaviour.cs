@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -9,6 +8,7 @@ public class SquadMovementBehaviour : MonoBehaviourCI
 
     private HashSet<GameObject> assignedUnits;
     private float offsetDistanceBetweenUnits = 1.5f;
+
     public void SetDestination(Vector3 mainDestination)
     {
         assignedUnits = new HashSet<GameObject>();

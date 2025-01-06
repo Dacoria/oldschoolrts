@@ -11,9 +11,9 @@ public partial class GameManager : BaseAEMonoCI
         if (freeSerfs.Count > 0)
         {
             var poppedSerfRequests = new List<SerfRequest>();
-            while (order == null && SerfRequests.Count > 0)
+            while (order == null && serfRequests.Count > 0)
             {
-                var serfRequest = SerfRequests.Pop();
+                var serfRequest = serfRequests.Pop();
                 poppedSerfRequests.Add(serfRequest);
 
                 order = CreateNewOrder(serfRequest);
@@ -28,7 +28,7 @@ public partial class GameManager : BaseAEMonoCI
             
             foreach (var poppedSerfRequest in poppedSerfRequests.Where(x => x.IsOriginator))
             {
-                SerfRequests.Add(poppedSerfRequest);
+                serfRequests.Add(poppedSerfRequest);
             }
         }
 
@@ -43,7 +43,7 @@ public partial class GameManager : BaseAEMonoCI
         // Find any ongoing orders we can combine
         if (serfRequest.Direction == Direction.PULL)
         {
-            var match = CurrentSerfOrders.FirstOrDefault(x =>
+            var match = currentSerfOrders.FirstOrDefault(x =>
                 !x.To.IsOriginator // This 'To' was created just to create an order, we can safely overrule it and forget the unoriginal request
                 && x.To.ItemType == serfRequest.ItemType // We only care about an itemmatch
                 && UnityEngine.AI.NavMesh.CalculatePath( // We need a valid path
@@ -57,14 +57,14 @@ public partial class GameManager : BaseAEMonoCI
             if (order != null)
             {
                 // Change priority of the order, so remove and add
-                CurrentSerfOrders.Remove(order);
+                currentSerfOrders.Remove(order);
                 order.To = serfRequest;
-                CurrentSerfOrders.Add(order);
+                currentSerfOrders.Add(order);
             }
         }
         else if (serfRequest.Direction == Direction.PUSH)
         {
-            var match = CurrentSerfOrders.FirstOrDefault(x =>
+            var match = currentSerfOrders.FirstOrDefault(x =>
                 !x.From.IsOriginator // This 'From' was created just to create an order, we can safely overrule it and forget the unoriginal request
                 && x.To.ItemType == serfRequest.ItemType // We only care about an itemmatch
                 && x.Status ==
@@ -80,9 +80,9 @@ public partial class GameManager : BaseAEMonoCI
             if (match != null)
             {
                 // Change priority of the order, so remove and add
-                CurrentSerfOrders.Remove(order);
+                currentSerfOrders.Remove(order);
                 match.From = serfRequest;
-                CurrentSerfOrders.Add(order);
+                currentSerfOrders.Add(order);
             }
         }
 
@@ -106,7 +106,7 @@ public partial class GameManager : BaseAEMonoCI
         {
             order.To = serfRequest;
             
-            var match = SerfRequests.FirstOrDefault(x =>
+            var match = serfRequests.FirstOrDefault(x =>
                 x.Direction == Direction.PUSH 
                 && x.ItemType == serfRequest.ItemType
                 && UnityEngine.AI.NavMesh.CalculatePath(x.Location, serfRequest.Location, serfRequest.Purpose.ToAreaMask(), path));
@@ -118,7 +118,7 @@ public partial class GameManager : BaseAEMonoCI
             if (order.From == null)
             {
                 // ter voorkoming dat 1 item in de stockpile 3x kan worden opgehaald
-                var countItemsAlreadyBeingPickedUp = CurrentSerfOrders.Count(x => x.From.GameObject == MainCastle && x.ItemType == serfRequest.ItemType && x.Status == Status.IN_PROGRESS_FROM);
+                var countItemsAlreadyBeingPickedUp = currentSerfOrders.Count(x => x.From.GameObject == MainCastle && x.ItemType == serfRequest.ItemType && x.Status == Status.IN_PROGRESS_FROM);
 
                 var stockpileWithStock = StockPilesManager.Instance.GetStockpiles().FirstOrDefault(x =>
                     x.CurrentItemAmount.Any(x => x.ItemType == serfRequest.ItemType && x.Amount - countItemsAlreadyBeingPickedUp > 0)
@@ -134,7 +134,7 @@ public partial class GameManager : BaseAEMonoCI
         {
             order.From = serfRequest;
 
-            var match = SerfRequests.FirstOrDefault(x =>
+            var match = serfRequests.FirstOrDefault(x =>
                 x.Direction == Direction.PULL
                 && x.ItemType == serfRequest.ItemType
                 && UnityEngine.AI.NavMesh.CalculatePath(serfRequest.Location, x.Location, x.Purpose.ToAreaMask(), path));
@@ -153,7 +153,7 @@ public partial class GameManager : BaseAEMonoCI
                 if (stockpile != null)
                 {
                     order.To = order.From.CloneOpposite();
-                    order.To.OrderDestination = MainCastleOrderDestination;
+                    order.To.OrderDestination = mainCastleOrderDestination;
                 }
             }
         }
@@ -165,9 +165,9 @@ public partial class GameManager : BaseAEMonoCI
 
         if (order != null)
         {
-            CurrentSerfOrders.Add(order);
-            SerfRequests.Remove(order.From);
-            SerfRequests.Remove(order.To);
+            currentSerfOrders.Add(order);
+            serfRequests.Remove(order.From);
+            serfRequests.Remove(order.To);
         }
 
         return order;

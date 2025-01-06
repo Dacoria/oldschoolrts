@@ -1,4 +1,3 @@
-using Assets.Army;
 using System;
 
 public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
@@ -42,9 +41,9 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
         Health.Text.text = unitStats.Health.ToString();
         Speed.Text.text = unitStats.Speed.ToString();
 
-        Attack.Image.sprite = MonoHelper.Instance.GetSpriteForAttackType(unitStats.Offence.AttackType);
-        Defence.Image.sprite = MonoHelper.Instance.GetSpriteForArmorType(unitStats.Defence.ArmorType);
-                               
+        Attack.Image.sprite = Load.SpriteMapMilitary[$"damage_{unitStats.Offence.AttackType}"];
+        Defence.Image.sprite = Load.SpriteMapMilitary[$"armor_{unitStats.Defence.ArmorType}"];
+
         CreateOrUpdateTooltipCanvas(Attack, GetAttackText(unitStats.Offence.AttackType));
         CreateOrUpdateTooltipCanvas(Defence, GetArmorText(unitStats.Defence.ArmorType));
 

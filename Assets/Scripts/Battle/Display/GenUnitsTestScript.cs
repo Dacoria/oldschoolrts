@@ -34,8 +34,7 @@ public class GenUnitsTestScript : MonoBehaviour
         }
     }
 
-
-    public void GenUnits(Vector3 pos)
+    private void GenUnits(Vector3 pos)
     {
         var type = BarracksUnitType.SWORDFIGHTER;
         var unit = BarrackUnitPrefabs.Get().Single(x => x.Type == type);

@@ -4,18 +4,18 @@ using System.Collections;
 public class RecoverHarvestableMaterialScript : MonoBehaviourSlowUpdateFramesCI
 {
     [ComponentInject]
-    private HarvestableMaterialScript HarvestableMaterialScript;
+    private HarvestableMaterialScript harvestableMaterialScript;
 
     public int RecoverAmount;
     public int RecoveryTimeInSeconds;
 
     public DateTime? StartDateRefilling;
-    public bool isRefillingResources => StartDateRefilling.HasValue;
+    public bool IsRefillingResources => StartDateRefilling.HasValue;
         
-    protected override int FramesTillSlowUpdate => 100;
+    protected override int FramesTillSlowUpdate => 30;
     protected override void SlowUpdate()
     {
-        if(HarvestableMaterialScript.MaterialCount == 0)
+        if(harvestableMaterialScript.MaterialCount == 0)
         {
             StartCoroutine(RecoverHarvestableMaterial());
         }
@@ -25,7 +25,7 @@ public class RecoverHarvestableMaterialScript : MonoBehaviourSlowUpdateFramesCI
     {
         StartDateRefilling = DateTime.Now;
         yield return Wait4Seconds.Get(RecoveryTimeInSeconds);
-        HarvestableMaterialScript.MaterialCount = RecoverAmount;
+        harvestableMaterialScript.MaterialCount = RecoverAmount;
         StartDateRefilling = null;
     }
 }

@@ -7,7 +7,7 @@ public class TooltipTriggerCanvas : MonoBehaviour, IPointerEnterHandler, IPointe
     public string Header;
 
 
-    private Vector2 PositionMouseOnStartTooltip;
+    private Vector2 positionMouseOnStartTooltip;
 
     private bool activeTooltip;
 
@@ -29,7 +29,7 @@ public class TooltipTriggerCanvas : MonoBehaviour, IPointerEnterHandler, IPointe
             StopTooltip();
         }
 
-        if(Vector2.Distance(PositionMouseOnStartTooltip, Input.mousePosition) > 50)
+        if(Vector2.Distance(positionMouseOnStartTooltip, Input.mousePosition) > 50)
         {
             StopTooltip();
         }
@@ -43,7 +43,7 @@ public class TooltipTriggerCanvas : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        PositionMouseOnStartTooltip = Input.mousePosition;
+        positionMouseOnStartTooltip = Input.mousePosition;
         TooltipSystem.instance.Show(Content, Header);
         activeTooltip = true;
     }

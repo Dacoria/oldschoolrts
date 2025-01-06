@@ -35,6 +35,7 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardSelectProdBuil
 
     private bool CanProduce(ItemProductionSetting itemProduceSetting)
     {
+
         if (ItemProdHelper.HasReachedRscProductionBuffer(itemProduceSetting, handleProduceResourceOrderBehaviour))
             return false;
 

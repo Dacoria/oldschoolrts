@@ -1,4 +1,6 @@
-﻿public static class Constants
+﻿using UnityEngine;
+
+public static class Constants
 {
     //layers (collision + nav mesh)
     public static int LAYER_DEFAULT = 0;
@@ -53,16 +55,19 @@
 
     // Objects to find in Prefabs
     //UI
+    public static string GO_PREFAB_UI_CAROUSSEL_LEFT_ARROW = "GoToTavernBubble";
     public static string GO_PREFAB_UI_GO_TO_TAVERN_DISPLAY = "GoToTavernBubble";
     public static string GO_PREFAB_UI_PRODUCE_ITEM_RIGHT_ARROW = "ProduceItemRightArrow";
     public static string GO_PREFAB_UI_RANGE_DISPLAY = "RangeDisplay";
     public static string GO_PREFAB_UI_SERF_PROCESSING_DISPLAY = "SerfProcessingDisplayGo";
     public static string GO_PREFAB_UI_UNIT_DESTINATION_DISPLAY = "UnitDestinationSphere";
     public static string GO_PREFAB_UI_UNIT_SELECTION_DISPLAY = "UnitSelectionSphere";
+    public static string GO_PREFAB_UI_WARNING_DISPLAY = "WarningDisplayGo";
 
     // RscToCarry
     public static string GO_PREFAB_RSC_TO_CARRY_CUBE_UNKNOWN = "CubeUnknownBeingCarried";
     
     //Buildings
     public static string GO_PREFAB_BUILDINGS_ROAD = "Road";
+
 }

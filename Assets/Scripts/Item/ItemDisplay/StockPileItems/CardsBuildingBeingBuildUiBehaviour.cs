@@ -17,15 +17,6 @@ public class CardsBuildingBeingBuildUiBehaviour : MonoBehaviourSlowUpdateFramesC
 
     private BuildingBehaviour buildingBehaviour; // bij resetten van cards geset
 
-    public bool CardsAreLoaded() => cardsLoaded;
-
-    public int GetCount() => imageTextBehaviours == null ? 0 : imageTextBehaviours.Count;
-
-    public void SetActiveStatusCardGo(int indexOfCard, bool activeYN)
-    {
-        imageTextBehaviours[indexOfCard].gameObject.SetActive(activeYN);
-    }
-
     private void OnEnable()
     {
         ResetCards();

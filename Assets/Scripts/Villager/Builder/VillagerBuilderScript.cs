@@ -3,10 +3,10 @@ using UnityEngine.AI;
 
 public class VillagerBuilderScript : BaseAEMonoCI
 {
-    [ComponentInject] private NavMeshAgent NavMeshAgent;
-    [ComponentInject] private Animator Animator;
+    [ComponentInject] private NavMeshAgent navMeshAgent;
+    [ComponentInject] private Animator animator;
 
-    private bool IsBuilding;
+    private bool isBuilding;
 
     public GameObject ToLocation;
 
@@ -14,22 +14,22 @@ public class VillagerBuilderScript : BaseAEMonoCI
     {
         if (previousStatus == BuildStatus.NEEDS_PREPARE && builderRequest.Status == BuildStatus.PREPARING)
         {
-            IsBuilding = true;
+            isBuilding = true;
         }
         if (previousStatus == BuildStatus.NEEDS_BUILDING && builderRequest.Status == BuildStatus.BUILDING)
         {
-            IsBuilding = true;
+            isBuilding = true;
         }
         if (builderRequest.Status == BuildStatus.COMPLETED_BUILDING || builderRequest.Status == BuildStatus.COMPLETED_PREPARING)
         {
-            IsBuilding = false;
+            isBuilding = false;
         }
     }
 
     public void Update()
     {
-        Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, NavMeshAgent.enabled);
-        Animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, IsBuilding);
-        Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !NavMeshAgent.enabled);
+        animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, navMeshAgent.enabled);
+        animator.SetBool(Constants.ANIM_BOOL_IS_WORKING, isBuilding);
+        animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !navMeshAgent.enabled);
     }
 }

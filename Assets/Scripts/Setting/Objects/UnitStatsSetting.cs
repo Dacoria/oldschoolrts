@@ -1,5 +1,4 @@
-﻿using Assets.Army;
-using System;
+﻿using System;
 
 [Serializable]
 public class UnitStatsSetting

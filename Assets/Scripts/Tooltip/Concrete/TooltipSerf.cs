@@ -36,13 +36,13 @@ public class TooltipSerf : MonoBehaviourCI, ITooltipUIText
             }
         }
 
-        if (SerfBehaviour._currentSerfOrder == null)
+        if (SerfBehaviour.CurrentSerfOrder == null)
         {
             content += "Order status: None";
         }
         else
         {
-            var order = SerfBehaviour._currentSerfOrder;
+            var order = SerfBehaviour.CurrentSerfOrder;
             content += "== Order ==";
             content += "\n";
             content += $"Type: {order.ItemType}";

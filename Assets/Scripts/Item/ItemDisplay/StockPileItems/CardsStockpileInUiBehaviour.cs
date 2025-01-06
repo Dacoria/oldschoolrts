@@ -13,7 +13,7 @@ public class CardsStockpileInUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICar
     public Text Title;
     private bool cardsLoaded;
 
-    private RefillBehaviour RefillStockpile; // bij resetten van cards geset
+    private RefillBehaviour refillStockpile; // bij resetten van cards geset
 
     public bool CardsAreLoaded() => cardsLoaded;
 
@@ -66,10 +66,10 @@ public class CardsStockpileInUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICar
         ClearAllCards();
 
         imageTextBehaviours = new List<ImageTextBehaviour>();
-        RefillStockpile = callingBuilding.GetGameObject()?.GetComponent<RefillBehaviour>();
-        if (RefillStockpile != null)
+        refillStockpile = callingBuilding.GetGameObject()?.GetComponent<RefillBehaviour>();
+        if (refillStockpile != null)
         {
-            foreach (var itemInStockpile in RefillStockpile.StockpileOfItemsRequired)
+            foreach (var itemInStockpile in refillStockpile.StockpileOfItemsRequired)
             {
                 var itemCountUiWrapper = Instantiate(ImageTextBehaviourPrefab, transform);
                 itemCountUiWrapper.Image.sprite = ResourcePrefabs.Get().Single(x => x.ItemType == itemInStockpile.ItemType).Icon;
@@ -89,11 +89,11 @@ public class CardsStockpileInUiBehaviour : MonoBehaviourSlowUpdateFramesCI, ICar
 
     private void UpdateValuesOfCard()
     {
-        if (cardsLoaded && RefillStockpile != null)
+        if (cardsLoaded && refillStockpile != null)
         {
             foreach (var card in imageTextBehaviours)
             {
-                card.Text.text = RefillStockpile.StockpileOfItemsRequired.Single(x => x.ItemType == card.ItemType).Amount.ToString();
+                card.Text.text = refillStockpile.StockpileOfItemsRequired.Single(x => x.ItemType == card.ItemType).Amount.ToString();
             }
         }
     }

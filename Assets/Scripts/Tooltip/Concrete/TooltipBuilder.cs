@@ -36,13 +36,13 @@ public class TooltipBuilder : MonoBehaviourCI, ITooltipUIText
             }
         }
 
-        if (BuilderBehaviour._currentBuilderRequest == null)
+        if (BuilderBehaviour.CurrentBuilderRequest == null)
         {
             content += "Request status: None";
         }
         else
         {
-            var request = BuilderBehaviour._currentBuilderRequest;
+            var request = BuilderBehaviour.CurrentBuilderRequest;
             content += "== Request ==";
             content += "\n";
             content += $"Purpose: {request.Purpose}";

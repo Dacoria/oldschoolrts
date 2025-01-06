@@ -49,7 +49,8 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
         var locOfResource = Real.GetComponent<ILocationOfResource>();
         if (locOfResource != null)
         {
-            var rangedDisplay = Instantiate(MonoHelper.Instance.RangedDisplayPrefab, ((MonoBehaviour)locOfResource).transform);
+            var rangedDisplayGo = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_RANGE_DISPLAY], ((MonoBehaviour)locOfResource).transform);
+            var rangedDisplay = rangedDisplayGo.GetComponent<RangeDisplayBehaviour>();
             rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
             rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();
         }        

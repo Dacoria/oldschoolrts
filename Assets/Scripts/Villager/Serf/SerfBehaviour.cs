@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,17 +5,17 @@ using UnityEngine.AI;
 
 public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 {
-    [ComponentInject] private NavMeshAgent NavMeshAgent;
-    public SerfOrder _currentSerfOrder { get; private set; }
-    [ComponentInject] private Animator Animator;
-    [ComponentInject(Required.OPTIONAL)] private AudioSource AudioSource;
-    [ComponentInject] private List<Renderer> Renderers;
+    [ComponentInject] private NavMeshAgent navMeshAgent;
+    public SerfOrder CurrentSerfOrder { get; private set; }
+    [ComponentInject] private Animator animator;
+    [ComponentInject(Required.OPTIONAL)] private AudioSource audioSource;
+    [ComponentInject] private List<Renderer> renderers;
 
-    [ComponentInject] private SerfResourceCarryingBehaviour SerfResourceCarryingBehaviour;
-    [ComponentInject] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
+    [ComponentInject] private SerfResourceCarryingBehaviour serfResourceCarryingBehaviour;
+    [ComponentInject] private FoodConsumptionBehaviour foodConsumptionBehaviour;
 
-    private float WaitTimeInSecCompletingSerfFromRequest = 2;
-    private float WaitTimeInSecCompletingSerfToRequest = 1;
+    private float waitTimeInSecCompletingSerfFromRequest = 2;
+    private float waitTimeInSecCompletingSerfToRequest = 1;
 
     public VillagerUnitType GetVillagerUnitType() => VillagerUnitType.Serf;
     public GameObject GetGO() => this.gameObject;
@@ -39,7 +38,7 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     protected override void OnFoodStatusHasChanged(FoodConsumption foodConsumption, FoodConsumptionStatus previousStatus)
     {
-        if(foodConsumption == FoodConsumptionBehaviour.FoodConsumption)
+        if(foodConsumption == foodConsumptionBehaviour.FoodConsumption)
         {
             switch(foodConsumption.FoodConsumptionStatus)
             {
@@ -58,11 +57,11 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
-        if (serfOrder == _currentSerfOrder)
+        if (serfOrder == CurrentSerfOrder)
         {
-            if(SerfResourceCarryingBehaviour != null)
+            if(serfResourceCarryingBehaviour != null)
             {
-                SerfResourceCarryingBehaviour.UpdateSerfOrder(serfOrder);
+                serfResourceCarryingBehaviour.UpdateSerfOrder(serfOrder);
             }
 
             switch (serfOrder.Status)
@@ -70,10 +69,10 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
                 case Status.SUCCESS:
                 case Status.FAILED:
                     {
-                        _currentSerfOrder = null;
-                        if (NavMeshAgent.isActiveAndEnabled)
+                        CurrentSerfOrder = null;
+                        if (navMeshAgent.isActiveAndEnabled)
                         {
-                            NavMeshAgent.isStopped = true;
+                            navMeshAgent.isStopped = true;
                         }
                         if(!stopAsapWithOrders && !stoppedWithOrders)
                         {
@@ -101,7 +100,7 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     {
         if(stopAsapWithOrders &&
             !stoppedWithOrders && 
-            _currentSerfOrder == null)
+            CurrentSerfOrder == null)
         {
             GameManager.Instance.TryRemoveSerfFromFreeSerfList(this);
             stoppedWithOrders = true;                       
@@ -110,22 +109,22 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     private void UpdateCurrentOrder()
     {
-        if (_currentSerfOrder != null && NavMeshAgent.isActiveAndEnabled)
+        if (CurrentSerfOrder != null && navMeshAgent.isActiveAndEnabled)
         {
             UpdateNavMesh();
 
-            if (NavMeshAgent.StoppedAtDestination() && !isHandlingStatusSwitch() && canCompleteOrder(_currentSerfOrder))
+            if (navMeshAgent.StoppedAtDestination() && !isHandlingStatusSwitch() && canCompleteOrder(CurrentSerfOrder))
             {
-                switch (_currentSerfOrder.Status)
+                switch (CurrentSerfOrder.Status)
                 {
                     case Status.IN_PROGRESS_FROM:
                         {
-                            StartCoroutine(CompletedFromRequest(_currentSerfOrder));
+                            StartCoroutine(CompletedFromRequest(CurrentSerfOrder));
                             break;
                         }
                     case Status.IN_PROGRESS_TO:
                         {
-                            StartCoroutine(CompletedToRequest(_currentSerfOrder));
+                            StartCoroutine(CompletedToRequest(CurrentSerfOrder));
                             break;
                         }
                 }
@@ -135,31 +134,31 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     private void UpdateNavMesh()
     {
-        NavMeshAgent.isStopped = false;
-        var destination = _currentSerfOrder.Location;
+        navMeshAgent.isStopped = false;
+        var destination = CurrentSerfOrder.Location;
 
         var path = new NavMeshPath();
         if (!NavMesh.CalculatePath(
             this.transform.position,
             destination,
-            _currentSerfOrder.Purpose.ToAreaMask(),
+            CurrentSerfOrder.Purpose.ToAreaMask(),
             path))
         {
             // This may be a terribly expensive operation. May be better to remember the currentOrder.From and if it changed, reevaluate the areamask?
             //Debug.LogWarning("Overwriting the navmesh-areaMask for the serf because there is no path.");
-            NavMeshAgent.areaMask = 1 << 0; // can happen, so lets just make an exception here
+            navMeshAgent.areaMask = 1 << 0; // can happen, so lets just make an exception here
         }
         else
         {
-            NavMeshAgent.areaMask = _currentSerfOrder.Purpose.ToAreaMask();
+            navMeshAgent.areaMask = CurrentSerfOrder.Purpose.ToAreaMask();
         }
 
 
-        switch (_currentSerfOrder.Status)
+        switch (CurrentSerfOrder.Status)
         {
             case Status.IN_PROGRESS_FROM:
             case Status.IN_PROGRESS_TO:
-                NavMeshAgent.destination = destination;
+                navMeshAgent.destination = destination;
                 break;
         }
     }
@@ -181,72 +180,72 @@ public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     private IEnumerator CompletedFromRequest(SerfOrder currentSerfOrder)
     {
-        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder); // voorkomt dat gebouw andere orders afhandelt
-        yield return Wait4Seconds.Get(WaitTimeInSecCompletingSerfFromRequest);
+        AE.StartCompletingSerfRequest?.Invoke(CurrentSerfOrder); // voorkomt dat gebouw andere orders afhandelt
+        yield return Wait4Seconds.Get(waitTimeInSecCompletingSerfFromRequest);
         if (currentSerfOrder.From.OrderDestination.CanProcessOrder(currentSerfOrder))
         {
-            _currentSerfOrder.Status = Status.IN_PROGRESS_TO;
+            CurrentSerfOrder.Status = Status.IN_PROGRESS_TO;
         }
         else
         {
-            _currentSerfOrder.Status = Status.FAILED;
+            CurrentSerfOrder.Status = Status.FAILED;
         }
     }
 
     private IEnumerator CompletedToRequest(SerfOrder currentSerfOrder)
     {
-        AE.StartCompletingSerfRequest?.Invoke(_currentSerfOrder); // voorkomt dat gebouw andere orders afhandelta
-        yield return Wait4Seconds.Get(WaitTimeInSecCompletingSerfToRequest);
+        AE.StartCompletingSerfRequest?.Invoke(CurrentSerfOrder); // voorkomt dat gebouw andere orders afhandelta
+        yield return Wait4Seconds.Get(waitTimeInSecCompletingSerfToRequest);
         if(currentSerfOrder.To.OrderDestination.CanProcessOrder(currentSerfOrder))
         {
-            _currentSerfOrder.Status = Status.SUCCESS;
+            CurrentSerfOrder.Status = Status.SUCCESS;
         }
         else
         {
-            _currentSerfOrder.Status = Status.FAILED;
+            CurrentSerfOrder.Status = Status.FAILED;
         }
         
     }
 
     private void UpdateAnimation()
     {
-        Animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, IsWalking());
-        Animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !IsWalking());
+        animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, IsWalking());
+        animator.SetBool(Constants.ANIM_BOOL_IS_IDLE, !IsWalking());
     }
 
     private bool IsWalking()
     {
-        return NavMeshAgent.isActiveAndEnabled &&
-            !(NavMeshAgent.destination == null || 
-            NavMeshAgent.isStopped ||
-            NavMeshAgent.StoppedAtDestination());
+        return navMeshAgent.isActiveAndEnabled &&
+            !(navMeshAgent.destination == null || 
+            navMeshAgent.isStopped ||
+            navMeshAgent.StoppedAtDestination());
     }
 
     public void Assign(SerfOrder serfOrder)
     {
-        this._currentSerfOrder = serfOrder;
+        this.CurrentSerfOrder = serfOrder;
         serfOrder.Assignee = this;
         RecalculateNavMeshPriority();
 
-        if (SerfResourceCarryingBehaviour != null)
+        if (serfResourceCarryingBehaviour != null)
         {
-            SerfResourceCarryingBehaviour.UpdateSerfOrder(serfOrder);
+            serfResourceCarryingBehaviour.UpdateSerfOrder(serfOrder);
         }
     }
 
     private void RecalculateNavMeshPriority()
     {
-        this.NavMeshAgent.avoidancePriority =
+        this.navMeshAgent.avoidancePriority =
             50 + // being a serf
-            _currentSerfOrder?.Priority ?? 
+            CurrentSerfOrder?.Priority ?? 
             99; // being idle has absolutely no priority
     }
 
     public void OnDestroy()
     {
-        if (this._currentSerfOrder != null)
+        if (this.CurrentSerfOrder != null)
         {
-            this._currentSerfOrder.Status = Status.FAILED;
+            this.CurrentSerfOrder.Status = Status.FAILED;
         }
         GameManager.Instance.TryRemoveSerfFromFreeSerfList(this);
     }    

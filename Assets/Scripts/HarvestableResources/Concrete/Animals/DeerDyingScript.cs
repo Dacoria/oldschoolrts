@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class DeerDyingScript : MonoBehaviour,IRetrieveResourceFromObject
 {
-    private bool IsKilled => TimeKilled.HasValue;
-    private bool IsBeingOrHasBeenRetrieved = false;
-    private DateTime? TimeKilled;
+    private bool isKilled => timeKilled.HasValue;
+    private bool isBeingOrHasBeenRetrieved = false;
+    private DateTime? timeKilled;
 
     public HarvestMaterialResource ResourceIsRetrieved()
     {
-        if (IsKilled)
+        if (isKilled)
         {
             return null; // ander houthakker heeft boom al omgehakt? niks meer om te retrieven
         }
 
-        TimeKilled = DateTime.Now;
+        timeKilled = DateTime.Now;
         this.GetComponentInChildren<Animator>().SetTrigger(Constants.ANIM_TRIGGER_DIE);
 
         var moveObjectDownSurfaceAndDestroy = this.gameObject.AddComponent<MoveObjectDownSurfaceAndDestroy>();
@@ -27,10 +27,10 @@ public class DeerDyingScript : MonoBehaviour,IRetrieveResourceFromObject
   
     public bool CanRetrieveResource()
     {
-        return !IsBeingOrHasBeenRetrieved;
+        return !isBeingOrHasBeenRetrieved;
     }
     public void StartRetrievingResource(int materialNumberRequestedToHarvest = 1)
     {
-        IsBeingOrHasBeenRetrieved = true;
+        isBeingOrHasBeenRetrieved = true;
     }
 }

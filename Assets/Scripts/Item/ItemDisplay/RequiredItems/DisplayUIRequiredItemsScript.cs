@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DisplayUIRequiredItemsScript : MonoBehaviour
 {
-    private List<ImageTextBehaviour> ImagesRequiredItems;
+    private List<ImageTextBehaviour> imagesRequiredItems;
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
         var isSelectedDisplayCard = transform.GetComponentInParent<SelectedDisplayCardScript>() != null;
         if (isSelectedDisplayCard || (selectedDisplayUiCard?.CardUiHandler != null && selectedDisplayUiCard.CardUiHandler.ShowRequiredItemsUnderCard))
         {
-            ImagesRequiredItems = GetComponentsInChildren<ImageTextBehaviour>(true).ToList();
+            imagesRequiredItems = GetComponentsInChildren<ImageTextBehaviour>(true).ToList();
             var buildingType = selectedDisplayUiCard.CardUiHandler.CallingBuilding.GetBuildingType();
             var produceSetting = buildingType.GetProductionSettings().First(x => x.GetType().ToString() == selectedDisplayUiCard.Type.ToString());
             UpdateImages(produceSetting);
@@ -36,7 +36,7 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
 
     private void UpdateImages(ProductionSetting productionSetting)
     {
-        foreach(var imageScript in ImagesRequiredItems)
+        foreach(var imageScript in imagesRequiredItems)
         {
             imageScript.gameObject.SetActive(false);
         }
@@ -56,7 +56,7 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
         for (int j = 0; j < prodSettingForItemTypeRequired.Amount; j++)
         {
             var imageFound = false;
-            foreach (var itemScript in ImagesRequiredItems)
+            foreach (var itemScript in imagesRequiredItems)
             {                
                 if(!itemScript.gameObject.activeSelf)
                 {
@@ -69,7 +69,7 @@ public class DisplayUIRequiredItemsScript : MonoBehaviour
             }
             if (!imageFound)
             {
-                throw new Exception($"Item benodigd display kan max {ImagesRequiredItems.Count} items tonen, item {prodSettingForItemTypeRequired.ItemType} vereist er meer, dat past niet");
+                throw new Exception($"Item benodigd display kan max {imagesRequiredItems.Count} items tonen, item {prodSettingForItemTypeRequired.ItemType} vereist er meer, dat past niet");
             }
         }
     }

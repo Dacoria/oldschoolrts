@@ -11,5 +11,4 @@ public class KeyCodeAction
     public KeyCodeActionType KeyCodeActionType { get;set; }
     public KeyCode KeyCode { get; set; }
     public bool Active { get; set; }
-
 }

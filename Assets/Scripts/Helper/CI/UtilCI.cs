@@ -26,7 +26,7 @@ public static class UtilCI
 
             var componentInject = (ComponentInject)injectableField.GetCustomAttributes
                 (typeof(ComponentInject), false).Single();
-            var valueToInject = getValueToInject(fieldType, componentInject, monoBehaviour);
+            var valueToInject = GetValueToInject(fieldType, componentInject, monoBehaviour);
             injectableField.SetValue(monoBehaviour, valueToInject);
         }
 
@@ -35,12 +35,12 @@ public static class UtilCI
             var propertyType = injectableProperty.PropertyType;
             var componentInject = (ComponentInject)injectableProperty.GetCustomAttributes
                 (typeof(ComponentInject), false).Single();
-            var valueToInject = getValueToInject(propertyType, componentInject, monoBehaviour);
+            var valueToInject = GetValueToInject(propertyType, componentInject, monoBehaviour);
             injectableProperty.SetValue(monoBehaviour, valueToInject);
         }
     }
 
-    private static object getValueToInject(Type type, ComponentInject componentInject, MonoBehaviour monoBehaviour)
+    private static object GetValueToInject(Type type, ComponentInject componentInject, MonoBehaviour monoBehaviour)
     {
         if (type.GetInterfaces().Contains(typeof(IEnumerable)))
         {

@@ -18,10 +18,6 @@ public static class VectorExtensions
     {
         return a.x == 0 && a.y == 0 && a.z == 0;
     }
-    public static bool IsAlmostEmptyVector(this Vector3 a)
-    {
-        return Mathf.Abs(a.x) <= 0.1 && Mathf.Abs(a.y) <= 0.1 && Mathf.Abs(a.z) <= 0.1;
-    }
 
     public static Vector3 MultiplyVector(this Vector3 a, Vector3 b)
     {

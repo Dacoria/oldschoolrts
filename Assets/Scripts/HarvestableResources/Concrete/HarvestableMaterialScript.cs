@@ -7,7 +7,7 @@ public class HarvestableMaterialScript : MonoBehaviour, IRetrieveResourceFromObj
     public int InitialMaterialCount;
     public int MaterialCount; // voor evt resetten materials
     public bool ResourceIsBeingRetrieved { private set; get; }
-    private int MaterialNumberRequestedToHarvest;
+    private int materialNumberRequestedToHarvest;
 
     public bool DestroyOnNoMaterial = true;
 
@@ -49,11 +49,11 @@ public class HarvestableMaterialScript : MonoBehaviour, IRetrieveResourceFromObj
             NoMoreMaterialAction();
             return null;
         }
-        if (MaterialCount > MaterialNumberRequestedToHarvest)
+        if (MaterialCount > materialNumberRequestedToHarvest)
         {
-            MaterialCount -= MaterialNumberRequestedToHarvest;
+            MaterialCount -= materialNumberRequestedToHarvest;
             ResourceIsBeingRetrieved = false;
-            return new HarvestMaterialResource(MaterialType, MaterialNumberRequestedToHarvest);
+            return new HarvestMaterialResource(MaterialType, materialNumberRequestedToHarvest);
         }
 
         var materialsLeft = MaterialCount;
@@ -69,7 +69,7 @@ public class HarvestableMaterialScript : MonoBehaviour, IRetrieveResourceFromObj
 
     public void StartRetrievingResource(int materialNumberRequestedToHarvest = 1)
     {
-        MaterialNumberRequestedToHarvest = materialNumberRequestedToHarvest;
+        this.materialNumberRequestedToHarvest = materialNumberRequestedToHarvest;
         ResourceIsBeingRetrieved = true;
     }
 }

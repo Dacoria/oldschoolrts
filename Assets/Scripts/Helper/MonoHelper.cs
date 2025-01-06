@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Assets.Army;
 using System.Collections;
 
 public class MonoHelper : MonoBehaviour
@@ -15,50 +12,7 @@ public class MonoHelper : MonoBehaviour
     void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
-        // check of alle armortypes plaatjes hebben
-        foreach (ArmorType armorType in Enum.GetValues(typeof(ArmorType)))
-        {
-            var x = SpriteArmorTypes.Single(x => x.ArmorType == armorType);
-        }
-        // check of alle attacktypes plaatjes hebben
-        foreach (AttackType attackType in Enum.GetValues(typeof(AttackType)))
-        {
-            SpriteDamageTypes.Single(x => x.AttackType == attackType);
-        }
-    }
-
-    public Vector3 GetMousePositionV3(Vector3 mousePosition) => MainCamera.ScreenToWorldPoint(mousePosition);
-
-    public List<SpriteArmorType> SpriteArmorTypes;
-    public List<SpriteAttackType> SpriteDamageTypes;
-
-
-    [Serializable]
-    public class SpriteArmorType
-    {
-        public ArmorType ArmorType;
-        public Sprite Sprite;
-    }
-
-    [Serializable]
-    public class SpriteAttackType
-    {
-        public AttackType AttackType;
-        public Sprite Sprite;
-    }
-
-    public Sprite GetSpriteForArmorType(ArmorType armorType) => SpriteArmorTypes.Single(x => x.ArmorType == armorType).Sprite;
-    public Sprite GetSpriteForAttackType(AttackType attackType) => SpriteDamageTypes.Single(x => x.AttackType == attackType).Sprite;
-
-
-    public GameObject LeftArrowCarousselUiPrefab;
-    public GameObject RightArrowCarousselUiPrefab;
-    public RangeDisplayBehaviour RangedDisplayPrefab;
-    public GameObject WarningGoPrefab;
+    }    
 
     public TavernBehaviour GetClosestTavernWithFood()
     {

@@ -191,7 +191,8 @@ public class BuildBuildingsByUser : MonoBehaviour
         var locOfResource = ObjectToBuild.GetComponentInChildren<ILocationOfResource>(true);
         if (locOfResource != null)
         {
-            var rangedDisplay = Instantiate(MonoHelper.Instance.RangedDisplayPrefab, ObjectToBuild.GetComponentInChildren<GhostBuildingBehaviour>().transform);
+            var rangedDisplayGo = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_RANGE_DISPLAY], ObjectToBuild.GetComponentInChildren<GhostBuildingBehaviour>().transform);
+            var rangedDisplay = rangedDisplayGo.GetComponent<RangeDisplayBehaviour>();
             rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
             rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();
             rangedDisplay.gameObject.SetActive(true);

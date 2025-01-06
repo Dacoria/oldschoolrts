@@ -31,7 +31,7 @@ public class TooltipHarvestableMaterialScript : MonoBehaviourCI, ITooltipUIText
             content += "Status: Is now being harvested";
         }
 
-        if (RecoverHarvestableMaterialScript != null && RecoverHarvestableMaterialScript.isRefillingResources)
+        if (RecoverHarvestableMaterialScript != null && RecoverHarvestableMaterialScript.IsRefillingResources)
         {
             var timeSpendInSec = (DateTime.Now - RecoverHarvestableMaterialScript.StartDateRefilling.Value).TotalSeconds;
             var progress = Math.Min(1, timeSpendInSec / (float)RecoverHarvestableMaterialScript.RecoveryTimeInSeconds);

@@ -5,10 +5,9 @@ public class HideShowBerryGo : MonoBehaviourSlowUpdateFramesCI
     public GameObject HasBerries;
     public GameObject NoBerries;
 
-    [ComponentInject]
-    private HarvestableMaterialScript HarvestableMaterialScript;
+    [ComponentInject] private HarvestableMaterialScript HarvestableMaterialScript;
 
-    protected override int FramesTillSlowUpdate => 100;
+    protected override int FramesTillSlowUpdate => 30;
 
     protected override void SlowUpdate()
     {

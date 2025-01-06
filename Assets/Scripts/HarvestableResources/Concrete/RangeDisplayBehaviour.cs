@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class RangeDisplayBehaviour : MonoBehaviour
 {
-    public int cirlceSegments = 50;
+    public int CirlceSegments = 50;
     LineRenderer line;
 
     public RangeType RangeType;
@@ -28,7 +28,7 @@ public class RangeDisplayBehaviour : MonoBehaviour
         line.useWorldSpace = false;
         if (RangeType == RangeType.Circle)
         {
-            line.positionCount = cirlceSegments + 1;
+            line.positionCount = CirlceSegments + 1;
             CreateCirlcePoints();
         }
         else if(RangeType == RangeType.BoxColliderExpand)
@@ -66,14 +66,14 @@ public class RangeDisplayBehaviour : MonoBehaviour
     {
         float angle = 20f;
 
-        for (int i = 0; i < (cirlceSegments + 1); i++)
+        for (int i = 0; i < (CirlceSegments + 1); i++)
         {
             var x = Mathf.Sin(Mathf.Deg2Rad * angle) * MaxRangeForResource;
             var y = Mathf.Cos(Mathf.Deg2Rad * angle) * MaxRangeForResource;
 
             line.SetPosition(i, new Vector3(x, y, 0));
             line.transform.localPosition = new Vector3(0, 0.01f, 0);
-            angle += (360f / cirlceSegments);
+            angle += (360f / CirlceSegments);
         }
     }
 }

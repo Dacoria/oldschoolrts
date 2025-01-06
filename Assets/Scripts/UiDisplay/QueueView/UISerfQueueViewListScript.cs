@@ -20,11 +20,11 @@ public class UISerfQueueViewListScript : MonoBehaviourSlowUpdateFramesCI
         var serves = VillagerManager.Instance.GetSerfs();
         foreach (var serf in serves)
         {
-            if(serf._currentSerfOrder == null)
+            if(serf.CurrentSerfOrder == null)
             {
                 continue;
             }
-            var goUIQueueItemView = CreateUIQueueItemGo(serf._currentSerfOrder, Colorr.GrassGreen);
+            var goUIQueueItemView = CreateUIQueueItemGo(serf.CurrentSerfOrder, Colorr.GrassGreen);
             CurrentUIQueueItemViews.Add(goUIQueueItemView);
         }
 

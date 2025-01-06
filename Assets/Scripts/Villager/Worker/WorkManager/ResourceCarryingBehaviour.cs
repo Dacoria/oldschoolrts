@@ -3,44 +3,44 @@ using UnityEngine;
 public class ResourceCarryingBehaviour : MonoBehaviour
 {
     public GameObject HarvestedResourceToCarryPrefab;
-    private GameObject HarvestedResourceToCarry;
+    private GameObject harvestedResourceToCarry;
 
     public GameObject PlantResourceToCarryPrefab;
-    private GameObject PlantResourceToCarry;
+    private GameObject plantResourceToCarry;
 
-    [ComponentInject] private RetrieveResourceBehaviour RetrieveResourceScript;
-    [ComponentInject(Required.OPTIONAL)] private PlantResourceBehaviour PlantResourceScript;
+    [ComponentInject] private RetrieveResourceBehaviour retrieveResourceScript;
+    [ComponentInject(Required.OPTIONAL)] private PlantResourceBehaviour plantResourceScript;
 
     void Start()
     {
         this.ComponentInject(); // in awake van villager worden componenten pas toegevoegd
-        if (HarvestedResourceToCarryPrefab != null && RetrieveResourceScript != null)
+        if (HarvestedResourceToCarryPrefab != null && retrieveResourceScript != null)
         {
-            HarvestedResourceToCarry = Instantiate(HarvestedResourceToCarryPrefab, this.transform, false);
-            HarvestedResourceToCarry.transform.localPosition = new Vector3(0, 1.2f, 0.5f); // net voor de borst -> voor nu hardcoded
-            HarvestedResourceToCarry.SetActive(false);
+            harvestedResourceToCarry = Instantiate(HarvestedResourceToCarryPrefab, this.transform, false);
+            harvestedResourceToCarry.transform.localPosition = new Vector3(0, 1.2f, 0.5f); // net voor de borst -> voor nu hardcoded
+            harvestedResourceToCarry.SetActive(false);
 
-            if (PlantResourceToCarryPrefab != null && PlantResourceScript != null)
+            if (PlantResourceToCarryPrefab != null && plantResourceScript != null)
             {
-                PlantResourceToCarry = Instantiate(PlantResourceToCarryPrefab, this.transform, false);
-                PlantResourceToCarry.transform.localPosition = new Vector3(0, 1.2f, 0.5f); // net voor de borst -> voor nu hardcoded
-                PlantResourceToCarry.SetActive(false);
+                plantResourceToCarry = Instantiate(PlantResourceToCarryPrefab, this.transform, false);
+                plantResourceToCarry.transform.localPosition = new Vector3(0, 1.2f, 0.5f); // net voor de borst -> voor nu hardcoded
+                plantResourceToCarry.SetActive(false);
             }
         }
     }        
 
     void Update()
     {
-        if(RetrieveResourceScript != null)
+        if(retrieveResourceScript != null)
         {
-            var isCarryingResource = RetrieveResourceScript.IsCarryingResource();
+            var isCarryingResource = retrieveResourceScript.IsCarryingResource();
 
-            HarvestedResourceToCarry.SetActive(isCarryingResource);
+            harvestedResourceToCarry.SetActive(isCarryingResource);
 
-            if(PlantResourceToCarry != null)
+            if(plantResourceToCarry != null)
             {
-                var isCarryingResource2 = PlantResourceScript.IsCarryingResource();
-                PlantResourceToCarry.SetActive(!isCarryingResource && isCarryingResource2);
+                var isCarryingResource2 = plantResourceScript.IsCarryingResource();
+                plantResourceToCarry.SetActive(!isCarryingResource && isCarryingResource2);
             }
         }
     }

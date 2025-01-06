@@ -19,13 +19,13 @@ public class VillagerManager : BaseAEMonoCI
     public List<WorkManager> GetWorkers() => workers;
     public List<IVillagerUnit> GetVillagers() => villagerUnits;
 
-    private GameObject VillagersParentGo;
+    private GameObject villagersParentGo;
 
     private new void Awake()
     {
         base.Awake();
         Instance = this;
-        VillagersParentGo = GameObject.Find(Constants.GO_SCENE_VILLAGERS);
+        villagersParentGo = GameObject.Find(Constants.GO_SCENE_VILLAGERS);
         RefreshVillagerUnits();
     }
 
@@ -44,7 +44,7 @@ public class VillagerManager : BaseAEMonoCI
 
         foreach (var villagerUnit in villagerUnits)
         {
-            ((MonoBehaviour)villagerUnit).transform.parent = VillagersParentGo.transform;
+            ((MonoBehaviour)villagerUnit).transform.parent = villagersParentGo.transform;
 
             var type = villagerUnit.GetVillagerUnitType();
             

@@ -1,5 +1,4 @@
-﻿using Assets;
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]

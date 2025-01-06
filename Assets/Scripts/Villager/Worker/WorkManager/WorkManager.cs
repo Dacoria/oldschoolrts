@@ -83,7 +83,7 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
                 case FoodConsumptionStatus.REFILL_FAILED:
                     stopAsapWithOrders = false;
                     stoppedWithOrders = false;
-                    goingToWorkStation.actionIsAvailable = true;// prio 1 -> deze wordt als 1e weer gepakt                    
+                    goingToWorkStation.ActionIsAvailable = true;// prio 1 -> deze wordt als 1e weer gepakt                    
                     break;
             }
         }

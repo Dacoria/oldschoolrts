@@ -17,7 +17,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
     [HideInInspector] public QueueForBuildingBehaviour CallingQueueForBuildingBehaviour;
 
     // display queue (weergave van items uit CallingQueueForBuildingBehaviour)
-    private List<UiQueueItem> PlacedDisplayItemsOnQueue = new List<UiQueueItem>();
+    private List<UiQueueItem> placedDisplayItemsOnQueue = new List<UiQueueItem>();
 
     public class UiQueueItem
     {
@@ -35,7 +35,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
 
     public void OnCancelQueueItemClick(UiQueueCardBehaviour uiQueueCardBehaviour)
     {
-        var item = PlacedDisplayItemsOnQueue.Single(x => x.UiQueueCardBehaviour == uiQueueCardBehaviour);
+        var item = placedDisplayItemsOnQueue.Single(x => x.UiQueueCardBehaviour == uiQueueCardBehaviour);
         CallingQueueForBuildingBehaviour.RemoveItemFromQueue(item.QueueItem);
 
         // TODO Items/resources teruggeven? (nog eerst regelen dat resources worden gebruikt.... )
@@ -54,7 +54,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
             (
                 LastKnownQueue != CallingQueueForBuildingBehaviour ||
                 (LastTypeProcessed != GetCurrentItemProcessed() && LastTypeProcessed == null) || 
-                PlacedDisplayItemsOnQueue.Count != CallingQueueForBuildingBehaviour.QueueItems.Count)            
+                placedDisplayItemsOnQueue.Count != CallingQueueForBuildingBehaviour.QueueItems.Count)            
             )
         {
             DestroyItemsOnQueue();
@@ -66,7 +66,7 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
 
     private void DestroyItemsOnQueue()
     {
-        PlacedDisplayItemsOnQueue.RemoveAll(x => true);
+        placedDisplayItemsOnQueue.RemoveAll(x => true);
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
@@ -85,9 +85,9 @@ public class UiQueueHandler : MonoBehaviourSlowUpdateFramesCI, IProcesOneItemUI
                 QueueItem = queueItem,
                 UiQueueCardBehaviour = displayUIQueueCard
             };
-            var removeCancelOptionUnit = !PlacedDisplayItemsOnQueue.Any() && GetCurrentItemProcessed() != null;  // 1e is niet te cancelen als die al gebouwd wordt
+            var removeCancelOptionUnit = !placedDisplayItemsOnQueue.Any() && GetCurrentItemProcessed() != null;  // 1e is niet te cancelen als die al gebouwd wordt
             displayUIQueueCard.CancelButtonGO.SetActive(!removeCancelOptionUnit); 
-            PlacedDisplayItemsOnQueue.Add(displayQueueItem);
+            placedDisplayItemsOnQueue.Add(displayQueueItem);
         }
     }
 

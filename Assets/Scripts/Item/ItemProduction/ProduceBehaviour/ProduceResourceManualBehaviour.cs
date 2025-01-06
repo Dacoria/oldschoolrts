@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ProduceResourceManualBehaviour : MonoBehaviourCI, ICardOneProdBuilding
 {
-    private ItemOutput itemToProduce => buildingBehaviour.BuildingType.GetItemProduceSettings().First().ItemsToProduce.First();
+    private ItemOutput itemToProduce => buildingBehaviour.BuildingType.GetItemProduceSettings().Single().ItemsToProduce.Single();
 
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     private RefillBehaviour refillBehaviour;

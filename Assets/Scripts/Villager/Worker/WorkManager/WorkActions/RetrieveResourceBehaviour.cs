@@ -4,35 +4,35 @@ using UnityEngine.AI;
 
 public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, IToolShowVillager
 {
-    [ComponentInject] private NavMeshAgent NavMeshAgent;
-    private GameObject ObjectToBringResourceBackTo;
+    [ComponentInject] private NavMeshAgent navMeshAgent;
+    private GameObject objectToBringResourceBackTo;
     private GameObject objectToRetrieveResourceFrom;
 
-    private IRetrieveResourceFromObject RetrieveResourceScript;
-    private ILocationOfResource LocationOfResourceScript;
+    private IRetrieveResourceFromObject retrieveResourceScript;
+    private ILocationOfResource locationOfResourceScript;
 
-    private HarvestMaterialResource ResourceCarriedBack;
+    private HarvestMaterialResource resourceCarriedBack;
     private ProduceResourceManualBehaviour produceResourceBehaviour;
 
-    public float stopDistanceFromObjectToRetrieveResourceFrom = 2f;
+    public float StopDistanceFromObjectToRetrieveResourceFrom = 2f;
 
-    private bool isCarryingResourceToBringBack => ResourceCarriedBack != null;
+    private bool isCarryingResourceToBringBack => resourceCarriedBack != null;
     private bool isDroppingResourceOff;
     private bool isRetrievingResource;
 
-    public float timeToDropOffResourceInSeconds = 1f;
-    public float timeToRetrieveResourceInSeconds = 5f;
-    public float timeToWaitForRetrievalOfResourceInSeconds = 0f;
+    public float TimeToDropOffResourceInSeconds = 1f;
+    public float TimeToRetrieveResourceInSeconds = 5f;
+    public float TimeToWaitForRetrievalOfResourceInSeconds = 0f;
 
     private bool isActive;
 
     public void SetReturnTargetForAction(GameObject objectToBringResourceBackTo)
     {
-        ObjectToBringResourceBackTo = objectToBringResourceBackTo;
-        LocationOfResourceScript = ObjectToBringResourceBackTo.GetComponent<ILocationOfResource>(); // waar moet de resource vandaan gehaald worden?
-        if (LocationOfResourceScript == null) { throw new System.Exception("LocationOfResourceScript -> Nodig voor bepalen objectToRetrieveResourceFrom"); }
+        this.objectToBringResourceBackTo = objectToBringResourceBackTo;
+        locationOfResourceScript = this.objectToBringResourceBackTo.GetComponent<ILocationOfResource>(); // waar moet de resource vandaan gehaald worden?
+        if (locationOfResourceScript == null) { throw new System.Exception("LocationOfResourceScript -> Nodig voor bepalen objectToRetrieveResourceFrom"); }
 
-        produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceManualBehaviour>();
+        produceResourceBehaviour = this.objectToBringResourceBackTo.GetComponent<ProduceResourceManualBehaviour>();
         if (produceResourceBehaviour == null) { throw new System.Exception("ProduceResourceManualBehaviour -> Nodig voor ophalen rsc"); }
     }
 
@@ -41,9 +41,9 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     public bool CanDoAction()
     {
-        if(LocationOfResourceScript != null && ObjectToBringResourceBackTo != null)
+        if(locationOfResourceScript != null && objectToBringResourceBackTo != null)
         {        
-            objectToRetrieveResourceFrom = LocationOfResourceScript.GetResourceToRetrieve();
+            objectToRetrieveResourceFrom = locationOfResourceScript.GetResourceToRetrieve();
             return objectToRetrieveResourceFrom != null && HasEnoughBufferForResource();
         }
 
@@ -52,10 +52,10 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     private bool HasEnoughBufferForResource()
     {
-        var produceResourceBehaviour = ObjectToBringResourceBackTo.GetComponent<ProduceResourceManualBehaviour>();
+        var produceResourceBehaviour = objectToBringResourceBackTo.GetComponent<ProduceResourceManualBehaviour>();
         if (produceResourceBehaviour != null)
         {
-            var stockPile = ObjectToBringResourceBackTo.GetComponent<HandleProduceResourceOrderBehaviour>().OutputOrders.Count;
+            var stockPile = objectToBringResourceBackTo.GetComponent<HandleProduceResourceOrderBehaviour>().OutputOrders.Count;
             var producedPerRun = produceResourceBehaviour.ProducedPerRun;
             var maxBuffer = produceResourceBehaviour.MaxBuffer;
 
@@ -68,7 +68,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     public void Init()
     {
         isActive = true;
-        objectToRetrieveResourceFrom = LocationOfResourceScript.GetResourceToRetrieve();
+        objectToRetrieveResourceFrom = locationOfResourceScript.GetResourceToRetrieve();
         if(objectToRetrieveResourceFrom != null)
         {
             TargetResourceToRetrieve();
@@ -88,7 +88,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     {
         return new AnimationStatus
         {
-            IsWalking = NavMeshAgent.enabled && !NavMeshAgent.isStopped,
+            IsWalking = navMeshAgent.enabled && !navMeshAgent.isStopped,
             IsWorking = isRetrievingResource,
             IsIdle = isDroppingResourceOff
         };
@@ -96,7 +96,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     public void Update()
     {
-        if (isActive && NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
+        if (isActive && navMeshAgent.StoppedAtDestination() && !navMeshAgent.isStopped)
         {
             UpdateDestNavAgentReached();
         }
@@ -104,9 +104,9 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     private void UpdateDestNavAgentReached()
     {
-        if (NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
+        if (navMeshAgent.StoppedAtDestination() && !navMeshAgent.isStopped)
         {
-            NavMeshAgent.isStopped = true;
+            navMeshAgent.isStopped = true;
             DestinationReached();
         }
     }
@@ -114,9 +114,9 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
     private void DestinationReached()
     {
         // probeert rsc op te halen?
-        if (objectToRetrieveResourceFrom != null && objectToRetrieveResourceFrom.transform.position.IsSameXAndZ(NavMeshAgent.destination))
+        if (objectToRetrieveResourceFrom != null && objectToRetrieveResourceFrom.transform.position.IsSameXAndZ(navMeshAgent.destination))
         {
-            if (RetrieveResourceScript.CanRetrieveResource())
+            if (retrieveResourceScript.CanRetrieveResource())
             {
                 StartCoroutine(RetrievingResource());
             }
@@ -127,9 +127,9 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
             }
         }
         // brengt resource terug?
-        else if (ObjectToBringResourceBackTo != null && ObjectToBringResourceBackTo.EntranceExit().IsSameXAndZ(NavMeshAgent.destination))
+        else if (objectToBringResourceBackTo != null && objectToBringResourceBackTo.EntranceExit().IsSameXAndZ(navMeshAgent.destination))
         {
-            NavMeshAgent.isStopped = true;
+            navMeshAgent.isStopped = true;
             if (isCarryingResourceToBringBack)
             {
                 StartCoroutine(DroppingResourceOff());
@@ -149,57 +149,57 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
 
     private void GoBackToGatherPoint()
     {
-        NavMeshAgent.isStopped = false;
-        NavMeshAgent.destination = ObjectToBringResourceBackTo.EntranceExit();
+        navMeshAgent.isStopped = false;
+        navMeshAgent.destination = objectToBringResourceBackTo.EntranceExit();
     }  
 
     private IEnumerator RetrievingResource()
     {
         isRetrievingResource = true;
-        RetrieveResourceScript.StartRetrievingResource(produceResourceBehaviour.ProducedPerRun);
-        yield return Wait4Seconds.Get(timeToRetrieveResourceInSeconds);
+        retrieveResourceScript.StartRetrievingResource(produceResourceBehaviour.ProducedPerRun);
+        yield return Wait4Seconds.Get(TimeToRetrieveResourceInSeconds);
         isRetrievingResource = false;
-        ResourceCarriedBack = RetrieveResourceScript.ResourceIsRetrieved();
+        resourceCarriedBack = retrieveResourceScript.ResourceIsRetrieved();
 
-        var waitTime = ResourceCarriedBack?.MaterialCount > 0 ? timeToWaitForRetrievalOfResourceInSeconds : 0; // bv als een andere villiager de resource voor je neus heeft weggekaapt; dan niet wachten
+        var waitTime = resourceCarriedBack?.MaterialCount > 0 ? TimeToWaitForRetrievalOfResourceInSeconds : 0; // bv als een andere villiager de resource voor je neus heeft weggekaapt; dan niet wachten
         MonoHelper.Instance.Do_CR(waitTime, () => BringResourceBack());
     }
 
     private void BringResourceBack()
     {
-        NavMeshAgent.isStopped = false;
-        NavMeshAgent.destination = ObjectToBringResourceBackTo.EntranceExit();
-        NavMeshAgent.stoppingDistance = 0;
+        navMeshAgent.isStopped = false;
+        navMeshAgent.destination = objectToBringResourceBackTo.EntranceExit();
+        navMeshAgent.stoppingDistance = 0;
     }
 
     private IEnumerator DroppingResourceOff()
     {
         isDroppingResourceOff = true;
-        yield return Wait4Seconds.Get(timeToDropOffResourceInSeconds);
+        yield return Wait4Seconds.Get(TimeToDropOffResourceInSeconds);
         produceResourceBehaviour.ProduceResource();
 
         isDroppingResourceOff = false;
-        ResourceCarriedBack = null;
+        resourceCarriedBack = null;
         Finished();
     }   
 
     private void TargetResourceToRetrieve()
     {
-        RetrieveResourceScript = objectToRetrieveResourceFrom.GetComponent<IRetrieveResourceFromObject>(); // op dit moment optioneel (mag null blijven) -> gebruikt om resource te consumeren (bv boom laten verdwijnen als deze is omgehakt; evt voor stonequery langzaam laten depleten)
+        retrieveResourceScript = objectToRetrieveResourceFrom.GetComponent<IRetrieveResourceFromObject>(); // op dit moment optioneel (mag null blijven) -> gebruikt om resource te consumeren (bv boom laten verdwijnen als deze is omgehakt; evt voor stonequery langzaam laten depleten)
 
         // TODO nette fix --> voor nu nodig om de interfaces werkend te krijgen
-        if(RetrieveResourceScript == null) { RetrieveResourceScript = new RetrieveResourceDummy(); }
+        if(retrieveResourceScript == null) { retrieveResourceScript = new RetrieveResourceDummy(); }
 
-        NavMeshAgent.SetDestination(objectToRetrieveResourceFrom.transform.position);
-        NavMeshAgent.stoppingDistance = stopDistanceFromObjectToRetrieveResourceFrom;
-        NavMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(objectToRetrieveResourceFrom.transform.position);
+        navMeshAgent.stoppingDistance = StopDistanceFromObjectToRetrieveResourceFrom;
+        navMeshAgent.isStopped = false;
     }
 
     public bool IsCarryingResource()
     {
         return isCarryingResourceToBringBack &&
-            !NavMeshAgent.isStopped && 
-            NavMeshAgent.destination.IsSameXAndZ(ObjectToBringResourceBackTo.EntranceExit()            
+            !navMeshAgent.isStopped && 
+            navMeshAgent.destination.IsSameXAndZ(objectToBringResourceBackTo.EntranceExit()            
         );
     }
 
@@ -210,7 +210,7 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
             isRetrievingResource || // bezig met ophalen resources
             (
             objectToRetrieveResourceFrom != null && // gaat naar resource toe lopen
-            NavMeshAgent.destination.IsSameXAndZ(objectToRetrieveResourceFrom.transform.position)
+            navMeshAgent.destination.IsSameXAndZ(objectToRetrieveResourceFrom.transform.position)
             );
     }
 }

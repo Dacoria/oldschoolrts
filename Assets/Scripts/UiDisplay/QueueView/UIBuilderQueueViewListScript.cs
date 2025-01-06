@@ -17,11 +17,11 @@ public class UIBuilderQueueViewListScript : MonoBehaviourSlowUpdateFramesCI
         var builders = VillagerManager.Instance.GetBuilders();
         foreach (var builder in builders)
         {
-            if(builder._currentBuilderRequest == null)
+            if(builder.CurrentBuilderRequest == null)
             {
                 continue;
             }
-            var goUIQueueItemView = CreateUIQueueItemGo(builder._currentBuilderRequest, Colorr.GrassGreen);
+            var goUIQueueItemView = CreateUIQueueItemGo(builder.CurrentBuilderRequest, Colorr.GrassGreen);
             CurrentUIQueueItemViews.Add(goUIQueueItemView);
         }
 
@@ -62,5 +62,4 @@ public class UIBuilderQueueViewListScript : MonoBehaviourSlowUpdateFramesCI
         }
         CurrentUIQueueItemViews.Clear();
     }
-
 }

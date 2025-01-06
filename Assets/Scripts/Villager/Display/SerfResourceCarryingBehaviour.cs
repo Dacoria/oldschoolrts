@@ -4,51 +4,51 @@ using System;
 
 public class SerfResourceCarryingBehaviour : MonoBehaviour
 {
-    private GameObject ResourceBeingCarriedGo;
-    private GameObject ResourceBubbleToPickupGo;
+    private GameObject resourceBeingCarriedGo;
+    private GameObject resourceBubbleToPickupGo;
 
     public void InitiateCarryingResource(ItemType itemType)
     {
-        if (ResourceBubbleToPickupGo != null)
+        if (resourceBubbleToPickupGo != null)
         {
-            Destroy(ResourceBubbleToPickupGo);
+            Destroy(resourceBubbleToPickupGo);
         }
 
-        if (ResourceBeingCarriedGo != null) { throw new Exception("zou al destroyed moeten zijn"); }
+        if (resourceBeingCarriedGo != null) { throw new Exception("zou al destroyed moeten zijn"); }
         GameObject resourceGoPrefab = ResourcePrefabs.Get().Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is          
 
-        ResourceBeingCarriedGo = Instantiate(resourceGoPrefab, this.transform, false);
+        resourceBeingCarriedGo = Instantiate(resourceGoPrefab, this.transform, false);
         if (resourceGoPrefab == Load.GoMapRscToCarry[Constants.GO_PREFAB_RSC_TO_CARRY_CUBE_UNKNOWN])
         {
-            ResourceBeingCarriedGo.GetComponent<SetMaterialForItemTypeBehaviour>().SetMaterial(itemType); // juiste material
+            resourceBeingCarriedGo.GetComponent<SetMaterialForItemTypeBehaviour>().SetMaterial(itemType); // juiste material
         }
-        ResourceBeingCarriedGo.transform.localPosition = new Vector3(0, 1.2f, 0.5f); // net voor de borst -> voor nu hardcoded, allemaal cubes
+        resourceBeingCarriedGo.transform.localPosition = new Vector3(0, 1.2f, 0.5f); // net voor de borst -> voor nu hardcoded, allemaal cubes
     }
 
     public void InitiateResourceBubbleToPickup(ItemType itemType)
     {
         //if (ResourceBubbleToPickup != null) { throw new Exception("zou al destroyed moeten zijn"); }
-        if (ResourceBubbleToPickupGo != null) { Destroy(ResourceBubbleToPickupGo); }
+        if (resourceBubbleToPickupGo != null) { Destroy(resourceBubbleToPickupGo); }
 
         GameObject resourceGoPrefab = ResourcePrefabs.Get().Single(x => x.ItemType == itemType).ResourcePrefab; // is er altijd als het goed is
-        ResourceBubbleToPickupGo = Instantiate(resourceGoPrefab, this.transform, false);
+        resourceBubbleToPickupGo = Instantiate(resourceGoPrefab, this.transform, false);
         if (resourceGoPrefab == Load.GoMapRscToCarry[Constants.GO_PREFAB_RSC_TO_CARRY_CUBE_UNKNOWN])
         {
-            ResourceBubbleToPickupGo.GetComponent<SetMaterialForItemTypeBehaviour>().SetMaterial(itemType); // juiste material
+            resourceBubbleToPickupGo.GetComponent<SetMaterialForItemTypeBehaviour>().SetMaterial(itemType); // juiste material
         }
-        ResourceBubbleToPickupGo.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        ResourceBubbleToPickupGo.transform.localPosition = new Vector3(0, 2.4f, 0); // net voor de borst -> voor nu hardcoded, allemaal cubes
+        resourceBubbleToPickupGo.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        resourceBubbleToPickupGo.transform.localPosition = new Vector3(0, 2.4f, 0); // net voor de borst -> voor nu hardcoded, allemaal cubes
     }    
 
     public void FinishedCarryingResource()
     {       
-        if (ResourceBeingCarriedGo != null)
+        if (resourceBeingCarriedGo != null)
         {
-            Destroy(ResourceBeingCarriedGo);
+            Destroy(resourceBeingCarriedGo);
         }
-        if (ResourceBubbleToPickupGo != null)
+        if (resourceBubbleToPickupGo != null)
         {
-            Destroy(ResourceBubbleToPickupGo);
+            Destroy(resourceBubbleToPickupGo);
         }
     }
 

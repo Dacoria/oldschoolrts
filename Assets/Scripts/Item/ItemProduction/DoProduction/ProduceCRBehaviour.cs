@@ -19,8 +19,8 @@ public class ProduceCRBehaviour : MonoBehaviourCI
 
     public void ProduceInstant(ProduceSetup produceSetup)
     {
-        var durations = new ProduceDurations();
-        StartCoroutine(CR_ProduceOverTime(produceSetup, durations));
+        var noDurations = new ProduceDurations { TimeToProduceResourceInSeconds = 0, TimeToWaitAfterProducingInSeconds = 0};
+        StartCoroutine(CR_ProduceOverTime(produceSetup, noDurations));
     }
 
     private IEnumerator CR_ProduceOverTime(ProduceSetup produceSetup, ProduceDurations durations)

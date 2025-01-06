@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class ConsumeRefillItemsBehaviour : MonoBehaviourCI
 {
-    [ComponentInject] private RefillBehaviour RefillBehaviour;
+    [ComponentInject] private RefillBehaviour refillBehaviour;
      
     public bool CanConsumeRefillItems(List<ItemAmountBuffer> itemsConsumedToProduce) =>
         CanConsumeRefillItems(itemsConsumedToProduce.ConvertAll(x => (ItemAmount)x));
@@ -11,24 +11,19 @@ public class ConsumeRefillItemsBehaviour : MonoBehaviourCI
     private bool CanConsumeRefillItems(List<ItemAmount> itemsConsumedToProduce)
     {
         return itemsConsumedToProduce.All(x =>
-             RefillBehaviour.StockpileOfItemsRequired.Single(y => y.ItemType == x.ItemType).Amount >= x.Amount
+             refillBehaviour.StockpileOfItemsRequired.Single(y => y.ItemType == x.ItemType).Amount >= x.Amount
         );
     }
 
     public bool TryConsumeRefillItems(List<ItemAmountBuffer> itemsConsumedToProduce)
-    {
-        return TryConsumeRefillItems(itemsConsumedToProduce.ConvertAll(x => (ItemAmount)x).ToList());
-    }
-
-    public bool TryConsumeRefillItems(List<ItemAmount> itemsConsumedToProduce)
-    {
-        if(CanConsumeRefillItems(itemsConsumedToProduce))
+    { 
+        if (CanConsumeRefillItems(itemsConsumedToProduce))
         {
             foreach (var itemToConsume in itemsConsumedToProduce)
             {
-                var stockpileOfItem = RefillBehaviour.StockpileOfItemsRequired.Single(x => x.ItemType == itemToConsume.ItemType);
+                var stockpileOfItem = refillBehaviour.StockpileOfItemsRequired.Single(x => x.ItemType == itemToConsume.ItemType);
                 stockpileOfItem.Amount = stockpileOfItem.Amount - itemToConsume.Amount;
-                RefillBehaviour.AddSerfRequestTillBuffer(itemToConsume.ItemType);
+                refillBehaviour.AddSerfRequestTillBuffer(itemToConsume.ItemType);
             }
 
             return true;

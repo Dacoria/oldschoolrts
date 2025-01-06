@@ -3,20 +3,20 @@ using UnityEngine.AI;
 
 public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
 {
-    [HideInInspector] public bool actionIsAvailable;
-    [ComponentInject] private NavMeshAgent NavMeshAgent;
-    private GameObject ObjectToBringResourceBackTo;
+    [HideInInspector] public bool ActionIsAvailable;
+    [ComponentInject] private NavMeshAgent navMeshAgent;
+    private GameObject objectToBringResourceBackTo;
 
     private bool isActive;
 
     public void Start()
     {
-        actionIsAvailable = true;
+        ActionIsAvailable = true;
     }
 
     public void Update()
     {
-        if (isActive && NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
+        if (isActive && navMeshAgent.StoppedAtDestination() && !navMeshAgent.isStopped)
         {
             UpdateDestNavAgentReached();
         }
@@ -28,7 +28,7 @@ public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
     public bool CanDoAction()
     {
         // MEER?
-        return actionIsAvailable;
+        return ActionIsAvailable;
     }
 
     public void Init()
@@ -39,22 +39,22 @@ public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
 
     public void Finished()
     {
-        actionIsAvailable = false; // standaard maar 1x -> kan overschreven worden (public)
+        ActionIsAvailable = false; // standaard maar 1x -> kan overschreven worden (public)
         isActive = false;
-        NavMeshAgent.areaMask = 1 << NavMesh.GetAreaFromName(Constants.AREA_MASK_WALKABLE);
+        navMeshAgent.areaMask = 1 << NavMesh.GetAreaFromName(Constants.AREA_MASK_WALKABLE);
     }
 
     public AnimationStatus GetAnimationStatus()
     {
         return new AnimationStatus
         {
-            IsWalking = NavMeshAgent.enabled && !NavMeshAgent.isStopped,
+            IsWalking = navMeshAgent.enabled && !navMeshAgent.isStopped,
         };
     }
 
     private void UpdateDestNavAgentReached()
     {
-        if (NavMeshAgent.StoppedAtDestination() && !NavMeshAgent.isStopped)
+        if (navMeshAgent.StoppedAtDestination() && !navMeshAgent.isStopped)
         {
             Finished();
         }
@@ -62,12 +62,12 @@ public class GoingToWorkStation : MonoBehaviourCI, IVillagerWorkAction
 
     private void GoBackToGatherPoint()
     {
-        NavMeshAgent.isStopped = false;
-        NavMeshAgent.destination = ObjectToBringResourceBackTo.EntranceExit();
+        navMeshAgent.isStopped = false;
+        navMeshAgent.destination = objectToBringResourceBackTo.EntranceExit();
     }
 
     public void SetReturnTargetForAction(GameObject objectToBringResourceBackTo)
     {
-        ObjectToBringResourceBackTo = objectToBringResourceBackTo;
+        this.objectToBringResourceBackTo = objectToBringResourceBackTo;
     }
 }

@@ -16,14 +16,14 @@ public static class CompassDirectionHelper
 {
 	public static int GetAngle(this CompassDirection direction) => direction switch
     {
-        CompassDirection.NORTH => 0,
-        CompassDirection.EAST => 90,
-        CompassDirection.SOUTH => 180,
-        CompassDirection.WEST => 270,
-        CompassDirection.NORTH_WEST => 315,
-        CompassDirection.SOUTH_WEST => 225,
+        CompassDirection.NORTH      => 0,
         CompassDirection.NORTH_EAST => 45,
+        CompassDirection.EAST       => 90,
         CompassDirection.SOUTH_EAST => 135,
+        CompassDirection.SOUTH      => 180,
+        CompassDirection.SOUTH_WEST => 225,
+        CompassDirection.WEST       => 270,
+        CompassDirection.NORTH_WEST => 315,
         _ => throw new NotImplementedException(),
     };
 

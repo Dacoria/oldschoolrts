@@ -6,13 +6,13 @@ public class GameObjectGrowScript : MonoBehaviour
     public float StartScale = 0.1f;
     public float EndScale = 1f;
 
-    private Vector3 TargetSize;
+    private Vector3 targetSize;
 
-    public bool HasReachedGrowthTarget() => Vector3.SqrMagnitude(transform.localScale - TargetSize) < 0.01;
+    public bool HasReachedGrowthTarget() => Vector3.SqrMagnitude(transform.localScale - targetSize) < 0.01;
 
     void Start()
     {
-        TargetSize = transform.localScale * EndScale;
+        targetSize = transform.localScale * EndScale;
 
         transform.localPosition = new Vector3(transform.localPosition.x, 0.04f, transform.localPosition.z);
         transform.localScale = transform.localScale * StartScale;
@@ -22,7 +22,7 @@ public class GameObjectGrowScript : MonoBehaviour
     {
         if(!HasReachedGrowthTarget())
         {
-            transform.localScale = Vector3.MoveTowards(transform.localScale, TargetSize, GrowSpeed * Time.deltaTime);
+            transform.localScale = Vector3.MoveTowards(transform.localScale, targetSize, GrowSpeed * Time.deltaTime);
         }
     }
 }

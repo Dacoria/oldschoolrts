@@ -9,7 +9,7 @@ public class HealthBehaviour : BaseAEMonoCI
 
     public GameObject InstantiatedGoOnDeath;
 
-    private FoodConsumption FoodConsumption;
+    private FoodConsumption foodConsumption;
     private bool isDying;
 
     [ComponentInject(Required.OPTIONAL)] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
@@ -19,13 +19,13 @@ public class HealthBehaviour : BaseAEMonoCI
         InitialHeath = CurrentHealth;
         if (FoodConsumptionBehaviour != null)
         {
-            FoodConsumption = FoodConsumptionBehaviour.FoodConsumption;
+            foodConsumption = FoodConsumptionBehaviour.FoodConsumption;
         }
     }
 
     protected override void OnNoFoodToConsume(FoodConsumption foodConsumption)
     {
-        if(FoodConsumption == foodConsumption)
+        if(this.foodConsumption == foodConsumption)
         {
             TakeDamage(DamageForNoFood);
         }

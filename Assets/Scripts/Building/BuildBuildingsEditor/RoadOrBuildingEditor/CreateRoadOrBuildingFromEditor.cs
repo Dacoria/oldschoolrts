@@ -13,8 +13,8 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     public GameManager GameManager;
     public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
 
-    private GameObject FirstBuildingOrRoadSelected;
-    private GameObject SecondRoadSelected;
+    private GameObject firstBuildingOrRoadSelected;
+    private GameObject secondRoadSelected;
 
     private GameObject GetRoadPrefab() => Load.GoMapBuildings[Constants.GO_PREFAB_BUILDINGS_ROAD];
 
@@ -26,8 +26,8 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
         {
             DestroyImmediate(editorRoads[i].gameObject);
         }
-        FirstBuildingOrRoadSelected = null;
-        SecondRoadSelected = null;        
+        firstBuildingOrRoadSelected = null;
+        secondRoadSelected = null;        
     }
 
     private bool BuildEditorActive => EditorSettings.BuildBuildingOnMouseActivity_Active || EditorSettings.BuildRoadOnMouseActivity_Active;
@@ -39,7 +39,7 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
 
     private void OnGUI()
     {
-        if(Application.isPlaying && FirstBuildingOrRoadSelected != null)
+        if(Application.isPlaying && firstBuildingOrRoadSelected != null)
         {
             DestroyEditorBuildings();
             return;
@@ -72,13 +72,13 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
 
     private void DestroyEditorBuildings()
     {
-        if (FirstBuildingOrRoadSelected != null)
+        if (firstBuildingOrRoadSelected != null)
         {
-            DestroyImmediate(FirstBuildingOrRoadSelected);
+            DestroyImmediate(firstBuildingOrRoadSelected);
         }
-        if (SecondRoadSelected != null)
+        if (secondRoadSelected != null)
         {
-            DestroyImmediate(SecondRoadSelected);
+            DestroyImmediate(secondRoadSelected);
         }
     }
 
@@ -94,12 +94,12 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
         else
         {
             if(EditorSettings.BuildBuildingOnMouseActivity_Active 
-                && FirstBuildingOrRoadSelected == null)
+                && firstBuildingOrRoadSelected == null)
             {                
                 InitializeNewRoadOrBuilding(mousePosition);                
             }
             else if (EditorSettings.BuildRoadOnMouseActivity_Active &&
-                    (FirstBuildingOrRoadSelected == null || SecondRoadSelected == null)
+                    (firstBuildingOrRoadSelected == null || secondRoadSelected == null)
                 )
             {               
                 InitializeNewRoadOrBuilding(mousePosition);                
@@ -139,19 +139,19 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
         if(EditorSettings.BuildBuildingOnMouseActivity_Active)
         {
             var buildingSelected = InstantiateBuildingGo(v3Mouse);
-            FirstBuildingOrRoadSelected = buildingSelected;
+            firstBuildingOrRoadSelected = buildingSelected;
 
         }
         else if (EditorSettings.BuildRoadOnMouseActivity_Active)
         {
             var roadSelected = InstantiateRoadGo(v3Mouse);
-            if (FirstBuildingOrRoadSelected == null)
+            if (firstBuildingOrRoadSelected == null)
             {
-                FirstBuildingOrRoadSelected = roadSelected;
+                firstBuildingOrRoadSelected = roadSelected;
             }
             else
             {
-                SecondRoadSelected = roadSelected;
+                secondRoadSelected = roadSelected;
             }
         }            
     }
@@ -173,22 +173,22 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
     {
         if (EditorSettings.BuildBuildingOnMouseActivity_Active)
         {
-            FinalizeRoadOrBuilding(FirstBuildingOrRoadSelected, isRoad: false);
+            FinalizeRoadOrBuilding(firstBuildingOrRoadSelected, isRoad: false);
         }
         else if (EditorSettings.BuildRoadOnMouseActivity_Active)
         {
-            if (FirstBuildingOrRoadSelected != null && SecondRoadSelected == null)
+            if (firstBuildingOrRoadSelected != null && secondRoadSelected == null)
             {
-                FinalizeRoadOrBuilding(FirstBuildingOrRoadSelected, isRoad: true);
+                FinalizeRoadOrBuilding(firstBuildingOrRoadSelected, isRoad: true);
             }
-            else if (FirstBuildingOrRoadSelected != null && SecondRoadSelected != null)
+            else if (firstBuildingOrRoadSelected != null && secondRoadSelected != null)
             {
                 CreateAndFinalizeMultipleRoads();
             }
         }
 
-        FirstBuildingOrRoadSelected = null;
-        SecondRoadSelected = null;
+        firstBuildingOrRoadSelected = null;
+        secondRoadSelected = null;
     }
 
     private void CreateAndFinalizeMultipleRoads()
@@ -202,21 +202,21 @@ public class CreateRoadOrBuildingFromEditor: MonoBehaviour
 
     private List<GameObject> CreateRoadsBetweenFirstAndSecond()
     {
-        var xLow = (int)Math.Min(FirstBuildingOrRoadSelected.transform.position.x, SecondRoadSelected.transform.position.x);
-        var zLow = (int)Math.Min(FirstBuildingOrRoadSelected.transform.position.z, SecondRoadSelected.transform.position.z);
+        var xLow = (int)Math.Min(firstBuildingOrRoadSelected.transform.position.x, secondRoadSelected.transform.position.x);
+        var zLow = (int)Math.Min(firstBuildingOrRoadSelected.transform.position.z, secondRoadSelected.transform.position.z);
 
-        var xMax = (int)Math.Max(FirstBuildingOrRoadSelected.transform.position.x, SecondRoadSelected.transform.position.x);
-        var zMax = (int)Math.Max(FirstBuildingOrRoadSelected.transform.position.z, SecondRoadSelected.transform.position.z);
+        var xMax = (int)Math.Max(firstBuildingOrRoadSelected.transform.position.x, secondRoadSelected.transform.position.x);
+        var zMax = (int)Math.Max(firstBuildingOrRoadSelected.transform.position.z, secondRoadSelected.transform.position.z);
 
-        var roadsToFinalize = new List<GameObject> { FirstBuildingOrRoadSelected, SecondRoadSelected };
+        var roadsToFinalize = new List<GameObject> { firstBuildingOrRoadSelected, secondRoadSelected };
 
         for (int x = xLow; x <= xMax; x++)
         {
             for (int z = zLow; z <= zMax; z++)
             {
                 var newPositionForRoad = new Vector3(x, 0.01f, z);
-                if (!FirstBuildingOrRoadSelected.transform.position.IsSameVector3(newPositionForRoad) &&
-                    !SecondRoadSelected.transform.position.IsSameVector3(newPositionForRoad))
+                if (!firstBuildingOrRoadSelected.transform.position.IsSameVector3(newPositionForRoad) &&
+                    !secondRoadSelected.transform.position.IsSameVector3(newPositionForRoad))
                 {
                     var newRoad = InstantiateRoadGo(newPositionForRoad);
                     roadsToFinalize.Add(newRoad);

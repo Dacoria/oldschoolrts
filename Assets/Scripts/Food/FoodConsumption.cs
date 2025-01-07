@@ -5,7 +5,7 @@ public class FoodConsumption
 {
     public float FoodSatisfactionPercentage;
     public float FoodDeclinePercPerSecond;
-    private float PercLimitForFoodRefill;
+    private float percLimitForFoodRefill;
 
     public bool NeedsFoodRefill;
     public TavernBehaviour TavernTargetedForFoodRefill;
@@ -14,7 +14,7 @@ public class FoodConsumption
     {
         this.FoodSatisfactionPercentage = FoodSatisfactionPercentage;
         this.FoodDeclinePercPerSecond = FoodDeclinePercPerSecond;
-        this.PercLimitForFoodRefill = PercLimitForFoodRefill;
+        this.percLimitForFoodRefill = PercLimitForFoodRefill;
         NeedsFoodRefill = FoodSatisfactionPercentage <= PercLimitForFoodRefill;
     }
 
@@ -40,7 +40,7 @@ public class FoodConsumption
         if (_foodConsumptionStatus != FoodConsumptionStatus.IS_REFILLING)
         {
             FoodSatisfactionPercentage = Mathf.Max(FoodSatisfactionPercentage - FoodDeclinePercPerSecond, 0);
-            NeedsFoodRefill = FoodSatisfactionPercentage <= PercLimitForFoodRefill;
+            NeedsFoodRefill = FoodSatisfactionPercentage <= percLimitForFoodRefill;
             if(NeedsFoodRefill &&
                 !IsBusyWithFoodRefillig() &&
                 MonoHelper.Instance.GetClosestTavernWithFood() != null // als er geen voedsel te halen valt --> dan hoef je het ook niet te proberen

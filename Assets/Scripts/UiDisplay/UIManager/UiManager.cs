@@ -7,10 +7,7 @@ public partial class UiManager : MonoBehaviour
 
     public GameObject SelectedBuildingPanel;
     public GameObject QueueUiGo;
-    public MonoBehaviour BuildingOverviewUI;
-
-    [HideInInspector] public RangeDisplayBehaviour ActiveRangeDisplayBehaviour;
-    [HideInInspector] public DisplayBuildingInputOutputHandler ActiveDisplayBuildingInputOutputHandler;
+    public MonoBehaviour BuildingOverviewUI;    
 
     void Update()
     {

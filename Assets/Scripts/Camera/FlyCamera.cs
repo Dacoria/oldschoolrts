@@ -5,11 +5,12 @@ public class FlyCamera : MonoBehaviourCI
     [ComponentInject] private Camera _camera;
 
     // gebruik = WASD, middelste muisknop indrukken voor rondkijken, en scrollen voor zoomen
-    public float mainSpeed = 100; //regular speed
-    public float shiftAdd = 5; //multiplied by how long shift is held.  Basically running
-    public float maxShift = 50; //Maximum speed when holdin gshift
-    public float scrollSpeed = 20; //Maximum speed when holdin gshift
-    public float camSens = 0.25f; //How sensitive it with mouse
+    public float MainSpeed = 100; //regular speed
+    public float ShiftAdd = 5; //multiplied by how long shift is held.  Basically running
+    public float MaxShift = 50; //Maximum speed when holdin gshift
+    public float ScrollSpeed = 20; //Maximum speed when holdin gshift
+    public float CamSens = 0.25f; //How sensitive it with mouse
+
     private Vector3 lastMouse = new Vector3(255, 255, 255); //kind of in the middle of the screen, rather than at the top (play)
     private float totalRun = 1.0f;
 
@@ -35,7 +36,7 @@ public class FlyCamera : MonoBehaviourCI
         if (mouseIsHeldDown)
         {
             lastMouse = Input.mousePosition - lastMouse;
-            lastMouse = new Vector3(-lastMouse.y * camSens, lastMouse.x * camSens, 0);
+            lastMouse = new Vector3(-lastMouse.y * CamSens, lastMouse.x * CamSens, 0);
             lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.x, transform.eulerAngles.y + lastMouse.y, 0);
             transform.eulerAngles = lastMouse;
             lastMouse = Input.mousePosition;
@@ -81,15 +82,15 @@ public class FlyCamera : MonoBehaviourCI
         if (Input.GetKey(KeyCode.LeftShift))
         {
             totalRun += Time.deltaTime;
-            changeInput = changeInput * totalRun * shiftAdd / 5;
-            changeInput.x = Mathf.Clamp(changeInput.x, -maxShift, maxShift);
-            changeInput.y = Mathf.Clamp(changeInput.y, -maxShift, maxShift);
-            changeInput.z = Mathf.Clamp(changeInput.z, -maxShift, maxShift);
+            changeInput = changeInput * totalRun * ShiftAdd / 5;
+            changeInput.x = Mathf.Clamp(changeInput.x, -MaxShift, MaxShift);
+            changeInput.y = Mathf.Clamp(changeInput.y, -MaxShift, MaxShift);
+            changeInput.z = Mathf.Clamp(changeInput.z, -MaxShift, MaxShift);
         }
         else
         {
             totalRun = Mathf.Clamp(totalRun * 0.1f, 1f, 10);
-            changeInput = changeInput * mainSpeed / 5;
+            changeInput = changeInput * MainSpeed / 5;
         }
 
         return changeInput * Time.deltaTime; // waarde
@@ -102,11 +103,11 @@ public class FlyCamera : MonoBehaviourCI
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            p_Velocity += new Vector3(0, 0, scrollSpeed);
+            p_Velocity += new Vector3(0, 0, ScrollSpeed);
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            p_Velocity += new Vector3(0, 0, -scrollSpeed);
+            p_Velocity += new Vector3(0, 0, -ScrollSpeed);
         }
         
         return p_Velocity;

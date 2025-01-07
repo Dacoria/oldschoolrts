@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangeDisplayBehaviour : MonoBehaviour
 {
     public int CirlceSegments = 50;
-    LineRenderer line;
+    private LineRenderer line;
 
     public RangeType RangeType;
     public int MaxRangeForResource = 20;

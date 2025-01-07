@@ -2,6 +2,8 @@ using UnityEngine;
 
 public partial class UiManager : MonoBehaviour
 {
+    [HideInInspector] public RangeDisplayBehaviour ActiveRangeDisplayBehaviour;
+
     private void ActiveRangedDisplay(GameObject buildingHit)
     {
         var resourceRangeBuilding1 = buildingHit.transform.GetComponentInChildren<RangeDisplayBehaviour>(true);

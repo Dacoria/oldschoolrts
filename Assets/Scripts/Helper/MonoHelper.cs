@@ -1,13 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 
 public class MonoHelper : MonoBehaviour
 {
     public static MonoHelper Instance { get; set; }
-    public Camera MainCamera;
-
-    public GameObject ProcessingDisplayPrefab;
 
     void Awake()
     {
@@ -35,18 +31,7 @@ public class MonoHelper : MonoBehaviour
         }
 
         return closestTavern;
-    }
-
-    public void Do_CR(float waitTimeInSeconds, Action callback)
-    {
-        StartCoroutine(CR_Do_CR(waitTimeInSeconds, callback));
-    }
-
-    private IEnumerator CR_Do_CR(float waitTimeInSeconds, Action callback)
-    {
-        yield return Wait4Seconds.Get(waitTimeInSeconds);
-        callback?.Invoke();
-    }
+    }  
 
     public T FindChildComponentInParents<T>(GameObject go, bool searchInactiveChilds = true)
     {

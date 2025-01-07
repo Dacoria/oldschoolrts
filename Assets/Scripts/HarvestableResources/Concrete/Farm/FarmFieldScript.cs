@@ -7,7 +7,7 @@ public class FarmFieldScript : MonoBehaviour, IRetrieveResourceFromObject
 
     [HideInInspector] public bool HasObjectGrownOnField;
     [HideInInspector] public bool HasObjectGrownOnFieldFinishedGrowing;
-    private IGrowOnFarmField GrowOnFarmFieldScript;
+    private IGrowOnFarmField growOnFarmFieldScript;
 
     void Update()
     {
@@ -16,7 +16,7 @@ public class FarmFieldScript : MonoBehaviour, IRetrieveResourceFromObject
         {
             if (!HasObjectGrownOnFieldFinishedGrowing)
             {
-                HasObjectGrownOnFieldFinishedGrowing = GrowOnFarmFieldScript.HasFinishedGrowing();
+                HasObjectGrownOnFieldFinishedGrowing = growOnFarmFieldScript.HasFinishedGrowing();
             }            
         }
     }
@@ -24,10 +24,10 @@ public class FarmFieldScript : MonoBehaviour, IRetrieveResourceFromObject
     private void CheckHasObjectGrownOnField()
     {
         HasObjectGrownOnField = ObjectGrownOnField != null && ObjectGrownOnField.activeSelf; // als bv een graan GO wordt gekoppeld is deze nog niet actief -> pas reageren als die op actief wordt gezet
-        if (HasObjectGrownOnField && GrowOnFarmFieldScript == null)
+        if (HasObjectGrownOnField && growOnFarmFieldScript == null)
         {
-            GrowOnFarmFieldScript = ObjectGrownOnField.GetComponent<IGrowOnFarmField>();
-            if (GrowOnFarmFieldScript == null)
+            growOnFarmFieldScript = ObjectGrownOnField.GetComponent<IGrowOnFarmField>();
+            if (growOnFarmFieldScript == null)
             {
                 throw new Exception("Elk Go op farmfield heeft een script met interface 'IGrowOnFarmField' nodig!");
             }
@@ -52,7 +52,7 @@ public class FarmFieldScript : MonoBehaviour, IRetrieveResourceFromObject
         }
         Destroy(ObjectGrownOnField); // todo coole animatie? (zoals boom omvallen)
         ObjectGrownOnField = null;
-        GrowOnFarmFieldScript = null;
+        growOnFarmFieldScript = null;
 
         return new HarvestMaterialResource(MaterialResourceType.WHEAT, 1);
     }

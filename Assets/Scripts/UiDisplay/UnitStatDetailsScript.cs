@@ -8,27 +8,26 @@ public class UnitStatDetailsScript : MonoBehaviourSlowUpdateFramesCI
     public ImageTextBehaviour Range;
     public ImageTextBehaviour Speed;
 
-    [ComponentInject]
-    private SelectedDisplayCardScript SelectedDisplayCardScript;
+    [ComponentInject] private SelectedDisplayCardScript selectedDisplayCardScript;
 
-    private BarracksUnitSetting LastUpdatedBarracksUnitSetting;
+    private BarracksUnitSetting lastUpdatedBarracksUnitSetting;
 
     protected override int FramesTillSlowUpdate => 40;
     protected override void SlowUpdate()
     {
-        if(SelectedDisplayCardScript?.SelectedDisplayUiCard?.CardUiHandler?.CallingBuilding != null)
+        if(selectedDisplayCardScript?.SelectedDisplayUiCard?.CardUiHandler?.CallingBuilding != null)
         {
-            var prodSettings = SelectedDisplayCardScript.SelectedDisplayUiCard.CardUiHandler.CallingBuilding.GetCardDisplaySetting(SelectedDisplayCardScript.SelectedDisplayUiCard.Type);
+            var prodSettings = selectedDisplayCardScript.SelectedDisplayUiCard.CardUiHandler.CallingBuilding.GetCardDisplaySetting(selectedDisplayCardScript.SelectedDisplayUiCard.Type);
 
 
             if (prodSettings is BarracksUnitSetting)
             {
                 var barracksProdSettings = (BarracksUnitSetting)prodSettings;
-                if (LastUpdatedBarracksUnitSetting != barracksProdSettings)
+                if (lastUpdatedBarracksUnitSetting != barracksProdSettings)
                 {
                     UpdateStats(barracksProdSettings.UnitStats);
                 }
-                LastUpdatedBarracksUnitSetting = barracksProdSettings;
+                lastUpdatedBarracksUnitSetting = barracksProdSettings;
             }
         }    
     }

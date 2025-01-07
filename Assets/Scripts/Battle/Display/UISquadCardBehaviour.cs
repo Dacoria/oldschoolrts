@@ -8,53 +8,53 @@ public class UISquadCardBehaviour : MonoBehaviour, IUiCardAddItemClick, IUiCardD
 
     public Image DirectionArrow;
 
-    private SquadBehaviour CallingSquad => RtsUnitSelectionManager.Instance.CurrentSelected;
+    private SquadBehaviour callingSquad => RtsUnitSelectionManager.Instance.CurrentSelected;
     
     void Update()
     {
         CurrentCount.text = "";
-        if (CallingSquad != null)
+        if (callingSquad != null)
         {
-            CurrentCount.text = CallingSquad.UnitWidth.ToString();
-            var newRotation = 360 - CallingSquad.CurrentDirection.GetAngle();
+            CurrentCount.text = callingSquad.UnitWidth.ToString();
+            var newRotation = 360 - callingSquad.CurrentDirection.GetAngle();
             DirectionArrow.transform.rotation = Quaternion.Euler(DirectionArrow.transform.rotation.x, DirectionArrow.transform.rotation.y, newRotation); 
         }
     }
 
     public void AddAmount(int amount)
     {
-        var newAmount = CallingSquad.UnitWidth + 1;
-        if(newAmount <= CallingSquad.GetUnits().Count)
+        var newAmount = callingSquad.UnitWidth + 1;
+        if(newAmount <= callingSquad.GetUnits().Count)
         {
-            CallingSquad.UnitWidth = newAmount;
+            callingSquad.UnitWidth = newAmount;
         }
 
     }
 
     public void DecreaseAmount(int amount)
     {
-        var newAmount = CallingSquad.UnitWidth - 1;
+        var newAmount = callingSquad.UnitWidth - 1;
         if (newAmount >= 1)
         {
-            CallingSquad.UnitWidth = newAmount;
+            callingSquad.UnitWidth = newAmount;
         }
     }
 
     // button
     public void TurnDirectionRight()
     {
-        CallingSquad.CurrentDirection = CallingSquad.CurrentDirection.TurnRight();
+        callingSquad.CurrentDirection = callingSquad.CurrentDirection.TurnRight();
     }
 
     // button
     public void TurnDirectionLeft()
     {
-        CallingSquad.CurrentDirection = CallingSquad.CurrentDirection.TurnLeft();
+        callingSquad.CurrentDirection = callingSquad.CurrentDirection.TurnLeft();
     }
 
     // button
     public void SetDefaultDirection()
     {
-        RtsUnitSelectionManager.Instance.DefaultDirection = CallingSquad.CurrentDirection;
+        RtsUnitSelectionManager.Instance.DefaultDirection = callingSquad.CurrentDirection;
     }
 }

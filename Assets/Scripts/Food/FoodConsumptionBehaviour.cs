@@ -17,7 +17,7 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
     private List<IHasStopped> hasStoppedScripts;
 
     public bool UseTavernBubble = true;
-    private GameObject GoToTavernBubble;
+    private GameObject goToTavernBubble;
 
     void Start()
     {
@@ -108,16 +108,16 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
 
     private void InitiateGoToTavernBubble()
     {
-        GoToTavernBubble = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_GO_TO_TAVERN_DISPLAY], this.transform, false);
-        GoToTavernBubble.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-        GoToTavernBubble.transform.localPosition = new Vector3(0, 2.4f, 0); // net voor de borst -> voor nu hardcoded, allemaal cubes
+        goToTavernBubble = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_GO_TO_TAVERN_DISPLAY], this.transform, false);
+        goToTavernBubble.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        goToTavernBubble.transform.localPosition = new Vector3(0, 2.4f, 0); // net voor de borst -> voor nu hardcoded, allemaal cubes
     }
 
     private void FinishedGoToTavernBubble()
     {
-        if (GoToTavernBubble != null)
+        if (goToTavernBubble != null)
         {
-            Destroy(GoToTavernBubble);
+            Destroy(goToTavernBubble);
         }
     }
 

@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public static class EditorSettings
 {
     public static bool BuildRoadOnMouseActivity_Active;

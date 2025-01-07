@@ -162,11 +162,12 @@ public class RetrieveResourceBehaviour : MonoBehaviourCI, IVillagerWorkAction, I
         resourceCarriedBack = retrieveResourceScript.ResourceIsRetrieved();
 
         var waitTime = resourceCarriedBack?.MaterialCount > 0 ? TimeToWaitForRetrievalOfResourceInSeconds : 0; // bv als een andere villiager de resource voor je neus heeft weggekaapt; dan niet wachten
-        MonoHelper.Instance.Do_CR(waitTime, () => BringResourceBack());
+        StartCoroutine(BringResourceBack(waitTime));
     }
 
-    private void BringResourceBack()
+    private IEnumerator BringResourceBack(float waitTimeInSeconds)
     {
+        yield return Wait4Seconds.Get(waitTimeInSeconds);
         navMeshAgent.isStopped = false;
         navMeshAgent.destination = objectToBringResourceBackTo.EntranceExit();
         navMeshAgent.stoppingDistance = 0;

@@ -8,7 +8,7 @@ public class ImageTextBehaviour : MonoBehaviour
 
     public bool ActivateItemTooltip = true;
 
-    public ItemType _itemType;
+    private ItemType _itemType;
     [HideInInspector]
     public ItemType ItemType
     { 

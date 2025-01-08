@@ -55,8 +55,8 @@ public static class Constants
 
     // Objects to find in Prefabs
     //UI
-    public static string GO_PREFAB_UI_CAROUSSEL_LEFT_ARROW = "GoToTavernBubble";
     public static string GO_PREFAB_UI_GO_TO_TAVERN_DISPLAY = "GoToTavernBubble";
+    public static string GO_PREFAB_UI_PROCESSING_DISPLAY_INPUT_OUTPUT = "ProcessingDisplayPrefab";
     public static string GO_PREFAB_UI_PRODUCE_ITEM_RIGHT_ARROW = "ProduceItemRightArrow";
     public static string GO_PREFAB_UI_RANGE_DISPLAY = "RangeDisplay";
     public static string GO_PREFAB_UI_SERF_PROCESSING_DISPLAY = "SerfProcessingDisplayGo";

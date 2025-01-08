@@ -12,25 +12,30 @@ public class BuildBuildingsByUser : MonoBehaviour
         Instance = this;    
     }
 
-    private GameObject ObjectToBuild;
-    private GameObject SelectedGameObjectToBuild; // hierin wordt het gameobject gezet wat wordt gebouwd. Hiermee wordt ObjectToBuild Initiated! (kan meerdere keren zijn door Roads)
+    private GameObject objectToBuild;
+    private GameObject selectedGameObjectToBuild; // hierin wordt het gameobject gezet wat wordt gebouwd. Hiermee wordt ObjectToBuild Initiated! (kan meerdere keren zijn door Roads)
 
     [HideInInspector] public bool InstaBuild = false;
 
-    private bool isHighlightedFieldShown => ObjectToBuild != null;
+    private bool isHighlightedFieldShown => objectToBuild != null;
     private bool isMouseDragging;
 
-    public DisplayProcessingInputOutput DisplayProcessingInputOutputPrefab;
+    private DisplayProcessingInputOutput displayProcessingInputOutputPrefab;
 
-    private bool IsSelectedGoToBuildARoadOrField() => SelectedGameObjectToBuild?.name.IndexOf("Road") >= 0 || SelectedGameObjectToBuild?.name.IndexOf("FarmField") >= 0;
+    private bool IsSelectedGoToBuildARoadOrField() => selectedGameObjectToBuild.IsRoad() || selectedGameObjectToBuild.IsFarmField();
 
     private CheckCollisionHandler checkCollisionForBuilding;
 
+    private void Start()
+    {
+        displayProcessingInputOutputPrefab = Load.GoMapBuildings[Constants.GO_PREFAB_UI_PROCESSING_DISPLAY_INPUT_OUTPUT].GetComponent<DisplayProcessingInputOutput>();
+    }
+
     private void Update()
     {
-        if(SelectedGameObjectToBuild == null)
+        if(selectedGameObjectToBuild == null)
         {
-            if (isHighlightedFieldShown) { Destroy(ObjectToBuild); }
+            if (isHighlightedFieldShown) { Destroy(objectToBuild); }
         }
         else if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
         {
@@ -55,7 +60,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1)) // rechter muisknop
         {
-            SelectedGameObjectToBuild = null;
+            selectedGameObjectToBuild = null;
             DestroyHighlightedObjects();
         }
 
@@ -67,7 +72,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private void DestroyHighlightedObjects()
     {
-        Destroy(ObjectToBuild);
+        Destroy(objectToBuild);
 
         // alleen voor roads
         if (RoadsOrFieldsHighlightedToBuild.Any())
@@ -90,7 +95,7 @@ public class BuildBuildingsByUser : MonoBehaviour
                 if (!checkCollisionForBuilding.IsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
-                    Build(ObjectToBuild);
+                    Build(objectToBuild);
                     ClearSelectedGameObjectToBuild();
                 }
             }
@@ -104,14 +109,14 @@ public class BuildBuildingsByUser : MonoBehaviour
     private void UpdateDragLeftMouseInputForRoadOrField()
     {                 
         if (!checkCollisionForBuilding.IsColliding() && 
-            ObjectToBuild != null &&
+            objectToBuild != null &&
             LastKnownGhostRoadOrFieldLocation != null && 
-            !ObjectToBuild.transform.position.IsSameVector3(LastKnownGhostRoadOrFieldLocation)
+            !objectToBuild.transform.position.IsSameVector3(LastKnownGhostRoadOrFieldLocation)
             )
         {
             // TODO: alleen als het gebouw/road niet collide, dan bouwen -> checken of dat al niet gebeurt (werkt CheckCollisionForBuilding?)
             IncreaseTemplateRoadOrField();
-            LastKnownGhostRoadOrFieldLocation = ObjectToBuild.transform.position;
+            LastKnownGhostRoadOrFieldLocation = objectToBuild.transform.position;
         }
     }
 
@@ -122,7 +127,7 @@ public class BuildBuildingsByUser : MonoBehaviour
         {
             if(!RoadsOrFieldsHighlightedToBuild.Any(x => x.transform.position == LastKnownGhostRoadOrFieldLocation))
             {
-                var roadOrFieldGO = Instantiate(SelectedGameObjectToBuild, LastKnownGhostRoadOrFieldLocation, Quaternion.identity);
+                var roadOrFieldGO = Instantiate(selectedGameObjectToBuild, LastKnownGhostRoadOrFieldLocation, Quaternion.identity);
                 RoadsOrFieldsHighlightedToBuild.Add(roadOrFieldGO);
             }
         }
@@ -137,9 +142,9 @@ public class BuildBuildingsByUser : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isMouseDragging = true;
-            if(ObjectToBuild != null)
+            if(objectToBuild != null)
             { 
-                LastKnownGhostRoadOrFieldLocation = ObjectToBuild.transform.position;  
+                LastKnownGhostRoadOrFieldLocation = objectToBuild.transform.position;  
             }
         }
 
@@ -151,7 +156,7 @@ public class BuildBuildingsByUser : MonoBehaviour
                 if (!checkCollisionForBuilding.IsColliding())
                 {
                     // alleen als het gebouw niet collide, dan bouwen
-                    BuildRoadsOrFields(ObjectToBuild);
+                    BuildRoadsOrFields(objectToBuild);
                 }
                 else
                 {
@@ -162,7 +167,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             {
                 ShowGhostBuilding();
                 UpdateLocationHighlightField();
-                LastKnownGhostRoadOrFieldLocation = ObjectToBuild.transform.position;
+                LastKnownGhostRoadOrFieldLocation = objectToBuild.transform.position;
             }
         }
     }
@@ -172,7 +177,7 @@ public class BuildBuildingsByUser : MonoBehaviour
         var rayCastLocation = Get2DRaycastLocation();
         if(rayCastLocation != null)
         {
-            ObjectToBuild.transform.position = new Vector3(rayCastLocation.Item1, ObjectToBuild.transform.position.y, rayCastLocation.Item2);
+            objectToBuild.transform.position = new Vector3(rayCastLocation.Item1, objectToBuild.transform.position.y, rayCastLocation.Item2);
         }
         else
         {
@@ -183,15 +188,15 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private void ShowGhostBuilding()
     {
-        ObjectToBuild = Instantiate(SelectedGameObjectToBuild, new Vector3(0, 0.01f, 0), Quaternion.identity);
-        FillBuildingType(SelectedGameObjectToBuild, ObjectToBuild);
+        objectToBuild = Instantiate(selectedGameObjectToBuild, new Vector3(0, 0.01f, 0), Quaternion.identity);
+        FillBuildingType(selectedGameObjectToBuild, objectToBuild);
 
-        checkCollisionForBuilding = ObjectToBuild.AddComponent<CheckCollisionHandler>(); // voor bepalen of collide wordt met ander iets
+        checkCollisionForBuilding = objectToBuild.AddComponent<CheckCollisionHandler>(); // voor bepalen of collide wordt met ander iets
 
-        var locOfResource = ObjectToBuild.GetComponentInChildren<ILocationOfResource>(true);
+        var locOfResource = objectToBuild.GetComponentInChildren<ILocationOfResource>(true);
         if (locOfResource != null)
         {
-            var rangedDisplayGo = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_RANGE_DISPLAY], ObjectToBuild.GetComponentInChildren<GhostBuildingBehaviour>().transform);
+            var rangedDisplayGo = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_RANGE_DISPLAY], objectToBuild.GetComponentInChildren<GhostBuildingBehaviour>().transform);
             var rangedDisplay = rangedDisplayGo.GetComponent<RangeDisplayBehaviour>();
             rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
             rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();
@@ -240,7 +245,7 @@ public class BuildBuildingsByUser : MonoBehaviour
             Build(lastRoadOrFieldTemplate);
         }
 
-        ObjectToBuild = null; // anders blijft gebouw met je muis meebewegen
+        objectToBuild = null; // anders blijft gebouw met je muis meebewegen
     }
 
     private void Build(GameObject goTemplate)
@@ -252,11 +257,11 @@ public class BuildBuildingsByUser : MonoBehaviour
             InitiateGhostBuilding(goTemplate);
         }
         
-        if(goTemplate == ObjectToBuild)
+        if(goTemplate == objectToBuild)
         {
-            ObjectToBuild = null;
+            objectToBuild = null;
         }
-        SelectedGameObjectToBuild = null;
+        selectedGameObjectToBuild = null;
     }
 
     private void InitiateGhostBuilding(GameObject building)
@@ -269,9 +274,9 @@ public class BuildBuildingsByUser : MonoBehaviour
 
             if (!buildingBehaviour.gameObject.IsRoad() && !buildingBehaviour.gameObject.IsFarmField())
             {
-                var displayOffset = BuildingPrefabs.Get().Single(x => x.BuildingPrefab == SelectedGameObjectToBuild).DisplayOffset;
+                var displayOffset = BuildingPrefabs.Get().Single(x => x.BuildingPrefab == selectedGameObjectToBuild).DisplayOffset;
                                
-                buildingBehaviour.Real.AddComponent<DisplayBuildingInputOutputHandler>().DisplayProcessingInputOutputPrefab = DisplayProcessingInputOutputPrefab;
+                buildingBehaviour.Real.AddComponent<DisplayBuildingInputOutputHandler>().DisplayProcessingInputOutputPrefab = displayProcessingInputOutputPrefab;
                 buildingBehaviour.Real.GetComponent<DisplayBuildingInputOutputHandler>().GoSpawnOffset = displayOffset;
 
                 Destroy(buildingBehaviour.GetComponentInChildren<RangeDisplayBehaviour>()?.gameObject);
@@ -281,12 +286,12 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     public void BuildGeneric(GameObject go)
     {
-        if (ObjectToBuild != null)
+        if (objectToBuild != null)
         {
             DestroyHighlightedObjects();
         }
 
-        SelectedGameObjectToBuild = go;
+        selectedGameObjectToBuild = go;
     }  
 
     public void ClearSelectedGameObjectToBuild ()
@@ -294,12 +299,12 @@ public class BuildBuildingsByUser : MonoBehaviour
         // als niks gehighlight is, dan hoeft er ook niks gecleared te worden
         if (isHighlightedFieldShown)
         {
-            if (ObjectToBuild != null)
+            if (objectToBuild != null)
             {
                 DestroyHighlightedObjects();
             }           
         }
 
-        SelectedGameObjectToBuild = null;
+        selectedGameObjectToBuild = null;
     }
 }

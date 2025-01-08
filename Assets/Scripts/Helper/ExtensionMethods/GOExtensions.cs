@@ -41,6 +41,11 @@ public static class GOExtensions
 
     private static bool RootNameGoStartsWith(GameObject go, string startsWithText)
     {
+        if(go == null)
+        {
+            return false;
+        }
+
         var currGo = go;
         do
         {

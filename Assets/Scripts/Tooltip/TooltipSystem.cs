@@ -7,9 +7,9 @@ public class TooltipSystem : MonoBehaviour
     public static TooltipSystem Instance;
     public Tooltip Tooltip;
 
-    [SerializeField] private float waitTimeToShow = 0.5f;
-    [SerializeField] private float fadeInTime = 0.5f;
-    [SerializeField] private float fadeOutTime = 0.5f;
+    private float waitTimeToShow = 0.5f;
+    private float fadeInTime = 0.355f;
+    private float fadeOutTime = 0.25f;
 
     public void Awake()
     {

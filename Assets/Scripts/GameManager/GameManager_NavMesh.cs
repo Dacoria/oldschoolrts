@@ -7,25 +7,12 @@ public partial class GameManager : BaseAEMonoCI
     public GameObject RoadNavMeshSurface;
 
     public NavMeshAgent Agent; // voor path check
-
-    private NavMeshSurface _roadNavMeshSurfaceComponent;
-    private NavMeshSurface roadNavMeshSurfaceComponent
-    {
-        get {
-            if (_roadNavMeshSurfaceComponent == null)
-            {                
-                _roadNavMeshSurfaceComponent = RoadNavMeshSurface.GetComponent<NavMeshSurface>();
-            }
-            return _roadNavMeshSurfaceComponent;
-        }
-        set => _roadNavMeshSurfaceComponent = value;
-    }
       
     public void RegisterRoad(Transform transform)
     {
         transform.gameObject.tag = Constants.TAG_ROAD;
         transform.SetParent(RoadNavMeshSurface.transform);
-        roadNavMeshSurfaceComponent.BuildNavMesh();
+        RoadNavMeshSurface.GetComponent<NavMeshSurface>().BuildNavMesh();
         ManagePossibleNewSerfOrders();
     }
 
@@ -36,7 +23,7 @@ public partial class GameManager : BaseAEMonoCI
 
     private bool IsFullPathAvailable(Vector3 loc1, Vector3 loc2, int areaMask, UnityEngine.AI.NavMeshPath path)
     {
-        var hasPartialPath = UnityEngine.AI.NavMesh.CalculatePath(loc1, loc2, areaMask, path);
+        var hasPartialPath = NavMesh.CalculatePath(loc1, loc2, areaMask, path);
         return path.status == NavMeshPathStatus.PathComplete;
     }
 }

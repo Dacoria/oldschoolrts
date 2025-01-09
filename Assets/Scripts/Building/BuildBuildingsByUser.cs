@@ -28,7 +28,7 @@ public class BuildBuildingsByUser : MonoBehaviour
 
     private void Start()
     {
-        displayProcessingInputOutputPrefab = Load.GoMapBuildings[Constants.GO_PREFAB_UI_PROCESSING_DISPLAY_INPUT_OUTPUT].GetComponent<DisplayProcessingInputOutput>();
+        displayProcessingInputOutputPrefab = Load.GoMapUI[Constants.GO_PREFAB_UI_PROCESSING_DISPLAY_INPUT_OUTPUT].GetComponent<DisplayProcessingInputOutput>();
     }
 
     private void Update()

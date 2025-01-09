@@ -66,8 +66,7 @@ public class SummonGoScript : MonoBehaviour
         }
 
         // geen geschikte locatie gevonden
-        return new Vector3(0, 0, 0);
-        
+        return new Vector3(0, 0, 0);        
     }
 
     private bool IsInRange(Vector3 position, Vector3 newLoc, int minDistance)

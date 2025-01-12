@@ -129,7 +129,8 @@ namespace UnityEditor.AI
 
         public static GameObject CreateAndSelectGameObject(string suggestedName, GameObject parent)
         {
-            var parentTransform = parent != null ? parent.transform : null;
+            var parentTransform = parent != null ? parent.transform : null;            
+
             var uniqueName = GameObjectUtility.GetUniqueNameForSibling(parentTransform, suggestedName);
             var child = new GameObject(uniqueName);
 

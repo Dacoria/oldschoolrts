@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class MoveObjectToSurface : MonoBehaviourCI
 {
-    private float MovementSpeed;
-    private float TimeInSeconds;
-
-    private bool EndPositionReached = false;
-    private Vector3 EndPosition;
+    private float movementSpeed;
+    private float timeInSeconds;
+    private bool endPositionReached = false;
+    private Vector3 endPosition;
 
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
     [ComponentInject] private BoxCollider boxCollider;
@@ -17,7 +16,7 @@ public class MoveObjectToSurface : MonoBehaviourCI
     {
         if (buildingBehaviour != null)
         {
-            TimeInSeconds = buildingBehaviour.BuildingType.GetBuildDurationSettings().TimeToBuildRealInSeconds;
+            timeInSeconds = buildingBehaviour.BuildingType.GetBuildDurationSettings().TimeToBuildRealInSeconds;
             if (buildingBehaviour.CurrentBuildStatus == BuildStatus.COMPLETED_BUILDING)
             {
                 enabled = false;
@@ -26,14 +25,14 @@ public class MoveObjectToSurface : MonoBehaviourCI
         }
         else
         {
-            TimeInSeconds = 1; // default;
+            timeInSeconds = 1; // default;
         }
 
         var orig = this.transform.position;
         this.transform.position = new Vector3(this.transform.position.x, distanceSpawnedBelowSurface, this.transform.position.z);
-        this.EndPosition = orig;  //new Vector3(this.transform.position.x, 0.11f, this.transform.position.z); 
+        this.endPosition = orig;  //new Vector3(this.transform.position.x, 0.11f, this.transform.position.z); 
 
-        MovementSpeed = (this.EndPosition.y - this.transform.position.y) / TimeInSeconds;        
+        movementSpeed = (this.endPosition.y - this.transform.position.y) / timeInSeconds;        
     }
   
     void Update()
@@ -42,11 +41,11 @@ public class MoveObjectToSurface : MonoBehaviourCI
         {
             Destroy(this);
         }
-        else if(!EndPositionReached)
+        else if(!endPositionReached)
         {
-            if (transform.position != EndPosition)
+            if (transform.position != endPosition)
             {
-                transform.position = Vector3.MoveTowards(transform.position, EndPosition, MovementSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, endPosition, movementSpeed * Time.deltaTime);
             }
             else
             {

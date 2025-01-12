@@ -1204,7 +1204,6 @@ MonoBehaviour:
   Image: {fileID: 821526613}
   Text: {fileID: 0}
   ActivateItemTooltip: 1
-  _itemType: 0
 --- !u!1 &179913116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1473,6 @@ MonoBehaviour:
   Image: {fileID: 1584959212}
   Text: {fileID: 931786538}
   ActivateItemTooltip: 0
-  _itemType: 0
 --- !u!1 &216330951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,9 +1542,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tooltip: {fileID: 1585632973}
-  waitTimeToShow: 0.5
-  fadeInTime: 0.35
-  fadeOutTime: 0.25
 --- !u!114 &258426378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3680,27 +3675,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6483001869502693095, guid: ba5e96acfc6cb484181fa630df4bb013, type: 3}
       insertIndex: -1
       addedObject: {fileID: 412734550}
-    - targetCorrespondingSourceObject: {fileID: 6483001869502693095, guid: ba5e96acfc6cb484181fa630df4bb013, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 412734549}
   m_SourcePrefab: {fileID: 100100000, guid: ba5e96acfc6cb484181fa630df4bb013, type: 3}
 --- !u!1 &412734548 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6483001869502693095, guid: ba5e96acfc6cb484181fa630df4bb013, type: 3}
   m_PrefabInstance: {fileID: 412734547}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &412734549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 412734548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7cff22f4a89a4b43a91919af1dabd61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &412734550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6459,7 +6439,6 @@ MonoBehaviour:
   Image: {fileID: 307310388}
   Text: {fileID: 0}
   ActivateItemTooltip: 1
-  _itemType: 0
 --- !u!1 &655966769
 GameObject:
   m_ObjectHideFlags: 0
@@ -6513,7 +6492,6 @@ MonoBehaviour:
   Image: {fileID: 1679505279}
   Text: {fileID: 0}
   ActivateItemTooltip: 1
-  _itemType: 0
 --- !u!4 &656581267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2454753724633340410, guid: 256a60a2e53e3aa4586937a7b9bd6682, type: 3}
@@ -6639,7 +6617,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InstaBuild: 0
-  DisplayProcessingInputOutputPrefab: {fileID: -5586510935880300235, guid: ad32582bdb1fd0948ac51bc26f60015a, type: 3}
 --- !u!114 &683332193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6798,36 +6775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97142b619089ac047ad59f05319dff43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 2110412846}
-  ProcessingDisplayPrefab: {fileID: 9103726423603439420, guid: ad32582bdb1fd0948ac51bc26f60015a, type: 3}
-  SpriteArmorTypes:
-  - ArmorType: 0
-    Sprite: {fileID: 21300000, guid: b7cb26e1742a180488586b514531790a, type: 3}
-  - ArmorType: 1
-    Sprite: {fileID: 21300000, guid: 3537d4f8d54e8ef4490bea45ff13b020, type: 3}
-  - ArmorType: 2
-    Sprite: {fileID: 21300000, guid: 90ca1ba6dbf405642ae082ee25b3ab5a, type: 3}
-  - ArmorType: 3
-    Sprite: {fileID: 21300000, guid: 477ebf83dd6a4f245b2a8892e6af9c2e, type: 3}
-  - ArmorType: 4
-    Sprite: {fileID: 21300000, guid: 74348a50a60ad3443b08c2ab893af85c, type: 3}
-  SpriteDamageTypes:
-  - AttackType: 0
-    Sprite: {fileID: 21300000, guid: db973c1d857cadb448f40d1675344c0e, type: 3}
-  - AttackType: 1
-    Sprite: {fileID: 21300000, guid: b4ad792ebf62a574e9e2f430a0febfe9, type: 3}
-  - AttackType: 2
-    Sprite: {fileID: 21300000, guid: cedbc3307230f98438dcdbc690db0674, type: 3}
-  - AttackType: 3
-    Sprite: {fileID: 21300000, guid: cdfc885cde25f974cab3873d42b8478c, type: 3}
-  - AttackType: 4
-    Sprite: {fileID: 21300000, guid: 0426c99292a1fb24aa8bffbde071e713, type: 3}
-  - AttackType: 5
-    Sprite: {fileID: 21300000, guid: 4077ea629db58c84ca50617dc75a76e3, type: 3}
-  LeftArrowCarousselUiPrefab: {fileID: 3246791275630294436, guid: f62aacef7c693804880102f06282bac3, type: 3}
-  RightArrowCarousselUiPrefab: {fileID: 3246791275630294436, guid: 9eb6a6ac6b4c41d41b87041ad1ec7e26, type: 3}
-  RangedDisplayPrefab: {fileID: 961634244853401028, guid: 293c0b33a5e2ce448ac216459b439052, type: 3}
-  WarningGoPrefab: {fileID: 6078325515453996273, guid: 7e1bba14874c06c4080dfdf4833e7250, type: 3}
 --- !u!1 &692434608 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4862582928633410447, guid: ec603cadbd768a946b18ebe773b69191, type: 3}
@@ -8365,7 +8312,6 @@ MonoBehaviour:
   Image: {fileID: 1535888128}
   Text: {fileID: 826374421}
   ActivateItemTooltip: 0
-  _itemType: 0
 --- !u!1001 &843890837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8955,9 +8901,9 @@ MonoBehaviour:
   SelectedBuildingPanel: {fileID: 946884539}
   QueueUiGo: {fileID: 376333471}
   BuildingOverviewUI: {fileID: 600773286}
-  ActiveRangeDisplayBehaviour: {fileID: 0}
   ActiveDisplayBuildingInputOutputHandler: {fileID: 0}
   ActiveOutlineBehaviour: {fileID: 0}
+  ActiveRangeDisplayBehaviour: {fileID: 0}
 --- !u!222 &927418708
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10103,7 +10049,6 @@ MonoBehaviour:
   Image: {fileID: 1053597147}
   Text: {fileID: 730939976}
   ActivateItemTooltip: 0
-  _itemType: 0
 --- !u!1 &1010085960
 GameObject:
   m_ObjectHideFlags: 0
@@ -16002,7 +15947,6 @@ MonoBehaviour:
   Image: {fileID: 1534981930}
   Text: {fileID: 0}
   ActivateItemTooltip: 1
-  _itemType: 0
 --- !u!1001 &1262054936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19651,7 +19595,6 @@ MonoBehaviour:
   Image: {fileID: 6048431}
   Text: {fileID: 0}
   ActivateItemTooltip: 1
-  _itemType: 0
 --- !u!1 &1665682851
 GameObject:
   m_ObjectHideFlags: 0
@@ -20153,7 +20096,6 @@ MonoBehaviour:
   Image: {fileID: 1204128514}
   Text: {fileID: 44568584}
   ActivateItemTooltip: 1
-  _itemType: 0
 --- !u!1 &1685913735
 GameObject:
   m_ObjectHideFlags: 0
@@ -20467,7 +20409,6 @@ MonoBehaviour:
   Image: {fileID: 317505548}
   Text: {fileID: 0}
   ActivateItemTooltip: 1
-  _itemType: 0
 --- !u!4 &1715480191 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2012151322882059317, guid: ed90bd376c7637d49a3cba11bd1afbc2, type: 3}
@@ -26069,11 +26010,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3092af895ed7d4045ab387894b0397ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainSpeed: 100
-  shiftAdd: 200
-  maxShift: 1000
-  scrollSpeed: 20
-  camSens: 0.25
+  MainSpeed: 100
+  ShiftAdd: 5
+  MaxShift: 50
+  ScrollSpeed: 20
+  CamSens: 0.25
 --- !u!114 &2110412849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28407,7 +28348,6 @@ MonoBehaviour:
   Image: {fileID: 2118349242}
   Text: {fileID: 364544927}
   ActivateItemTooltip: 0
-  _itemType: 0
 --- !u!1001 &2143478159
 PrefabInstance:
   m_ObjectHideFlags: 0

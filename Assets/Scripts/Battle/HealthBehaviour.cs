@@ -1,31 +1,47 @@
+using System;
 using UnityEngine;
 
 public class HealthBehaviour : BaseAEMonoCI
 {
-    [HideInInspector] public float InitialHeath = 100;
+    [HideInInspector] private float initialHeath = 100; // wordt geset bij barracksunits via de unitsettings in armybehaviour
 
     public float CurrentHealth = 100;
     public float DamageForNoFood = 1;
 
     public GameObject InstantiatedGoOnDeath;
 
-    private FoodConsumption foodConsumption;
     private bool isDying;
 
-    [ComponentInject(Required.OPTIONAL)] private FoodConsumptionBehaviour FoodConsumptionBehaviour;
+    [ComponentInject(Required.OPTIONAL)] private FoodConsumptionBehaviour foodConsumptionBehaviour;
+
+    [ComponentInject(Required.OPTIONAL)] private IVillagerUnit villagerUnit;
+    [ComponentInject(Required.OPTIONAL)] private ArmyUnitBehaviour armyUnitBehaviour;
 
     void Start()
     {
-        InitialHeath = CurrentHealth;
-        if (FoodConsumptionBehaviour != null)
+        SetInitialHealth();
+        CurrentHealth = initialHeath;
+    }
+
+    private void SetInitialHealth()
+    {
+        if (villagerUnit != null)
         {
-            foodConsumption = FoodConsumptionBehaviour.FoodConsumption;
+            initialHeath = 100;
+        }
+        else if (armyUnitBehaviour != null)
+        {
+            initialHeath = armyUnitBehaviour.BarracksUnitType.GetUnitStats().Health;
+        }
+        else
+        {
+            throw new Exception("Geen unit voor init health");
         }
     }
 
     protected override void OnNoFoodToConsume(FoodConsumption foodConsumption)
     {
-        if(this.foodConsumption == foodConsumption)
+        if(foodConsumption == foodConsumptionBehaviour?.FoodConsumption)
         {
             TakeDamage(DamageForNoFood);
         }
@@ -39,7 +55,7 @@ public class HealthBehaviour : BaseAEMonoCI
     public void TakeDamage(float damage)
     {
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-        if(CurrentHealth <= 0 && !isDying)
+        if(CurrentHealth == 0 && !isDying)
         {
             Die();
         }

@@ -6,11 +6,9 @@ using UnityEngine;
 public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProduce
 {
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
-    public List<SerfRequest> IncomingOrders;
-    public List<ItemAmount> StockpileOfItemsRequired;
 
     private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
-    [HideInInspector] public RefillBehaviour RefillBehaviour;
+    [HideInInspector] private RefillBehaviour refillBehaviour;
     public QueueForBuildingBehaviour queueForBuildingBehaviour;
     private ProduceCRBehaviour produceCRBehaviour;
 
@@ -20,7 +18,7 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
         gameObject.AddComponent<ValidComponents>().DoCheck(
             inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour), typeof(ProduceCRBehaviour) });
 
-        RefillBehaviour = gameObject.AddComponent<RefillBehaviour>();
+        refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
         consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
         queueForBuildingBehaviour = gameObject.AddComponent<QueueForBuildingBehaviour>();
         produceCRBehaviour = gameObject.AddComponent<ProduceCRBehaviour>();
@@ -56,34 +54,8 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
             var unitGo = Instantiate(unit.ResourcePrefab);
             unitGo.GetComponent<OwnedByPlayerBehaviour>().Player = Player.PLAYER1;
             unitGo.transform.position = this.transform.gameObject.EntranceExit();
-            SetUnitStats(unitGo, unit);
         }
-    }
-
-    private void SetUnitStats(GameObject unitGo, BarracksUnitSetting unitSettings)
-    {
-        var armyUnitBehaviour = unitGo.GetComponent<ArmyUnitBehaviour>();
-        if (armyUnitBehaviour != null)
-        {
-            armyUnitBehaviour.Offence = unitSettings.UnitStats.Offence.DeepClone();
-            armyUnitBehaviour.Defence = unitSettings.UnitStats.Defence.DeepClone();
-            armyUnitBehaviour.EnemyAttractRadius = unitSettings.UnitStats.RangeToAttractEnemies;
-            armyUnitBehaviour.Reach = unitSettings.UnitStats.RangeToAttack;
-            armyUnitBehaviour.NavMeshAgent.stoppingDistance = unitSettings.UnitStats.RangeToAttack;
-            armyUnitBehaviour.NavMeshAgent.speed = unitSettings.UnitStats.Speed;
-
-            var healthBehaviour = unitGo.GetComponent<HealthBehaviour>();
-            if (healthBehaviour != null)
-            {
-                healthBehaviour.InitialHeath = unitSettings.UnitStats.Health.DeepClone();
-                healthBehaviour.CurrentHealth = unitSettings.UnitStats.Health.DeepClone();
-            }
-        }
-        else
-        {
-            throw new Exception($"Unit '{unitSettings.Type} -> {unitGo.name}' vereist ArmyUnitBehaviour");
-        }
-    }
+    }   
 
     public bool CanProces(Enum type) 
     {

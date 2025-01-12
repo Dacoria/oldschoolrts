@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveObjectDownSurfaceAndDestroy : MonoBehaviour
 {
-    public float movementSpeed = 1f;
-    public float distanceBelowSurface = -1f;
-    public float waitTimeInSecondsBeforeGoingDown = 0;
+    public float MovementSpeed = 1f;
+    public float DistanceBelowSurface = -1f;
+    public float WaitTimeInSecondsBeforeGoingDown = 0;
     public bool AlsoDestroyParent = true;
 
     private Vector3 endPosition;
@@ -14,15 +12,15 @@ public class MoveObjectDownSurfaceAndDestroy : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.endPosition = new Vector3(this.transform.position.x, this.transform.position.y + distanceBelowSurface, this.transform.position.z);
+        this.endPosition = new Vector3(this.transform.position.x, this.transform.position.y + DistanceBelowSurface, this.transform.position.z);
     }
 
-    private bool CanGoDown;
+    private bool canGoDown;
     private float waitTimer;
     
     void Update()
     {
-        if(CanGoDown)
+        if(canGoDown)
         {
             UpdateGoDownAndDie();
         }
@@ -35,9 +33,9 @@ public class MoveObjectDownSurfaceAndDestroy : MonoBehaviour
     private void WaitToGoDown()
     {
         waitTimer += Time.deltaTime;
-        if (waitTimer >= waitTimeInSecondsBeforeGoingDown)
+        if (waitTimer >= WaitTimeInSecondsBeforeGoingDown)
         {
-            CanGoDown = true;
+            canGoDown = true;
         }
     }
 
@@ -46,19 +44,18 @@ public class MoveObjectDownSurfaceAndDestroy : MonoBehaviour
         
         if (transform.position != endPosition)
         {
-            transform.position = Vector3.MoveTowards(transform.position, endPosition, movementSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, endPosition, MovementSpeed * Time.deltaTime);
         }
         else
         {
             if(AlsoDestroyParent && this.transform.parent != null)
             {
-                GameObject.Destroy(this.transform.parent.gameObject);
+                Destroy(this.transform.parent.gameObject);
             }
             else
             {
-                GameObject.Destroy(this.gameObject);
-            }
-            
+                Destroy(this.gameObject);
+            }            
         }        
     }
 }

@@ -4,18 +4,18 @@ using System.Collections.Generic;
 
 public class TavernBehaviour : BaseAEMonoCI
 {
-    public int MaxBufferForEachFoodType = 5;
+    private int maxBufferForEachFoodType = 5;
 
-    public List<SerfRequest> IncomingOrders;
     public List<ItemAmount> StockpileOfItemsRequired;
 
-    [ComponentInject] private TavernRefillingBehaviour TavernRefillingBehaviour;
-    [ComponentInject] private IOrderDestination OrderDestination;
+    public List<SerfRequest> incomingOrders = new List<SerfRequest>();
+
+    [ComponentInject] private TavernRefillingBehaviour tavernRefillingBehaviour;
+    [ComponentInject] private IOrderDestination orderDestination;
 
     void Start()
     {
         InitiateStockpile();
-        IncomingOrders = new List<SerfRequest>();
         foreach (var itemAmount in FoodConsumptionSettings.ItemFoodRefillValues)
         {
             AddSerfRequestTillBuffer(itemAmount.ItemType);
@@ -33,7 +33,7 @@ public class TavernBehaviour : BaseAEMonoCI
                 var foodToConsume = GetFoodToConsume();
                 foodToConsume.Amount--;
 
-                TavernRefillingBehaviour.StartFoodRefilling(foodToConsume.ItemType, foodConsumptionBehaviour);
+                tavernRefillingBehaviour.StartFoodRefilling(foodToConsume.ItemType, foodConsumptionBehaviour);
             }
             else
             {
@@ -59,7 +59,7 @@ public class TavernBehaviour : BaseAEMonoCI
         return randomFood;
     }
 
-    private bool TavernIsFull() => TavernRefillingBehaviour.TavernRefillItems.Count >= FoodConsumptionSettings.Tavern_Max_Refill_Items;    
+    private bool TavernIsFull() => tavernRefillingBehaviour.TavernRefillItems.Count >= FoodConsumptionSettings.Tavern_Max_Refill_Items;    
        
 
     // evt andere logica bij vegans oid --> voor nu: is er iets van voedsel/drinken beschikbaar
@@ -76,11 +76,11 @@ public class TavernBehaviour : BaseAEMonoCI
 
     public void AddSerfRequestTillBuffer(ItemType itemType)
     {
-        var orderCountIncoming = IncomingOrders.Count(x => x.ItemType == itemType);
+        var orderCountIncoming = incomingOrders.Count(x => x.ItemType == itemType);
         var orderCountStocked = StockpileOfItemsRequired.Single(x => x.ItemType == itemType).Amount;
         var itemTypeConfig = FoodConsumptionSettings.ItemFoodRefillValues.Single(x => x.ItemType == itemType);
 
-        for (var i = (orderCountIncoming + orderCountStocked); i < MaxBufferForEachFoodType; i++)
+        for (var i = (orderCountIncoming + orderCountStocked); i < maxBufferForEachFoodType; i++)
         {
             NewRequest(itemType);
         }
@@ -88,7 +88,7 @@ public class TavernBehaviour : BaseAEMonoCI
 
     protected override void OnOrderStatusChanged(SerfOrder serfOrder, Status prevStatus)
     {
-        var myRequest = IncomingOrders.FirstOrDefault(serfOrder.Has);
+        var myRequest = incomingOrders.FirstOrDefault(serfOrder.Has);
         if (myRequest != null)
         {
             switch (serfOrder.Status)
@@ -97,11 +97,11 @@ public class TavernBehaviour : BaseAEMonoCI
                     var stockpileItem = StockpileOfItemsRequired.Single(x => x.ItemType == serfOrder.ItemType);
                     stockpileItem.Amount++;
 
-                    IncomingOrders.Remove(myRequest);
+                    incomingOrders.Remove(myRequest);
                     AddSerfRequestTillBuffer(myRequest.ItemType);
                     break;
                 case Status.FAILED:                    
-                    IncomingOrders.Remove(myRequest);
+                    incomingOrders.Remove(myRequest);
                     AddSerfRequestTillBuffer(myRequest.ItemType);
                     break;
                     
@@ -115,12 +115,12 @@ public class TavernBehaviour : BaseAEMonoCI
         {
             Purpose = Purpose.LOGISTICS,
             ItemType = itemType,
-            OrderDestination = this.OrderDestination,
+            OrderDestination = this.orderDestination,
             IsOriginator = true,
             Direction = Direction.PULL,
-            BufferDepth = IncomingOrders.Count,
+            BufferDepth = incomingOrders.Count,
         };
         AE.SerfRequest?.Invoke(serfRequest);
-        IncomingOrders.Add(serfRequest);
+        incomingOrders.Add(serfRequest);
     }
 }

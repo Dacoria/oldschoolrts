@@ -5,18 +5,20 @@ using UnityEngine.AI;
 
 public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
 {
-    public float EnemyAttractRadius; // wordt geset voor aanmaken
-    public float Reach; // wordt geset voor aanmaken
-    public Offence Offence; // wordt geset voor aanmaken
-    public Defence Defence; // wordt geset voor aanmaken
+    public float EnemyAttractRadius { get; private set; } 
+    public float Reach { get; private set; }
+    public Offence Offence { get; private set; }
+    public Defence Defence { get; private set; }
 
-    [ComponentInject] public NavMeshAgent NavMeshAgent;
-    [ComponentInject] private Animator animator;    
+    [ComponentInject] private NavMeshAgent navMeshAgent;
+    [ComponentInject] private Animator animator;
+    [ComponentInject] private HealthBehaviour healthBehaviour;
+
+    public BarracksUnitType BarracksUnitType;
 
     private GameObject target;
 
-    public bool IsRanged => RangedHomingMissilePrefab != null;
-
+    public bool isRanged => RangedHomingMissilePrefab != null;
 
     public RangedHomingMissileBehaviour RangedHomingMissilePrefab;
     public Transform RangedHomingMissileSpawnPosition;
@@ -26,9 +28,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
 
     private void Start()
     {
-        // TODO IETS MET REACH?
-
-        NavMeshAgent.stoppingDistance = 0;
+        SetUnitStats();
         AE.NewBattleUnit?.Invoke(this);
         gameObject.AddComponent<DisplayUnitIsSelected>();
     }
@@ -40,7 +40,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     {       
         var colliders = Physics.OverlapSphere(this.transform.position, EnemyAttractRadius, 1 << Constants.LAYER_RTS_UNIT);
         
-        animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !NavMeshAgent.StoppedAtDestination());
+        animator.SetBool(Constants.ANIM_BOOL_IS_WALKING, !navMeshAgent.StoppedAtDestination());
         animator.SetBool(Constants.ANIM_BOOL_IS_ATTACKING, false);
 
         target = null;
@@ -51,9 +51,9 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
             if (otherOwnedByPlayerBehaviour.Player != ownedByPlayerBehaviour.Player)
             {
                 target = otherOwnedByPlayerBehaviour.gameObject;
-                NavMeshAgent.destination = otherOwnedByPlayerBehaviour.transform.position;
+                navMeshAgent.destination = otherOwnedByPlayerBehaviour.transform.position;
 
-                if (NavMeshAgent.StoppedAtDestination())
+                if (navMeshAgent.StoppedAtDestination())
                 {
                     isAttacking = true;
                     FaceTarget(); // navmesh kan gestopt zijn terwijl je nog gedraait bent of van achteren wordt geraakkt
@@ -72,7 +72,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
         {
             activeDirection = RtsUnitSelectionManager.Instance.CurrentSelected.CurrentDirection;
         }
-        if(!isAttacking && NavMeshAgent.StoppedAtDestination())
+        if(!isAttacking && navMeshAgent.StoppedAtDestination())
         {
             FaceActiveDirection();
         }
@@ -82,7 +82,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
 
     private void FaceTarget()
     {
-        var turnTowardNavSteeringTarget = NavMeshAgent.steeringTarget;
+        var turnTowardNavSteeringTarget = navMeshAgent.steeringTarget;
 
         Vector3 direction = (turnTowardNavSteeringTarget - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
@@ -101,7 +101,7 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
     {
         if (target != null)
         {
-            if (IsRanged)
+            if (isRanged)
             {
                 SpawnRangedHomingMissle();
             }
@@ -117,5 +117,18 @@ public class ArmyUnitBehaviour : MonoBehaviourSlowUpdateFramesCI
         var rangedHomingMissile = Instantiate(RangedHomingMissilePrefab, RangedHomingMissileSpawnPosition.position, Quaternion.identity);
         rangedHomingMissile.SetTarget(target);
         rangedHomingMissile.Offence = this.Offence;
+    }
+
+    private void SetUnitStats()
+    {
+        var unitStats = BarracksUnitType.GetUnitStats();
+
+        Offence = unitStats.Offence.DeepClone();
+        Defence = unitStats.Defence.DeepClone();
+        EnemyAttractRadius = unitStats.RangeToAttractEnemies;
+        Reach = unitStats.RangeToAttack;
+        //NavMeshAgent.stoppingDistance = unitStats.RangeToAttack;
+        navMeshAgent.stoppingDistance = 0;
+        navMeshAgent.speed = unitStats.Speed;       
     }
 }

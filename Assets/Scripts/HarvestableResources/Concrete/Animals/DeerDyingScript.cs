@@ -18,8 +18,8 @@ public class DeerDyingScript : MonoBehaviour,IRetrieveResourceFromObject
         this.GetComponentInChildren<Animator>().SetTrigger(Constants.ANIM_TRIGGER_DIE);
 
         var moveObjectDownSurfaceAndDestroy = this.gameObject.AddComponent<MoveObjectDownSurfaceAndDestroy>();
-        moveObjectDownSurfaceAndDestroy.waitTimeInSecondsBeforeGoingDown = 2;
-        moveObjectDownSurfaceAndDestroy.distanceBelowSurface = -3;
+        moveObjectDownSurfaceAndDestroy.WaitTimeInSecondsBeforeGoingDown = 2;
+        moveObjectDownSurfaceAndDestroy.DistanceBelowSurface = -3;
         moveObjectDownSurfaceAndDestroy.AlsoDestroyParent = false;
 
         return new HarvestMaterialResource(MaterialResourceType.WILDANIMAL, 1);

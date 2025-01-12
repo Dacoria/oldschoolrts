@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class FadeOutAndDestroyGo : MonoBehaviourSlowUpdateFramesCI
 {
-    [ComponentInject] private Renderer ciRenderer;
     public int WaitBeforeFadeDuration;
     public int FadeDuration;
+
+    [ComponentInject] private Renderer ciRenderer;
 
     private DateTime startTime;    
 

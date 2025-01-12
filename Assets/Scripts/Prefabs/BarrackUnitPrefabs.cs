@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class BarrackUnitPrefabs
 {
+    public static UnitStatsSetting GetUnitStats(this BarracksUnitType type) => Get().Single(x => x.Type == type).UnitStats;
+
     private static List<BarracksUnitSetting> cache;
     public static List<BarracksUnitSetting> Get() 
     {        
@@ -26,7 +29,7 @@ public static class BarrackUnitPrefabs
         return result;
     }
 
-    private static BarracksUnitSetting GetStartSettings(BarracksUnitType type)
+    private static BarracksUnitSetting GetBarracksUnitPrefabSetup(BarracksUnitType type)
     {
         if (Load.GoMapUnits.TryGetValue($"{type.ToString()}Prefab", out GameObject prefab))
         {
@@ -52,7 +55,7 @@ public static class BarrackUnitPrefabs
 
     private static BarracksUnitSetting GetSwordFighter()
     {
-        var result = GetStartSettings(BarracksUnitType.SWORDFIGHTER);
+        var result = GetBarracksUnitPrefabSetup(BarracksUnitType.SWORDFIGHTER);
         result.ItemsConsumedToProduce = new List<ItemAmountBuffer>
             {
                 new ItemAmountBuffer{ Amount = 1, ItemType = ItemType.IRONSWORD, MaxBuffer = 10},
@@ -84,7 +87,7 @@ public static class BarrackUnitPrefabs
 
     private static BarracksUnitSetting GetMage()
     {
-        var result = GetStartSettings(BarracksUnitType.MAGE);
+        var result = GetBarracksUnitPrefabSetup(BarracksUnitType.MAGE);
         result.ItemsConsumedToProduce = new List<ItemAmountBuffer>
             {
                 new ItemAmountBuffer{ Amount = 1, ItemType = ItemType.CLOTHARMOR, MaxBuffer = 10},
@@ -116,7 +119,7 @@ public static class BarrackUnitPrefabs
 
     private static BarracksUnitSetting GetArcher()
     {
-        var result = GetStartSettings(BarracksUnitType.ARCHER);
+        var result = GetBarracksUnitPrefabSetup(BarracksUnitType.ARCHER);
         result.ItemsConsumedToProduce = new List<ItemAmountBuffer>
             {
                 new ItemAmountBuffer{ Amount = 1, ItemType = ItemType.LEATHERARMOR, MaxBuffer = 10},

@@ -40,31 +40,5 @@ public class GenUnitsTestScript : MonoBehaviour
         var unitGo = Instantiate(unit.ResourcePrefab);
         unitGo.GetComponent<OwnedByPlayerBehaviour>().Player = Player.PLAYER1;
         unitGo.transform.position = pos;
-        SetUnitStats(unitGo, unit);        
-    }
-
-    private void SetUnitStats(GameObject unitGo, BarracksUnitSetting unitSettings)
-    {
-        var armyUnitBehaviour = unitGo.GetComponent<ArmyUnitBehaviour>();
-        if (armyUnitBehaviour != null)
-        {
-            armyUnitBehaviour.Offence = unitSettings.UnitStats.Offence.DeepClone();
-            armyUnitBehaviour.Defence = unitSettings.UnitStats.Defence.DeepClone();
-            armyUnitBehaviour.EnemyAttractRadius = unitSettings.UnitStats.RangeToAttractEnemies;
-            armyUnitBehaviour.Reach = unitSettings.UnitStats.RangeToAttack;
-            armyUnitBehaviour.NavMeshAgent.stoppingDistance = unitSettings.UnitStats.RangeToAttack;
-            armyUnitBehaviour.NavMeshAgent.speed = unitSettings.UnitStats.Speed;
-
-            var healthBehaviour = unitGo.GetComponent<HealthBehaviour>();
-            if (healthBehaviour != null)
-            {
-                healthBehaviour.InitialHeath = unitSettings.UnitStats.Health.DeepClone();
-                healthBehaviour.CurrentHealth = unitSettings.UnitStats.Health.DeepClone();
-            }
-        }
-        else
-        {
-            throw new Exception($"Unit '{unitSettings.Type} -> {unitGo.name}' vereist ArmyUnitBehaviour");
-        }
-    }
+    }   
 }

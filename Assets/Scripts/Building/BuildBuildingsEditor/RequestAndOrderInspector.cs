@@ -5,7 +5,7 @@ using UnityEngine;
 public class RequestAndOrderInspector : EditorWindow
 
 {
-    public Dictionary<SerfOrder, bool> foldoutState = new Dictionary<SerfOrder, bool>();
+    private Dictionary<SerfOrder, bool> foldoutState = new Dictionary<SerfOrder, bool>();
     private int tab;
 
     // Add menu item named "My Window" to the Window menu

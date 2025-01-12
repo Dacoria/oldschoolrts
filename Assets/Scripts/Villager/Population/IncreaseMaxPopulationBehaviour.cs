@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class IncreaseMaxPopulationBehaviour : MonoBehaviour
 {
-    public int IncreasePopCount = 5;
+    private int increasePopCount = 5;
 
     private void Start()
     {
-        PopulationManager.PopulationLimit += IncreasePopCount;
+        PopulationManager.PopulationLimit += increasePopCount;
     }
 
     private void OnDestroy()
     {
-        PopulationManager.PopulationLimit -= IncreasePopCount;
+        PopulationManager.PopulationLimit -= increasePopCount;
     }
 }

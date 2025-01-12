@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class WarningDisplayAboveHeadBehaviour : BaseAEMonoCI
 {
-
-    public int NoWorkCounterToDisplayWarning = 5;
+    private int noWorkCounterToDisplayWarning = 5;
     private int currentNoWorkCounter;
     private GameObject warningGo;
 
@@ -15,7 +14,7 @@ public class WarningDisplayAboveHeadBehaviour : BaseAEMonoCI
         {
             currentNoWorkCounter++;
 
-            if (warningGo == null && currentNoWorkCounter >= NoWorkCounterToDisplayWarning)
+            if (warningGo == null && currentNoWorkCounter >= noWorkCounterToDisplayWarning)
             {
                 InitiateWarningBubble();
             }            

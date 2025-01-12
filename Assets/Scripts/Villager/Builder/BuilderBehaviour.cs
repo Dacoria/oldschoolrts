@@ -6,7 +6,7 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 {    
     public BuilderRequest CurrentBuilderRequest { private set; get; }
 
-    [ComponentInject] public NavMeshObstacle MyNavMeshObstacle;
+    [ComponentInject] private NavMeshObstacle navMeshObstacle;
     [ComponentInject] private NavMeshAgent navMeshAgent;
     [ComponentInject] private Animator animator;
     [ComponentInject] private FoodConsumptionBehaviour foodConsumptionBehaviour;
@@ -154,12 +154,12 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     {
         isWorking = true;
         navMeshAgent.enabled = false;
-        MyNavMeshObstacle.enabled = true;
+        navMeshObstacle.enabled = true;
         yield return Wait4Seconds.Get(timeToPrepareGround);
         if(this.CurrentBuilderRequest != null)
         {
             // kan dood gegaan zijn
-            MyNavMeshObstacle.enabled = false;
+            navMeshObstacle.enabled = false;
             navMeshAgent.enabled = true;
             this.CurrentBuilderRequest.Status = BuildStatus.COMPLETED_PREPARING;
             isWorking = false;
@@ -170,12 +170,12 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
     {
         isWorking = true;
         navMeshAgent.enabled = false;
-        MyNavMeshObstacle.enabled = true;
+        navMeshObstacle.enabled = true;
         yield return Wait4Seconds.Get(timeToBuildBuilding);
         if (this.CurrentBuilderRequest != null)
         {
             // kan doodgegaan zijn
-            MyNavMeshObstacle.enabled = false;
+            navMeshObstacle.enabled = false;
             navMeshAgent.enabled = true;
             this.CurrentBuilderRequest.Status = BuildStatus.COMPLETED_BUILDING;
             isWorking = false;

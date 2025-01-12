@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public static class SetupBuildingBuildCostsSetting
 {
@@ -19,7 +17,6 @@ public static class SetupBuildingBuildCostsSetting
     {
         return type.GetBuildingCostsSetup().ConvertToBuildCosts();
     }
-
 
     private static BuildingCostsSetup GetBuildingCostsSetup(this BuildingType buildingType)
     {

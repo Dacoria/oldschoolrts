@@ -8,8 +8,8 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
     [ComponentInject] private BuildingBehaviour buildingBehaviour;
 
     private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
-    [HideInInspector] private RefillBehaviour refillBehaviour;
-    public QueueForBuildingBehaviour queueForBuildingBehaviour;
+    private RefillBehaviour refillBehaviour;
+    private QueueForBuildingBehaviour queueForBuildingBehaviour;
     private ProduceCRBehaviour produceCRBehaviour;
 
     public new void Awake()

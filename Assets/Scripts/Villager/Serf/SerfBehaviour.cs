@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class SerfBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 {
-    [ComponentInject] private NavMeshAgent navMeshAgent;
     public SerfOrder CurrentSerfOrder { get; private set; }
+
+    [ComponentInject] private NavMeshAgent navMeshAgent;
     [ComponentInject] private Animator animator;
     [ComponentInject(Required.OPTIONAL)] private AudioSource audioSource;
     [ComponentInject] private List<Renderer> renderers;

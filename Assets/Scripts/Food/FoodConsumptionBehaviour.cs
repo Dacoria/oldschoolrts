@@ -13,10 +13,10 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
     public FoodConsumption FoodConsumption;
     public FoodConsumptionStatus Status => FoodConsumption != null ? FoodConsumption.FoodConsumptionStatus : FoodConsumptionStatus.NONE; // alleen voor gemak
 
-    [ComponentInject] private NavMeshAgent NavMeshAgent;
+    [ComponentInject] private NavMeshAgent navMeshAgent;
     private List<IHasStopped> hasStoppedScripts;
 
-    public bool UseTavernBubble = true;
+    private bool UseTavernBubble = true;
     private GameObject goToTavernBubble;
 
     void Start()
@@ -63,10 +63,10 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
         }
 
         else if (Status == FoodConsumptionStatus.GO_TOWARDS_REFILLL_POINT && 
-            NavMeshAgent.StoppedAtDestination(0.7f))
+            navMeshAgent.StoppedAtDestination(0.7f))
         {
             ReachedRefillPoint();
-            NavMeshAgent.isStopped = true;
+            navMeshAgent.isStopped = true;
         }
         FoodSatisfactionPercentage = FoodConsumption.FoodSatisfactionPercentage; //makkelijker debuggen....
     }
@@ -77,8 +77,8 @@ public class FoodConsumptionBehaviour : BaseAEMonoCI
         {
             if(FoodConsumption.TrySetTavernToGetFood())
             {
-                NavMeshAgent.destination = FoodConsumption.TavernTargetedForFoodRefill.gameObject.EntranceExit();
-                NavMeshAgent.isStopped = false;
+                navMeshAgent.destination = FoodConsumption.TavernTargetedForFoodRefill.gameObject.EntranceExit();
+                navMeshAgent.isStopped = false;
                 FoodConsumption.FoodConsumptionStatus = FoodConsumptionStatus.GO_TOWARDS_REFILLL_POINT;
             }
         }

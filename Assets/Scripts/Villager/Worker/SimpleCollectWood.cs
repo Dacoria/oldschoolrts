@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SimpleCollectWood : MonoBehaviour
 {
-    public int NumberOfWood;
+    public int NumberOfWood; // via ui instellen
 
     public void WoodDroppedOff()
     {

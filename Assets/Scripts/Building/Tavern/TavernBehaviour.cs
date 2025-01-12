@@ -8,7 +8,7 @@ public class TavernBehaviour : BaseAEMonoCI
 
     public List<ItemAmount> StockpileOfItemsRequired;
 
-    public List<SerfRequest> incomingOrders = new List<SerfRequest>();
+    private List<SerfRequest> incomingOrders = new List<SerfRequest>();
 
     [ComponentInject] private TavernRefillingBehaviour tavernRefillingBehaviour;
     [ComponentInject] private IOrderDestination orderDestination;

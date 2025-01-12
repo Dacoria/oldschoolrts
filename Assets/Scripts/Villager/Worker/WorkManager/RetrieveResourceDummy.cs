@@ -1,6 +1,6 @@
 public class RetrieveResourceDummy : IRetrieveResourceFromObject
 {
-    private int MaterialNumberRequestedToHarvest;
+    private int MaterialNumberRequestedToHarvest; // via UI ingesteld
     public bool CanRetrieveResource()
     {
         return true;

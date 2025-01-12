@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class CheckResourceCollisionForBuilding : MonoBehaviour
 {
-    public MaterialResourceType MaterialResourceTypeToCheck;
-   
+    public MaterialResourceType MaterialResourceTypeToCheck;   
 
     public bool IsCollidingWithRequiredResource(Collider other)
     {  

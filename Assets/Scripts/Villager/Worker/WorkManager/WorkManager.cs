@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
 {
     public List<BuildingType> BuildingTypeToBringResourceBackTo;
-    public float timeToWaitForRetryIfNoNewAction = 1;
+    public float TimeToWaitForRetryIfNoNewAction = 1;
 
     // wordt geset bij initieren van unit in school
     public VillagerUnitType VillagerUnitType;
@@ -147,7 +147,7 @@ public class WorkManager : BaseAEMonoCI, IHasStopped, IVillagerUnit
     private IEnumerator IdleForRetryNewAction()
     {
         isIdle = true;
-        yield return Wait4Seconds.Get(timeToWaitForRetryIfNoNewAction);
+        yield return Wait4Seconds.Get(TimeToWaitForRetryIfNoNewAction);
         isIdle = false; // via update nieuwe poging
     }
 

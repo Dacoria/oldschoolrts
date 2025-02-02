@@ -11,9 +11,9 @@ public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, ICardOneProdBui
     private ProduceCRBehaviour produceCRBehaviour;
     private HandleProduceResourceOrderBehaviour handleProduceResourceOrderBehaviour;
 
-    private new void Awake()
+    // via start -> zorgt dat bij real activeren, geen nieuwe comp. worden aangemaakt
+    private void Start()
     {
-        base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
             inactives: new List<System.Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(ProduceCRBehaviour), typeof(HandleProduceResourceOrderBehaviour) });
 
@@ -21,12 +21,9 @@ public class ProduceResourceOverTimeBehaviour : MonoBehaviourCI, ICardOneProdBui
         consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
         produceCRBehaviour = gameObject.AddComponent<ProduceCRBehaviour>();
         handleProduceResourceOrderBehaviour = gameObject.AddComponent<HandleProduceResourceOrderBehaviour>();
-    }
 
-    private void Start()
-    {
         StartCoroutine(TryToProduceOverXSeconds());
-    }
+    }   
 
     private bool CanProduce(ItemProduceSetting itemProduceSetting)
     {

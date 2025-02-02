@@ -12,9 +12,9 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
     private QueueForBuildingBehaviour queueForBuildingBehaviour;
     private ProduceCRBehaviour produceCRBehaviour;
 
-    public new void Awake()
+    // via start -> zorgt dat bij real activeren, geen nieuwe comp. worden aangemaakt
+    private void Start()
     {
-        base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
             inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour), typeof(ProduceCRBehaviour) });
 

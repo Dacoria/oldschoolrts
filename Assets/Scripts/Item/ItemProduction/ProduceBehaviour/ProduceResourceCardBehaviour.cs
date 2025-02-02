@@ -14,9 +14,9 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardSelectProdBuil
     private ProduceCRBehaviour produceCRBehaviour;
     private HandleProduceResourceOrderBehaviour handleProduceResourceOrderBehaviour;
 
-    private new void Awake()
+    // via start -> zorgt dat bij real activeren, geen nieuwe comp. worden aangemaakt
+    private void Start()
     {
-        base.Awake();
         gameObject.AddComponent<ValidComponents>().DoCheck(
             inactives: new List<System.Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(ProduceCRBehaviour), typeof(HandleProduceResourceOrderBehaviour) });
 
@@ -26,12 +26,9 @@ public class ProduceResourceCardBehaviour : MonoBehaviourCI, ICardSelectProdBuil
         handleProduceResourceOrderBehaviour = gameObject.AddComponent<HandleProduceResourceOrderBehaviour>();
 
         itemsToProcess = buildingBehaviour.BuildingType.GetItemProductionSettings().Select(x => new ItemLimit { ItemType = x.Type }).ToList();
-    }
 
-    private void Start()
-    {
         StartCoroutine(TryToProduceOverXSeconds());
-    }    
+    }
 
     private bool CanProduce(ItemProductionSetting itemProduceSetting)
     {

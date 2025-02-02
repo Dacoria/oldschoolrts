@@ -600,6 +600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_01
       objectReference: {fileID: 0}
+    - target: {fileID: 3142773083838402517, guid: 9ec9a389e33c64a418c1a821a228a8b5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3177260995062376496, guid: 9ec9a389e33c64a418c1a821a228a8b5, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -656,7 +660,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4349574361233642335, guid: 9ec9a389e33c64a418c1a821a228a8b5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3142773083838402517, guid: 9ec9a389e33c64a418c1a821a228a8b5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -882,7 +891,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3142773083838402517, guid: 9ec9a389e33c64a418c1a821a228a8b5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

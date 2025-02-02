@@ -1426,7 +1426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fa0b0a3aa010a34388f768c366c75e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHeath: 100
   CurrentHealth: 100
   DamageForNoFood: 1
   InstantiatedGoOnDeath: {fileID: 0}
@@ -1442,17 +1441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855a614d1b1e78246b7ca526b3029512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyAttractRadius: 20
-  Reach: 10
-  Offence:
-    AttackHitRate: 0
-    AttackType: 0
-    BaseDamage: 0
-  Defence:
-    ArmorValue: 0
-    ArmorType: 0
-  NavMeshAgent: {fileID: 0}
-  RangedHomingMissilePrefab: {fileID: 2866004277436670112, guid: 5ef6da306ff48504c92d3c8ceb28ea7f, type: 3}
+  BarracksUnitType: 3
+  RangedHomingMissilePrefab: {fileID: 6170033462332499675, guid: 5ef6da306ff48504c92d3c8ceb28ea7f, type: 3}
   RangedHomingMissileSpawnPosition: {fileID: 6311374211925972321}
 --- !u!195 &6306940336090191728
 NavMeshAgent:

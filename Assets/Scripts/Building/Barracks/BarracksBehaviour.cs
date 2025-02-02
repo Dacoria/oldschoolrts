@@ -9,18 +9,16 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
 
     private ConsumeRefillItemsBehaviour consumeRefillItemsBehaviour;
     private RefillBehaviour refillBehaviour;
-    private QueueForBuildingBehaviour queueForBuildingBehaviour;
     private ProduceCRBehaviour produceCRBehaviour;
 
     // via start -> zorgt dat bij real activeren, geen nieuwe comp. worden aangemaakt
     private void Start()
     {
         gameObject.AddComponent<ValidComponents>().DoCheck(
-            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(QueueForBuildingBehaviour), typeof(ProduceCRBehaviour) });
+            inactives: new List<Type> { typeof(RefillBehaviour), typeof(ConsumeRefillItemsBehaviour), typeof(ProduceCRBehaviour) });
 
         refillBehaviour = gameObject.AddComponent<RefillBehaviour>();
         consumeRefillItemsBehaviour = gameObject.AddComponent<ConsumeRefillItemsBehaviour>();
-        queueForBuildingBehaviour = gameObject.AddComponent<QueueForBuildingBehaviour>();
         produceCRBehaviour = gameObject.AddComponent<ProduceCRBehaviour>();
     }
 
@@ -41,7 +39,7 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
             }
             else
             {
-                throw new Exception("Zou al gecheckt moeten zijn"); //queue
+                throw new Exception("Zou al gecheckt moeten zijn"); //anders geen buildbutton
             }
         }
     }

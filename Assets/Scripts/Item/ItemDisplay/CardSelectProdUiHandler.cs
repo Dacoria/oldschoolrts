@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
 
 public class CardSelectProdUiHandler : MonoBehaviour, ICardCarousselDisplay, IProcesOneItemUI, IUiCallingBuilding
-{   
+{
     public UiCardBehaviour UiCardBehaviourPrefab;
     [HideInInspector] public List<UiCardBehaviour> UiCardBehaviours;
 

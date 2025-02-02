@@ -41,21 +41,29 @@ public static class SetupBuildingProdDurationSetting
                         TimeToWaitAfterProducingInSeconds = 5
                     };
                 }
-
-                return new ProduceDurations
+                else
                 {
-                    TimeToProduceResourceInSeconds = 30,
-                    TimeToWaitAfterProducingInSeconds = 5
-                };
+
+                    return new ProduceDurations
+                    {
+                        TimeToProduceResourceInSeconds = 30,
+                        TimeToWaitAfterProducingInSeconds = 5
+                    };
+                }
             case BuildingCategory.SelectProductsOverTime:
                 return new ProduceDurations
                 {
                     TimeToProduceResourceInSeconds = 40,
                     TimeToWaitAfterProducingInSeconds = 5
                 };
-            case BuildingCategory.School:
-            case BuildingCategory.Unknown:
             case BuildingCategory.Barracks:
+                return new ProduceDurations
+                {
+                    TimeToProduceResourceInSeconds = 0, // geen queue bij barracks --> instant
+                    TimeToWaitAfterProducingInSeconds = 0 // geen queue bij barracks --> instant
+                };
+            case BuildingCategory.School:
+            case BuildingCategory.Unknown:            
             case BuildingCategory.Population:
                 return new ProduceDurations
                 {

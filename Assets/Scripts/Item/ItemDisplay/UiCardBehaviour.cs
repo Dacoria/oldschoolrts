@@ -8,9 +8,9 @@ public class UiCardBehaviour : MonoBehaviour, IUiCardAddItemClick, IUiCardDecrea
     public Text CountText;
     public Text TitleText;
     public Enum Type;
+    public GameObject BuildButtonGo;
 
-    [HideInInspector]
-    public CardSelectProdUiHandler CardUiHandler;
+    [HideInInspector] public CardSelectProdUiHandler CardUiHandler;
 
     public void AddAmount(int amount)
     {

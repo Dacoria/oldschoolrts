@@ -24,8 +24,8 @@ public class SerfShowPackageHandling : MonoBehaviourCI
         if(ProcessingPackageGO != null)
         {
             Destroy(ProcessingPackageGO);
-            navMeshAgent.enabled = true;
             navMeshObstacle.enabled = false;
+            navMeshAgent.enabled = true;
         }
     }
 }

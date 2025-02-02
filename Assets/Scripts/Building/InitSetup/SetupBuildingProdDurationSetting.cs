@@ -56,12 +56,7 @@ public static class SetupBuildingProdDurationSetting
                     TimeToProduceResourceInSeconds = 40,
                     TimeToWaitAfterProducingInSeconds = 5
                 };
-            case BuildingCategory.Barracks:
-                return new ProduceDurations
-                {
-                    TimeToProduceResourceInSeconds = 0, // geen queue bij barracks --> instant
-                    TimeToWaitAfterProducingInSeconds = 0 // geen queue bij barracks --> instant
-                };
+            //case BuildingCategory.Barracks:               
             case BuildingCategory.School:
             case BuildingCategory.Unknown:            
             case BuildingCategory.Population:

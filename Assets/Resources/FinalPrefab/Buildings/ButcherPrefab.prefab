@@ -149,7 +149,7 @@ MonoBehaviour:
   Purpose: 1
   Real: {fileID: 1927110598342846321}
   DEBUG_RealImmediately: 1
-  BuildingType: 0
+  BuildingType: 150
   CurrentBuildStatus: 0
 --- !u!54 &2705753540323770299
 Rigidbody:
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6405057885917937274}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ca1b40d54745da4ea82fe01ed204975, type: 3}
   m_Name: 

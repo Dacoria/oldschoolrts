@@ -77,7 +77,6 @@ public static class SetupBuildingBuildCostsSetting
         { BuildingType.SHEEPFARM, new BuildingCostsSetup(      @in:ItemType.PLANKS, inAmount: 4, in2: ItemType.STONE, inAmount2: 3, in3: ItemType.NONE,    inAmount3: 0) },
         { BuildingType.TAVERN, new BuildingCostsSetup(         @in:ItemType.PLANKS, inAmount: 6, in2: ItemType.STONE, inAmount2: 5, in3: ItemType.NONE,    inAmount3: 0) },
         { BuildingType.THREADMAKER, new BuildingCostsSetup(    @in:ItemType.PLANKS, inAmount: 4, in2: ItemType.STONE, inAmount2: 3, in3: ItemType.NONE,    inAmount3: 0) },
-        { BuildingType.WALL, new BuildingCostsSetup(           @in:ItemType.NONE  , inAmount: 0, in2: ItemType.STONE, inAmount2: 1, in3: ItemType.NONE,    inAmount3: 0) },
         { BuildingType.WAREHOUSE, new BuildingCostsSetup(      @in:ItemType.PLANKS, inAmount: 6, in2: ItemType.STONE, inAmount2: 6, in3: ItemType.NONE,    inAmount3: 0) },
         { BuildingType.WATERWELL, new BuildingCostsSetup(      @in:ItemType.PLANKS, inAmount: 1, in2: ItemType.STONE, inAmount2: 2, in3: ItemType.NONE,    inAmount3: 0) },
         { BuildingType.WEAPONMAKER, new BuildingCostsSetup(    @in:ItemType.PLANKS, inAmount: 5, in2: ItemType.STONE, inAmount2: 3, in3: ItemType.NONE,    inAmount3: 0) },

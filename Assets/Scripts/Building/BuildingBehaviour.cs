@@ -16,7 +16,7 @@ public class BuildingBehaviour : BaseAEMonoCI, IOrderDestination
 
     [HideInInspector] public DateTime StartTimeBuildingTheBuilding; // voor weergave progressie bouwen 
 
-    public GameObject GetGO() {try { return this.gameObject; } catch (Exception e) {return null; }} // voor stoppen unity.... TODO
+    public GameObject GetGO() {try { return this.gameObject; } catch (Exception) {return null; }} // voor stoppen unity.... TODO
     [ComponentInject(Required.OPTIONAL)] private IValidateOrder validateOrder;
 
     private void Start()

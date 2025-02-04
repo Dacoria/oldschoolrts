@@ -189,6 +189,8 @@ public class BuildBuildingsByUser : MonoBehaviour
     private void ShowGhostBuilding()
     {
         objectToBuild = Instantiate(selectedGameObjectToBuild, new Vector3(0, 0.01f, 0), Quaternion.identity);
+        var ghostOfObjToBuild = objectToBuild.GetComponentInChildren<GhostBuildingBehaviour>();
+        ghostOfObjToBuild.enabled = false; //altijd beginnen met inactive ghost --> enablen betekent: Begin met bouwen
         FillBuildingType(selectedGameObjectToBuild, objectToBuild);
 
         checkCollisionForBuilding = objectToBuild.AddComponent<CheckCollisionHandler>(); // voor bepalen of collide wordt met ander iets
@@ -196,7 +198,7 @@ public class BuildBuildingsByUser : MonoBehaviour
         var locOfResource = objectToBuild.GetComponentInChildren<ILocationOfResource>(true);
         if (locOfResource != null)
         {
-            var rangedDisplayGo = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_RANGE_DISPLAY], objectToBuild.GetComponentInChildren<GhostBuildingBehaviour>().transform);
+            var rangedDisplayGo = Instantiate(Load.GoMapUI[Constants.GO_PREFAB_UI_RANGE_DISPLAY], ghostOfObjToBuild.transform);
             var rangedDisplay = rangedDisplayGo.GetComponent<RangeDisplayBehaviour>();
             rangedDisplay.MaxRangeForResource = locOfResource.GetMaxRangeForResource();
             rangedDisplay.RangeType = locOfResource.GetRangeTypeToFindResource();

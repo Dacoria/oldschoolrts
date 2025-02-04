@@ -10,8 +10,6 @@ public class SetGhostColor : BaseAEMonoCI
     [ComponentInject] private SetTemplateMaterialInTemplateMode SetTemplateMaterialInTemplateMode; // error als deze er niet is
     [ComponentInject] private List<Renderer> Renderers;
 
-    private bool hasSetColorGhostToBuild = false;
-
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
         if (GhostBuildingBehaviour != null && 

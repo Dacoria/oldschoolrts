@@ -25,8 +25,9 @@ public class BuildBuildingMenuButton : EditorWindow
 
         window.Show();
 
-    }    
+    }
 
+    [System.Obsolete]
     public void CreateGUI()
     {
         // Create a two-pane view with the left pane being fixed with

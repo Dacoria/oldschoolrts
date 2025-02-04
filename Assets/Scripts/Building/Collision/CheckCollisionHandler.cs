@@ -13,6 +13,14 @@ public class CheckCollisionHandler : BaseAEMonoCI
     private CheckCollision roadCollision;
     private Vector3 placingBuildingSizeIncreaseCollider = new Vector3(1, 1, 1);
 
+    private new void Awake()
+    {
+        base.Awake();
+        test = this.gameObject;
+    }
+
+    private GameObject test;
+
     private void Start()
     {        
         isBuildingToBuild = IsBuildingBeingBuild();
@@ -26,7 +34,7 @@ public class CheckCollisionHandler : BaseAEMonoCI
         {
             CreateStandardCollision();
         }
-    }    
+    }
 
     public bool IsColliding()
     {
@@ -35,7 +43,7 @@ public class CheckCollisionHandler : BaseAEMonoCI
             return mainCollision.IsColliding || roadCollision.IsColliding;
         }
         else
-        {
+        {            
             return mainCollision.IsColliding;
         }
     }
@@ -92,7 +100,7 @@ public class CheckCollisionHandler : BaseAEMonoCI
 
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus buildStatus)
     {
-        if (builderRequest.GameObject == this.gameObject)
+        if (builderRequest.GameObject == this.gameObject && buildStatus != BuildStatus.NONE)
         {
             // gebouw is geplaatst -> collisioncheck niet meer nodig
             Destroy(mainCollision);

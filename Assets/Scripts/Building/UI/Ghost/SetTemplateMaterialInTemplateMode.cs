@@ -32,12 +32,16 @@ public class SetTemplateMaterialInTemplateMode : BaseAEMonoCI
             {
                 break;
             }
-            if (i == 30)
+            else if (i < 30)
+            {
+                Debug.Log("Wait 0.1 sec");
+                yield return Wait4Seconds.Get(0.1f);
+                continue;
+            }
+            else
             {
                 throw new System.Exception("SetTemplateMaterialInTemplateMode -> No CheckCollisionHandler found");
             }
-
-            yield return Wait4Seconds.Get(0.1f);
         }
 
         InitScript();

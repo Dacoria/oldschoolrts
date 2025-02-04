@@ -33,7 +33,7 @@ public class BuilderBehaviour : BaseAEMonoCI, IHasStopped, IVillagerUnit
 
     protected override void OnBuilderRequestStatusChanged(BuilderRequest builderRequest, BuildStatus previousStatus)
     {
-        if (builderRequest == CurrentBuilderRequest)
+        if (builderRequest == CurrentBuilderRequest && builderRequest.Status != BuildStatus.NONE)
         {
             switch (builderRequest.Status)
             {

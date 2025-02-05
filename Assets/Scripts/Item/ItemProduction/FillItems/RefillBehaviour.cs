@@ -15,6 +15,24 @@ public class RefillBehaviour : BaseAEMonoCI
         StockpileOfItemsRequired = GetItemsToRefill()
             .Select(x => new ItemAmount() { ItemType = x.ItemType, Amount = 0 })
             .ToList();
+
+        SetInitialRequiredItemsStockpile();
+    }
+
+    private void SetInitialRequiredItemsStockpile()
+    {
+        var initialStockPileBehaviour = this.GetComponent<InitialStockPileBehaviour>();
+        if (initialStockPileBehaviour != null)
+        {
+            foreach (var item in StockpileOfItemsRequired)
+            {
+                var itemStartStockpile = initialStockPileBehaviour.InitialStockPile.FirstOrDefault(x => x.ItemType == item.ItemType);
+                if (itemStartStockpile != null)
+                {
+                    item.Amount = itemStartStockpile.Amount;
+                }
+            }
+        }
     }
 
     private void Start()

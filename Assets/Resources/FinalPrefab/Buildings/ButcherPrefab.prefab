@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 1298773430377668666}
   m_Layer: 0
   m_Name: EntranceExit
-  m_TagString: EntanceExit
+  m_TagString: EntranceExit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -35,7 +35,7 @@ public class BarracksBehaviour : MonoBehaviourCI, ICardSelectProdBuilding, IProd
             if (CanProces(barracksUnitType))
             {
                 consumeRefillItemsBehaviour.TryConsumeRefillItems(itemsForProduction);
-                produceCRBehaviour.ProduceOverTime(new ProduceSetup(barracksUnitType, this));
+                produceCRBehaviour.ProduceInstant(new ProduceSetup(barracksUnitType, this));
             }
             else
             {
